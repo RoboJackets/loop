@@ -1,0 +1,14 @@
+parameters:
+  reportMaybesInPropertyPhpDocTypes: false
+  excludePaths:
+    - *.blade.php
+    - .phpstorm.meta.php
+    - _ide_helper.php
+    - bootstrap/*
+    - storage/*
+    - tests/*
+    - vendor/*
+    - stubs/*
+  ignoreErrors:
+    - '#Parameter \#1 \$title of static method Illuminate\\Support\\Str::slug\(\) expects string, mixed given\.#'
+    - '#Parameter \#2 \$string of function explode expects string, mixed given\.#'

@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
@@ -10,23 +14,20 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
+     * @phan-suppress PhanUnusedProtectedMethodParameter
      */
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // nothing to do here, yet
     }
 
     /**
      * Register the commands for the application.
-     *
-     * @return void
      */
-    protected function commands()
+    protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');
 
-        require base_path('routes/console.php');
+        include base_path('routes/console.php');
     }
 }
