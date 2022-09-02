@@ -21,7 +21,6 @@ return [
     */
     'cas_real_hosts' => env('CAS_REAL_HOSTS', 'cas.myuniv.edu'),
 
-
     /*
     |--------------------------------------------------------------------------
     | Customize CAS Session Cookie Name

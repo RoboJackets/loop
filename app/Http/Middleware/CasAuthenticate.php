@@ -44,7 +44,7 @@ class CasAuthenticate
         'sn',
         'authnContextClass',
         'eduPersonPrimaryAffiliation',
-        'eduPersonScopedAffiliation'
+        'eduPersonScopedAffiliation',
     ];
 
     public function __construct(Guard $auth)
@@ -55,6 +55,8 @@ class CasAuthenticate
 
     /**
      * Handle an incoming request.
+     *
+     * @phan-suppress PhanPluginInconsistentReturnMethod
      */
     public function handle(Request $request, Closure $next)
     {

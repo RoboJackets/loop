@@ -9,7 +9,7 @@ return [
     'base-path' => '',
 
     /**
-     * Paths to host the health check and ping endpoints
+     * Paths to host the health check and ping endpoints.
      */
     'route-paths' => [
         'health' => '/health',
@@ -130,7 +130,7 @@ return [
 
     /*
      * Default value for env checks.
-     * For each key, the check will call `env(KEY, config('healthcheck.env-default-key'))` 
+     * For each key, the check will call `env(KEY, config('healthcheck.env-default-key'))`
      * to avoid false positives when `env(KEY)` is defined but is null.
      */
     'env-check-key' => 'HEALTH_CHECK_ENV_DEFAULT_VALUE',
