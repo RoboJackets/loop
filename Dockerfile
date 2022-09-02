@@ -10,7 +10,6 @@ COPY --link config/ /app/config/
 COPY --link database/ /app/database/
 COPY --link lang/ /app/lang/
 COPY --link public/ /app/public/
-COPY --link resources/ /app/resources/
 COPY --link routes/ /app/routes/
 COPY --link storage/ /app/storage/
 COPY --link artisan composer.json composer.lock /app/
