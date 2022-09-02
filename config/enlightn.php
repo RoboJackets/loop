@@ -52,6 +52,7 @@ return [
     // If you wish to skip running some analyzers in CI mode, list the classes below.
     'ci_mode_exclude_analyzers' => [
         \Enlightn\Enlightn\Analyzers\Performance\QueueDriverAnalyzer::class,
+        \Enlightn\Enlightn\Analyzers\Security\CSRFAnalyzer::class,
     ],
 
     /*
