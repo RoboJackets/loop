@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  loop:
+    image: robojackets/loop
+    network_mode: host
+    environment:
+      APP_NAME: Loop Local
+      APP_ENV: local
+      APP_DEBUG: true
+      APP_LOG_LEVEL: debug
+      APP_URL: http://127.0.0.1:8000
+      LOG_CHANNEL: stderr
+      DB_CONNECTION: sqlite
+      DB_DATABASE: /app/storage/database.sqlite
+      BROADCAST_DRIVER: log
+      CACHE_DRIVER: array
+      SESSION_DRIVER: file
+      QUEUE_DRIVER: sync
+      CAS_MASQUERADE: ltest3
+      CAS_MASQUERADE_givenName: Loop
+      CAS_MASQUERADE_sn: Test
+      SCOUT_DRIVER: collection
+      MAIL_MAILER: log
+    command: >-
+      /bin/sh -euxc "export APP_KEY=$$(php artisan key:generate --show --verbose) &&
+      touch /app/storage/database.sqlite &&
+      php artisan migrate --no-interaction &&
+      exec php artisan serve"

@@ -14,4 +14,11 @@
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
+    <issueHandlers>
+        <TooManyArguments>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </TooManyArguments>
+    </issueHandlers>
 </psalm>

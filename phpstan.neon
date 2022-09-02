@@ -10,5 +10,11 @@ parameters:
     - vendor/*
     - stubs/*
   ignoreErrors:
+    - '#Anonymous function should return (bool|string|string\|null) but returns mixed\.#'
+    - '#Class App\\Nova\\Resource extends generic class Laravel\\Nova\\Resource but does not specify its types: TModel#'
+    - '#Method App\\Http\\Middleware\\[a-zA-Z]+::handle\(\) has no return type specified\.#'
+    - '#Method App\\Nova\\[a-zA-Z0-9]+::fields\(\) return type has no value type specified in iterable type array\.#'
     - '#Parameter \#1 \$title of static method Illuminate\\Support\\Str::slug\(\) expects string, mixed given\.#'
+    - '#Parameter \#1 \$value of static method Illuminate\\Support\\Str::singular\(\) expects string, mixed given\.#'
     - '#Parameter \#2 \$string of function explode expects string, mixed given\.#'
+    - '#Property App\\Models\\[a-zA-Z]+::\$[a-zA-Z_]+ \(string\) does not accept mixed\.#'
