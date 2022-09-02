@@ -12,7 +12,7 @@ REDIS_PASSWORD="{{- key "redis/password" | trimSpace -}}"
 MEILISEARCH_HOST="http://127.0.0.1:{{- .Port -}}"
 {{ end }}
 MEILISEARCH_KEY="{{- key "meilisearch/v0-28-admin-key" | trimSpace -}}"
-{{ range $key, $value := (key (printf "loop/%s" (slice (env "NOMAD_JOB_NAME") 7)) | parseJSON) -}}
+{{ range $key, $value := (key (printf "loop/%s" (slice (env "NOMAD_JOB_NAME") 5)) | parseJSON) -}}
 {{- $key | trimSpace -}}={{- $value | toJSON }}
 {{ end -}}
 APP_ENV="{{ slice (env "NOMAD_JOB_NAME") 5 }}"
