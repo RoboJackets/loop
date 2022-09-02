@@ -23,8 +23,3 @@ fi
 
 mkdir --parents /assets/${NOMAD_JOB_NAME}/
 cp --recursive --verbose public/* /assets/${NOMAD_JOB_NAME}/
-
-if [ ${SCOUT_DRIVER} = "meilisearch" ]
-then
-    #php artisan meilisearch:update-index-settings --no-interaction --verbose --only-return-id || true
-fi
