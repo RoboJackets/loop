@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.4
 
-ARG base_image="debian:bookworm-slim"
+ARG base_image="ubuntu:22.04"
 
 FROM scratch as backend-source
 
