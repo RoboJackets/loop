@@ -2,23 +2,21 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
-
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use UKFast\HealthCheck\Commands\CacheSchedulerRunning;
 
 class Kernel extends ConsoleKernel
 {
     /**
      * Define the application's command schedule.
-     *
-     * @phan-suppress PhanUnusedProtectedMethodParameter
      */
     protected function schedule(Schedule $schedule): void
     {
-        // nothing to do here, yet
+        $schedule->command('horizon:snapshot')->everyFiveMinutes();
+        $schedule->command(CacheSchedulerRunning::class)->everyMinute();
     }
 
     /**
