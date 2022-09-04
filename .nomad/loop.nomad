@@ -13,16 +13,6 @@ variable "environment_name" {
   description = "The name of the environment being deployed"
 }
 
-variable "registry_username" {
-  type = string
-  description = "The username to access images in the registry"
-}
-
-variable "registry_password" {
-  type = string
-  description = "The password to access images in the registry"
-}
-
 locals {
   # compressed in this context refers to the config string itself, not the assets
   compressed_nginx_configuration = trimspace(
@@ -75,7 +65,7 @@ locals {
 job "loop" {
   region = "campus"
 
-  datacenters = ["cc"]
+  datacenters = ["bcdc"]
 
   type = "service"
 
@@ -96,7 +86,7 @@ job "loop" {
     }
 
     task "prestart" {
-      driver = "podman"
+      driver = "docker"
 
       lifecycle {
         hook = "prestart"
@@ -105,18 +95,12 @@ job "loop" {
       config {
         image = var.image
 
-        auth {
-          username = var.registry_username
-          password = var.registry_password
-        }
-
         force_pull = true
 
         network_mode = "host"
 
-        entrypoint = "/bin/bash"
-
-        args = [
+        entrypoint = [
+          "/bin/bash",
           "-xeuo",
           "pipefail",
           "-c",
@@ -166,31 +150,32 @@ EOF
     }
 
     task "web" {
-      driver = "podman"
+      driver = "docker"
 
       config {
         image = var.image
-
-        auth {
-          username = var.registry_username
-          password = var.registry_password
-        }
 
         force_pull = true
 
         network_mode = "host"
 
-        volumes = [
-          "local/fpm/:/etc/php/8.1/fpm/pool.d/:ro,noexec"
-        ]
+        mount {
+          type   = "bind"
+          source = "local/fpm/"
+          target = "/etc/php/8.1/fpm/pool.d/"
+        }
 
-        tmpfs = [
-          "/run/php"
-        ]
+        mount {
+          type = "tmpfs"
+          target = "/run/php"
+          readonly = false
+          tmpfs_options {
+            size = 16000
+          }
+        }
 
-        entrypoint = "/bin/bash"
-
-        args = [
+        entrypoint = [
+          "/bin/bash",
           "-xeuo",
           "pipefail",
           "-c",
@@ -296,7 +281,7 @@ EOF
       labels = [task.value]
 
       content {
-        driver = "podman"
+        driver = "docker"
 
         config {
           image = var.image
@@ -305,9 +290,8 @@ EOF
 
           network_mode = "host"
 
-          entrypoint = "/bin/bash"
-
-          args = [
+          entrypoint = [
+            "/bin/bash",
             "-xeuo",
             "pipefail",
             "-c",
@@ -352,6 +336,31 @@ EOF
 
           change_mode = "noop"
         }
+      }
+    }
+
+    task "set-restart-policy" {
+      driver = "raw_exec"
+
+      config {
+        command = "/usr/bin/bash"
+        args    = [
+          "-xue",
+          "-o",
+          "pipefail",
+          "-c",
+          join("; ", [for task in ["web", "scheduler", "worker"] : "docker update --restart=always ${task}-${NOMAD_ALLOC_ID}"])
+        ]
+      }
+
+      resources {
+        cpu = 100
+        memory = 128
+        memory_max = 2048
+      }
+
+      lifecycle {
+        hook = "poststart"
       }
     }
   }
