@@ -30,8 +30,6 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
      */
     protected function gate(): void
     {
-        // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
-        // phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
-        Gate::define('viewHorizon', static fn (User $user): bool => false);
+        Gate::define('viewHorizon', static fn (User $user): bool => $user->can('access-horizon'));
     }
 }

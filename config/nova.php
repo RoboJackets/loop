@@ -8,6 +8,7 @@ use Laravel\Nova\Http\Middleware\Authorize;
 use Laravel\Nova\Http\Middleware\BootTools;
 use Laravel\Nova\Http\Middleware\DispatchServingNovaEvent;
 use Laravel\Nova\Http\Middleware\HandleInertiaRequests;
+use Vyuldashev\NovaPermission\ForgetCachedPermissions;
 
 return [
 
@@ -105,6 +106,7 @@ return [
         HandleInertiaRequests::class,
         DispatchServingNovaEvent::class,
         BootTools::class,
+        ForgetCachedPermissions::class,
     ],
 
     'api_middleware' => [

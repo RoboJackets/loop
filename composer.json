@@ -10,6 +10,7 @@
         "enlightn/enlightn": "^2.1",
         "guzzlehttp/guzzle": "^7.2",
         "htmlmin/htmlmin": "^9.0",
+        "jeffbeltran/sanctum-tokens": "^2.0",
         "laravel/framework": "^9.19",
         "laravel/horizon": "^5.10",
         "laravel/nova": "^4.13",
@@ -17,7 +18,10 @@
         "laravel/scout": "^9.4",
         "laravel/tinker": "^2.7",
         "predis/predis": "^2.0",
-        "subfission/cas": "^4.2"
+        "robojackets/meilisearch-index-settings-helper": "^0.7.0",
+        "spatie/laravel-permission": "^5.5",
+        "subfission/cas": "^4.2",
+        "vyuldashev/nova-permission": "^3.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

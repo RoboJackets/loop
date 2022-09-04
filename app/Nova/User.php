@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use Illuminate\Validation\Rules;
-use Laravel\Nova\Fields\Gravatar;
+use Illuminate\Http\Request;
+use Jeffbeltran\SanctumTokens\SanctumTokens;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Vyuldashev\NovaPermission\Permission;
+use Vyuldashev\NovaPermission\Role;
 
 /**
  * A Nova resource for users.
@@ -40,7 +42,9 @@ class User extends Resource
      * @var array<string>
      */
     public static $search = [
-        'id', 'name', 'email',
+        'first_name',
+        'last_name',
+        'username',
     ];
 
     /**
@@ -51,22 +55,29 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Gravatar::make()->maxWidth(50),
-
-            Text::make('Name')
+            Text::make('First Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Text::make('Email')
+            Text::make('Last Name')
                 ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
+                ->rules('required', 'max:255'),
 
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', Rules\Password::defaults())
-                ->updateRules('nullable', Rules\Password::defaults()),
+            Text::make('Username')
+                ->sortable()
+                ->rules('required', 'max:127')
+                ->creationRules('unique:users,username')
+                ->updateRules('unique:users,username,{{resourceId}}'),
+
+            SanctumTokens::make()
+                ->hideAbilities()
+                ->canSee(static fn (Request $request): bool => $request->user()->can('update-user-tokens')),
+
+            MorphToMany::make('Roles', 'roles', Role::class)
+                ->canSee(static fn (Request $request): bool => $request->user()->can('update-user-permissions')),
+
+            MorphToMany::make('Permissions', 'permissions', Permission::class)
+                ->canSee(static fn (Request $request): bool => $request->user()->can('update-user-permissions')),
         ];
     }
 
