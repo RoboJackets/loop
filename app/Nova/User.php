@@ -6,7 +6,6 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Jeffbeltran\SanctumTokens\SanctumTokens;
-use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -53,7 +52,11 @@ class User extends Resource
     public function fields(NovaRequest $request): array
     {
         return [
-            ID::make()->sortable(),
+            Text::make('Username')
+                ->sortable()
+                ->rules('required', 'max:127')
+                ->creationRules('unique:users,username')
+                ->updateRules('unique:users,username,{{resourceId}}'),
 
             Text::make('First Name')
                 ->sortable()
@@ -62,12 +65,6 @@ class User extends Resource
             Text::make('Last Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
-
-            Text::make('Username')
-                ->sortable()
-                ->rules('required', 'max:127')
-                ->creationRules('unique:users,username')
-                ->updateRules('unique:users,username,{{resourceId}}'),
 
             SanctumTokens::make()
                 ->hideAbilities()

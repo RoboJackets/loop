@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\FiscalYear;
 use App\Models\User;
+use App\Policies\FiscalYearPolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\RolePolicy;
 use App\Policies\UserPolicy;
@@ -20,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
+        FiscalYear::class => FiscalYearPolicy::class,
         Permission::class => PermissionPolicy::class,
         Role::class => RolePolicy::class,
         User::class => UserPolicy::class,

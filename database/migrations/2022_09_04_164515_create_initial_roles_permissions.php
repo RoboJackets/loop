@@ -22,18 +22,24 @@ return new class extends Migration
         Permission::firstOrCreate(['name' => 'access-quickbooks']);
         Permission::firstOrCreate(['name' => 'access-sensible']);
 
-        $update_permissions = Permission::firstOrCreate(['name' => 'update-user-permissions']);
-
-        $update_tokens = Permission::firstOrCreate(['name' => 'update-user-tokens']);
+        $update_user_permissions = Permission::firstOrCreate(['name' => 'update-user-permissions']);
+        $update_user_tokens = Permission::firstOrCreate(['name' => 'update-user-tokens']);
+        $create_users = Permission::firstOrCreate(['name' => 'create-users']);
+        $create_fiscal_years = Permission::firstOrCreate(['name' => 'create-fiscal-years']);
+        $update_fiscal_years = Permission::firstOrCreate(['name' => 'update-fiscal-years']);
 
         $admin = Role::firstOrCreate(['name' => 'admin']);
         $admin->givePermissionTo($access_nova);
         $admin->givePermissionTo($access_horizon);
-        $admin->givePermissionTo($update_permissions);
-        $admin->givePermissionTo($update_tokens);
+        $admin->givePermissionTo($update_user_permissions);
+        $admin->givePermissionTo($update_user_tokens);
+        $admin->givePermissionTo($create_users);
+        $admin->givePermissionTo($create_fiscal_years);
+        $admin->givePermissionTo($update_fiscal_years);
 
         $treasurer = Role::firstOrCreate(['name' => 'treasurer']);
         $treasurer->givePermissionTo($access_nova);
+        $treasurer->givePermissionTo($create_fiscal_years);
 
         $auditor = Role::firstOrCreate(['name' => 'auditor']);
         $auditor->givePermissionTo($access_nova);
@@ -52,6 +58,9 @@ return new class extends Migration
         Permission::where('name', 'access-sensible')->delete();
         Permission::where('name', 'update-user-permissions')->delete();
         Permission::where('name', 'update-user-tokens')->delete();
+        Permission::where('name', 'create-users')->delete();
+        Permission::where('name', 'create-fiscal-years')->delete();
+        Permission::where('name', 'update-fiscal-years')->delete();
 
         Role::where('name', 'admin')->delete();
         Role::where('name', 'treasurer')->delete();
