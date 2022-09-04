@@ -22,6 +22,15 @@ class User extends Authenticatable
     use Searchable;
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array<string>
+     */
+    protected $appends = [
+        'name',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
