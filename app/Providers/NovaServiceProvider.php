@@ -30,6 +30,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     <a class="text-primary dim no-underline" href="https://github.com/RoboJackets/loop">Made with ♥ by RoboJackets</a>
 </p>
 ');
+        Nova::report(static function (\Throwable $exception): void {
+            if (app()->bound('sentry')) {
+                app('sentry')->captureException($exception);
+            }
+        });
     }
 
     /**

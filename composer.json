@@ -19,6 +19,8 @@
         "laravel/tinker": "^2.7",
         "predis/predis": "^2.0",
         "robojackets/meilisearch-index-settings-helper": "^0.7.0",
+        "sentry/sentry-laravel": "^2.13",
+        "spatie/laravel-csp": "^2.8",
         "spatie/laravel-permission": "^5.5",
         "subfission/cas": "^4.2",
         "vyuldashev/nova-permission": "^3.2"
