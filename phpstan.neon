@@ -12,10 +12,12 @@ parameters:
     - database/migrations/2022_09_04_164122_create_permission_tables.php
   ignoreErrors:
     - '#Anonymous function should return (bool|string|string\|null) but returns mixed\.#'
+    - '#Cannot access property \$[a-z]+ on App\\Models\\User\|null\.#'
     - '#Cannot call method can\(\) on App\\Models\\User\|null\.#'
     - '#Class App\\Nova\\Resource extends generic class Laravel\\Nova\\Resource but does not specify its types: TModel#'
     - '#Method App\\Http\\Middleware\\[a-zA-Z]+::handle\(\) has no return type specified\.#'
     - '#Method App\\Nova\\[a-zA-Z0-9]+::fields\(\) return type has no value type specified in iterable type array\.#'
+    - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),string>::map\(\) expects callable\(string, \(int\|string\)\): array, Closure\(array, string\): array given\.#'
     - '#Parameter \#1 \$haystack of static method Illuminate\\Support\\Str::startsWith\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$title of static method Illuminate\\Support\\Str::slug\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$url of function parse_url expects string, mixed given\.#'

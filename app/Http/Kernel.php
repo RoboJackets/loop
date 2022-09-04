@@ -37,6 +37,8 @@ class Kernel extends HttpKernel
             \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
             \App\Http\Middleware\CasAuthenticate::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\Sentry::class,
+            \Spatie\Csp\AddCspHeaders::class,
             \HTMLMin\HTMLMin\Http\Middleware\MinifyMiddleware::class,
         ],
 
