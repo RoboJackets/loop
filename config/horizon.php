@@ -166,33 +166,28 @@ return [
     |
     */
 
-    'defaults' => [
-        'supervisor-1' => [
-            'connection' => 'redis',
-            'queue' => ['default'],
-            'balance' => 'auto',
-            'maxProcesses' => 1,
-            'maxTime' => 0,
-            'maxJobs' => 0,
-            'memory' => 128,
-            'tries' => 1,
-            'timeout' => 60,
-            'nice' => 0,
-        ],
-    ],
+    'defaults' => [],
 
     'environments' => [
         'production' => [
-            'supervisor-1' => [
-                'maxProcesses' => 10,
-                'balanceMaxShift' => 1,
-                'balanceCooldown' => 3,
+            'supervisor' => [
+                'connection' => 'redis',
+                'queue' => ['default'],
+                'balance' => 'simple',
+                'processes' => 1,
+                'tries' => 1,
+                'block_for' => null,
             ],
         ],
 
-        'local' => [
-            'supervisor-1' => [
-                'maxProcesses' => 3,
+        'test' => [
+            'supervisor' => [
+                'connection' => 'redis',
+                'queue' => ['default'],
+                'balance' => 'simple',
+                'processes' => 1,
+                'tries' => 1,
+                'block_for' => null,
             ],
         ],
     ],
