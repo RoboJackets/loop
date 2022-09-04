@@ -73,7 +73,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             NovaPermissionTool::make()
                 ->rolePolicy(RolePolicy::class)
                 ->permissionPolicy(PermissionPolicy::class)
-                ->canSee(static fn (User $user): bool => $user->can('update-user-permissions')),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('update-user-permissions')),
         ];
     }
 }
