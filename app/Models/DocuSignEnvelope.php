@@ -73,6 +73,14 @@ class DocuSignEnvelope extends Model
     ];
 
     /**
+     * Get the default foreign key name for the model.
+     */
+    public function getForeignKey(): string
+    {
+        return 'docusign_envelope_id';
+    }
+
+    /**
      * Get the fiscal year for this envelope.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FiscalYear, self>
@@ -109,12 +117,7 @@ class DocuSignEnvelope extends Model
      */
     public function fundingSources(): BelongsToMany
     {
-        return $this->belongsToMany(
-            FundingAllocationLine::class,
-            'docusign_funding_sources',
-            'docusign_envelope_id',
-            'funding_allocation_line_id'
-        )
+        return $this->belongsToMany(FundingAllocationLine::class, 'docusign_funding_sources')
             ->withPivot(['amount'])
             ->withTimestamps()
             ->using(DocuSignFundingSource::class);

@@ -20,6 +20,16 @@ class FiscalYear extends Model
         return $this->hasMany(FundingAllocation::class);
     }
 
+    /**
+     * Get the DocuSign envelopes for this fiscal year.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DocuSignEnvelope>
+     */
+    public function envelopes(): HasMany
+    {
+        return $this->hasMany(DocuSignEnvelope::class);
+    }
+
     public static function fromDate(Carbon $date): self
     {
         return self::where('ending_year', $date->year + ($date->month < 7 ? 0 : 1))->sole();

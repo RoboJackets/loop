@@ -17,7 +17,7 @@ return new class extends Migration
     {
         Schema::create('docusign_funding_sources', static function (Blueprint $table): void {
             $table->id();
-            $table->foreignIdFor(DocuSignEnvelope::class, 'docusign_envelope_id')->constrained('docusign_envelopes');
+            $table->foreignIdFor(DocuSignEnvelope::class)->constrained();
             $table->foreignIdFor(FundingAllocationLine::class)->constrained();
             $table->decimal('amount', 8, 2)->nullable();
             $table->timestamps();

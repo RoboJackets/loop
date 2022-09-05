@@ -98,12 +98,7 @@ class FundingAllocationLine extends Model
      */
     public function envelopes(): BelongsToMany
     {
-        return $this->belongsToMany(
-            DocuSignEnvelope::class,
-            'docusign_funding_sources',
-            'funding_allocation_line_id',
-            'docusign_envelope_id'
-        )
+        return $this->belongsToMany(DocuSignEnvelope::class, 'docusign_funding_sources')
             ->withPivot(['amount'])
             ->withTimestamps()
             ->using(DocuSignFundingSource::class);

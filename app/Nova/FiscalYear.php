@@ -55,6 +55,8 @@ class FiscalYear extends Resource
 
             HasMany::make('Funding Allocations'),
 
+            HasMany::make('DocuSign Envelopes', 'envelopes'),
+
             new Panel(
                 'Timestamps',
                 [
