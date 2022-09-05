@@ -5,33 +5,35 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\File;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\MorphTo;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 
 /**
- * A Nova resource for fiscal years.
+ * A Nova resource for attachments.
  *
- * @extends \App\Nova\Resource<\App\Models\FiscalYear>
+ * @extends \App\Nova\Resource<\App\Models\Attachment>
  *
  * @phan-suppress PhanUnreferencedClass
  */
-class FiscalYear extends Resource
+class Attachment extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\FiscalYear::class;
+    public static $model = \App\Models\Attachment::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'ending_year';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -39,7 +41,7 @@ class FiscalYear extends Resource
      * @var array<string>
      */
     public static $search = [
-        'ending_year',
+        'id',
     ];
 
     /**
@@ -48,23 +50,30 @@ class FiscalYear extends Resource
     public function fields(NovaRequest $request): array
     {
         return [
-            Number::make('Ending Year')
-                ->rules('required', 'integer', 'digits:4', 'min:2010', 'max:2030')
-                ->creationRules('unique:fiscal_years,ending_year')
-                ->updateRules('unique:fiscal_years,ending_year,{{resourceId}}'),
+            ID::make()
+                ->sortable(),
 
-            HasMany::make('Funding Allocations'),
+            MorphTo::make('Attachable')
+                ->types([
+                    DocuSignEnvelope::class,
+                ]),
 
-            new Panel(
-                'Timestamps',
-                [
-                    DateTime::make('Created', 'created_at')
-                        ->onlyOnDetail(),
+            Text::make('Filename')
+                ->onlyOnIndex(),
 
-                    DateTime::make('Last Updated', 'updated_at')
-                        ->onlyOnDetail(),
-                ]
-            ),
+            File::make('File', 'filename')
+                ->disk('local'),
+
+            Panel::make('Timestamps', [
+                DateTime::make('Created', 'created_at')
+                    ->onlyOnDetail(),
+
+                DateTime::make('Last Updated', 'updated_at')
+                    ->onlyOnDetail(),
+
+                DateTime::make('Deleted', 'deleted_at')
+                    ->onlyOnDetail(),
+            ]),
         ];
     }
 

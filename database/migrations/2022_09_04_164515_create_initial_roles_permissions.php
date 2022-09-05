@@ -51,6 +51,7 @@ return new class extends Migration
     public function down(): void
     {
         app()['cache']->forget('spatie.permission.cache');
+
         Permission::where('name', 'access-nova')->delete();
         Permission::where('name', 'access-horizon')->delete();
         Permission::where('name', 'access-workday')->delete();
