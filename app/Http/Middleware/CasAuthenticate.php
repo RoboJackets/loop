@@ -38,13 +38,9 @@ class CasAuthenticate
      * @phan-read-only
      */
     private static $attributes = [
-        'gtGTID',
         'email_primary',
         'givenName',
         'sn',
-        'authnContextClass',
-        'eduPersonPrimaryAffiliation',
-        'eduPersonScopedAffiliation',
     ];
 
     public function __construct(Guard $auth)
@@ -77,6 +73,7 @@ class CasAuthenticate
             $user->username = $this->cas->user();
             $user->first_name = $this->cas->getAttribute('givenName');
             $user->last_name = $this->cas->getAttribute('sn');
+            $user->email = $this->cas->getAttribute('email_primary');
             $user->save();
 
             Auth::login($user);
