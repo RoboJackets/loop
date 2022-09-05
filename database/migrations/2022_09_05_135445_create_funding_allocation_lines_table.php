@@ -23,7 +23,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unique(['funding_allocation_id', 'line_number']);
+            $table->unique(['funding_allocation_id', 'line_number'], 'funding_allocation_lines_id_line_number_unique');
         });
     }
 
