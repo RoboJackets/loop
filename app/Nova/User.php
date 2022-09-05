@@ -66,6 +66,12 @@ class User extends Resource
                 ->sortable()
                 ->rules('required', 'max:255'),
 
+            Text::make('Email')
+                ->sortable()
+                ->rules('required', 'max:127')
+                ->creationRules('unique:users,email')
+                ->updateRules('unique:users,email,{{resourceId}}'),
+
             SanctumTokens::make()
                 ->hideAbilities()
                 ->canSee(static fn (Request $request): bool => $request->user()->can('update-user-tokens')),
