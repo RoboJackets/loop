@@ -18,5 +18,15 @@
                 <directory name="app" />
             </errorLevel>
         </TooManyArguments>
+        <TooManyTemplateParams>
+            <errorLevel type="suppress">
+                <directory name="app" />
+            </errorLevel>
+        </TooManyTemplateParams>
+        <UndefinedMagicMethod>
+            <errorLevel type="suppress">
+                <directory name="app/Nova" />
+            </errorLevel>
+        </UndefinedMagicMethod>
     </issueHandlers>
 </psalm>

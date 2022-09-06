@@ -4,31 +4,30 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use Jeffbeltran\SanctumTokens\SanctumTokens;
+use App\Nova\Actions\CreateFundingAllocationLinesFromJacketPages;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
-use Vyuldashev\NovaPermission\Permission;
-use Vyuldashev\NovaPermission\Role;
 
 /**
- * A Nova resource for users.
+ * A Nova resource for funding allocations.
  *
- * @extends \App\Nova\Resource<\App\Models\User>
+ * @extends \App\Nova\Resource<\App\Models\FundingAllocation>
  *
  * @phan-suppress PhanUnreferencedClass
  */
-class User extends Resource
+class FundingAllocation extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string
+     * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\FundingAllocation::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -43,9 +42,9 @@ class User extends Resource
      * @var array<string>
      */
     public static $search = [
-        'first_name',
-        'last_name',
-        'username',
+        'fiscal_year.ending_year',
+        'sga_bill_number',
+        'type',
     ];
 
     /**
@@ -54,35 +53,26 @@ class User extends Resource
     public function fields(NovaRequest $request): array
     {
         return [
-            Text::make('Username')
+            BelongsTo::make('Fiscal Year')
                 ->sortable()
-                ->rules('required', 'max:127')
-                ->creationRules('unique:users,username')
-                ->updateRules('unique:users,username,{{resourceId}}'),
+                ->rules('required'),
 
-            Text::make('First Name')
+            Select::make('Type')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->options(\App\Models\FundingAllocation::$types)
+                ->displayUsingLabels(),
 
-            Text::make('Last Name')
+            Text::make('SGA Bill Number')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->nullable()
+                ->rules(
+                    'required_if:type,sga_bill',
+                    'prohibited_unless:type,sga_bill',
+                    'regex:/^\\d{2}J\\d{3}$/',
+                    'nullable'
+                ),
 
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'max:127')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            SanctumTokens::make()
-                ->hideAbilities()
-                ->canSee(static fn (Request $request): bool => $request->user()->can('update-user-tokens')),
-
-            MorphToMany::make('Roles', 'roles', Role::class)
-                ->canSee(static fn (Request $request): bool => $request->user()->can('update-user-permissions')),
-
-            MorphToMany::make('Permissions', 'permissions', Permission::class)
-                ->canSee(static fn (Request $request): bool => $request->user()->can('update-user-permissions')),
+            HasMany::make('Funding Allocation Lines'),
 
             new Panel(
                 'Timestamps',
@@ -91,6 +81,9 @@ class User extends Resource
                         ->onlyOnDetail(),
 
                     DateTime::make('Last Updated', 'updated_at')
+                        ->onlyOnDetail(),
+
+                    DateTime::make('Deleted', 'deleted_at')
                         ->onlyOnDetail(),
                 ]
             ),
@@ -134,16 +127,17 @@ class User extends Resource
      */
     public function actions(NovaRequest $request): array
     {
-        return [];
+        return [
+            new CreateFundingAllocationLinesFromJacketPages(),
+        ];
     }
 
     /**
      * Get the search result subtitle for the resource.
      */
-    public function subtitle(): ?string
+    public function subtitle(): string
     {
-        $role = $this->roles()->orderBy('id')->first();
-
-        return $role === null ? null : ucfirst($role->name);
+        return $this->fundingAllocationLines()->count().' Lines | $'.
+            number_format($this->fundingAllocationLines()->sum('amount'), 2);
     }
 }
