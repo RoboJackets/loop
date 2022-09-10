@@ -26,6 +26,8 @@ return [
         \Enlightn\Enlightn\Analyzers\Reliability\InvalidPropertyAccessAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Reliability\InvalidReturnTypeAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Security\XSSAnalyzer::class,
+        // CSRF analyzer expects subclassing the Laravel standard middleware and does not allow using it directly
+        \Enlightn\Enlightn\Analyzers\Security\CSRFAnalyzer::class,
         ...(env('SKIP_PHPSTAN_CHECKS', false) === true ? [
             \Enlightn\Enlightn\Analyzers\Performance\CollectionCallAnalyzer::class,
             \Enlightn\Enlightn\Analyzers\Reliability\DeadCodeAnalyzer::class,
