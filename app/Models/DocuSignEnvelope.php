@@ -95,6 +95,17 @@ class DocuSignEnvelope extends Model
     ];
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'envelope_id',
+        'sofo_form_filename',
+        'summary_filename',
+    ];
+
+    /**
      * List of valid types and display names for them.
      *
      * @var array<string,string>
