@@ -60,6 +60,7 @@ class Attachment extends Resource
 
             Text::make('Filename', static function (string $filename): string {
                 $array = explode('/', $filename);
+
                 return end($array);
             })
                 ->onlyOnIndex(),
