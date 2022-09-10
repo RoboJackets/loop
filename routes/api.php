@@ -26,5 +26,4 @@ Route::get('/v1/document/{uuid}', DocumentDownloadController::class)
 Route::webhooks('/v1/postmark/inbound', 'postmark-inbound');
 
 Route::webhooks('/v1/sensible', 'sensible')
-    ->name('sensible.webhook')
     ->middleware(['signed']);

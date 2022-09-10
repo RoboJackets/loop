@@ -58,7 +58,7 @@ class SubmitDocuSignEnvelopeToSensible implements ShouldQueue, ShouldBeUnique
                     ),
                     'webhook' => [
                         'payload' => $this->envelope->envelope_uuid,
-                        'url' => URL::signedRoute('sensible.webhook', [], now()->addDay()),
+                        'url' => URL::signedRoute('webhook-client-sensible', [], now()->addDay()),
                     ],
                 ],
             ]
