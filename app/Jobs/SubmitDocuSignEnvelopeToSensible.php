@@ -55,7 +55,7 @@ class SubmitDocuSignEnvelopeToSensible implements ShouldQueue, ShouldBeUnique
         );
 
         $client->post(
-            '/v0/extract_from_url/'.config('services.sensible.type'),
+            'v0/extract_from_url/'.config('services.sensible.type'),
             [
                 'json' => [
                     'content_type' => 'application/pdf',
