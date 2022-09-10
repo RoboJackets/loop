@@ -7,7 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
- * App\Models\DocuSignFundingSource
+ * Pivot model for associating a DocuSign envelope to a funding allocation line.
  *
  * @property int $id
  * @property int $docusign_envelope_id

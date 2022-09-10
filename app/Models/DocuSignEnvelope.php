@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
 
 /**
- * App\Models\DocuSignEnvelope
+ * A DocuSign envelope.
  *
  * @property int $id
  * @property string $envelope_id

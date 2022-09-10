@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 
 /**
- * App\Models\FundingAllocationLine
+ * A specific line item of a funding allocation, such as in an SGA budget or bill.
  *
  * @property int $id
  * @property int $funding_allocation_id

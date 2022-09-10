@@ -13,7 +13,7 @@ use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- * App\Models\User
+ * A user.
  *
  * @property int $id
  * @property string $username

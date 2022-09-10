@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Models\Attachment
+ * An attachment for a DocuSign envelope.
  *
  * @property int $id
  * @property string $attachable_type
