@@ -11,7 +11,6 @@ use App\Models\DocuSignEnvelope;
 use Illuminate\Http\Request;
 use Spatie\WebhookClient\SignatureValidator\SignatureValidator;
 use Spatie\WebhookClient\WebhookConfig;
-use Throwable;
 
 class Sensible implements SignatureValidator
 {
@@ -24,12 +23,6 @@ class Sensible implements SignatureValidator
      */
     public function isValid(Request $request, WebhookConfig $config): bool
     {
-        try {
-            DocuSignEnvelope::fromEnvelopeUuid($request->payload);
-
-            return true;
-        } catch (Throwable) {
-            return false;
-        }
+        return DocuSignEnvelope::whereEnvelopeUuid($request->payload)->exists();
     }
 }

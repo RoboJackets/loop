@@ -18,7 +18,7 @@ return new class extends Migration
     {
         Schema::create('docusign_envelopes', static function (Blueprint $table): void {
             $table->id();
-            $table->string('envelope_id')->unique();
+            $table->uuid('envelope_uuid')->unique();
             $table->string('type')->nullable();
             $table->string('supplier_name')->nullable();
             $table->string('description')->nullable();

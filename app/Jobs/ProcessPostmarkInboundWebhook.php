@@ -9,6 +9,7 @@ namespace App\Jobs;
 use App\Models\Attachment;
 use App\Models\DocuSignEnvelope;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Smalot\PdfParser\Parser;
 use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
 
@@ -67,26 +68,32 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                 throw new \Exception('Could not extract envelope ID');
             }
 
-            $envelope_id = $matches['envelopeId'];
+            $envelope_uuid = Str::lower(
+                Str::substr($matches['envelopeId'], 0, 8).'-'.
+                Str::substr($matches['envelopeId'], 8, 4).'-'.
+                Str::substr($matches['envelopeId'], 12, 4).'-'.
+                Str::substr($matches['envelopeId'], 16, 4).'-'.
+                Str::substr($matches['envelopeId'], 20, 12)
+            );
 
-            Storage::makeDirectory('docusign/'.$envelope_id);
+            Storage::makeDirectory('docusign/'.$envelope_uuid);
 
             Storage::disk('local')
                 ->put(
-                    'docusign/'.$envelope_id.'/Summary.pdf',
+                    'docusign/'.$envelope_uuid.'/Summary.pdf',
                     base64_decode($summary_attachment['Content'], true)
                 );
 
             Storage::disk('local')
                 ->put(
-                    'docusign/'.$envelope_id.'/'.$sofo_attachment['Name'],
+                    'docusign/'.$envelope_uuid.'/'.$sofo_attachment['Name'],
                     base64_decode($sofo_attachment['Content'], true)
                 );
 
             $envelope = DocuSignEnvelope::create([
-                'envelope_id' => $envelope_id,
-                'sofo_form_filename' => 'docusign/'.$envelope_id.'/'.$sofo_attachment['Name'],
-                'summary_filename' => 'docusign/'.$envelope_id.'/Summary.pdf',
+                'envelope_uuid' => $envelope_uuid,
+                'sofo_form_filename' => 'docusign/'.$envelope_uuid.'/'.$sofo_attachment['Name'],
+                'summary_filename' => 'docusign/'.$envelope_uuid.'/Summary.pdf',
             ]);
 
             $attachments->each(static function (array $value, int $key) use ($envelope): void {
@@ -98,7 +105,7 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                     throw new \Exception('Filename does not match regex');
                 }
 
-                $disk_path = 'docusign/'.$envelope->envelope_id.'/'.$value['Name'];
+                $disk_path = 'docusign/'.$envelope->envelope_uuid.'/'.$value['Name'];
 
                 // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
                 Storage::disk('local')->put($disk_path, base64_decode($value['Content'], true));

@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\DocumentDownloadController;
-use App\Models\DocuSignEnvelope;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::bind('uuid', static fn (string $uuid): DocuSignEnvelope => DocuSignEnvelope::fromEnvelopeUuid($uuid));
-
-Route::get('/v1/document/{uuid}', DocumentDownloadController::class)
+Route::get('/v1/document/{envelope:envelope_uuid}', DocumentDownloadController::class)
     ->name('document.download')
     ->middleware(['signed']);
 

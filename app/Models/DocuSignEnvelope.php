@@ -10,14 +10,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
 
 /**
  * A DocuSign envelope.
  *
  * @property int $id
- * @property string $envelope_id
+ * @property string $envelope_uuid
  * @property string|null $type
  * @property string|null $supplier_name
  * @property string|null $description
@@ -26,7 +25,7 @@ use Laravel\Scout\Searchable;
  * @property string $sofo_form_filename
  * @property string $summary_filename
  * @property string|null $sensible_extraction_id
- * @property array|null $sensible_response
+ * @property array|null $sensible_output
  * @property int|null $fiscal_year_id
  * @property int|null $replaces_docusign_envelope_id
  * @property bool $lost
@@ -39,7 +38,6 @@ use Laravel\Scout\Searchable;
  * @property-read \App\Models\FiscalYear|null $fiscalYear
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\FundingAllocationLine> $fundingSources
  * @property-read int|null $funding_sources_count
- * @property-read string $envelope_uuid
  * @property-read \App\Models\User|null $payToUser
  * @property-read DocuSignEnvelope|null $replacesEnvelope
  *
@@ -51,14 +49,14 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereEnvelopeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereEnvelopeUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereFiscalYearId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereLost($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope wherePayToUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereReplacesDocusignEnvelopeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereSensibleExtractionId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereSensibleResponse($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereSensibleOutput($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereSofoFormFilename($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereSubmittedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereSummaryFilename($value)
@@ -90,7 +88,7 @@ class DocuSignEnvelope extends Model
     protected $casts = [
         'amount' => 'float',
         'lost' => 'boolean',
-        'sensible_response' => 'array',
+        'sensible_output' => 'array',
         'submitted_at' => 'datetime',
     ];
 
@@ -199,21 +197,5 @@ class DocuSignEnvelope extends Model
     public function attachments(): MorphMany
     {
         return $this->morphMany(Attachment::class, 'attachable');
-    }
-
-    public function getEnvelopeUuidAttribute(): string
-    {
-        return Str::lower(
-            Str::substr($this->envelope_id, 0, 8).'-'.
-            Str::substr($this->envelope_id, 8, 4).'-'.
-            Str::substr($this->envelope_id, 12, 4).'-'.
-            Str::substr($this->envelope_id, 16, 4).'-'.
-            Str::substr($this->envelope_id, 20, 12)
-        );
-    }
-
-    public static function fromEnvelopeUuid(string $envelope_uuid): self
-    {
-        return self::where('envelope_id', Str::upper(Str::replace('-', '', $envelope_uuid)))->sole();
     }
 }

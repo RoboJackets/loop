@@ -26,6 +26,7 @@
         <UndefinedMagicMethod>
             <errorLevel type="suppress">
                 <directory name="app/Nova" />
+                <directory name="app/SignatureValidators" />
             </errorLevel>
         </UndefinedMagicMethod>
         <LessSpecificImplementedReturnType>
