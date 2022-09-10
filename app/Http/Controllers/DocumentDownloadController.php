@@ -13,8 +13,8 @@ class DocumentDownloadController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(DocuSignEnvelope $envelope): StreamedResponse
+    public function __invoke(DocuSignEnvelope $uuid): StreamedResponse
     {
-        return Storage::download($envelope->sofo_form_filename);
+        return Storage::download($uuid->sofo_form_filename);
     }
 }
