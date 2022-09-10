@@ -40,6 +40,17 @@ class Attachment extends Model
     use SoftDeletes;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'attachable_type',
+        'attachable_id',
+        'filename',
+    ];
+
+    /**
      * Get all the owning payable models.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo<\App\Models\DocuSignEnvelope,\App\Models\Attachment>
