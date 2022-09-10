@@ -31,6 +31,7 @@ parameters:
     - '#Parameter \#1 \$haystack of static method Illuminate\\Support\\Str::startsWith\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$num of function number_format expects float, mixed given\.#'
     - '#Parameter \#1 \$title of static method Illuminate\\Support\\Str::slug\(\) expects string, mixed given\.#'
+    - '#Parameter \#1 \$uri of method GuzzleHttp\\Client::post\(\) expects Psr\\Http\\Message\\UriInterface\|string, mixed given\.#'
     - '#Parameter \#1 \$url of function parse_url expects string, mixed given\.#'
     - '#Parameter \#1 \$value of static method Illuminate\\Support\\Str::singular\(\) expects string, mixed given\.#'
     - '#Parameter \#2 \$contents of method Illuminate\\Filesystem\\FilesystemAdapter::put\(\) expects Illuminate\\Http\\File\|Illuminate\\Http\\UploadedFile\|Psr\\Http\\Message\\StreamInterface\|resource\|string, string\|false given\.#'
