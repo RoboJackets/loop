@@ -15,8 +15,6 @@ class ProcessSensibleWebhook extends ProcessWebhookJob
      */
     public $queue = 'sensible';
 
-    public int $tries = 1;
-
     public function handle(): void
     {
         // pending SenseML design

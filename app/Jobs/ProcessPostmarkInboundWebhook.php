@@ -25,8 +25,6 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
      */
     public $queue = 'postmark';
 
-    public int $tries = 1;
-
     /**
      * Execute the job.
      *

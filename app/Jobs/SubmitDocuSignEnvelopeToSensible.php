@@ -22,19 +22,11 @@ class SubmitDocuSignEnvelopeToSensible implements ShouldQueue, ShouldBeUnique
     use SerializesModels;
 
     /**
-     * The queue this job will run on.
-     *
-     * @var string
-     */
-    public $queue = 'sensible';
-
-    public int $tries = 1;
-
-    /**
      * Create a new job instance.
      */
     public function __construct(private readonly DocuSignEnvelope $envelope)
     {
+        $this->queue = 'sensible';
     }
 
     /**
