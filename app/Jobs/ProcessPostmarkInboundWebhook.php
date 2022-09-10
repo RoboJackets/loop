@@ -76,6 +76,12 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                 Str::substr($matches['envelopeId'], 20, 12)
             );
 
+            $envelope = DocuSignEnvelope::create([
+                'envelope_uuid' => $envelope_uuid,
+                'sofo_form_filename' => 'docusign/'.$envelope_uuid.'/'.$sofo_attachment['Name'],
+                'summary_filename' => 'docusign/'.$envelope_uuid.'/Summary.pdf',
+            ]);
+
             Storage::makeDirectory('docusign/'.$envelope_uuid);
 
             Storage::disk('local')
@@ -89,12 +95,6 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                     'docusign/'.$envelope_uuid.'/'.$sofo_attachment['Name'],
                     base64_decode($sofo_attachment['Content'], true)
                 );
-
-            $envelope = DocuSignEnvelope::create([
-                'envelope_uuid' => $envelope_uuid,
-                'sofo_form_filename' => 'docusign/'.$envelope_uuid.'/'.$sofo_attachment['Name'],
-                'summary_filename' => 'docusign/'.$envelope_uuid.'/Summary.pdf',
-            ]);
 
             $attachments->each(static function (array $value, int $key) use ($envelope): void {
                 if ($value['Name'] === 'Summary.pdf' || str_starts_with($value['Name'], 'SOFO')) {
