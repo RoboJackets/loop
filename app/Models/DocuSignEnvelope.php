@@ -24,7 +24,7 @@ use Laravel\Scout\Searchable;
  * @property int|null $pay_to_user_id
  * @property string $sofo_form_filename
  * @property string $summary_filename
- * @property string|null $sensible_extraction_id
+ * @property string|null $sensible_extraction_uuid
  * @property array|null $sensible_output
  * @property int|null $fiscal_year_id
  * @property int|null $replaces_docusign_envelope_id
@@ -55,7 +55,7 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereLost($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope wherePayToUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereReplacesDocusignEnvelopeId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereSensibleExtractionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereSensibleExtractionUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereSensibleOutput($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereSofoFormFilename($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereSubmittedAt($value)
