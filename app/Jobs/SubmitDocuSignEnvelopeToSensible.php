@@ -52,7 +52,7 @@ class SubmitDocuSignEnvelopeToSensible implements ShouldQueue, ShouldBeUnique
                     'content_type' => 'application/pdf',
                     'document_url' => URL::signedRoute(
                         'document.download',
-                        ['uuid' => $this->envelope->envelope_uuid],
+                        ['envelope' => $this->envelope],
                         now()->addDay()
                     ),
                     'webhook' => [

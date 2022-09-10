@@ -147,6 +147,14 @@ class DocuSignEnvelope extends Model
     }
 
     /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'envelope_uuid';
+    }
+
+    /**
      * Get the fiscal year for this envelope.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FiscalYear, self>

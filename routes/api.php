@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/v1/document/{envelope:envelope_uuid}', DocumentDownloadController::class)
+Route::get('/v1/document/{envelope}', DocumentDownloadController::class)
     ->name('document.download')
     ->middleware(['signed']);
 
