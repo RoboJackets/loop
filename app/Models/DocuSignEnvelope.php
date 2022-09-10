@@ -98,7 +98,7 @@ class DocuSignEnvelope extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'envelope_id',
+        'envelope_uuid',
         'sofo_form_filename',
         'summary_filename',
     ];
