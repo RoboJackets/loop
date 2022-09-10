@@ -36,7 +36,6 @@ class SubmitDocuSignEnvelopeToSensible implements ShouldQueue, ShouldBeUnique
     {
         $client = new Client(
             [
-                'base_uri' => config('services.sensible.base_uri'),
                 'headers' => [
                     'User-Agent' => 'RoboJackets Loop on '.config('app.url'),
                     'Authorization' => 'Bearer '.config('services.sensible.token'),
@@ -47,7 +46,7 @@ class SubmitDocuSignEnvelopeToSensible implements ShouldQueue, ShouldBeUnique
         );
 
         $client->post(
-            'v0/extract_from_url/'.config('services.sensible.type'),
+            config('services.sensible.url'),
             [
                 'json' => [
                     'content_type' => 'application/pdf',

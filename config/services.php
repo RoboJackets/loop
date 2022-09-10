@@ -34,9 +34,8 @@ return [
     ],
 
     'sensible' => [
-        'type' => env('SENSIBLE_TYPE'),
+        'url' => env('SENSIBLE_URL'),
         'token' => env('SENSIBLE_TOKEN'),
         'environment' => env('SENSIBLE_ENVIRONMENT'),
-        'base_uri' => env('SENSIBLE_BASE_URI', 'https://api.sensible.so'),
     ],
 ];
