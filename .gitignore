@@ -16,3 +16,5 @@ yarn-error.log
 /.vscode
 /lang/vendor/
 /public/vendor/
+/.phpstorm.meta.php
+/_ide_helper.php

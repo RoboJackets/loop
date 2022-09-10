@@ -28,5 +28,21 @@
                 <directory name="app/Nova" />
             </errorLevel>
         </UndefinedMagicMethod>
+        <LessSpecificImplementedReturnType>
+            <errorLevel type="suppress">
+                <directory name="app/Models" />
+            </errorLevel>
+        </LessSpecificImplementedReturnType>
+        <ImplementedReturnTypeMismatch>
+            <errorLevel type="suppress">
+                <directory name="app/Models" />
+            </errorLevel>
+        </ImplementedReturnTypeMismatch>
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <file name="app/Exceptions/Handler.php" />
+                <file name="app/Providers/NovaServiceProvider.php" />
+            </errorLevel>
+        </UndefinedClass>
     </issueHandlers>
 </psalm>

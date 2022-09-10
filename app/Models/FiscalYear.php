@@ -8,6 +8,27 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * App\Models\FiscalYear
+ *
+ * @property int $id
+ * @property int $ending_year
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DocuSignEnvelope> $envelopes
+ * @property-read int|null $envelopes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\FundingAllocation> $fundingAllocations
+ * @property-read int|null $funding_allocations_count
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear query()
+ * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear whereEndingYear($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear whereUpdatedAt($value)
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ */
 class FiscalYear extends Model
 {
     /**
