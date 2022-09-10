@@ -58,7 +58,10 @@ class Attachment extends Resource
                     DocuSignEnvelope::class,
                 ]),
 
-            Text::make('Filename')
+            Text::make('Filename', static function (string $filename): string {
+                $array = explode('/', $filename);
+                return end($array);
+            })
                 ->onlyOnIndex(),
 
             File::make('File', 'filename')
