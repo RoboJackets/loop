@@ -80,6 +80,15 @@ class FundingAllocation extends Model
     ];
 
     /**
+     * The attributes that Nova might think can be used for filtering, but actually can't.
+     *
+     * @var array<string>
+     */
+    public array $do_not_filter_on = [
+        'funding_allocation_line_id',
+    ];
+
+    /**
      * Get the fiscal year for this funding allocation.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FiscalYear, \App\Models\FundingAllocation>
