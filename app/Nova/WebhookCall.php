@@ -4,29 +4,29 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 
 /**
- * A Nova resource for attachments.
+ * A Nova resource for webhook calls.
  *
- * @extends \App\Nova\Resource<\App\Models\Attachment>
+ * @extends \App\Nova\Resource<\Spatie\WebhookClient\Models\WebhookCall>
  *
  * @phan-suppress PhanUnreferencedClass
  */
-class Attachment extends Resource
+class WebhookCall extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Attachment::class;
+    public static $model = \Spatie\WebhookClient\Models\WebhookCall::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -46,39 +46,38 @@ class Attachment extends Resource
 
     /**
      * Get the fields displayed by the resource.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @return array
      */
     public function fields(NovaRequest $request): array
     {
         return [
-            ID::make()
-                ->sortable(),
+            ID::make(),
 
-            MorphTo::make('Attachable')
-                ->types([
-                    DocuSignEnvelope::class,
-                ]),
+            Text::make('Name'),
 
-            Text::make('Filename')
-                ->displayUsing(static function (string $filename): string {
-                    $array = explode('/', $filename);
+            URL::make('URL'),
 
-                    return end($array);
-                })
-                ->onlyOnIndex(),
+            Code::make('Payload')
+                ->json(),
 
-            File::make('File', 'filename')
-                ->disk('local'),
+            Code::make('Headers')
+                ->json(),
 
-            Panel::make('Timestamps', [
-                DateTime::make('Created', 'created_at')
-                    ->onlyOnDetail(),
+            Text::make('Exception')
+                ->onlyOnDetail(),
 
-                DateTime::make('Last Updated', 'updated_at')
-                    ->onlyOnDetail(),
+            new Panel(
+                'Timestamps',
+                [
+                    DateTime::make('Created', 'created_at')
+                        ->onlyOnDetail(),
 
-                DateTime::make('Deleted', 'deleted_at')
-                    ->onlyOnDetail(),
-            ]),
+                    DateTime::make('Last Updated', 'updated_at')
+                        ->onlyOnDetail(),
+                ]
+            ),
         ];
     }
 

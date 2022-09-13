@@ -33,4 +33,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'sensible' => [
+        'url' => env('SENSIBLE_URL'),
+        'token' => env('SENSIBLE_TOKEN'),
+        'environment' => env('SENSIBLE_ENVIRONMENT'),
+    ],
 ];

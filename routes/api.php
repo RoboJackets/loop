@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\DocumentDownloadController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -12,3 +15,12 @@ declare(strict_types=1);
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('/v1/document/{envelope}', DocumentDownloadController::class)
+    ->name('document.download')
+    ->middleware(['signed']);
+
+Route::webhooks('/v1/postmark/inbound', 'postmark-inbound');
+
+Route::webhooks('/v1/sensible', 'sensible')
+    ->middleware(['signed']);

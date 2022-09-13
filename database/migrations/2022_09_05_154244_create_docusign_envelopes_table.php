@@ -18,7 +18,7 @@ return new class extends Migration
     {
         Schema::create('docusign_envelopes', static function (Blueprint $table): void {
             $table->id();
-            $table->string('envelope_id')->unique();
+            $table->uuid('envelope_uuid')->unique();
             $table->string('type')->nullable();
             $table->string('supplier_name')->nullable();
             $table->string('description')->nullable();
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class, 'pay_to_user_id')->nullable()->constrained('users');
             $table->string('sofo_form_filename')->unique();
             $table->string('summary_filename')->unique();
-            $table->string('sensible_extraction_id')->nullable()->unique();
+            $table->uuid('sensible_extraction_uuid')->nullable()->unique();
             $table->json('sensible_output')->nullable();
             $table->foreignIdFor(FiscalYear::class)->nullable()->constrained();
             $table->foreignIdFor(DocuSignEnvelope::class, 'replaces_docusign_envelope_id')

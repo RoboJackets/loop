@@ -16,7 +16,8 @@ class DocuSignFundingSourceFields
     public function __invoke(): array
     {
         return [
-            Currency::make('This Envelope', 'amount'),
+            Currency::make('This Envelope', 'amount')
+                ->rules('required'),
         ];
     }
 }

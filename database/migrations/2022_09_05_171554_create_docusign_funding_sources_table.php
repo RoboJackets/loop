@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(DocuSignEnvelope::class)->constrained();
             $table->foreignIdFor(FundingAllocationLine::class)->constrained();
-            $table->decimal('amount', 8, 2)->nullable();
+            $table->decimal('amount', 8, 2);
             $table->timestamps();
         });
     }

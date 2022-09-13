@@ -60,7 +60,8 @@ class FundingAllocation extends Resource
             Select::make('Type')
                 ->sortable()
                 ->options(\App\Models\FundingAllocation::$types)
-                ->displayUsingLabels(),
+                ->displayUsingLabels()
+                ->rules('required'),
 
             Text::make('SGA Bill Number')
                 ->sortable()

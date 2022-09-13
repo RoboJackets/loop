@@ -91,7 +91,7 @@ class DocuSignEnvelope extends Resource
             ID::make()
                 ->sortable(),
 
-            Text::make('DocuSign Envelope ID', 'envelope_id')
+            Text::make('DocuSign Envelope UUID', 'envelope_uuid')
                 ->onlyOnDetail(),
 
             BelongsTo::make('Fiscal Year')

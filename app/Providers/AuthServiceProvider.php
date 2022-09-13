@@ -18,9 +18,11 @@ use App\Policies\FundingAllocationPolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\RolePolicy;
 use App\Policies\UserPolicy;
+use App\Policies\WebhookCallPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\WebhookClient\Models\WebhookCall;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -38,6 +40,7 @@ class AuthServiceProvider extends ServiceProvider
         Permission::class => PermissionPolicy::class,
         Role::class => RolePolicy::class,
         User::class => UserPolicy::class,
+        WebhookCall::class => WebhookCallPolicy::class,
     ];
 
     /**

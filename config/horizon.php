@@ -172,7 +172,7 @@ return [
         'production' => [
             'supervisor' => [
                 'connection' => 'redis',
-                'queue' => ['default'],
+                'queue' => ['default', 'postmark', 'sensible'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,
@@ -183,7 +183,7 @@ return [
         'test' => [
             'supervisor' => [
                 'connection' => 'redis',
-                'queue' => ['default'],
+                'queue' => ['default', 'postmark', 'sensible'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,
