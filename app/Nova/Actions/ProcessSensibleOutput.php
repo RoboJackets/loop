@@ -51,7 +51,7 @@ class ProcessSensibleOutput extends Action
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
-        Job::dispatch($models->first);
+        Job::dispatch($models->first());
 
         return Action::message('Job queued!');
     }
