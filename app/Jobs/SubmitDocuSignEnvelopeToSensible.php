@@ -33,7 +33,6 @@ class SubmitDocuSignEnvelopeToSensible implements ShouldQueue, ShouldBeUnique
      * Execute the job.
      *
      * @phan-suppress PhanTypeArraySuspiciousNullable
-     * @phan-suppress PhanTypeMismatchDimFetch
      */
     public function handle(): void
     {
@@ -66,7 +65,7 @@ class SubmitDocuSignEnvelopeToSensible implements ShouldQueue, ShouldBeUnique
             ]
         );
 
-        $json = json_decode($response->getBody()->getContents());
+        $json = json_decode($response->getBody()->getContents(), true);
 
         $this->envelope->sensible_extraction_uuid = $json['id'];
         $this->envelope->save();
