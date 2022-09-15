@@ -89,7 +89,7 @@ class ProcessSensibleOutput implements ShouldQueue
             $envelope->submitted_at = self::parseDateTimeFromDocuSignFormat($datetime);
         }
 
-        if ($envelope->submitted_at === null) {
+        if ($datetime !== null && $envelope->submitted_at === null) {
             $this->validation_errors[] = 'Sensible returned a submission timestamp, but it could not be parsed.';
         } else {
             try {
