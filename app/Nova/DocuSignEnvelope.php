@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\ProcessSensibleOutput;
+use App\Nova\Actions\RunSensibleExtraction;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -16,6 +18,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 
@@ -132,7 +135,11 @@ class DocuSignEnvelope extends Resource
             MorphMany::make('Attachments', 'attachments', Attachment::class),
 
             Panel::make('Sensible', [
-                Text::make('Extraction ID', 'sensible_extraction_id')
+                URL::make('View in Sensible', 'sensible_extraction_url')
+                    ->onlyOnDetail()
+                    ->canSee(static fn (Request $request): bool => $request->user()->can('access-sensible')),
+
+                Text::make('Extraction ID', 'sensible_extraction_uuid')
                     ->onlyOnDetail()
                     ->canSee(static fn (Request $request): bool => $request->user()->can('access-sensible')),
 
@@ -204,6 +211,9 @@ class DocuSignEnvelope extends Resource
      */
     public function actions(NovaRequest $request): array
     {
-        return [];
+        return [
+            new ProcessSensibleOutput(),
+            new RunSensibleExtraction(),
+        ];
     }
 }

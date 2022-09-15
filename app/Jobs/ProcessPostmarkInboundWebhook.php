@@ -41,7 +41,7 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
             return;
         }
 
-        if (str_starts_with($subject, 'Completed: ')) {
+        if (str_starts_with($subject, 'Completed: ') || str_starts_with($subject, 'Fwd: Completed: ')) {
             /**
              * Type hint for static analyzers.
              *

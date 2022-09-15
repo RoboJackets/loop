@@ -55,7 +55,6 @@ class CreateFundingAllocationLinesFromJacketPages extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields  $fields
      * @param  \Illuminate\Support\Collection<int,\App\Models\FundingAllocation>  $models
      * @return array<string,string>
      *
@@ -88,7 +87,7 @@ class CreateFundingAllocationLinesFromJacketPages extends Action
                 );
             });
 
-        return Action::message('Success!');
+        return Action::message('Successfully created lines!');
     }
 
     /**
