@@ -7,7 +7,7 @@ namespace App\Jobs;
 use App\Models\DocuSignEnvelope;
 use App\Models\FiscalYear;
 use App\Models\User;
-use DateTimeImmutable;
+use Carbon\CarbonImmutable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -83,14 +83,16 @@ class ProcessSensibleOutput implements ShouldQueue
             }
         }
 
-        $datetime = $this->getValueOrAddValidationError('officer_signed_at');
+        $signed_at_string = $this->getValueOrAddValidationError('officer_signed_at');
 
-        if ($datetime !== null) {
-            $envelope->submitted_at = self::parseDateTimeFromDocuSignFormat($datetime);
+        if ($signed_at_string !== null) {
+            $envelope->submitted_at = self::parseDateTimeFromDocuSignFormat($signed_at_string);
         }
 
-        if ($datetime !== null && $envelope->submitted_at === null) {
-            $this->validation_errors[] = 'Sensible returned a submission timestamp, but it could not be parsed.';
+        if ($envelope->submitted_at === null) {
+            if ($signed_at_string !== null) {
+                $this->validation_errors[] = 'Sensible returned a submission timestamp, but it could not be parsed.';
+            }
         } else {
             try {
                 $envelope->fiscal_year_id = FiscalYear::fromDate($envelope->submitted_at)->id;
@@ -105,9 +107,9 @@ class ProcessSensibleOutput implements ShouldQueue
         Log::info(self::class.' '.json_encode($this->validation_errors));
     }
 
-    private static function parseDateTimeFromDocuSignFormat(string $timestamp): ?DateTimeImmutable
+    private static function parseDateTimeFromDocuSignFormat(string $timestamp): ?CarbonImmutable
     {
-        $datetime = DateTimeImmutable::createFromFormat('!m/d/Y \| h:i a e', $timestamp);
+        $datetime = CarbonImmutable::createFromFormat('!m/d/Y \| h:i a e', $timestamp);
 
         return $datetime === false ? null : $datetime;
     }
@@ -123,7 +125,7 @@ class ProcessSensibleOutput implements ShouldQueue
     private function getValueOrAddValidationError(string $field_name): string|float|null
     {
         $fields = $this->envelope->sensible_output['parsed_document'];
-        if (array_key_exists($field_name, $fields[$field_name]) && $fields[$field_name] !== null) {
+        if (array_key_exists($field_name, $fields) && $fields[$field_name] !== null) {
             return $fields[$field_name]['value'];
         } else {
             if (! array_key_exists($field_name, $fields)) {
