@@ -123,8 +123,8 @@ class ProcessSensibleOutput implements ShouldQueue
     private function getValueOrAddValidationError(string $field_name): string|float|null
     {
         $fields = $this->envelope->sensible_output['parsed_document'];
-        if (array_key_exists($field_name, $fields['parsed_document']) && $fields[$field_name] !== null) {
-            return $fields['description']['value'];
+        if (array_key_exists($field_name, $fields[$field_name]) && $fields[$field_name] !== null) {
+            return $fields[$field_name]['value'];
         } else {
             if (! array_key_exists($field_name, $fields)) {
                 $this->validation_errors[] = 'Sensible did not return a \''.$field_name.'\' field.';
