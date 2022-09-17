@@ -17,7 +17,7 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
 {
     private const ENVELOPE_ID_REGEX = '/Envelope Id: (?P<envelopeId>[A-Z0-9]{32})/';
 
-    private const FILENAME_SANITIZATION_REGEX = '/(?P<filename>^[a-zA-Z0-9 .-\#]+$)/';
+    private const FILENAME_SANITIZATION_REGEX = '/(?P<filename>^[a-zA-Z0-9 .\#-]+$)/';
 
     /**
      * The queue this job will run on.
