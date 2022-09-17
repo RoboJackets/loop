@@ -120,7 +120,7 @@ class DocuSignEnvelope extends Resource
 
             Currency::make(
                 'Funding Sources Total',
-                fn (): string => $this->fundingSources()->sum('docusign_funding_sources.amount')
+                fn (): string|int => $this->fundingSources()->sum('docusign_funding_sources.amount')
             )
                 ->onlyOnDetail(),
 
