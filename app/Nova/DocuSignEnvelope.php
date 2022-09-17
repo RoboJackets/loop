@@ -118,6 +118,12 @@ class DocuSignEnvelope extends Resource
             Currency::make('Amount')
                 ->sortable(),
 
+            Currency::make(
+                'Funding Sources Total',
+                fn (): string|int => $this->fundingSources()->sum('docusign_funding_sources.amount')
+            )
+                ->onlyOnDetail(),
+
             BelongsToMany::make('Funding Sources', 'fundingSources', FundingAllocationLine::class)
                 ->fields(new DocuSignFundingSourceFields()),
 
@@ -151,11 +157,11 @@ class DocuSignEnvelope extends Resource
 
             Panel::make('Tracking', [
                 BelongsTo::make('Replaces Envelope', 'replacesEnvelope', self::class)
-                    ->sortable()
+                    ->onlyOnDetail()
                     ->nullable(),
 
                 Boolean::make('Lost')
-                    ->sortable(),
+                    ->onlyOnDetail(),
             ]),
 
             Panel::make('Timestamps', [

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource as NovaResource;
@@ -62,5 +63,30 @@ abstract class Resource extends NovaResource
         }
 
         return $query;
+    }
+
+    public static function queryParamFromReferrer(Request $request, string $param_name): ?string
+    {
+        $header_value = $request->header('referer');
+
+        if ($header_value === null) {
+            return null;
+        }
+
+        $query_string = parse_url($header_value, PHP_URL_QUERY);
+
+        if ($query_string === false) {
+            return null;
+        }
+
+        $query_params = [];
+
+        parse_str($query_string, $query_params);
+
+        if (! array_key_exists($param_name, $query_params)) {
+            return null;
+        }
+
+        return $query_params[$param_name];
     }
 }

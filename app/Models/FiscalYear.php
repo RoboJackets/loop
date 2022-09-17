@@ -53,6 +53,11 @@ class FiscalYear extends Model
 
     public static function fromDate(Carbon $date): self
     {
-        return self::where('ending_year', $date->year + ($date->month < 7 ? 0 : 1))->sole();
+        return self::where('ending_year', self::intFromDate($date))->sole();
+    }
+
+    public static function intFromDate(Carbon $date): int
+    {
+        return $date->year + ($date->month < 7 ? 0 : 1);
     }
 }

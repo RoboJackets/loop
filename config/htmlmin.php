@@ -67,6 +67,7 @@ return [
         'resources/views/vendor/html',
         'resources/views/vendor/notifications',
         'resources/views/vendor/markdown',
+        'resources/views/mail',
     ],
 
 ];
