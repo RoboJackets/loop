@@ -56,5 +56,10 @@
                 <file name="app/Jobs/ProcessSensibleOutput.php"/>
             </errorLevel>
         </InvalidPropertyAssignmentValue>
+        <UndefinedMagicPropertyFetch>
+            <errorLevel type="suppress">
+                <directory name="app/Nova"/>
+            </errorLevel>
+        </UndefinedMagicPropertyFetch>
     </issueHandlers>
 </psalm>

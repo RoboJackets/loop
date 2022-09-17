@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Currency;
@@ -57,11 +58,13 @@ class FundingAllocationLine extends Resource
                 ->withoutTrashed()
                 ->searchable()
                 ->sortable()
-                ->rules('required'),
+                ->rules('required')
+                ->default(static fn (Request $request): ?int => $request->funding_allocation_id),
 
             Number::make('Line Number')
                 ->sortable()
-                ->rules('required', 'integer', 'min:1', 'max:65535'),
+                ->rules('required', 'integer', 'min:1', 'max:65535')
+                ->default(static fn (Request $request): ?int => $request->line_number),
 
             Text::make('Description')
                 ->rules('required'),

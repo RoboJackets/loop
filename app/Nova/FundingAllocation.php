@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Nova\Actions\CreateFundingAllocationLinesFromJacketPages;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
@@ -55,13 +56,15 @@ class FundingAllocation extends Resource
         return [
             BelongsTo::make('Fiscal Year')
                 ->sortable()
-                ->rules('required'),
+                ->rules('required')
+                ->default(static fn (Request $request): ?int => $request->fiscal_year_id),
 
             Select::make('Type')
                 ->sortable()
                 ->options(\App\Models\FundingAllocation::$types)
                 ->displayUsingLabels()
-                ->rules('required'),
+                ->rules('required')
+                ->default(static fn (Request $request): ?string => $request->type),
 
             Text::make('SGA Bill Number')
                 ->sortable()
@@ -71,7 +74,8 @@ class FundingAllocation extends Resource
                     'prohibited_unless:type,sga_bill',
                     'regex:/^\\d{2}J\\d{3}$/',
                     'nullable'
-                ),
+                )
+                ->default(static fn (Request $request): ?string => $request->sga_bill_number),
 
             HasMany::make('Funding Allocation Lines'),
 

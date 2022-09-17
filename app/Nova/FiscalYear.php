@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;
@@ -51,7 +52,8 @@ class FiscalYear extends Resource
             Number::make('Ending Year')
                 ->rules('required', 'integer', 'digits:4', 'min:2010', 'max:2030')
                 ->creationRules('unique:fiscal_years,ending_year')
-                ->updateRules('unique:fiscal_years,ending_year,{{resourceId}}'),
+                ->updateRules('unique:fiscal_years,ending_year,{{resourceId}}')
+                ->default(static fn (Request $request): ?int => $request->ending_year),
 
             HasMany::make('Funding Allocations'),
 

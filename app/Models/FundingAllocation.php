@@ -24,6 +24,7 @@ use Laravel\Scout\Searchable;
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\FundingAllocationLine> $fundingAllocationLines
  * @property-read int|null $funding_allocation_lines_count
  * @property-read string $name
+ * @property-read string|null $type_display_name
  *
  * @method static \Illuminate\Database\Eloquent\Builder|FundingAllocation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FundingAllocation newQuery()
@@ -115,6 +116,14 @@ class FundingAllocation extends Model
     {
         return self::$types[$this->type].' '.
             ($this->type === 'sga_bill' ? $this->sga_bill_number : 'FY'.$this->fiscalYear->ending_year);
+    }
+
+    /**
+     * Get the type display name for this funding allocation.
+     */
+    public function getTypeDisplayNameAttribute(): ?string
+    {
+        return $this->type === null ? null : self::$types[$this->type];
     }
 
     /**
