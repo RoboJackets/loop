@@ -37,4 +37,8 @@ return [
         'url' => env('SENSIBLE_URL'),
         'token' => env('SENSIBLE_TOKEN'),
     ],
+
+    'treasurer_email_address' => env('TREASURER_EMAIL_ADDRESS'),
+
+    'developer_email_address' => env('DEVELOPER_EMAIL_ADDRESS'),
 ];

@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Mail\DocuSignEnvelopeProcessed;
 use App\Models\DocuSignEnvelope;
 use App\Models\DocuSignFundingSource;
 use App\Models\FiscalYear;
@@ -20,7 +21,7 @@ use Illuminate\Database\MultipleRecordsFoundException;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ProcessSensibleOutput implements ShouldQueue
 {
@@ -204,7 +205,7 @@ class ProcessSensibleOutput implements ShouldQueue
             $this->attachSingleLineFundingSources('foundation');
         }
 
-        Log::info(self::class.' '.json_encode($this->validation_errors));
+        Mail::send(new DocuSignEnvelopeProcessed($this->envelope, $this->validation_errors));
     }
 
     private static function parseDateTimeFromDocuSignFormat(string $timestamp): ?CarbonImmutable

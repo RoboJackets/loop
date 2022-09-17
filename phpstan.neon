@@ -13,6 +13,7 @@ parameters:
   ignoreErrors:
     - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$[a-zA-Z_]+\.#'
     - '#Access to an undefined property Laravel\\Nova\\Fields\\ActionFields::\$[a-zA-Z_]+\.#'
+    - '#Anonymous function should return float but returns mixed\.#'
     - '#Anonymous function should return int\|null but returns mixed\.#'
     - '#Anonymous function should return string but returns mixed\.#'
     - '#Anonymous function should return string\|null but returns mixed\.#'
@@ -29,6 +30,8 @@ parameters:
     - '#Method App\\Nova\\[a-zA-Z0-9]+::fields\(\) return type has no value type specified in iterable type array\.#'
     - '#Offset ''[a-zA-Z]+'' does not exist on array\|null\.#'
     - '#Offset ''[a-zA-Z_]+'' does not exist on array\|null\.#'
+    - '#Parameter \#1 ...\$addresses of method Symfony\\Component\\Mime\\Email::replyTo\(\) expects string\|Symfony\\Component\\Mime\\Address, mixed given\.#'
+    - '#Parameter \#1 \$address of method Illuminate\\Mail\\Mailable::[a-z]{2}\(\) expects array\|object\|string, mixed given\.#'
     - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),mixed>::each\(\) expects callable\(mixed, \(int\|string\)\): mixed, Closure\(string, int\): void given\.#'
     - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),string>::map\(\) expects callable\(string, \(int\|string\)\): array, Closure\(array, string\): array given\.#'
     - '#Parameter \#1 \$content of method Smalot\\PdfParser\\Parser::parseContent\(\) expects string, string\|false given\.#'
