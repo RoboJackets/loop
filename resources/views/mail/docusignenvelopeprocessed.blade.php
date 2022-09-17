@@ -2,7 +2,7 @@ Loop completed processing envelope {{ $envelope->id }} submitted at {{ $envelope
 
 @forelse ($validation_errors as $error)
 @if($loop->first)
-The following problems were detected during processing.
+The following problems were detected during processing:
 @endif
 - {!! $error !!}
 @empty
