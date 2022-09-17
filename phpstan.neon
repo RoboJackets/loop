@@ -13,7 +13,6 @@ parameters:
   ignoreErrors:
     - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$[a-zA-Z_]+\.#'
     - '#Access to an undefined property Laravel\\Nova\\Fields\\ActionFields::\$[a-zA-Z_]+\.#'
-    - '#Anonymous function should return float but returns mixed\.#'
     - '#Anonymous function should return string but returns mixed\.#'
     - '#Call to an undefined static method Illuminate\\Support\\Facades\\Route::webhooks\(\)\.#'
     - '#Cannot access offset ''[a-zA-Z_]+'' on mixed\.#'
