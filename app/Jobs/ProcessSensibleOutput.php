@@ -106,7 +106,8 @@ class ProcessSensibleOutput implements ShouldQueue
             try {
                 $envelope->fiscal_year_id = FiscalYear::fromDate($envelope->submitted_at)->id;
             } catch (ModelNotFoundException) {
-                $this->validation_errors[] = 'This fiscal year does not exist in Loop. Create it at '
+                $this->validation_errors[] = 'Fiscal year '.FiscalYear::intFromDate($envelope->submitted_at)
+                    .' does not exist in Loop. Create it at '
                     .route(
                         'nova.pages.create',
                         [
