@@ -130,7 +130,7 @@ class ProcessSensibleOutput implements ShouldQueue
                         'resourceId' => $envelope->id,
                     ]
                 );
-        } else {
+        } elseif ($envelope->fiscal_year_id !== null) {
             if ($this->anyFieldSet(
                 'sga_budget_one_line_number',
                 'sga_budget_one_amount',
