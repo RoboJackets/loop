@@ -59,12 +59,19 @@ class FundingAllocationLine extends Resource
                 ->searchable()
                 ->sortable()
                 ->rules('required')
-                ->default(static fn (Request $request): ?int => $request->funding_allocation_id),
+                ->default(
+                    static fn (Request $request): ?string => self::queryParamFromReferrer(
+                        $request,
+                        'funding_allocation_id'
+                    )
+                ),
 
             Number::make('Line Number')
                 ->sortable()
                 ->rules('required', 'integer', 'min:1', 'max:65535')
-                ->default(static fn (Request $request): ?int => $request->line_number),
+                ->default(
+                    static fn (Request $request): ?string => self::queryParamFromReferrer($request, 'line_number')
+                ),
 
             Text::make('Description')
                 ->rules('required'),

@@ -57,14 +57,18 @@ class FundingAllocation extends Resource
             BelongsTo::make('Fiscal Year')
                 ->sortable()
                 ->rules('required')
-                ->default(static fn (Request $request): ?int => $request->fiscal_year_id),
+                ->default(
+                    static fn (Request $request): ?string => self::queryParamFromReferrer($request, 'fiscal_year_id')
+                ),
 
             Select::make('Type')
                 ->sortable()
                 ->options(\App\Models\FundingAllocation::$types)
                 ->displayUsingLabels()
                 ->rules('required')
-                ->default(static fn (Request $request): ?string => $request->type),
+                ->default(
+                    static fn (Request $request): ?string => self::queryParamFromReferrer($request, 'type')
+                ),
 
             Text::make('SGA Bill Number')
                 ->sortable()
@@ -75,7 +79,9 @@ class FundingAllocation extends Resource
                     'regex:/^\\d{2}J\\d{3}$/',
                     'nullable'
                 )
-                ->default(static fn (Request $request): ?string => $request->sga_bill_number),
+                ->default(
+                    static fn (Request $request): ?string => self::queryParamFromReferrer($request, 'sga_bill_number')
+                ),
 
             HasMany::make('Funding Allocation Lines'),
 

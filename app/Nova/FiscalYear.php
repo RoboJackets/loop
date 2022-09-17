@@ -53,7 +53,9 @@ class FiscalYear extends Resource
                 ->rules('required', 'integer', 'digits:4', 'min:2010', 'max:2030')
                 ->creationRules('unique:fiscal_years,ending_year')
                 ->updateRules('unique:fiscal_years,ending_year,{{resourceId}}')
-                ->default(static fn (Request $request): ?int => $request->ending_year),
+                ->default(
+                    static fn (Request $request): ?string => self::queryParamFromReferrer($request, 'ending_year')
+                ),
 
             HasMany::make('Funding Allocations'),
 
