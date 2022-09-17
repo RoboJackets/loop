@@ -139,6 +139,6 @@ class FundingAllocation extends Resource
     public function subtitle(): string
     {
         return $this->fundingAllocationLines()->count().' Lines | $'.
-            number_format($this->fundingAllocationLines()->sum('amount'), 2);
+            number_format(floatval($this->fundingAllocationLines()->sum('amount')), 2);
     }
 }

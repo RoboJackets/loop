@@ -37,6 +37,13 @@ class CreateFundingAllocationLinesFromJacketPages extends Action
     public $confirmButtonText = 'Create Lines';
 
     /**
+     * The text to be used for the action's confirmation text.
+     *
+     * @var string
+     */
+    public $confirmText = 'Paste the rows from the Final tab of the bill, without the headers.';
+
+    /**
      * Determine if the filter or action should be available for the given request.
      */
     public function authorizedToSee(Request $request): bool
