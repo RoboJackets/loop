@@ -21,6 +21,11 @@ return new class extends Migration
             $table->foreignIdFor(FundingAllocationLine::class)->constrained();
             $table->decimal('amount', 8, 2);
             $table->timestamps();
+
+            $table->unique(
+                ['docusign_envelope_id', 'funding_allocation_line_id'],
+                'envelope_id_allocation_line_id_unique'
+            );
         });
     }
 
