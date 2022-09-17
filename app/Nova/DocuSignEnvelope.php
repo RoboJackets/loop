@@ -118,7 +118,10 @@ class DocuSignEnvelope extends Resource
             Currency::make('Amount')
                 ->sortable(),
 
-            Currency::make('Funding Sources Total', fn (): float => $this->fundingSources()->sum('amount'))
+            Currency::make(
+                'Funding Sources Total',
+                fn (): float => $this->fundingSources()->sum('docusign_funding_sources.amount')
+            )
                 ->onlyOnDetail(),
 
             BelongsToMany::make('Funding Sources', 'fundingSources', FundingAllocationLine::class)
