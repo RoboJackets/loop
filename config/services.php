@@ -36,6 +36,5 @@ return [
     'sensible' => [
         'url' => env('SENSIBLE_URL'),
         'token' => env('SENSIBLE_TOKEN'),
-        'environment' => env('SENSIBLE_ENVIRONMENT'),
     ],
 ];

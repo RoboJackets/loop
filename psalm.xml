@@ -27,6 +27,7 @@
             <errorLevel type="suppress">
                 <directory name="app/Nova" />
                 <directory name="app/SignatureValidators" />
+                <directory name="app/Jobs" />
             </errorLevel>
         </UndefinedMagicMethod>
         <LessSpecificImplementedReturnType>
@@ -45,5 +46,15 @@
                 <file name="app/Providers/NovaServiceProvider.php" />
             </errorLevel>
         </UndefinedClass>
+        <InvalidScalarArgument>
+            <errorLevel type="suppress">
+                <file name="app/Jobs/ProcessSensibleOutput.php"/>
+            </errorLevel>
+        </InvalidScalarArgument>
+        <InvalidPropertyAssignmentValue>
+            <errorLevel type="suppress">
+                <file name="app/Jobs/ProcessSensibleOutput.php"/>
+            </errorLevel>
+        </InvalidPropertyAssignmentValue>
     </issueHandlers>
 </psalm>

@@ -40,6 +40,7 @@ use Laravel\Scout\Searchable;
  * @property-read int|null $funding_sources_count
  * @property-read \App\Models\User|null $payToUser
  * @property-read DocuSignEnvelope|null $replacesEnvelope
+ * @property-read string|null $sensible_extraction_url
  *
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope newQuery()
@@ -205,5 +206,17 @@ class DocuSignEnvelope extends Model
     public function attachments(): MorphMany
     {
         return $this->morphMany(Attachment::class, 'attachable');
+    }
+
+    /**
+     * Get the sensible_extraction_url attribute to show this envelope in the Sensible UI.
+     *
+     * @return ?string
+     */
+    public function getSensibleExtractionUrlAttribute(): ?string
+    {
+        return $this->sensible_extraction_uuid === null ?
+            null :
+            'https://app.sensible.so/extraction/?e='.$this->sensible_extraction_uuid;
     }
 }
