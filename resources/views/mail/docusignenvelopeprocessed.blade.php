@@ -4,7 +4,7 @@ Loop completed processing envelope {{ $envelope->id }} submitted at {{ $envelope
 @if($loop->first)
 The following problems were detected during processing.
 @endif
-- {{ $error }}
+- {!! $error !!}
 @empty
 No problems were detected.
 @endforelse
