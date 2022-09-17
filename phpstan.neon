@@ -34,7 +34,6 @@ parameters:
     - '#Parameter \#1 \$envelope of job class App\\Jobs\\[a-zA-Z]+ constructor expects App\\Models\\DocuSignEnvelope in App\\Jobs\\[a-zA-Z]+::dispatch(Sync)?\(\), App\\Models\\DocuSignEnvelope\|null given\.#'
     - '#Parameter \#1 \$haystack of function str_ends_with expects string, float\|string given\.#'
     - '#Parameter \#1 \$haystack of static method Illuminate\\Support\\Str::startsWith\(\) expects string, mixed given\.#'
-    - '#Parameter \#1 \$num of function number_format expects float, mixed given\.#'
     - '#Parameter \#1 \$timestamp of static method App\\Jobs\\ProcessSensibleOutput::parseDateTimeFromDocuSignFormat\(\) expects string, float\|string given\.#'
     - '#Parameter \#1 \$title of static method Illuminate\\Support\\Str::slug\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$uri of method GuzzleHttp\\Client::post\(\) expects Psr\\Http\\Message\\UriInterface\|string, mixed given\.#'
