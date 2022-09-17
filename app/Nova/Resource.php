@@ -75,7 +75,7 @@ abstract class Resource extends NovaResource
 
         $query_string = parse_url($header_value, PHP_URL_QUERY);
 
-        if ($query_string == false) {
+        if ($query_string === false) {
             return null;
         }
 
@@ -83,7 +83,7 @@ abstract class Resource extends NovaResource
 
         parse_str($query_string, $query_params);
 
-        if (!array_key_exists($param_name, $query_params)) {
+        if (! array_key_exists($param_name, $query_params)) {
             return null;
         }
 
