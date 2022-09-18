@@ -32,6 +32,8 @@ class ProcessSensibleOutput implements ShouldQueue
 
     private const UPN_REGEX = '/(?P<uid>[a-z]+[0-9]+)@gatech\.edu/';
 
+    private const PURCHASE_ORDER_NUMBER_REGEX = '/[A-Za-z]{2,3}-\d{4}-PO-\d+/';
+
     private const FUNDING_NUMBER_NAMES = ['one', 'two', 'three'];
 
     /**
@@ -67,6 +69,10 @@ class ProcessSensibleOutput implements ShouldQueue
 
         $envelope->description = $this->getValueOrAddValidationError('description');
 
+        if (preg_match(self::UPN_REGEX, $envelope->description) !== 1) {
+            $this->validation_errors[] = 'Description does not include a RoboJackets purchase order number';
+        }
+
         $envelope->amount = $this->getValueOrAddValidationError('total_amount');
 
         if ($envelope->type === 'purchase_reimbursement' || $envelope->type === 'travel_reimbursement') {
@@ -84,7 +90,7 @@ class ProcessSensibleOutput implements ShouldQueue
                                 $envelope->pay_to_user_id = User::whereUsername($matches['uid'])->sole()->id;
                             } catch (ModelNotFoundException) {
                                 $this->validation_errors[] =
-                                    'Could not determine user to associate with reimbursement.';
+                                    'Could not determine user to associate with reimbursement';
                             }
                         }
                     }
@@ -100,7 +106,7 @@ class ProcessSensibleOutput implements ShouldQueue
 
         if ($envelope->submitted_at === null) {
             if ($signed_at_string !== null) {
-                $this->validation_errors[] = 'Sensible returned a submission timestamp, but it could not be parsed.';
+                $this->validation_errors[] = 'Sensible returned a submission timestamp, but it could not be parsed';
             }
         } else {
             try {
@@ -181,8 +187,8 @@ class ProcessSensibleOutput implements ShouldQueue
                             ->whereSgaBillNumber($bill_number)
                             ->sole();
                     } catch (ModelNotFoundException) {
-                        $this->validation_errors[] = 'This form references SGA bill \''.$bill_number
-                            .'\', but this bill does not exist in Loop. Create it at '
+                        $this->validation_errors[] = 'This form references SGA bill '.$bill_number
+                            .', but this bill does not exist in Loop. Create it at '
                             .route(
                                 'nova.pages.create',
                                 [
@@ -198,12 +204,16 @@ class ProcessSensibleOutput implements ShouldQueue
                     }
                 } else {
                     $this->validation_errors[] = 'This form references SGA bill lines, but Sensible did not return a '
-                        .'bill number.';
+                        .'bill number';
                 }
             }
 
             $this->attachSingleLineFundingSources('agency');
             $this->attachSingleLineFundingSources('foundation');
+
+            if ($envelope->amount !== floatval($envelope->fundingSources()->sum('docusign_funding_sources.amount'))) {
+                $this->validation_errors[] = 'Total amount does not match sum of funding sources';
+            }
         }
 
         Mail::send(new DocuSignEnvelopeProcessed($this->envelope, $this->validation_errors));
@@ -228,9 +238,9 @@ class ProcessSensibleOutput implements ShouldQueue
             return $fields[$field_name]['value'];
         } else {
             if (! array_key_exists($field_name, $fields)) {
-                $this->validation_errors[] = 'Sensible did not return a \''.$field_name.'\' field.';
+                $this->validation_errors[] = 'Sensible did not return a \''.$field_name.'\' field';
             } elseif ($fields[$field_name] === null) {
-                $this->validation_errors[] = 'Sensible could not extract the \''.$field_name.'\' field.';
+                $this->validation_errors[] = 'Sensible could not extract the \''.$field_name.'\' field';
             }
         }
 
@@ -363,7 +373,7 @@ class ProcessSensibleOutput implements ShouldQueue
                         );
                     } else {
                         $this->validation_errors[] = 'Attempted to attach a funding source from '.$display_name
-                            .', but the amount was null.';
+                            .', but the amount was null';
                     }
                 }
             }
