@@ -55,6 +55,7 @@ class ProcessSensibleOutput implements ShouldQueue
      * Execute the job.
      *
      * @phan-suppress PhanTypeArraySuspiciousNullable
+     * @phan-suppress PhanPossiblyNullTypeArgumentInternal
      */
     public function handle(): void
     {
