@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Nova\Actions\CreateFundingAllocationLinesFromJacketPages;
+use App\Nova\Actions\CreateFundingAllocationLinesFromRoboJacketsLedger;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
@@ -140,6 +141,7 @@ class FundingAllocation extends Resource
     {
         return [
             new CreateFundingAllocationLinesFromJacketPages(),
+            new CreateFundingAllocationLinesFromRoboJacketsLedger(),
         ];
     }
 
