@@ -80,6 +80,12 @@ class FundingAllocationLine extends Resource
                 ->sortable()
                 ->rules('required'),
 
+            Currency::make(
+                'Spent Amount',
+                fn (): string|int => $this->envelopes()->sum('docusign_funding_sources.amount')
+            )
+                ->onlyOnDetail(),
+
             BelongsToMany::make('DocuSign Envelopes', 'envelopes', DocuSignEnvelope::class)
                 ->fields(new DocuSignFundingSourceFields()),
 
