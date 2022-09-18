@@ -123,7 +123,7 @@ class DocuSignEnvelope extends Model
      * @var array<string>
      */
     public array $searchable_attributes = [
-        'envelope_id',
+        'envelope_uuid',
         'type',
         'description',
         'supplier_name',
