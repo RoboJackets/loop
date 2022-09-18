@@ -68,6 +68,16 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                 throw new \Exception('Could not extract envelope ID');
             }
 
+            $attachments->each(static function (array $value, int $key): void {
+                if ($value['Name'] === 'Summary.pdf' || str_starts_with($value['Name'], 'SOFO')) {
+                    return;
+                }
+
+                if (preg_match(self::FILENAME_SANITIZATION_REGEX, $value['Name']) !== 1) {
+                    throw new \Exception('Filename does not match regex');
+                }
+            });
+
             $envelope_uuid = Str::lower(
                 Str::substr($matches['envelopeId'], 0, 8).'-'.
                 Str::substr($matches['envelopeId'], 8, 4).'-'.
@@ -75,6 +85,10 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                 Str::substr($matches['envelopeId'], 16, 4).'-'.
                 Str::substr($matches['envelopeId'], 20, 12)
             );
+
+            if (DocuSignEnvelope::whereEnvelopeUuid($envelope_uuid)->exists()) {
+                return;
+            }
 
             $envelope = DocuSignEnvelope::create([
                 'envelope_uuid' => $envelope_uuid,
