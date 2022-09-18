@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use _PHPStan_52b7bec27\Nette\Neon\Exception;
 use App\Models\FundingAllocationLine;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -68,6 +68,8 @@ class CreateFundingAllocationLinesFromRoboJacketsLedger extends Action
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\FundingAllocation>  $models
      * @return array<string,string>
+     *
+     * @phan-suppress PhanTypeMismatchArgument
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
