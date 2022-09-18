@@ -90,6 +90,12 @@ class CreateFundingAllocationLinesFromRoboJacketsLedger extends Action
                     throw new Exception('Failed to parse line');
                 }
 
+                $amount = str_replace(',', '', $matches['amount']);
+
+                if ($amount === '-') {
+                    $amount = 0;
+                }
+
                 FundingAllocationLine::updateOrCreate(
                     [
                         'funding_allocation_id' => $funding_allocation_id,
@@ -97,7 +103,7 @@ class CreateFundingAllocationLinesFromRoboJacketsLedger extends Action
                     ],
                     [
                         'description' => $matches['description'],
-                        'amount' => str_replace(',', '', $matches['amount']),
+                        'amount' => $amount,
                     ]
                 );
             });
