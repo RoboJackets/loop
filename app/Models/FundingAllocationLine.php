@@ -76,7 +76,6 @@ class FundingAllocationLine extends Model
     public array $searchable_attributes = [
         'description',
         'line_number',
-        'amount',
     ];
 
     /**
