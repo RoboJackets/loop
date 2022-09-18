@@ -69,7 +69,7 @@ class ProcessSensibleOutput implements ShouldQueue
 
         $envelope->description = $this->getValueOrAddValidationError('description');
 
-        if (preg_match(self::UPN_REGEX, $envelope->description) !== 1) {
+        if (preg_match(self::PURCHASE_ORDER_NUMBER_REGEX, $envelope->description) !== 1) {
             $this->validation_errors[] = 'Description does not include a RoboJackets purchase order number';
         }
 

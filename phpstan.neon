@@ -48,6 +48,7 @@ parameters:
     - '#Parameter \#2 \$contents of method Illuminate\\Filesystem\\FilesystemAdapter::put\(\) expects Illuminate\\Http\\File\|Illuminate\\Http\\UploadedFile\|Psr\\Http\\Message\\StreamInterface\|resource\|string, string\|false given\.#'
     - '#Parameter \#2 \$string of function explode expects string, mixed given\.#'
     - '#Parameter \#2 \$subject of function preg_match expects string, float\|int\|string given\.#'
+    - '#Parameter \#2 \$subject of function preg_match expects string, float\|int\|string\|null given\.#'
     - '#Parameter \#2 \$values of method Spatie\\Csp\\Policies\\Policy::addDirective\(\) expects array\|bool\|string, mixed given\.#'
     - '#Property App\\Models\\DocuSignEnvelope::\$[a-z_]+ \(.+\) does not accept float\|int\|string\|null\.#'
     - '#Property App\\Models\\DocuSignEnvelope::\$[a-z_]+ \(.+\) does not accept mixed\.#'
