@@ -62,9 +62,6 @@ class WebhookCall extends Resource
             Code::make('Payload')
                 ->json(),
 
-            Code::make('Headers')
-                ->json(),
-
             Text::make('Exception')
                 ->onlyOnDetail(),
 
