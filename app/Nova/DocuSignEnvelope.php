@@ -14,6 +14,7 @@ use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\File;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Select;
@@ -157,12 +158,14 @@ class DocuSignEnvelope extends Resource
 
             Panel::make('Tracking', [
                 BelongsTo::make('Replaces Envelope', 'replacesEnvelope', self::class)
-                    ->onlyOnDetail()
+                    ->hideFromIndex()
                     ->nullable(),
 
                 Boolean::make('Lost')
                     ->onlyOnDetail(),
             ]),
+
+            HasMany::make('Replaced By', 'replacedBy', self::class),
 
             Panel::make('Timestamps', [
                 DateTime::make('Submitted', 'submitted_at')

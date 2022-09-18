@@ -8,6 +8,7 @@ use App\Traits\GetMorphClassStatic;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
@@ -175,13 +176,23 @@ class DocuSignEnvelope extends Model
     }
 
     /**
-     * Get the payee for this envelope, if it is a known user.
+     * Get the envelope that this envelope replaces, if any.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<self, self>
      */
     public function replacesEnvelope(): BelongsTo
     {
         return $this->belongsTo(self::class, 'replaces_docusign_envelope_id');
+    }
+
+    /**
+     * Get the envelopes that replace this envelope, if any.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<self>
+     */
+    public function replacedBy(): HasMany
+    {
+        return $this->hasMany(self::class, 'replaces_docusign_envelope_id');
     }
 
     /**
