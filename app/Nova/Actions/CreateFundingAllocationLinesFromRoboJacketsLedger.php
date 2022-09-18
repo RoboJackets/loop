@@ -16,7 +16,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class CreateFundingAllocationLinesFromRoboJacketsLedger extends Action
 {
-    private const LEDGER_LINE_REGEX = '/(?P<line_number>\d)+\s+(?P<description>.+?)\s+\$\s(?P<amount>[0-9,.]+|\-)\s+/';
+    private const LEDGER_LINE_REGEX = '/(?P<line_number>\d+)\s+(?P<description>.+?)\s+\$\s(?P<amount>[0-9,.]+|\-)/';
 
     /**
      * The displayable name of the action.
@@ -97,7 +97,7 @@ class CreateFundingAllocationLinesFromRoboJacketsLedger extends Action
                     ],
                     [
                         'description' => $matches['description'],
-                        'amount' => $matches['amount'],
+                        'amount' => str_replace(',', '', $matches['amount']),
                     ]
                 );
             });
