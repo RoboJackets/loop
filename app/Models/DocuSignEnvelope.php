@@ -127,7 +127,6 @@ class DocuSignEnvelope extends Model
         'type',
         'description',
         'supplier_name',
-        'amount',
     ];
 
     /**
