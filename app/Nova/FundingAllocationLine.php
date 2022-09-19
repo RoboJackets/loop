@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
@@ -73,7 +74,18 @@ class FundingAllocationLine extends Resource
                     static fn (Request $request): ?string => self::queryParamFromReferrer($request, 'line_number')
                 ),
 
+            Number::make('SOFO Line Number', 'sofo_line_number')
+                ->sortable()
+                ->rules('nullable', 'integer', 'min:1', 'max:65535')
+                ->help('Required for SGA Budget funding allocations'),
+
             Text::make('Description')
+                ->rules('required'),
+
+            Select::make('Type')
+                ->sortable()
+                ->options(\App\Models\FundingAllocationLine::$types)
+                ->displayUsingLabels()
                 ->rules('required'),
 
             Currency::make('Line Amount', 'amount')
@@ -151,5 +163,26 @@ class FundingAllocationLine extends Resource
     public function subtitle(): string
     {
         return $this->description.' | $'.number_format($this->amount, 2);
+    }
+
+    /**
+     * Handle any post-validation processing.
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
+     */
+    protected static function afterValidation(NovaRequest $request, $validator): void
+    {
+        $funding_allocation_type = \App\Models\FundingAllocation::whereId($request->fundingAllocation)->sole()->type;
+        if ($funding_allocation_type === 'sga_budget' && $request->sofo_line_number === null) {
+            $validator->errors()->add(
+                'sofo_line_number',
+                'The SOFO Line Number is required for SGA Budget funding allocations.'
+            );
+        } elseif ($funding_allocation_type !== 'sga_budget' && $request->sofo_line_number !== null) {
+            $validator->errors()->add(
+                'sofo_line_number',
+                'The SOFO Line Number is only permitted for SGA Budget funding allocations.'
+            );
+        }
     }
 }

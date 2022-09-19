@@ -39,6 +39,8 @@ use Laravel\Scout\Searchable;
  * @property-read \App\Models\FiscalYear|null $fiscalYear
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\FundingAllocationLine> $fundingSources
  * @property-read int|null $funding_sources_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<DocuSignEnvelope> $replacedBy
+ * @property-read int|null $replaced_by_count
  * @property-read \App\Models\User|null $payToUser
  * @property-read DocuSignEnvelope|null $replacesEnvelope
  * @property-read string|null $sensible_extraction_url

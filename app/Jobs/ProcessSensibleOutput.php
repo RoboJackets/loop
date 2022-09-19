@@ -14,6 +14,7 @@ use App\Models\FundingAllocation;
 use App\Models\FundingAllocationLine;
 use App\Models\User;
 use Carbon\CarbonImmutable;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -71,7 +72,7 @@ class ProcessSensibleOutput implements ShouldQueue
         $envelope->description = $this->getValueOrAddValidationError('description');
 
         if (preg_match(self::PURCHASE_ORDER_NUMBER_REGEX, $envelope->description) !== 1) {
-            $this->validation_errors[] = 'Description does not include a RoboJackets purchase order number';
+            $this->validation_errors[] = 'Description does not include a RoboJackets purchase order number.';
         }
 
         $envelope->amount = $this->getValueOrAddValidationError('total_amount');
@@ -91,7 +92,7 @@ class ProcessSensibleOutput implements ShouldQueue
                                 $envelope->pay_to_user_id = User::whereUsername($matches['uid'])->sole()->id;
                             } catch (ModelNotFoundException) {
                                 $this->validation_errors[] =
-                                    'Could not determine user to associate with reimbursement';
+                                    'Could not determine user to associate with reimbursement.';
                             }
                         }
                     }
@@ -107,7 +108,7 @@ class ProcessSensibleOutput implements ShouldQueue
 
         if ($envelope->submitted_at === null) {
             if ($signed_at_string !== null) {
-                $this->validation_errors[] = 'Sensible returned a submission timestamp, but it could not be parsed';
+                $this->validation_errors[] = 'Sensible returned a submission timestamp, but it could not be parsed.';
             }
         } else {
             try {
@@ -205,7 +206,7 @@ class ProcessSensibleOutput implements ShouldQueue
                     }
                 } else {
                     $this->validation_errors[] = 'This form references SGA bill lines, but Sensible did not return a '
-                        .'bill number';
+                        .'bill number.';
                 }
             }
 
@@ -213,7 +214,7 @@ class ProcessSensibleOutput implements ShouldQueue
             $this->attachSingleLineFundingSources('foundation');
 
             if ($envelope->amount !== floatval($envelope->fundingSources()->sum('docusign_funding_sources.amount'))) {
-                $this->validation_errors[] = 'Total amount does not match sum of funding sources';
+                $this->validation_errors[] = 'Total amount does not match sum of funding sources.';
             }
         }
 
@@ -239,9 +240,9 @@ class ProcessSensibleOutput implements ShouldQueue
             return $fields[$field_name]['value'];
         } else {
             if (! array_key_exists($field_name, $fields)) {
-                $this->validation_errors[] = 'Sensible did not return a \''.$field_name.'\' field';
+                $this->validation_errors[] = 'Sensible did not return a \''.$field_name.'\' field.';
             } elseif ($fields[$field_name] === null) {
-                $this->validation_errors[] = 'Sensible could not extract the \''.$field_name.'\' field';
+                $this->validation_errors[] = 'Sensible could not extract the \''.$field_name.'\' field.';
             }
         }
 
@@ -278,22 +279,69 @@ class ProcessSensibleOutput implements ShouldQueue
                 if ($line_number !== null && $amount !== null) {
                     $funding_allocation_line = null;
 
-                    try {
-                        $funding_allocation_line = FundingAllocationLine::whereFundingAllocationId($allocation->id)
-                            ->whereLineNumber($line_number)
-                            ->sole();
-                    } catch (ModelNotFoundException) {
-                        $this->validation_errors[] = 'This form references '.$allocation->type_display_name.
-                            ($allocation->type === 'sga_bill' ? ' '.$allocation->sga_bill_number : '')
-                            .' line '.$line_number
-                            .', but this line number does not exist in Loop. View the funding allocation at '
-                            .route(
-                                'nova.pages.detail',
-                                [
-                                    'resource' => \App\Nova\FundingAllocation::uriKey(),
-                                    'resourceId' => $allocation->id,
-                                ]
-                            );
+                    if ($allocation->type === 'sga_bill') {
+                        try {
+                            $funding_allocation_line = FundingAllocationLine::whereFundingAllocationId($allocation->id)
+                                ->whereLineNumber($line_number)
+                                ->sole();
+                        } catch (ModelNotFoundException) {
+                            $this->validation_errors[] = 'This form references '.$allocation->type_display_name
+                                .' '.$allocation->sga_bill_number.' line '.$line_number
+                                .', but this line number does not exist in Loop. View the funding allocation at '
+                                .route(
+                                    'nova.pages.detail',
+                                    [
+                                        'resource' => \App\Nova\FundingAllocation::uriKey(),
+                                        'resourceId' => $allocation->id,
+                                    ]
+                                );
+                        }
+                    } elseif ($allocation->type === 'sga_budget') {
+                        try {
+                            $funding_allocation_line = FundingAllocationLine::whereFundingAllocationId($allocation->id)
+                                ->whereSofoLineNumber($line_number)
+                                ->sole();
+                        } catch (ModelNotFoundException) {
+                            $this->validation_errors[] = 'This form references '.$allocation->type_display_name
+                                .' line '.$line_number
+                                .', but this SOFO line number does not exist in Loop. View the funding allocation at '
+                                .route(
+                                    'nova.pages.detail',
+                                    [
+                                        'resource' => \App\Nova\FundingAllocation::uriKey(),
+                                        'resourceId' => $allocation->id,
+                                    ]
+                                );
+                        } catch (MultipleRecordsFoundException) {
+                            try {
+                                $funding_allocation_line = FundingAllocationLine::whereFundingAllocationId(
+                                    $allocation->id
+                                )
+                                    ->whereSofoLineNumber($line_number)
+                                    ->whereType('operating_supplies_equipment')
+                                    ->sole();
+
+                                $this->validation_errors[] = 'This form references '.$allocation->type_display_name
+                                    .' line '
+                                    .$line_number.', but this is ambiguous. Loop defaulted to selecting the Operating '
+                                    .'Supplies & Equipment line with this SOFO line number, but you should validate '
+                                    .'that this is correct.';
+                            } catch (ModelNotFoundException) {
+                                $this->validation_errors[] = 'This form references '.$allocation->type_display_name
+                                    .' line '.$line_number
+                                    .', but there are multiple lines with this SOFO line number. View the funding '
+                                    .'allocation at '
+                                    .route(
+                                        'nova.pages.detail',
+                                        [
+                                            'resource' => \App\Nova\FundingAllocation::uriKey(),
+                                            'resourceId' => $allocation->id,
+                                        ]
+                                    );
+                            }
+                        }
+                    } else {
+                        throw new Exception('Called with unsupported type '.$allocation->type);
                     }
 
                     if ($funding_allocation_line !== null) {

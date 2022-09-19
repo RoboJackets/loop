@@ -16,7 +16,9 @@ use Laravel\Scout\Searchable;
  * @property int $id
  * @property int $funding_allocation_id
  * @property int $line_number
+ * @property int|null $sofo_line_number
  * @property string $description
+ * @property string|null $type
  * @property float $amount
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -25,6 +27,7 @@ use Laravel\Scout\Searchable;
  * @property-read int|null $envelopes_count
  * @property-read \App\Models\FundingAllocation $fundingAllocation
  * @property-read string $name
+ * @property-read string|null $type_display_name
  *
  * @method static \Illuminate\Database\Eloquent\Builder|FundingAllocationLine newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FundingAllocationLine newQuery()
@@ -37,6 +40,8 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Eloquent\Builder|FundingAllocationLine whereFundingAllocationId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FundingAllocationLine whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FundingAllocationLine whereLineNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FundingAllocationLine whereSofoLineNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FundingAllocationLine whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FundingAllocationLine whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|FundingAllocationLine withTrashed()
  * @method static \Illuminate\Database\Query\Builder|FundingAllocationLine withoutTrashed()
@@ -66,6 +71,22 @@ class FundingAllocationLine extends Model
         'line_number',
         'description',
         'amount',
+    ];
+
+    /**
+     * List of valid types and display names for them.
+     *
+     * @var array<string,string>
+     *
+     * @phan-read-only
+     */
+    public static array $types = [
+        'operating_supplies_equipment' => 'Operating Supplies & Equipment',
+        'events_activities' => 'Events & Activities',
+        'travel' => 'Travel',
+        'personnel_services' => 'Personnel Services',
+        'capital_equipment_maintenance' => 'Capital Equipment & Maintenance',
+        'conference_funds' => 'Conference Funds',
     ];
 
     /**
@@ -106,6 +127,14 @@ class FundingAllocationLine extends Model
             (
                 str_starts_with($this->fundingAllocation->type, 'sga_') ? ' Line '.$this->line_number : ''
             );
+    }
+
+    /**
+     * Get the type display name for this funding allocation.
+     */
+    public function getTypeDisplayNameAttribute(): ?string
+    {
+        return $this->type === null ? null : self::$types[$this->type];
     }
 
     /**
