@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-// phpcs:disable Generic.Files.LineLength.TooLong
-
 namespace App\Http\Requests;
 
 use App\Models\ExternalCommitteeMember;
@@ -34,7 +32,7 @@ class UpsertExternalCommitteeMember extends FormRequest
         return [
             'title' => [
                 'required',
-                'array:widget,ecid,iid,enabled,label,instances,selfUriTemplate,relatedTasksUriTemplate,text,propertyName,singular',
+                'array',
             ],
             'title.instances' => [
                 'required',
@@ -43,7 +41,7 @@ class UpsertExternalCommitteeMember extends FormRequest
             ],
             'title.instances.*' => [
                 'required',
-                'array:widget,instanceId,text,rt,pv,v',
+                'array',
             ],
             'title.instances.*.instanceId' => [
                 'required',
@@ -57,7 +55,7 @@ class UpsertExternalCommitteeMember extends FormRequest
             ],
             'body' => [
                 'required',
-                'array:widget,iid,enabled,children,propertyName',
+                'array',
             ],
             'body.children' => [
                 'required',
@@ -66,7 +64,7 @@ class UpsertExternalCommitteeMember extends FormRequest
             ],
             'body.children.*' => [
                 'required',
-                'array:widget,ecid,iid,enabled,label,value,propertyName',
+                'array',
             ],
             'body.children.*.value' => [
                 'required',
