@@ -22,7 +22,7 @@ Route::get('/v1/document/{envelope}', DocumentDownloadController::class)
     ->middleware(['signed']);
 
 Route::post('/v1/workday/external-committee-members', ExternalCommitteeMemberController::class)
-    ->middleware(['auth:sanctum']);
+    ->middleware(['auth:sanctum', 'can:access-workday']);
 
 Route::webhooks('/v1/postmark/inbound', 'postmark-inbound');
 
