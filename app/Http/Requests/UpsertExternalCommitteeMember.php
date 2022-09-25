@@ -8,6 +8,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Validates a request to upsert an External Committee Member using the Workday API response.
+ *
+ * @phan-suppress PhanUnreferencedClass
+ */
 class UpsertExternalCommitteeMember extends FormRequest
 {
     /**

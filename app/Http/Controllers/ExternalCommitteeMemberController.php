@@ -13,6 +13,8 @@ class ExternalCommitteeMemberController extends Controller
 
     /**
      * Handle the incoming request.
+     *
+     * @phan-suppress PhanTypeMismatchDimFetch
      */
     public function __invoke(UpsertExternalCommitteeMember $request): JsonResponse
     {
