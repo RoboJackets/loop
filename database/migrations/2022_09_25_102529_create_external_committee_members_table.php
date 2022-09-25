@@ -16,10 +16,12 @@ return new class extends Migration
         Schema::create('external_committee_members', static function (Blueprint $table): void {
             $table->id();
             $table->unsignedSmallInteger('workday_instance_id')->unique();
-            $table->string('workday_external_committee_member_id')->unique();
+            $table->string('workday_external_committee_member_id');
             $table->string('name');
             $table->boolean('active');
             $table->timestamps();
+
+            $table->unique('workday_external_committee_member_id', 'external_committee_members_workday_ecm_id_unique');
         });
     }
 
