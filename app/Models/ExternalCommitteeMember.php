@@ -7,6 +7,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
+/**
+ * An External Committee Member as represented in Workday.
+ *
+ * @property int $id
+ * @property int $workday_instance_id
+ * @property string $workday_external_committee_member_id
+ * @property string $name
+ * @property bool $active
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read string $workday_url
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember whereActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember whereWorkdayExternalCommitteeMemberId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember whereWorkdayInstanceId($value)
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ */
 class ExternalCommitteeMember extends Model
 {
     use Searchable;
