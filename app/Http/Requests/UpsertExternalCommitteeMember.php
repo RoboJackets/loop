@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Models\ExternalCommitteeMember;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -52,7 +53,7 @@ class UpsertExternalCommitteeMember extends FormRequest
             'title.instances.*.text' => [
                 'required',
                 'string',
-                'regex:/^[a-zA-Z\s]+\s+\(ECM\)(\s+-\s+Inactive)?$/',
+                'regex:'.ExternalCommitteeMember::WORKDAY_NAME_REGEX,
             ],
             'body' => [
                 'required',

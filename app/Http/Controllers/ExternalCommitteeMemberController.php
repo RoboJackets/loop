@@ -10,8 +10,6 @@ use Illuminate\Http\JsonResponse;
 
 class ExternalCommitteeMemberController extends Controller
 {
-    private const WORKDAY_NAME_REGEX = '/^(?P<name>^[a-zA-Z\s]+)\s+\(ECM\)(?P<inactive>\s+-\s+Inactive)?$/';
-
     /**
      * Handle the incoming request.
      *
@@ -24,12 +22,13 @@ class ExternalCommitteeMemberController extends Controller
         $title_text = $request['title']['instances'][0]['text'];
 
         $matches = [];
-        if (preg_match(self::WORKDAY_NAME_REGEX, $title_text, $matches) === 1) {
+        if (preg_match(ExternalCommitteeMember::WORKDAY_NAME_REGEX, $title_text, $matches) === 1) {
             $name = $matches['name'];
             $active = ! array_key_exists('inactive', $matches);
         } else {
-            return response(status: 400)->json([
-                'error' => 'failed to parse name',
+            // this should be caught by the validator earlier in the process, but, just in case
+            return response(status: 422)->json([
+                'error' => 'Failed to parse name',
             ]);
         }
 

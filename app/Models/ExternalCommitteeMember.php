@@ -11,6 +11,8 @@ class ExternalCommitteeMember extends Model
 {
     use Searchable;
 
+    public const WORKDAY_NAME_REGEX = '/^(?P<name>^[a-zA-Z\s]+)\s+\(ECM\)(?P<inactive>\s+-\s+Inactive)?$/';
+
     /**
      * The attributes that should be cast to native types.
      *
