@@ -41,7 +41,7 @@ class ExternalCommitteeMemberPolicy
      */
     public function update(User $user, ExternalCommitteeMember $externalCommitteeMember): bool
     {
-        return false;
+        return $user->can('access-workday');
     }
 
     /**

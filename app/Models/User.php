@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Nova\Auth\Impersonatable;
 use Laravel\Sanctum\HasApiTokens;
@@ -29,6 +30,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $roles_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExternalCommitteeMember> $externalCommitteeMembers
+ * @property-read int|null $external_committee_members_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
@@ -85,6 +88,16 @@ class User extends Authenticatable
     ];
 
     protected string $guard_name = 'web';
+
+    /**
+     * Get the ECMs for this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExternalCommitteeMember>
+     */
+    public function externalCommitteeMembers(): HasMany
+    {
+        return $this->hasMany(ExternalCommitteeMember::class);
+    }
 
     /**
      * Get the name associated with the User.

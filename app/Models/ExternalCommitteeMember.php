@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Laravel\Scout\Searchable;
 
 /**
@@ -15,9 +16,11 @@ use Laravel\Scout\Searchable;
  * @property string $workday_external_committee_member_id
  * @property string $name
  * @property bool $active
+ * @property int|null $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read string $workday_url
+ * @property-read \App\Models\User|null $user
  *
  * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember newQuery()
@@ -29,6 +32,7 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember whereWorkdayExternalCommitteeMemberId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember whereWorkdayInstanceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember whereUserId($value)
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class ExternalCommitteeMember extends Model
@@ -67,6 +71,16 @@ class ExternalCommitteeMember extends Model
         'name',
         'workday_external_committee_member_id',
     ];
+
+    /**
+     * Get the user for this ECM, if any.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\ExternalCommitteeMember>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * Get the workday_url attribute to show this ECM in the Workday UI.

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
@@ -70,16 +71,23 @@ class ExternalCommitteeMember extends Resource
                 ->onlyOnDetail(),
 
             Text::make('Name')
-                ->sortable(),
+                ->sortable()
+                ->readonly(),
 
             Text::make('External Committee Member ID', 'workday_external_committee_member_id')
-                ->sortable(),
+                ->sortable()
+                ->readonly(),
 
             Boolean::make('Active')
-                ->sortable(),
+                ->sortable()
+                ->readonly(),
+
+            BelongsTo::make('User')
+                ->nullable(),
 
             URL::make('View in Workday', 'workday_url')
-                ->canSee(static fn (Request $request): bool => $request->user()->can('access-workday')),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('access-workday'))
+                ->hideWhenUpdating(),
 
             Panel::make('Timestamps', [
                 DateTime::make('Created', 'created_at')
