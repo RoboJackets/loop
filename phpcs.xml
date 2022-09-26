@@ -215,6 +215,7 @@
         <exclude name="SlevomatCodingStandard.Functions.FunctionLength"/>
         <exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/>
         <exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration"/>
+        <exclude name="SlevomatCodingStandard.Functions.DisallowNamedArguments"/>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>

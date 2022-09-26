@@ -7,6 +7,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Jeffbeltran\SanctumTokens\SanctumTokens;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -73,6 +74,8 @@ class User extends Resource
                 ->rules('required', 'max:127')
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
+
+            HasMany::make('External Committee Members', 'externalCommitteeMembers'),
 
             SanctumTokens::make()
                 ->hideAbilities()
