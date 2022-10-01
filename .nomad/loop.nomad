@@ -165,15 +165,6 @@ EOF
           target = "/etc/php/8.1/fpm/pool.d/"
         }
 
-        mount {
-          type = "tmpfs"
-          target = "/run/php"
-          readonly = false
-          tmpfs_options {
-            size = 16000
-          }
-        }
-
         entrypoint = [
           "/bin/bash",
           "-xeuo",

@@ -6,10 +6,13 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Jeffbeltran\SanctumTokens\SanctumTokens;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Vyuldashev\NovaPermission\Permission;
@@ -74,6 +77,17 @@ class User extends Resource
                 ->rules('required', 'max:127')
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
+
+            Boolean::make('Active Employee')
+                ->onlyOnDetail(),
+
+            Number::make('Instance ID', 'workday_instance_id')
+                ->onlyOnDetail(),
+
+            URL::make('View in Workday', 'workday_url')
+                ->canSee(static fn (Request $request): bool => $request->user()->can('access-workday'))
+                ->hideWhenUpdating()
+                ->hideWhenCreating(),
 
             HasMany::make('External Committee Members', 'externalCommitteeMembers'),
 
