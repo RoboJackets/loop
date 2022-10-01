@@ -28,6 +28,7 @@
                 <directory name="app/Nova" />
                 <directory name="app/SignatureValidators" />
                 <directory name="app/Jobs" />
+                <directory name="app/Http/Controllers"/>
             </errorLevel>
         </UndefinedMagicMethod>
         <LessSpecificImplementedReturnType>
