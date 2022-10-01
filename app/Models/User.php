@@ -32,6 +32,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $tokens_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExternalCommitteeMember> $externalCommitteeMembers
  * @property-read int|null $external_committee_members_count
+ * @property int|null $workday_instance_id
+ * @property int|null $active_employee
+ * @property-read string|null $workday_url
  *
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
@@ -45,6 +48,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereLastName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUsername($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereActiveEmployee($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereWorkdayInstanceId($value)
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class User extends Authenticatable
@@ -63,6 +68,19 @@ class User extends Authenticatable
      */
     protected $appends = [
         'name',
+    ];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'workday_instance_id',
+        'first_name',
+        'last_name',
+        'email',
+        'active_employee',
     ];
 
     /**
@@ -105,6 +123,17 @@ class User extends Authenticatable
     public function getNameAttribute(): string
     {
         return $this->first_name.' '.$this->last_name;
+    }
+
+    /**
+     * Get the workday_url attribute to show this Worker in the Workday UI.
+     *
+     * @return ?string
+     */
+    public function getWorkdayUrlAttribute(): ?string
+    {
+        return $this->workday_instance_id === null ? null : 'https://wd5.myworkday.com/gatech/d/inst/1$37/247$'
+            .$this->workday_instance_id.'.htmld';
     }
 
     /**

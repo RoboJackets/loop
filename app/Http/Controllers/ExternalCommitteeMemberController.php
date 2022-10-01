@@ -27,9 +27,12 @@ class ExternalCommitteeMemberController extends Controller
             $active = ! array_key_exists('inactive', $matches);
         } else {
             // this should be caught by the validator earlier in the process, but, just in case
-            return response(status: 422)->json([
-                'error' => 'Failed to parse name',
-            ]);
+            return response()->json(
+                [
+                    'error' => 'Failed to parse name',
+                ],
+                422
+            );
         }
 
         $model = ExternalCommitteeMember::updateOrCreate([

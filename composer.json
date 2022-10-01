@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "adldap2/adldap2-laravel": "^6.1",
         "ans-group/laravel-health-check": "^1.13",
         "enlightn/enlightn": "^2.1",
         "guzzlehttp/guzzle": "^7.5",

@@ -4,8 +4,131 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2fb68cd6acab454382c5e670b9306a0e",
+    "content-hash": "2689e4061d7d84acee81ca607b8a69f4",
     "packages": [
+        {
+            "name": "adldap2/adldap2",
+            "version": "v10.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Adldap2/Adldap2.git",
+                "reference": "97cc80ded68a3b7762b028729290fe375945b028"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/97cc80ded68a3b7762b028729290fe375945b028",
+                "reference": "97cc80ded68a3b7762b028729290fe375945b028",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-ldap": "*",
+                "illuminate/contracts": "~5.0|~6.0|~7.0|~8.0|~9.0",
+                "php": ">=7.0",
+                "psr/log": "~1.0|~2.0|~3.0",
+                "psr/simple-cache": "~1.0|~2.0",
+                "tightenco/collect": "~5.0|~6.0|~7.0|~8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~1.0",
+                "symfony/phpunit-bridge": "~5.2|~6.0"
+            },
+            "suggest": {
+                "ext-fileinfo": "fileinfo is required when retrieving user encoded thumbnails"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Adldap\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Steve Bauman",
+                    "email": "steven_bauman@outlook.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A PHP LDAP Package for humans.",
+            "keywords": [
+                "active directory",
+                "ad",
+                "adLDAP",
+                "adldap2",
+                "directory",
+                "ldap",
+                "windows"
+            ],
+            "support": {
+                "docs": "https://github.com/Adldap2/Adldap2/blob/master/readme.md",
+                "email": "steven_bauman@outlook.com",
+                "issues": "https://github.com/Adldap2/Adldap2/issues",
+                "source": "https://github.com/Adldap2/Adldap2"
+            },
+            "time": "2022-04-29T19:02:50+00:00"
+        },
+        {
+            "name": "adldap2/adldap2-laravel",
+            "version": "v6.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Adldap2/Adldap2-Laravel.git",
+                "reference": "e67f845db08389acdf7326fd596fda10b3560d25"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Adldap2/Adldap2-Laravel/zipball/e67f845db08389acdf7326fd596fda10b3560d25",
+                "reference": "e67f845db08389acdf7326fd596fda10b3560d25",
+                "shasum": ""
+            },
+            "require": {
+                "adldap2/adldap2": "^10.1",
+                "illuminate/support": "~5.5|~6.0|~7.0|~8.0|~9.0",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "mockery/mockery": "~1.0",
+                "orchestra/testbench": "~3.7|~4.0",
+                "phpunit/phpunit": "~7.0|~8.0"
+            },
+            "type": "project",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Adldap\\Laravel\\AdldapServiceProvider",
+                        "Adldap\\Laravel\\AdldapAuthServiceProvider"
+                    ],
+                    "aliases": {
+                        "Adldap": "Adldap\\Laravel\\Facades\\Adldap"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Adldap\\Laravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "LDAP Authentication & Management for Laravel.",
+            "keywords": [
+                "adLDAP",
+                "adldap2",
+                "laravel",
+                "ldap"
+            ],
+            "support": {
+                "issues": "https://github.com/Adldap2/Adldap2-Laravel/issues",
+                "source": "https://github.com/Adldap2/Adldap2-Laravel/tree/v6.1.6"
+            },
+            "time": "2022-02-09T13:04:53+00:00"
+        },
         {
             "name": "ans-group/laravel-health-check",
             "version": "v1.13.4",
@@ -2311,16 +2434,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v9.31.0",
+            "version": "v9.32.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "75013d4fffe3b24748d313fbbea53206351214f7"
+                "reference": "aae3b59f82434176546c9dd10804adda16da5278"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/75013d4fffe3b24748d313fbbea53206351214f7",
-                "reference": "75013d4fffe3b24748d313fbbea53206351214f7",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/aae3b59f82434176546c9dd10804adda16da5278",
+                "reference": "aae3b59f82434176546c9dd10804adda16da5278",
                 "shasum": ""
             },
             "require": {
@@ -2493,7 +2616,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-09-20T13:32:50+00:00"
+            "time": "2022-09-27T13:32:56+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -5471,16 +5594,16 @@
         },
         {
             "name": "psr/simple-cache",
-            "version": "3.0.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/simple-cache.git",
-                "reference": "764e0b3939f5ca87cb904f570ef9be2d78a07865"
+                "reference": "8707bf3cea6f710bf6ef05491234e3ab06f6432a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/764e0b3939f5ca87cb904f570ef9be2d78a07865",
-                "reference": "764e0b3939f5ca87cb904f570ef9be2d78a07865",
+                "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/8707bf3cea6f710bf6ef05491234e3ab06f6432a",
+                "reference": "8707bf3cea6f710bf6ef05491234e3ab06f6432a",
                 "shasum": ""
             },
             "require": {
@@ -5489,7 +5612,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0.x-dev"
+                    "dev-master": "2.0.x-dev"
                 }
             },
             "autoload": {
@@ -5516,9 +5639,9 @@
                 "simple-cache"
             ],
             "support": {
-                "source": "https://github.com/php-fig/simple-cache/tree/3.0.0"
+                "source": "https://github.com/php-fig/simple-cache/tree/2.0.0"
             },
-            "time": "2021-10-29T13:26:27+00:00"
+            "time": "2021-10-29T13:22:09+00:00"
         },
         {
             "name": "psy/psysh",
@@ -8676,6 +8799,60 @@
                 }
             ],
             "time": "2022-08-02T16:17:38+00:00"
+        },
+        {
+            "name": "tightenco/collect",
+            "version": "v8.83.23",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tighten/collect.git",
+                "reference": "a4423c6ace6b54ba4f86c0ac9de588c57bc94d79"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tighten/collect/zipball/a4423c6ace6b54ba4f86c0ac9de588c57bc94d79",
+                "reference": "a4423c6ace6b54ba4f86c0ac9de588c57bc94d79",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0",
+                "symfony/var-dumper": "^3.4 || ^4.0 || ^5.0 || ^6.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "nesbot/carbon": "^2.23.0",
+                "phpunit/phpunit": "^8.3"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Collect/Support/helpers.php",
+                    "src/Collect/Support/alias.php"
+                ],
+                "psr-4": {
+                    "Tightenco\\Collect\\": "src/Collect"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com"
+                }
+            ],
+            "description": "Collect - Illuminate Collections as a separate package.",
+            "keywords": [
+                "collection",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/tighten/collect/issues",
+                "source": "https://github.com/tighten/collect/tree/v8.83.23"
+            },
+            "time": "2022-08-22T17:50:04+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
