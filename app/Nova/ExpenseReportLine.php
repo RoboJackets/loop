@@ -4,35 +4,36 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Panel;
 
 /**
- * A Nova resource for fiscal years.
+ * A Nova resource for Workday Expense Report Lines.
  *
- * @extends \App\Nova\Resource<\App\Models\FiscalYear>
+ * @extends \App\Nova\Resource<\App\Models\ExpenseReportLine>
  *
  * @phan-suppress PhanUnreferencedClass
  */
-class FiscalYear extends Resource
+class ExpenseReportLine extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\FiscalYear::class;
+    public static $model = \App\Models\ExpenseReportLine::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'ending_year';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -40,39 +41,38 @@ class FiscalYear extends Resource
      * @var array<string>
      */
     public static $search = [
-        'ending_year',
+        'id',
     ];
 
     /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'Workday';
+
+    /**
      * Get the fields displayed by the resource.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @return array
      */
     public function fields(NovaRequest $request): array
     {
         return [
-            Number::make('Ending Year')
-                ->rules('required', 'integer', 'digits:4', 'min:2010', 'max:2030')
-                ->creationRules('unique:fiscal_years,ending_year')
-                ->updateRules('unique:fiscal_years,ending_year,{{resourceId}}')
-                ->default(
-                    static fn (Request $request): ?string => self::queryParamFromReferrer($request, 'ending_year')
-                ),
+            ID::make()->sortable(),
 
-            HasMany::make('Funding Allocations'),
+            Number::make('Workday Line ID'),
 
-            HasMany::make('DocuSign Envelopes', 'envelopes'),
+            BelongsTo::make('Expense Report', 'expenseReport', ExpenseReport::class),
 
-            HasMany::make('Expense Reports', 'expenseReports'),
+            Currency::make('Amount')
+                ->sortable(),
 
-            new Panel(
-                'Timestamps',
-                [
-                    DateTime::make('Created', 'created_at')
-                        ->onlyOnDetail(),
+            Text::make('Memo')
+                ->sortable(),
 
-                    DateTime::make('Last Updated', 'updated_at')
-                        ->onlyOnDetail(),
-                ]
-            ),
+            MorphMany::make('Attachments', 'attachments', Attachment::class),
         ];
     }
 

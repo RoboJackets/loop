@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphTo;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
@@ -68,6 +70,16 @@ class Attachment extends Resource
 
             File::make('File', 'filename')
                 ->disk('local'),
+
+            Panel::make('Workday Metadata', [
+                Number::make('Instance ID', 'workday_instance_id')->onlyOnDetail(),
+
+                BelongsTo::make('Uploaded By', 'uploadedBy', User::class)->onlyOnDetail(),
+
+                DateTime::make('Uploaded At', 'workday_uploaded_at')->onlyOnDetail(),
+
+                Text::make('Comment', 'workday_comment'),
+            ]),
 
             Panel::make('Timestamps', [
                 DateTime::make('Created', 'created_at')

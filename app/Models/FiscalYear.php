@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $envelopes_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\FundingAllocation> $fundingAllocations
  * @property-read int|null $funding_allocations_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExpenseReport> $expenseReports
+ * @property-read int|null $expense_reports_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear newQuery()
@@ -49,6 +51,16 @@ class FiscalYear extends Model
     public function envelopes(): HasMany
     {
         return $this->hasMany(DocuSignEnvelope::class);
+    }
+
+    /**
+     * Get the expense reports for this fiscal year.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpenseReport>
+     */
+    public function expenseReports(): HasMany
+    {
+        return $this->hasMany(ExpenseReport::class);
     }
 
     public static function fromDate(Carbon $date): self

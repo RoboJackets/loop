@@ -32,8 +32,10 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $tokens_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExternalCommitteeMember> $externalCommitteeMembers
  * @property-read int|null $external_committee_members_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExpenseReport> $expenseReports
+ * @property-read int|null $expense_reports_count
  * @property int|null $workday_instance_id
- * @property int|null $active_employee
+ * @property bool|null $active_employee
  * @property-read string|null $workday_url
  *
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
@@ -84,6 +86,15 @@ class User extends Authenticatable
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string,string>
+     */
+    protected $casts = [
+        'active_employee' => 'boolean',
+    ];
+
+    /**
      * The attributes that should be searchable in Meilisearch.
      *
      * @var array<string>
@@ -115,6 +126,16 @@ class User extends Authenticatable
     public function externalCommitteeMembers(): HasMany
     {
         return $this->hasMany(ExternalCommitteeMember::class);
+    }
+
+    /**
+     * Get the expense reports created by this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpenseReport>
+     */
+    public function expenseReports(): HasMany
+    {
+        return $this->hasMany(ExpenseReport::class, 'created_by_worker_id', 'workday_instance_id');
     }
 
     /**

@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\DocumentDownloadController;
+use App\Http\Controllers\ExpenseReportController;
+use App\Http\Controllers\ExpenseReportLineController;
 use App\Http\Controllers\ExternalCommitteeMemberController;
 use App\Http\Controllers\WorkerController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +29,12 @@ Route::prefix('/v1/workday/')->middleware(['auth:sanctum', 'can:access-workday']
     Route::post('external-committee-members', ExternalCommitteeMemberController::class);
 
     Route::post('workers', WorkerController::class);
+
+    Route::resource('expense-reports', ExpenseReportController::class)->only('store', 'update');
+
+    Route::resource('expense-reports.lines', ExpenseReportLineController::class)->only('update');
+
+    Route::post('attachments/{attachment}', AttachmentController::class);
 });
 
 Route::webhooks('/v1/postmark/inbound', 'postmark-inbound');
