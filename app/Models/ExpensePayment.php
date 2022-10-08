@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * App\Models\ExpensePayment
+ * An Expense Payment as represented in Workday.
  *
  * @property int $id
  * @property int $workday_instance_id
