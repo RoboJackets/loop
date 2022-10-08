@@ -20,7 +20,6 @@ class ExpenseReportLineController extends Controller
      *
      * @phan-suppress PhanTypeMismatchArgument
      * @phan-suppress PhanTypeMismatchDimFetch
-     * @phan-suppress PhanPossiblyNullTypeArgumentInternal
      */
     public function update(
         ExpenseReport $expense_report,
