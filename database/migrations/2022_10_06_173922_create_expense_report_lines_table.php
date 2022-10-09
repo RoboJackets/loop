@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('workday_line_id');
             $table->unsignedMediumInteger('expense_report_id');
             $table->decimal('amount', 8, 2);
-            $table->string('memo')->nullable();
+            $table->longText('memo')->nullable();
             $table->timestamps();
 
             $table->unique(['expense_report_id', 'workday_line_id']);
