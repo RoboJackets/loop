@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedMediumInteger('workday_instance_id')->unique();
             $table->string('workday_expense_report_id')->unique();
-            $table->string('memo');
+            $table->longText('memo');
             $table->date('created_date');
             $table->date('approval_date')->nullable();
             $table->unsignedSmallInteger('created_by_worker_id');
