@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('expense_payments', static function (Blueprint $table): void {
             $table->id();
-            $table->unsignedSmallInteger('workday_instance_id')->unique();
+            $table->unsignedMediumInteger('workday_instance_id')->unique();
             $table->string('status');
             $table->boolean('reconciled');
             $table->unsignedSmallInteger('external_committee_member_id');

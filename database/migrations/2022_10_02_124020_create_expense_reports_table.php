@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->unsignedSmallInteger('external_committee_member_id');
             $table->decimal('amount', 8, 2);
-            $table->unsignedSmallInteger('expense_payment_id')->nullable();
+            $table->unsignedMediumInteger('expense_payment_id')->nullable();
             $table->timestamps();
         });
     }
