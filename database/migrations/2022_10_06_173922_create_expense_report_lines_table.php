@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('expense_report_lines', static function (Blueprint $table): void {
             $table->id();
             $table->unsignedSmallInteger('workday_line_id');
-            $table->unsignedSmallInteger('expense_report_id');
+            $table->unsignedMediumInteger('expense_report_id');
             $table->decimal('amount', 8, 2);
             $table->string('memo')->nullable();
             $table->timestamps();

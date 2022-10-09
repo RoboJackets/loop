@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('expense_reports', static function (Blueprint $table): void {
             $table->id();
-            $table->unsignedSmallInteger('workday_instance_id')->unique();
+            $table->unsignedMediumInteger('workday_instance_id')->unique();
             $table->string('workday_expense_report_id')->unique();
             $table->string('memo');
             $table->date('created_date');
