@@ -42,7 +42,7 @@ class ExternalCommitteeMember extends Model
 {
     use Searchable;
 
-    public const WORKDAY_NAME_REGEX = '/^(?P<name>^[a-zA-Z\s]+)\s+\(ECM\)(?P<inactive>\s+-\s+Inactive)?$/';
+    public const WORKDAY_NAME_REGEX = '/^(?P<name>^[a-zA-Z-\s]+)\s+\(ECM\)(?P<inactive>\s+-\s+Inactive)?$/';
 
     /**
      * The attributes that should be cast to native types.
@@ -93,6 +93,16 @@ class ExternalCommitteeMember extends Model
     public function expenseReports(): HasMany
     {
         return $this->hasMany(ExpenseReport::class, 'external_committee_member_id', 'workday_instance_id');
+    }
+
+    /**
+     * Get the expense payments associated with this ECM.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpensePayment>
+     */
+    public function expensePayments(): HasMany
+    {
+        return $this->hasMany(ExpensePayment::class, 'external_committee_member_id', 'workday_instance_id');
     }
 
     /**

@@ -40,30 +40,6 @@ class UpsertExpenseReports extends FormRequest
                 'required',
                 'array',
             ],
-            'rows.*.cellsMap.*.widget' => [
-                'required',
-                'string',
-            ],
-            'rows.*.cellsMap.*.ecid' => [
-                'required',
-                'string',
-            ],
-            'rows.*.cellsMap.*.iid' => [
-                'required',
-                'string',
-            ],
-            'rows.*.cellsMap.*.enabled' => [
-                'required',
-                'boolean',
-            ],
-            'rows.*.cellsMap.*.label' => [
-                'required',
-                'string',
-            ],
-            'rows.*.cellsMap.*.propertyName' => [
-                'required',
-                'string',
-            ],
         ];
     }
 }

@@ -92,6 +92,8 @@ class ExternalCommitteeMember extends Resource
 
             HasMany::make('Expense Reports', 'expenseReports'),
 
+            HasMany::make('Expense Payments', 'expensePayments'),
+
             Panel::make('Timestamps', [
                 DateTime::make('Created', 'created_at')
                     ->onlyOnDetail(),

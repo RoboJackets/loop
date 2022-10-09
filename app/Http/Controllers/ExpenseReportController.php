@@ -133,6 +133,12 @@ class ExpenseReportController extends Controller
                     $sync_expense_reports[] = $attributes['workday_instance_id'];
                 } elseif ($expense_report->status !== 'Canceled' && $expense_report->expense_payment_id === null) {
                     $sync_expense_reports[] = $attributes['workday_instance_id'];
+                } elseif (
+                    $expense_report->expense_payment_id !== null &&
+                    ExpensePayment::whereId($expense_report->expense_payment_id)->exists() &&
+                    ! ExpensePayment::whereId($expense_report->expense_payment_id)->sole()->reconciled
+                ) {
+                    $sync_expense_reports[] = $attributes['workday_instance_id'];
                 }
             }
         }
@@ -154,18 +160,16 @@ class ExpenseReportController extends Controller
      */
     public function update(ExpenseReport $expense_report, UpdateExpenseReport $request): JsonResponse
     {
-        $header_widgets = $request['body']['children'][0];
-
         $expense_report_attributes = [
-            'status' => Workday::sole($header_widgets, 'wd:Expense_Report_Status')['value'],
+            'status' => Workday::sole($request['body']['children'][0], 'wd:Expense_Report_Status')['value'],
             'external_committee_member_id' => Workday::getInstanceId(
-                Workday::sole($header_widgets, 'wd:Expense_Payee_for_Expense_Documents--IS')
+                Workday::sole($request['body']['children'][0], 'wd:Expense_Payee_for_Expense_Documents--IS')
             ),
-            'amount' => Workday::sole($header_widgets, 'wd:Total_Reimbursement_Amount')['value'],
-            'memo' => Workday::sole($header_widgets, 'wd:Document_Memo')['value'],
+            'amount' => Workday::sole($request['body']['children'][0], 'wd:Total_Reimbursement_Amount')['value'],
+            'memo' => Workday::sole($request['body']['children'][1], 'wd:Document_Memo')['value'],
         ];
 
-        $approval_date = Workday::sole($header_widgets, 'wd:Approval_Date');
+        $approval_date = Workday::sole($request['body']['children'][1], 'wd:Approval_Date');
 
         $expense_report_attributes['approval_date'] = array_key_exists('value', $approval_date)
             ? Workday::getDate($approval_date)
@@ -249,7 +253,7 @@ class ExpenseReportController extends Controller
 
             foreach ($row['cellsMap'] as $cell) {
                 if ($cell['propertyName'] === 'wd:Charge_Description_Memo') {
-                    $update_attributes['memo'] = $cell['value'];
+                    $update_attributes['memo'] = array_key_exists('value', $cell) ? $cell['value'] : null;
                 } elseif ($cell['propertyName'] === 'wd:Converted_Amount') {
                     $update_attributes['amount'] = $cell['value'];
                 }

@@ -32,7 +32,7 @@ Route::prefix('/v1/workday/')->middleware(['auth:sanctum', 'can:access-workday']
 
     Route::resource('expense-reports', ExpenseReportController::class)->only('store', 'update');
 
-    Route::resource('expense-reports.lines', ExpenseReportLineController::class)->only('update');
+    Route::put('expense-reports/{expense_report}/lines/{line}', ExpenseReportLineController::class)->scopeBindings();
 
     Route::post('attachments/{attachment}', AttachmentController::class);
 });

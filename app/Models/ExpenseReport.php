@@ -116,7 +116,7 @@ class ExpenseReport extends Model
      */
     public function createdBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'workday_instance_id');
+        return $this->belongsTo(User::class, 'created_by_worker_id', 'workday_instance_id');
     }
 
     /**

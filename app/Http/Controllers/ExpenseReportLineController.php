@@ -21,7 +21,7 @@ class ExpenseReportLineController extends Controller
      * @phan-suppress PhanTypeMismatchArgument
      * @phan-suppress PhanTypeMismatchDimFetch
      */
-    public function update(
+    public function __invoke(
         ExpenseReport $expense_report,
         ExpenseReportLine $line,
         UpdateExpenseReportLine $request
