@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('attachments', static function (Blueprint $table): void {
-            $table->unsignedSmallInteger('workday_instance_id')->unique()->nullable();
+            $table->unsignedMediumInteger('workday_instance_id')->unique()->nullable();
             $table->unsignedSmallInteger('workday_uploaded_by_worker_id')->nullable();
             $table->timestamp('workday_uploaded_at')->nullable();
             $table->string('workday_comment')->nullable();
