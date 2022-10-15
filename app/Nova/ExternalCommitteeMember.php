@@ -84,7 +84,8 @@ class ExternalCommitteeMember extends Resource
                 ->readonly(),
 
             BelongsTo::make('User')
-                ->nullable(),
+                ->nullable()
+                ->searchable(),
 
             URL::make('View in Workday', 'workday_url')
                 ->canSee(static fn (Request $request): bool => $request->user()->can('access-workday'))

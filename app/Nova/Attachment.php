@@ -47,6 +47,13 @@ class Attachment extends Resource
     ];
 
     /**
+     * Indicates if the resource should be displayed in the sidebar.
+     *
+     * @var bool
+     */
+    public static $displayInNavigation = false;
+
+    /**
      * Get the fields displayed by the resource.
      */
     public function fields(NovaRequest $request): array

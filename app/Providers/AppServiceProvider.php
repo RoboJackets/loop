@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\Attachment;
 use App\Models\DocuSignEnvelope;
+use App\Models\ExpenseReport;
 use App\Models\ExpenseReportLine;
+use App\Observers\AttachmentObserver;
+use App\Observers\ExpenseReportLineObserver;
+use App\Observers\ExpenseReportObserver;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,5 +33,9 @@ class AppServiceProvider extends ServiceProvider
             'docusign-envelope' => DocuSignEnvelope::class,
             'expense-report-line' => ExpenseReportLine::class,
         ]);
+
+        Attachment::observe(AttachmentObserver::class);
+        ExpenseReport::observe(ExpenseReportObserver::class);
+        ExpenseReportLine::observe(ExpenseReportLineObserver::class);
     }
 }

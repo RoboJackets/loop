@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Lenses\UnmatchedExpenseReports;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\BelongsTo;
@@ -106,6 +107,8 @@ class ExpenseReport extends Resource
 
             HasMany::make('Lines', 'lines', ExpenseReportLine::class),
 
+            HasMany::make('DocuSign Envelopes', 'envelopes', DocuSignEnvelope::class),
+
             Panel::make('Timestamps', [
                 DateTime::make('Created', 'created_at')
                     ->onlyOnDetail(),
@@ -143,7 +146,9 @@ class ExpenseReport extends Resource
      */
     public function lenses(NovaRequest $request): array
     {
-        return [];
+        return [
+            UnmatchedExpenseReports::make(),
+        ];
     }
 
     /**
