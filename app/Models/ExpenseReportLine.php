@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
- * App\Models\ExpenseReportLine
+ * An Expense Report Line as represented in Workday.
  *
  * @property int $id
  * @property int $workday_line_id

@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.NoSpaceBefore
+// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.NoSpaceAfter
+
 namespace App\Jobs;
 
 use App\Models\DocuSignEnvelope;
@@ -48,7 +51,7 @@ class MatchExpenseReport implements ShouldQueue, ShouldBeUnique
 
                 $envelope->expense_report_id = $this->expenseReport->id;
                 $envelope->save();
-            } catch (ModelNotFoundException | MultipleRecordsFoundException) {
+            } catch (ModelNotFoundException|MultipleRecordsFoundException) {
                 return;
             }
         }
