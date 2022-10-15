@@ -4,40 +4,39 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 
 /**
- * A Nova resource for Workday External Committee Members.
+ * A Nova resource for Workday Expense Payments.
  *
- * @extends \App\Nova\Resource<\App\Models\ExternalCommitteeMember>
+ * @extends \App\Nova\Resource<\App\Models\ExpensePayment>
  *
  * @phan-suppress PhanUnreferencedClass
  */
-class ExternalCommitteeMember extends Resource
+class ExpensePayment extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\ExternalCommitteeMember::class;
+    public static $model = \App\Models\ExpensePayment::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'transaction_reference';
 
     /**
      * The columns that should be searched.
@@ -45,8 +44,7 @@ class ExternalCommitteeMember extends Resource
      * @var array<string>
      */
     public static $search = [
-        'name',
-        'workday_external_committee_member_id',
+        'id',
     ];
 
     /**
@@ -62,37 +60,31 @@ class ExternalCommitteeMember extends Resource
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
-    public function fields(NovaRequest $request): array
+    public function fields(NovaRequest $request)
     {
         return [
-            ID::make()
+            Number::make('Check Number', 'transaction_reference')
                 ->sortable(),
 
             Number::make('Instance ID', 'workday_instance_id')
                 ->onlyOnDetail(),
 
-            Text::make('Name')
-                ->sortable()
-                ->readonly(),
+            Text::make('Status')
+                ->sortable(),
 
-            Text::make('External Committee Member ID', 'workday_external_committee_member_id')
-                ->sortable()
-                ->readonly(),
+            Boolean::make('Reconciled')
+                ->sortable(),
 
-            Boolean::make('Active')
-                ->sortable()
-                ->readonly(),
+            BelongsTo::make('Pay To', 'payTo', ExternalCommitteeMember::class)
+                ->sortable(),
 
-            BelongsTo::make('User')
-                ->nullable(),
+            Date::make('Payment Date')
+                ->sortable(),
 
-            URL::make('View in Workday', 'workday_url')
-                ->canSee(static fn (Request $request): bool => $request->user()->can('access-workday'))
-                ->hideWhenUpdating(),
+            Currency::make('Amount')
+                ->sortable(),
 
             HasMany::make('Expense Reports', 'expenseReports'),
-
-            HasMany::make('Expense Payments', 'expensePayments'),
 
             Panel::make('Timestamps', [
                 DateTime::make('Created', 'created_at')

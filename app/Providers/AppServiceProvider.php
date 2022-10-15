@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\DocuSignEnvelope;
+use App\Models\ExpenseReportLine;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Relation::morphMap([
             'docusign-envelope' => DocuSignEnvelope::class,
+            'expense-report-line' => ExpenseReportLine::class,
         ]);
     }
 }

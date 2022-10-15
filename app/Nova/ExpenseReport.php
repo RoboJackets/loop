@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
@@ -17,27 +18,27 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 
 /**
- * A Nova resource for Workday External Committee Members.
+ * A Nova resource for Workday Expense Reports.
  *
- * @extends \App\Nova\Resource<\App\Models\ExternalCommitteeMember>
+ * @extends \App\Nova\Resource<\App\Models\ExpenseReport>
  *
  * @phan-suppress PhanUnreferencedClass
  */
-class ExternalCommitteeMember extends Resource
+class ExpenseReport extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\ExternalCommitteeMember::class;
+    public static $model = \App\Models\ExpenseReport::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'workday_expense_report_id';
 
     /**
      * The columns that should be searched.
@@ -45,8 +46,7 @@ class ExternalCommitteeMember extends Resource
      * @var array<string>
      */
     public static $search = [
-        'name',
-        'workday_external_committee_member_id',
+        'id',
     ];
 
     /**
@@ -58,41 +58,53 @@ class ExternalCommitteeMember extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return array
      */
     public function fields(NovaRequest $request): array
     {
         return [
-            ID::make()
+            Text::make('Number', 'workday_expense_report_id')
+                ->sortable(),
+
+            BelongsTo::make('Fiscal Year', 'fiscalYear', FiscalYear::class)
                 ->sortable(),
 
             Number::make('Instance ID', 'workday_instance_id')
                 ->onlyOnDetail(),
 
-            Text::make('Name')
-                ->sortable()
-                ->readonly(),
+            Text::make('Status')
+                ->sortable(),
 
-            Text::make('External Committee Member ID', 'workday_external_committee_member_id')
-                ->sortable()
-                ->readonly(),
+            BelongsTo::make('Pay To', 'payTo', ExternalCommitteeMember::class)
+                ->sortable(),
 
-            Boolean::make('Active')
+            Text::make('Memo')
                 ->sortable()
-                ->readonly(),
+                ->onlyOnDetail(),
 
-            BelongsTo::make('User')
-                ->nullable(),
+            Text::make('Memo')
+                ->sortable()
+                ->displayUsing(static fn (string $memo): string => Str::limit($memo))
+                ->onlyOnIndex(),
+
+            Date::make('Created Date', 'created_date')
+                ->onlyOnDetail(),
+
+            Date::make('Approval Date', 'approval_date')
+                ->onlyOnDetail(),
+
+            BelongsTo::make('Created By', 'createdBy', User::class)
+                ->onlyOnDetail(),
+
+            BelongsTo::make('Expense Payment', 'expensePayment', ExpensePayment::class)
+                ->onlyOnDetail(),
+
+            Currency::make('Amount')
+                ->sortable(),
 
             URL::make('View in Workday', 'workday_url')
-                ->canSee(static fn (Request $request): bool => $request->user()->can('access-workday'))
-                ->hideWhenUpdating(),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('access-workday')),
 
-            HasMany::make('Expense Reports', 'expenseReports'),
-
-            HasMany::make('Expense Payments', 'expensePayments'),
+            HasMany::make('Lines', 'lines', ExpenseReportLine::class),
 
             Panel::make('Timestamps', [
                 DateTime::make('Created', 'created_at')

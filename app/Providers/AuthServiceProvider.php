@@ -6,6 +6,9 @@ namespace App\Providers;
 
 use App\Models\Attachment;
 use App\Models\DocuSignEnvelope;
+use App\Models\ExpensePayment;
+use App\Models\ExpenseReport;
+use App\Models\ExpenseReportLine;
 use App\Models\ExternalCommitteeMember;
 use App\Models\FiscalYear;
 use App\Models\FundingAllocation;
@@ -13,6 +16,9 @@ use App\Models\FundingAllocationLine;
 use App\Models\User;
 use App\Policies\AttachmentPolicy;
 use App\Policies\DocuSignEnvelopePolicy;
+use App\Policies\ExpensePaymentPolicy;
+use App\Policies\ExpenseReportLinePolicy;
+use App\Policies\ExpenseReportPolicy;
 use App\Policies\ExternalCommitteeMemberPolicy;
 use App\Policies\FiscalYearPolicy;
 use App\Policies\FundingAllocationLinePolicy;
@@ -36,6 +42,9 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Attachment::class => AttachmentPolicy::class,
         DocuSignEnvelope::class => DocuSignEnvelopePolicy::class,
+        ExpensePayment::class => ExpensePaymentPolicy::class,
+        ExpenseReport::class => ExpenseReportPolicy::class,
+        ExpenseReportLine::class => ExpenseReportLinePolicy::class,
         ExternalCommitteeMember::class => ExternalCommitteeMemberPolicy::class,
         FiscalYear::class => FiscalYearPolicy::class,
         FundingAllocation::class => FundingAllocationPolicy::class,

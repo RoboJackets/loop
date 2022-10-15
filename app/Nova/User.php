@@ -91,6 +91,8 @@ class User extends Resource
 
             HasMany::make('External Committee Members', 'externalCommitteeMembers'),
 
+            HasMany::make('Expense Reports', 'expenseReports'),
+
             SanctumTokens::make()
                 ->hideAbilities()
                 ->canSee(static fn (Request $request): bool => $request->user()->can('update-user-tokens')),

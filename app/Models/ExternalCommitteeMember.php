@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Scout\Searchable;
 
 /**
@@ -21,6 +22,8 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read string $workday_url
  * @property-read \App\Models\User|null $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExpenseReport> $expenseReports
+ * @property-read int|null $expense_reports_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember newQuery()
@@ -39,7 +42,7 @@ class ExternalCommitteeMember extends Model
 {
     use Searchable;
 
-    public const WORKDAY_NAME_REGEX = '/^(?P<name>^[a-zA-Z\s]+)\s+\(ECM\)(?P<inactive>\s+-\s+Inactive)?$/';
+    public const WORKDAY_NAME_REGEX = '/^(?P<name>^[a-zA-Z-\s]+)\s+\(ECM\)(?P<inactive>\s+-\s+Inactive)?$/';
 
     /**
      * The attributes that should be cast to native types.
@@ -80,6 +83,26 @@ class ExternalCommitteeMember extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the expense reports associated with this ECM.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpenseReport>
+     */
+    public function expenseReports(): HasMany
+    {
+        return $this->hasMany(ExpenseReport::class, 'external_committee_member_id', 'workday_instance_id');
+    }
+
+    /**
+     * Get the expense payments associated with this ECM.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpensePayment>
+     */
+    public function expensePayments(): HasMany
+    {
+        return $this->hasMany(ExpensePayment::class, 'external_committee_member_id', 'workday_instance_id');
     }
 
     /**

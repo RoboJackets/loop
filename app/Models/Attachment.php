@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -40,6 +41,15 @@ class Attachment extends Model
     use SoftDeletes;
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string,string>
+     */
+    protected $casts = [
+        'workday_uploaded_at' => 'datetime',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -48,6 +58,10 @@ class Attachment extends Model
         'attachable_type',
         'attachable_id',
         'filename',
+        'workday_instance_id',
+        'workday_uploaded_by_worker_id',
+        'workday_uploaded_at',
+        'workday_comment',
     ];
 
     /**
@@ -58,5 +72,23 @@ class Attachment extends Model
     public function attachable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    /**
+     * Return the user that uploaded this attachment to Workday, if applicable.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, self>
+     */
+    public function uploadedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'workday_uploaded_by_worker_id', 'workday_instance_id');
+    }
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'workday_instance_id';
     }
 }
