@@ -10,7 +10,6 @@ use Illuminate\Support\Str;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -36,7 +35,6 @@ class UnmatchedExpenseReports extends Lens
         return $request->withOrdering($request->withFilters(
             $query->whereDoesntHave('envelopes')
                 ->where('status', '!=', 'Canceled')
-                ->orderByDesc('created_date')
         ));
     }
 
@@ -48,8 +46,7 @@ class UnmatchedExpenseReports extends Lens
     public function fields(NovaRequest $request): array
     {
         return [
-            ID::make('Number', 'workday_expense_report_id')
-                ->asBigInt()  // treats it as a string
+            Text::make('Number', 'workday_expense_report_id')
                 ->sortable(),
 
             Date::make('Created', 'created_date')

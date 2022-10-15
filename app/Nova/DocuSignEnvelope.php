@@ -133,14 +133,11 @@ class DocuSignEnvelope extends Resource
                 ->fields(new DocuSignFundingSourceFields()),
 
             Panel::make('Documents', [
-                ...($this->sofo_form_filename === null || $this->type === null ? [] : [
-                    File::make(\App\Models\DocuSignEnvelope::$types[$this->type].' Form', 'sofo_form_filename')
-                        ->disk('local'),
-                ]),
-                ...($this->summary_filename === null ? [] : [
-                    File::make('Summary', 'summary_filename')
-                        ->disk('local'),
-                ]),
+                File::make('SOFO Form', 'sofo_form_filename')
+                    ->disk('local'),
+
+                File::make('Summary', 'summary_filename')
+                    ->disk('local'),
             ]),
 
             MorphMany::make('Attachments', 'attachments', Attachment::class),
