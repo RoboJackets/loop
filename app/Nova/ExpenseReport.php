@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\MatchExpenseReport;
 use App\Nova\Lenses\UnmatchedExpenseReports;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -158,6 +159,10 @@ class ExpenseReport extends Resource
      */
     public function actions(NovaRequest $request): array
     {
-        return [];
+        return [
+            MatchExpenseReport::make()
+                ->canSee(static fn (Request $request) => true)
+                ->canRun(static fn (NovaRequest $request, \App\Models\ExpenseReport $expenseReport) => true)
+        ];
     }
 }

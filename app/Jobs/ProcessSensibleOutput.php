@@ -7,8 +7,10 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Mail\DocuSignEnvelopeProcessed;
+use App\Models\Attachment;
 use App\Models\DocuSignEnvelope;
 use App\Models\DocuSignFundingSource;
+use App\Models\ExpenseReportLine;
 use App\Models\FiscalYear;
 use App\Models\FundingAllocation;
 use App\Models\FundingAllocationLine;
@@ -218,6 +220,16 @@ class ProcessSensibleOutput implements ShouldQueue
         }
 
         Mail::send(new DocuSignEnvelopeProcessed($this->envelope, $this->validation_errors));
+
+        try {
+            $attachment = Attachment::whereFilename($this->envelope->sofo_form_filename)->sole();
+
+            if ($attachment->attachable_type === ExpenseReportLine::getMorphClassStatic()) {
+                MatchExpenseReport::dispatch($attachment->attachable->expenseReport);
+            }
+        } catch (ModelNotFoundException) {
+            // nothing to do here
+        }
     }
 
     private static function parseDateTimeFromDocuSignFormat(string $timestamp): ?CarbonImmutable
