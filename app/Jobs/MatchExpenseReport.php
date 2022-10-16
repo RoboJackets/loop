@@ -34,16 +34,12 @@ class MatchExpenseReport implements ShouldQueue, ShouldBeUnique
 
     /**
      * Execute the job.
-     *
-     * @phan-suppress PhanTypeMismatchReturn
      */
-    public function handle(): ?DocuSignEnvelope
+    public function handle(): void
     {
         if ($this->expenseReport->status === 'Canceled') {
             DocuSignEnvelope::whereExpenseReportId($this->expenseReport->id)
                 ->update(['expense_report_id' => null]);
-
-            return null;
         } else {
             try {
                 $envelope = DocuSignEnvelope::whereAmount($this->expenseReport->amount)
@@ -55,10 +51,8 @@ class MatchExpenseReport implements ShouldQueue, ShouldBeUnique
 
                 $envelope->expense_report_id = $this->expenseReport->id;
                 $envelope->save();
-
-                return $envelope;
             } catch (ModelNotFoundException|MultipleRecordsFoundException) {
-                return null;
+                return;
             }
         }
     }

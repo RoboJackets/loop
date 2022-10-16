@@ -21,7 +21,6 @@ parameters:
     - '#Cannot access offset 0 on mixed\.#'
     - '#Cannot access offset \d on mixed\.#'
     - '#Cannot access property \$[a-zA-Z_]+ on App\\Models\\[a-zA-Z]+\|null\.#'
-    - '#Cannot access property \$[a-zA-Z_]+ on mixed\.#'
     - '#Cannot call method can\(\) on App\\Models\\User\|null\.#'
     - '#Cannot call method getClientOriginalName\(\) on array<int, Illuminate\\Http\\UploadedFile>\|Illuminate\\Http\\UploadedFile\|null\.#'
     - '#Cannot call method modelKeys\(\) on array<Spatie\\Permission\\Models\\[a-zA-Z]+>\|Illuminate\\Database\\Eloquent\\Collection\.#'

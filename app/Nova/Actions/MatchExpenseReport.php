@@ -6,6 +6,9 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use App\Models\DocuSignEnvelope;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\MultipleRecordsFoundException;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
@@ -41,11 +44,13 @@ class MatchExpenseReport extends Action
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
-        $envelope = \App\Jobs\MatchExpenseReport::dispatchSync($models->sole());
+        $expense_report = $models->sole();
 
-        if ($envelope === null) {
-            return Action::danger('Could not find matching DocuSign envelope.');
-        } else {
+        \App\Jobs\MatchExpenseReport::dispatchSync($expense_report);
+
+        try {
+            $envelope = DocuSignEnvelope::whereExpenseReportId($expense_report->id)->sole();
+
             return Action::visit(route(
                 'nova.pages.detail',
                 [
@@ -54,6 +59,10 @@ class MatchExpenseReport extends Action
                 ],
                 false
             ));
+        } catch (ModelNotFoundException) {
+            return Action::danger('Could not find matching DocuSign envelope.');
+        } catch (MultipleRecordsFoundException) {
+            return Action::message('Matched more than one DocuSign envelope.');
         }
     }
 
