@@ -47,6 +47,7 @@ parameters:
     - '#Parameter \#1 \$address of method Illuminate\\Mail\\Mailable::[a-z]{2}\(\) expects array\|object\|string, mixed given\.#'
     - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),mixed>::each\(\) expects callable\(mixed, \(int\|string\)\): mixed, Closure\(string, int\): void given\.#'
     - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),string>::map\(\) expects callable\(string, \(int\|string\)\): array, Closure\(array, string\): array given\.#'
+    - '#Parameter \#1 \$callback of method Laravel\\Nova\\Actions\\Action::canRun\(\) expects Closure\(Laravel\\Nova\\Http\\Requests\\NovaRequest, mixed\): bool, Closure\(Laravel\\Nova\\Http\\Requests\\NovaRequest, App\\Models\\Attachment\): bool given\.#'
     - '#Parameter \#1 \$displayCallback of method Laravel\\Nova\\Fields\\Field<array<int, \(callable\)\|Illuminate\\Contracts\\Validation\\Rule\|string\|Stringable>\|\(callable\)\|string\|Stringable>::displayUsing\(\) expects callable\(mixed, mixed, string\): mixed, Closure\(string\): string given\.#'
     - '#Parameter \#1 \$envelope of job class App\\Jobs\\[a-zA-Z]+ constructor expects App\\Models\\DocuSignEnvelope in App\\Jobs\\[a-zA-Z]+::dispatch(Sync)?\(\), App\\Models\\DocuSignEnvelope\|null given\.#'
     - '#Parameter \#1 \$expenseReport of job class App\\Jobs\\MatchExpenseReport constructor expects App\\Models\\ExpenseReport in App\\Jobs\\MatchExpenseReport::dispatch\(\), App\\Models\\ExpenseReport\|null given\.#'

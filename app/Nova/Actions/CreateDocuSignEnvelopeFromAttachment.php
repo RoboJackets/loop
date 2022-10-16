@@ -6,7 +6,6 @@ namespace App\Nova\Actions;
 
 use App\Jobs\SubmitDocuSignEnvelopeToSensible;
 use App\Models\DocuSignEnvelope;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Actions\Action;
@@ -45,22 +44,6 @@ class CreateDocuSignEnvelopeFromAttachment extends Action
         .'this is a valid, machine-readable envelope before running this action.';
 
     /**
-     * Determine if the filter or action should be available for the given request.
-     */
-    public function authorizedToSee(Request $request): bool
-    {
-        return $request->user()->can('access-sensible');
-    }
-
-    /**
-     * Determine if the action is executable for the given request.
-     */
-    public function authorizedToRun(Request $request, $model): bool
-    {
-        return $request->user()->can('access-sensible');
-    }
-
-    /**
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\Attachment>  $models
@@ -68,7 +51,7 @@ class CreateDocuSignEnvelopeFromAttachment extends Action
     public function handle(ActionFields $fields, Collection $models): array
     {
         if (count($models) > 1) {
-            return Action::danger('Select exactly one attachment');
+            return Action::danger('Select exactly one attachment.');
         }
 
         $model = $models->first();
@@ -76,7 +59,7 @@ class CreateDocuSignEnvelopeFromAttachment extends Action
         $envelope_uuid = DocuSignEnvelope::getEnvelopeUuidFromSummaryPdf(Storage::get($model->filename));
 
         if (DocuSignEnvelope::whereEnvelopeUuid($envelope_uuid)->exists()) {
-            return Action::danger('Envelope already exists');
+            return Action::danger('Envelope already exists.');
         }
 
         $envelope = DocuSignEnvelope::create([

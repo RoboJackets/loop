@@ -70,7 +70,7 @@ class CreateFundingAllocationLinesFromJacketPages extends Action
     public function handle(ActionFields $fields, Collection $models): array
     {
         if (count($models) > 1) {
-            return Action::danger('Select exactly one funding allocation');
+            return Action::danger('Select exactly one funding allocation.');
         }
 
         $model = $models->first();
