@@ -9,14 +9,10 @@ namespace App\Jobs;
 use App\Models\Attachment;
 use App\Models\DocuSignEnvelope;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Smalot\PdfParser\Parser;
 use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
 
 class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
 {
-    private const ENVELOPE_ID_REGEX = '/Envelope Id: (?P<envelopeId>[A-Z0-9]{32})/';
-
     private const FILENAME_SANITIZATION_REGEX = '/(?P<filename>^[a-zA-Z0-9() .\#-_]+$)/';
 
     /**
@@ -58,15 +54,9 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                     && preg_match(self::FILENAME_SANITIZATION_REGEX, $value['Name']) === 1
             );
 
-            $summary_text = (new Parser())
-                ->parseContent(base64_decode($summary_attachment['Content'], true))
-                ->getText();
-
-            $matches = [];
-
-            if (preg_match(self::ENVELOPE_ID_REGEX, $summary_text, $matches) !== 1) {
-                throw new \Exception('Could not extract envelope ID');
-            }
+            $envelope_uuid = DocuSignEnvelope::getEnvelopeUuidFromSummaryPdf(
+                base64_decode($summary_attachment['Content'], true)
+            );
 
             $attachments->each(static function (array $value, int $key): void {
                 if ($value['Name'] === 'Summary.pdf' || str_starts_with($value['Name'], 'SOFO')) {
@@ -77,14 +67,6 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
                     throw new \Exception('Filename does not match regex');
                 }
             });
-
-            $envelope_uuid = Str::lower(
-                Str::substr($matches['envelopeId'], 0, 8).'-'.
-                Str::substr($matches['envelopeId'], 8, 4).'-'.
-                Str::substr($matches['envelopeId'], 12, 4).'-'.
-                Str::substr($matches['envelopeId'], 16, 4).'-'.
-                Str::substr($matches['envelopeId'], 20, 12)
-            );
 
             if (DocuSignEnvelope::whereEnvelopeUuid($envelope_uuid)->exists()) {
                 return;

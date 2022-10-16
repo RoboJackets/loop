@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
+use Smalot\PdfParser\Parser;
 
 /**
  * A DocuSign envelope.
@@ -79,6 +81,8 @@ class DocuSignEnvelope extends Model
     use SoftDeletes;
     use Searchable;
     use GetMorphClassStatic;
+
+    private const ENVELOPE_ID_REGEX = '/Envelope Id: (?P<envelopeId>[A-Z0-9]{32})/';
 
     /**
      * The name of the database table for this model.
@@ -243,5 +247,26 @@ class DocuSignEnvelope extends Model
         return $this->sensible_extraction_uuid === null ?
             null :
             'https://app.sensible.so/extraction/?e='.$this->sensible_extraction_uuid;
+    }
+
+    public static function getEnvelopeUuidFromSummaryPdf(string $summary_pdf_text): string
+    {
+        $summary_text = (new Parser())
+            ->parseContent($summary_pdf_text)
+            ->getText();
+
+        $matches = [];
+
+        if (preg_match(self::ENVELOPE_ID_REGEX, $summary_text, $matches) !== 1) {
+            throw new \Exception('Could not extract envelope ID');
+        }
+
+        return Str::lower(
+            Str::substr($matches['envelopeId'], 0, 8).'-'.
+            Str::substr($matches['envelopeId'], 8, 4).'-'.
+            Str::substr($matches['envelopeId'], 12, 4).'-'.
+            Str::substr($matches['envelopeId'], 16, 4).'-'.
+            Str::substr($matches['envelopeId'], 20, 12)
+        );
     }
 }
