@@ -44,7 +44,8 @@ class ExpensePayment extends Resource
      * @var array<string>
      */
     public static $search = [
-        'id',
+        'transaction_reference',
+        'amount',
     ];
 
     /**

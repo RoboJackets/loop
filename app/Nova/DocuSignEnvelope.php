@@ -127,7 +127,8 @@ class DocuSignEnvelope extends Resource
 
             BelongsTo::make('Expense Report', 'expenseReport', ExpenseReport::class)
                 ->sortable()
-                ->nullable(),
+                ->nullable()
+                ->searchable(),
 
             BelongsToMany::make('Funding Sources', 'fundingSources', FundingAllocationLine::class)
                 ->fields(new DocuSignFundingSourceFields()),
