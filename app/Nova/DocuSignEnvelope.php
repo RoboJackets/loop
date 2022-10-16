@@ -6,6 +6,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\ProcessSensibleOutput;
 use App\Nova\Actions\RunSensibleExtraction;
+use App\Nova\Lenses\MissingExpenseReports;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -124,18 +125,19 @@ class DocuSignEnvelope extends Resource
             )
                 ->onlyOnDetail(),
 
+            BelongsTo::make('Expense Report', 'expenseReport', ExpenseReport::class)
+                ->sortable()
+                ->nullable(),
+
             BelongsToMany::make('Funding Sources', 'fundingSources', FundingAllocationLine::class)
                 ->fields(new DocuSignFundingSourceFields()),
 
             Panel::make('Documents', [
-                ...($this->sofo_form_filename === null || $this->type === null ? [] : [
-                    File::make(\App\Models\DocuSignEnvelope::$types[$this->type].' Form', 'sofo_form_filename')
-                        ->disk('local'),
-                ]),
-                ...($this->summary_filename === null ? [] : [
-                    File::make('Summary', 'summary_filename')
-                        ->disk('local'),
-                ]),
+                File::make('SOFO Form', 'sofo_form_filename')
+                    ->disk('local'),
+
+                File::make('Summary', 'summary_filename')
+                    ->disk('local'),
             ]),
 
             MorphMany::make('Attachments', 'attachments', Attachment::class),
@@ -209,7 +211,9 @@ class DocuSignEnvelope extends Resource
      */
     public function lenses(NovaRequest $request): array
     {
-        return [];
+        return [
+            MissingExpenseReports::make(),
+        ];
     }
 
     /**
@@ -220,8 +224,8 @@ class DocuSignEnvelope extends Resource
     public function actions(NovaRequest $request): array
     {
         return [
-            new ProcessSensibleOutput(),
-            new RunSensibleExtraction(),
+            ProcessSensibleOutput::make(),
+            RunSensibleExtraction::make(),
         ];
     }
 }

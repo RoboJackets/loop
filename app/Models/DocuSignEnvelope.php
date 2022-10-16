@@ -30,6 +30,7 @@ use Laravel\Scout\Searchable;
  * @property int|null $fiscal_year_id
  * @property int|null $replaces_docusign_envelope_id
  * @property bool $lost
+ * @property int|null $expense_report_id
  * @property \Illuminate\Support\Carbon|null $submitted_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -41,7 +42,10 @@ use Laravel\Scout\Searchable;
  * @property-read int|null $funding_sources_count
  * @property-read \App\Models\User|null $payToUser
  * @property-read DocuSignEnvelope|null $replacesEnvelope
+ * @property-read \App\Models\ExpenseReport|null $expenseReport
  * @property-read string|null $sensible_extraction_url
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DocuSignEnvelope> $replacedBy
+ * @property-read int|null $replaced_by_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope newQuery()
@@ -52,6 +56,7 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereEnvelopeUuid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereExpenseReportId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereFiscalYearId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereLost($value)
@@ -216,6 +221,16 @@ class DocuSignEnvelope extends Model
     public function attachments(): MorphMany
     {
         return $this->morphMany(Attachment::class, 'attachable');
+    }
+
+    /**
+     * Get the expense report for this envelope, if available.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ExpenseReport, self>
+     */
+    public function expenseReport(): BelongsTo
+    {
+        return $this->belongsTo(ExpenseReport::class);
     }
 
     /**

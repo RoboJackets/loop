@@ -30,6 +30,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read \App\Models\FiscalYear $fiscalYear
  * @property-read string $workday_url
  * @property-read \App\Models\ExternalCommitteeMember|null $payTo
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DocuSignEnvelope> $envelopes
+ * @property-read int|null $envelopes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExpenseReportLine> $lines
+ * @property-read int|null $lines_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|ExpenseReport newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ExpenseReport newQuery()
@@ -137,6 +141,16 @@ class ExpenseReport extends Model
     public function lines(): HasMany
     {
         return $this->hasMany(ExpenseReportLine::class, 'expense_report_id', 'workday_instance_id');
+    }
+
+    /**
+     * Get the envelopes for this expense report.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DocuSignEnvelope>
+     */
+    public function envelopes(): HasMany
+    {
+        return $this->hasMany(DocuSignEnvelope::class);
     }
 
     /**

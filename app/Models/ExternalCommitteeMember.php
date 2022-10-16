@@ -24,6 +24,8 @@ use Laravel\Scout\Searchable;
  * @property-read \App\Models\User|null $user
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExpenseReport> $expenseReports
  * @property-read int|null $expense_reports_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExpensePayment> $expensePayments
+ * @property-read int|null $expense_payments_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember newQuery()

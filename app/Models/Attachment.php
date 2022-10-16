@@ -16,14 +16,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $attachable_type
  * @property int $attachable_id
  * @property string $filename
+ * @property int|null $workday_instance_id
+ * @property int|null $workday_uploaded_by_worker_id
+ * @property \Illuminate\Support\Carbon|null $workday_uploaded_at
+ * @property string|null $workday_comment
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \App\Models\DocuSignEnvelope $attachable
+ * @property-read \App\Models\DocuSignEnvelope|\App\Models\ExpenseReportLine $attachable
+ * @property-read \App\Models\User|null $uploadedBy
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Attachment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Attachment newQuery()
- * @method static \Illuminate\Database\Query\Builder|Attachment onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Attachment query()
  * @method static \Illuminate\Database\Eloquent\Builder|Attachment whereAttachableId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Attachment whereAttachableType($value)
@@ -32,6 +36,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Attachment whereFilename($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Attachment whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Attachment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Attachment whereWorkdayComment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Attachment whereWorkdayInstanceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Attachment whereWorkdayUploadedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Attachment whereWorkdayUploadedByWorkerId($value)
+ * @method static \Illuminate\Database\Query\Builder|Attachment onlyTrashed()
  * @method static \Illuminate\Database\Query\Builder|Attachment withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Attachment withoutTrashed()
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
