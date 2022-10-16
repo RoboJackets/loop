@@ -50,13 +50,9 @@ class CreateDocuSignEnvelopeFromAttachment extends Action
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
-        if (count($models) > 1) {
-            return Action::danger('Select exactly one attachment.');
-        }
+        $attachment = $models->sole();
 
-        $model = $models->first();
-
-        $envelope_uuid = DocuSignEnvelope::getEnvelopeUuidFromSummaryPdf(Storage::get($model->filename));
+        $envelope_uuid = DocuSignEnvelope::getEnvelopeUuidFromSummaryPdf(Storage::get($attachment->filename));
 
         if (DocuSignEnvelope::whereEnvelopeUuid($envelope_uuid)->exists()) {
             return Action::danger('Envelope already exists.');
@@ -64,7 +60,7 @@ class CreateDocuSignEnvelopeFromAttachment extends Action
 
         $envelope = DocuSignEnvelope::create([
             'envelope_uuid' => $envelope_uuid,
-            'sofo_form_filename' => $model->filename,
+            'sofo_form_filename' => $attachment->filename,
         ]);
 
         SubmitDocuSignEnvelopeToSensible::dispatch($envelope);

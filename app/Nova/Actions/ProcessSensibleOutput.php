@@ -51,7 +51,7 @@ class ProcessSensibleOutput extends Action
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
-        Job::dispatchSync($models->first());
+        Job::dispatchSync($models->sole());
 
         return Action::message('Successfully processed Sensible output!');
     }

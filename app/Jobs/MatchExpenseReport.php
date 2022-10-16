@@ -34,6 +34,8 @@ class MatchExpenseReport implements ShouldQueue, ShouldBeUnique
 
     /**
      * Execute the job.
+     *
+     * @phan-suppress PhanTypeMismatchReturn
      */
     public function handle(): ?DocuSignEnvelope
     {

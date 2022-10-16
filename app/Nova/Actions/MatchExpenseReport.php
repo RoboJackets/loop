@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
+
 namespace App\Nova\Actions;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
@@ -40,13 +41,7 @@ class MatchExpenseReport extends Action
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
-        if (count($models) > 1) {
-            return Action::danger('Select exactly one expense report.');
-        }
-
-        $model = $models->first();
-
-        $envelope = \App\Jobs\MatchExpenseReport::dispatchSync($model);
+        $envelope = \App\Jobs\MatchExpenseReport::dispatchSync($models->sole());
 
         if ($envelope === null) {
             return Action::danger('Could not find matching DocuSign envelope.');

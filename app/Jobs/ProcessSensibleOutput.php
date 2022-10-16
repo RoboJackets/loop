@@ -228,7 +228,7 @@ class ProcessSensibleOutput implements ShouldQueue
                 MatchExpenseReport::dispatch($attachment->attachable->expenseReport);
             }
         } catch (ModelNotFoundException) {
-            // nothing to do here
+            return;
         }
     }
 
