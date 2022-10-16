@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\CreateDocuSignEnvelopeFromAttachment;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\File;
@@ -138,6 +139,8 @@ class Attachment extends Resource
      */
     public function actions(NovaRequest $request): array
     {
-        return [];
+        return [
+            CreateDocuSignEnvelopeFromAttachment::make(),
+        ];
     }
 }

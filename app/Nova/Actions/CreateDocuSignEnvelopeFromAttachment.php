@@ -42,7 +42,7 @@ class CreateDocuSignEnvelopeFromAttachment extends Action
      * @var string
      */
     public $confirmText = 'Are you sure you want to parse this attachment as a DocuSign envelope? Visually confirm '
-        .'this is a valid envelope before running this action.';
+        .'this is a valid, machine-readable envelope before running this action.';
 
     /**
      * Determine if the filter or action should be available for the given request.
