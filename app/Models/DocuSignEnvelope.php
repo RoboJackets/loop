@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Exceptions\CouldNotExtractEnvelopeUuid;
 use App\Traits\GetMorphClassStatic;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -258,7 +259,7 @@ class DocuSignEnvelope extends Model
         $matches = [];
 
         if (preg_match(self::ENVELOPE_ID_REGEX, $summary_text, $matches) !== 1) {
-            throw new \Exception('Could not extract envelope ID');
+            throw new CouldNotExtractEnvelopeUuid();
         }
 
         return Str::lower(

@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Scout\Searchable;
 
 /**
  * An Expense Report as represented in Workday.
@@ -56,6 +57,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class ExpenseReport extends Model
 {
+    use Searchable;
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -83,6 +86,16 @@ class ExpenseReport extends Model
         'approval_date',
         'status',
         'amount',
+    ];
+
+    /**
+     * The attributes that should be searchable in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public array $searchable_attributes = [
+        'workday_expense_report_id',
+        'memo',
     ];
 
     /**

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Models\DocuSignEnvelope;
+use App\Models\ExpenseReport;
+use App\Models\ExternalCommitteeMember;
 use App\Models\User;
 use Illuminate\Console\Command;
 
@@ -30,10 +32,16 @@ class ImportAllModels extends Command
     public function handle(): int
     {
         $this->call('scout:import', [
-            'model' => User::class,
+            'model' => DocuSignEnvelope::class,
         ]);
         $this->call('scout:import', [
-            'model' => DocuSignEnvelope::class,
+            'model' => ExpenseReport::class,
+        ]);
+        $this->call('scout:import', [
+            'model' => ExternalCommitteeMember::class,
+        ]);
+        $this->call('scout:import', [
+            'model' => User::class,
         ]);
 
         return 0;
