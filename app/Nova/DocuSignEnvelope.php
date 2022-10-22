@@ -161,7 +161,8 @@ class DocuSignEnvelope extends Resource
             Panel::make('Tracking', [
                 BelongsTo::make('Replaces Envelope', 'replacesEnvelope', self::class)
                     ->hideFromIndex()
-                    ->nullable(),
+                    ->nullable()
+                    ->searchable(),
 
                 Boolean::make('Lost')
                     ->onlyOnDetail(),
