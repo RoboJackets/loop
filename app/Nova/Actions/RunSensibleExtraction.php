@@ -65,7 +65,7 @@ class RunSensibleExtraction extends DestructiveAction
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
-        $envelope = $models->first();
+        $envelope = $models->sole();
 
         SubmitDocuSignEnvelopeToSensible::dispatchSync($envelope);
 
