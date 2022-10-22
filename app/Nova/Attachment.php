@@ -143,12 +143,12 @@ class Attachment extends Resource
         return [
             CreateDocuSignEnvelopeFromAttachment::make()
                 ->canSee(
-                    static fn (Request $request) => $request->user()->can('access-sensible')
+                    static fn (Request $request): bool => $request->user()->can('access-sensible')
                 )
                 ->canRun(
-                    static fn (NovaRequest $request, \App\Models\Attachment $attachment) => $request->user()->can(
-                        'access-sensible'
-                    )
+                    static fn (NovaRequest $request, \App\Models\Attachment $attachment): bool => $request
+                        ->user()
+                        ->can('access-sensible')
                 ),
         ];
     }
