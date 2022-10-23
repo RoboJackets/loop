@@ -9,6 +9,8 @@ use App\Models\DocuSignEnvelope;
 use App\Models\ExpenseReport;
 use App\Models\ExpenseReportLine;
 use App\Models\ExternalCommitteeMember;
+use App\Models\FundingAllocation;
+use App\Models\FundingAllocationLine;
 use App\Models\User;
 use Illuminate\Console\Command;
 
@@ -47,6 +49,12 @@ class ImportAllModels extends Command
         ]);
         $this->call('scout:import', [
             'model' => ExternalCommitteeMember::class,
+        ]);
+        $this->call('scout:import', [
+            'model' => FundingAllocation::class,
+        ]);
+        $this->call('scout:import', [
+            'model' => FundingAllocationLine::class,
         ]);
         $this->call('scout:import', [
             'model' => User::class,

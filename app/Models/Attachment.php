@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Scout\Searchable;
 use Smalot\PdfParser\Parser;
 
@@ -125,7 +126,7 @@ class Attachment extends Model
 
         // --mime-type to get just the MIME type
         // --brief to be "brief" and return *just* the MIME type
-        exec('file --mime-type --brief '.escapeshellarg($this->filename), $output);
+        exec('file --mime-type --brief '.escapeshellarg(Storage::disk('local')->path($this->filename)), $output);
 
         if (count($output) === 0) {
             return null;
@@ -157,7 +158,7 @@ class Attachment extends Model
         $mime_type = $this->getMimeType();
 
         if ($mime_type === 'application/pdf') {
-            $array['full_text'] = (new Parser())->parseFile($this->filename)->getText();
+            $array['full_text'] = (new Parser())->parseFile(Storage::disk('local')->path($this->filename))->getText();
             try {
                 $array['docusign_envelope_uuid'] = DocuSignEnvelope::getEnvelopeUuidFromSummaryPdf($array['full_text']);
             } catch (CouldNotExtractEnvelopeUuid) {
