@@ -29,14 +29,17 @@ class ContentSecurityPolicy extends Policy
         $this->addDirective(Directive::STYLE_ELEM, [
             Keyword::SELF,
             Keyword::UNSAFE_INLINE,
+            'https://fonts.bunny.net',
             Keyword::REPORT_SAMPLE,
         ]);
         $this->addDirective(Directive::STYLE, [
             Keyword::SELF,
             Keyword::UNSAFE_INLINE,
+            'https://fonts.bunny.net',
             Keyword::REPORT_SAMPLE,
         ]);
         $this->addDirective(Directive::FONT, [
+            'https://fonts.bunny.net',
             Keyword::SELF,
         ]);
         $this->addDirective(Directive::SCRIPT, [
