@@ -103,6 +103,12 @@ class ExpenseReport extends Resource
             Currency::make('Amount')
                 ->sortable(),
 
+            Currency::make(
+                'Envelopes Total Amount',
+                fn (): string|int => $this->envelopes()->sum('docusign_envelopes.amount')
+            )
+                ->onlyOnDetail(),
+
             URL::make('View in Workday', 'workday_url')
                 ->canSee(static fn (Request $request): bool => $request->user()->can('access-workday')),
 
