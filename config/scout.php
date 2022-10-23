@@ -44,9 +44,7 @@ return [
     */
 
     'queue' => [
-        [
-            'queue' => 'meilisearch',
-        ],
+        'queue' => 'meilisearch',
     ],
 
     /*
