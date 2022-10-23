@@ -165,7 +165,7 @@ class DocuSignEnvelope extends Resource
                     ->searchable(),
 
                 Boolean::make('Lost')
-                    ->onlyOnDetail(),
+                    ->hideFromIndex(),
             ]),
 
             HasMany::make('Replaced By', 'replacedBy', self::class),
