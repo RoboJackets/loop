@@ -7,13 +7,13 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Exceptions\CouldNotExtractEnvelopeUuid;
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Scout\Searchable;
-use Smalot\PdfParser\Parser;
 
 /**
  * An attachment for a DocuSign envelope.
@@ -120,29 +120,6 @@ class Attachment extends Model
         return 'workday_instance_id';
     }
 
-    private function getMimeType(): ?string
-    {
-        $output = null;
-
-        // --mime-type to get just the MIME type
-        // --brief to be "brief" and return *just* the MIME type
-        exec('file --mime-type --brief '.escapeshellarg(Storage::disk('local')->path($this->filename)), $output);
-
-        if (count($output) === 0) {
-            return null;
-        }
-
-        $output = $output[0];
-
-        // Sanity check to make sure we got a MIME type back, rather than an error (file names can't contain the /
-        // character so that was a good indicator)
-        if ($output !== null && str_contains($output, '/') && ! str_contains($output, 'cannot open')) {
-            return $output;
-        }
-
-        return null;
-    }
-
     /**
      * Get the indexable data array for the model.
      *
@@ -152,18 +129,38 @@ class Attachment extends Model
     {
         $array = $this->toArray();
 
-        $array['full_text'] = null;
-        $array['docusign_envelope_uuid'] = null;
+        $response = (new Client(
+            [
+                'base_uri' => config('services.tika.url'),
+                'headers' => [
+                    'Accept' => 'text/plain',
+                    'Content-Type' => 'application/octet-stream',
+                ],
+                'allow_redirects' => false,
+                'connect_timeout' => 10,
+                'read_timeout' => 60,
+                'synchronous' => true,
+            ]
+        ))->put(
+            '/tika',
+            [
+                'body' => Storage::disk('local')->get($this->filename),
+            ]
+        );
 
-        $mime_type = $this->getMimeType();
+        if ($response->getStatusCode() !== 200) {
+            throw new \Exception(
+                'Tika returned non-200 status code - '.$response->getStatusCode().' - '
+                .$response->getBody()->getContents()
+            );
+        }
 
-        if ($mime_type === 'application/pdf') {
-            $array['full_text'] = (new Parser())->parseFile(Storage::disk('local')->path($this->filename))->getText();
-            try {
-                $array['docusign_envelope_uuid'] = DocuSignEnvelope::getEnvelopeUuidFromSummaryPdf($array['full_text']);
-            } catch (CouldNotExtractEnvelopeUuid) {
-                // do nothing
-            }
+        $array['full_text'] = $response->getBody()->getContents();
+
+        try {
+            $array['docusign_envelope_uuid'] = DocuSignEnvelope::getEnvelopeUuidFromSummaryPdf($array['full_text']);
+        } catch (CouldNotExtractEnvelopeUuid) {
+            $array['docusign_envelope_uuid'] = null;
         }
 
         return $array;
