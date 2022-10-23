@@ -28,3 +28,5 @@ if [ ${SCOUT_DRIVER} = "meilisearch" ]
 then
     php artisan meilisearch:update-index-settings --no-interaction --verbose --only-return-id || true
 fi
+
+php artisan record-deployment-timestamp --no-interaction --verbose

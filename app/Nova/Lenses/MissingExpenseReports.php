@@ -39,6 +39,7 @@ class MissingExpenseReports extends Lens
                 ->whereDoesntHave('replacedBy')
                 ->whereIn('type', ['purchase_reimbursement', 'travel_reimbursement'])
                 ->where('lost', '=', false)
+                ->where('internal_cost_transfer', '=', false)
         ));
     }
 

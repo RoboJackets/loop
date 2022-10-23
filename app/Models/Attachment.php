@@ -2,12 +2,17 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.CodeAnalysis.EmptyStatement.DetectedCatch
+
 namespace App\Models;
 
+use App\Exceptions\CouldNotExtractEnvelopeUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
+use Smalot\PdfParser\Parser;
 
 /**
  * An attachment for a DocuSign envelope.
@@ -48,6 +53,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Attachment extends Model
 {
     use SoftDeletes;
+    use Searchable;
 
     /**
      * The attributes that should be cast to native types.
@@ -71,6 +77,18 @@ class Attachment extends Model
         'workday_uploaded_by_worker_id',
         'workday_uploaded_at',
         'workday_comment',
+    ];
+
+    /**
+     * The attributes that should be searchable in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public array $searchable_attributes = [
+        'filename',
+        'workday_comment',
+        'docusign_envelope_uuid',
+        'full_text',
     ];
 
     /**
@@ -99,5 +117,54 @@ class Attachment extends Model
     public function getRouteKeyName(): string
     {
         return 'workday_instance_id';
+    }
+
+    private function getMimeType(): ?string
+    {
+        $output = null;
+
+        // --mime-type to get just the MIME type
+        // --brief to be "brief" and return *just* the MIME type
+        exec('file --mime-type --brief '.escapeshellarg($this->filename), $output);
+
+        if (count($output) === 0) {
+            return null;
+        }
+
+        $output = $output[0];
+
+        // Sanity check to make sure we got a MIME type back, rather than an error (file names can't contain the /
+        // character so that was a good indicator)
+        if ($output !== null && str_contains($output, '/') && ! str_contains($output, 'cannot open')) {
+            return $output;
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string,int|string>
+     */
+    public function toSearchableArray(): array
+    {
+        $array = $this->toArray();
+
+        $array['full_text'] = null;
+        $array['docusign_envelope_uuid'] = null;
+
+        $mime_type = $this->getMimeType();
+
+        if ($mime_type === 'application/pdf') {
+            $array['full_text'] = (new Parser())->parseFile($this->filename)->getText();
+            try {
+                $array['docusign_envelope_uuid'] = DocuSignEnvelope::getEnvelopeUuidFromSummaryPdf($array['full_text']);
+            } catch (CouldNotExtractEnvelopeUuid) {
+                // do nothing
+            }
+        }
+
+        return $array;
     }
 }

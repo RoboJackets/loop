@@ -10,7 +10,9 @@ namespace App\Providers;
 use App\Models\User;
 use App\Policies\PermissionPolicy;
 use App\Policies\RolePolicy;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -25,9 +27,24 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         parent::boot();
 
+        $workday_data_synced_text = 'at an unknown time';
+
+        $timestamp = Cache::get('last_workday_sync');
+
+        if ($timestamp !== null) {
+            $workday_data_synced_text = Carbon::createFromTimestamp($timestamp)->diffForHumans();
+        } else {
+            $timestamp = Cache::get('last_deployment');
+
+            if ($timestamp !== null) {
+                $workday_data_synced_text = 'more than '.Carbon::createFromTimestamp($timestamp)->diffForHumans();
+            }
+        }
+
         Nova::footer(static fn (Request $request): string => '
 <p class="mt-8 text-center text-xs text-80">
     <a class="text-primary dim no-underline" href="https://github.com/RoboJackets/loop">Made with ♥ by RoboJackets</a>
+    <span class="px-1">&middot;</span>&nbsp;<span>Workday data synced '.$workday_data_synced_text.'</span>
 </p>
 ');
         Nova::report(static function (\Throwable $exception): void {

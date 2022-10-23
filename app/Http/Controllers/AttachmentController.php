@@ -18,6 +18,7 @@ class AttachmentController extends Controller
         $file->storeAs('workday/'.$attachment['workday_instance_id'], $file->getClientOriginalName());
 
         MatchExpenseReport::dispatch($attachment->attachable->expenseReport);
+        $attachment->searchable();
 
         return response()->json($attachment);
     }

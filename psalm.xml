@@ -29,6 +29,7 @@
                 <directory name="app/SignatureValidators" />
                 <directory name="app/Jobs" />
                 <directory name="app/Http/Controllers"/>
+                <directory name="app/Observers"/>
             </errorLevel>
         </UndefinedMagicMethod>
         <LessSpecificImplementedReturnType>

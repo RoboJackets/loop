@@ -8,6 +8,7 @@ use App\Traits\GetMorphClassStatic;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Laravel\Scout\Searchable;
 
 /**
  * An Expense Report Line as represented in Workday.
@@ -38,6 +39,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 class ExpenseReportLine extends Model
 {
     use GetMorphClassStatic;
+    use Searchable;
 
     /**
      * The attributes that should be cast to native types.
@@ -57,6 +59,15 @@ class ExpenseReportLine extends Model
         'workday_line_id',
         'expense_report_id',
         'amount',
+        'memo',
+    ];
+
+    /**
+     * The attributes that should be searchable in Meilisearch.
+     *
+     * @var array<string>
+     */
+    public array $searchable_attributes = [
         'memo',
     ];
 

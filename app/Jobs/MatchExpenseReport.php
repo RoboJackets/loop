@@ -55,6 +55,7 @@ class MatchExpenseReport implements ShouldQueue, ShouldBeUnique
                     ->whereDoesntHave('replacedBy')
                     ->whereIn('type', ['purchase_reimbursement', 'travel_reimbursement'])
                     ->whereDate('submitted_at', '<=', $this->expenseReport->created_date)
+                    ->where('internal_cost_transfer', '=', false)
                     ->sole();
 
                 $envelope->expense_report_id = $this->expenseReport->id;
@@ -86,6 +87,7 @@ class MatchExpenseReport implements ShouldQueue, ShouldBeUnique
                             ->whereDoesntHave('expenseReport')
                             ->whereDoesntHave('replacedBy')
                             ->whereIn('type', ['purchase_reimbursement', 'travel_reimbursement'])
+                            ->where('internal_cost_transfer', '=', false)
                             ->whereDate('submitted_at', '<=', $this->expenseReport->created_date)
                             ->sole();
 
