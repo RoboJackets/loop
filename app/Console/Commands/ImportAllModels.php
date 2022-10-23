@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
+// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Console\Commands;
 
 use App\Models\Attachment;
@@ -36,9 +39,6 @@ class ImportAllModels extends Command
     public function handle(): int
     {
         $this->call('scout:import', [
-            'model' => Attachment::class,
-        ]);
-        $this->call('scout:import', [
             'model' => DocuSignEnvelope::class,
         ]);
         $this->call('scout:import', [
@@ -59,6 +59,9 @@ class ImportAllModels extends Command
         $this->call('scout:import', [
             'model' => User::class,
         ]);
+        Attachment::all()->each(static function (Attachment $attachment, int $key): void {
+            $attachment->searchable();
+        });
 
         return 0;
     }

@@ -78,6 +78,7 @@ return [
      */
     'addresses' => [
         env('MEILISEARCH_HOST').'/health' => 200,
+        env('TIKA_URL').'/tika' => 200,
     ],
 
     /*

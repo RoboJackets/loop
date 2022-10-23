@@ -170,7 +170,7 @@ return [
 
     'environments' => [
         'production' => [
-            'supervisor' => [
+            'main' => [
                 'connection' => 'redis',
                 'queue' => ['default', 'postmark', 'sensible'],
                 'balance' => 'simple',
@@ -178,14 +178,30 @@ return [
                 'tries' => 1,
                 'block_for' => null,
             ],
+            'meilisearch' => [
+                'connection' => 'redis',
+                'queue' => ['meilisearch'],
+                'balance' => 'simple',
+                'processes' => 4,
+                'tries' => 1,
+                'block_for' => null,
+            ],
         ],
 
         'test' => [
-            'supervisor' => [
+            'main' => [
                 'connection' => 'redis',
                 'queue' => ['default', 'postmark', 'sensible'],
                 'balance' => 'simple',
                 'processes' => 1,
+                'tries' => 1,
+                'block_for' => null,
+            ],
+            'meilisearch' => [
+                'connection' => 'redis',
+                'queue' => ['meilisearch'],
+                'balance' => 'simple',
+                'processes' => 4,
                 'tries' => 1,
                 'block_for' => null,
             ],
