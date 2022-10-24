@@ -58,6 +58,7 @@ parameters:
     - '#Parameter \#1 \$string of function substr expects string, mixed given\.#'
     - '#Parameter \#1 \$summary_pdf of static method App\\Models\\DocuSignEnvelope::getEnvelopeUuidFromSummaryPdf\(\) expects string, string\|false given\.#'
     - '#Parameter \#1 \$summary_pdf of static method App\\Models\\DocuSignEnvelope::getEnvelopeUuidFromSummaryPdf\(\) expects string, string\|null given\.#'
+    - '#Parameter \#1 \$summary_text of static method App\\Models\\DocuSignEnvelope::getEnvelopeUuidFromSummaryText\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$timestamp of static method App\\Jobs\\ProcessSensibleOutput::parseDateTimeFromDocuSignFormat\(\) expects string, float\|int\|string given\.#'
     - '#Parameter \#1 \$timestamp of static method Carbon\\Carbon::createFromTimestamp\(\) expects float\|int\|string, mixed given\.#'
     - '#Parameter \#1 \$title of static method Illuminate\\Support\\Str::slug\(\) expects string, mixed given\.#'
