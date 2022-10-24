@@ -172,18 +172,10 @@ return [
         'production' => [
             'main' => [
                 'connection' => 'redis',
-                'queue' => ['default', 'postmark', 'sensible'],
+                'queue' => ['default', 'postmark', 'sensible', 'meilisearch'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,
-                'block_for' => null,
-            ],
-            'meilisearch' => [
-                'connection' => 'redis',
-                'queue' => ['meilisearch'],
-                'balance' => 'simple',
-                'processes' => 2,
-                'tries' => 2,
                 'block_for' => null,
             ],
         ],
@@ -191,18 +183,10 @@ return [
         'test' => [
             'main' => [
                 'connection' => 'redis',
-                'queue' => ['default', 'postmark', 'sensible'],
+                'queue' => ['default', 'postmark', 'sensible', 'meilisearch'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,
-                'block_for' => null,
-            ],
-            'meilisearch' => [
-                'connection' => 'redis',
-                'queue' => ['meilisearch'],
-                'balance' => 'simple',
-                'processes' => 2,
-                'tries' => 2,
                 'block_for' => null,
             ],
         ],
