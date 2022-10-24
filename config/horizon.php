@@ -177,7 +177,7 @@ return [
                 'processes' => 1,
                 'tries' => 1,
                 'block_for' => null,
-                'timeout' => 120,
+                'timeout' => 90,
             ],
         ],
 
@@ -189,7 +189,7 @@ return [
                 'processes' => 1,
                 'tries' => 1,
                 'block_for' => null,
-                'timeout' => 120,
+                'timeout' => 90,
             ],
         ],
     ],
