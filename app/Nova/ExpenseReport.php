@@ -162,12 +162,14 @@ class ExpenseReport extends Resource
      * Get the actions available for the resource.
      *
      * @return array<\Laravel\Nova\Actions\Action>
+     *
+     * @phan-suppress PhanTypeMismatchArgumentProbablyReal
      */
     public function actions(NovaRequest $request): array
     {
         return [
             MatchExpenseReport::make()
-                ->canSee(static fn (Request $request): bool => true)
+                ->canSee(static fn (NovaRequest $request): bool => true)
                 ->canRun(static fn (NovaRequest $request, \App\Models\ExpenseReport $expenseReport): bool => true),
         ];
     }
