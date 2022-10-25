@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::table('docusign_envelopes', static function (Blueprint $table): void {
             $table->foreignIdFor(DocuSignEnvelope::class, 'duplicate_of_docusign_envelope_id')
                 ->nullable()
-                ->constrained();
+                ->constrained('docusign_envelopes');
         });
     }
 
