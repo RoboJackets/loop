@@ -47,6 +47,7 @@ class MatchExpenseReport implements ShouldQueue, ShouldBeUnique
     {
         if ($this->expenseReport->status === 'Canceled') {
             DocuSignEnvelope::whereExpenseReportId($this->expenseReport->id)
+                ->where('lost', '=', false)
                 ->update(['expense_report_id' => null]);
         } else {
             try {
@@ -69,7 +70,7 @@ class MatchExpenseReport implements ShouldQueue, ShouldBeUnique
                             static function (Attachment $attachment, int $key) use (&$envelope_uuids): void {
                                 try {
                                     $envelope_uuids[] = DocuSignEnvelope::getEnvelopeUuidFromSummaryPdf(
-                                        Storage::get($attachment->filename)
+                                        Storage::disk('local')->path($attachment->filename)
                                     );
                                 } catch (CouldNotExtractEnvelopeUuid|FileNotFoundException) {
                                     return;
