@@ -196,6 +196,16 @@ class DocuSignEnvelope extends Model
     }
 
     /**
+     * Get the envelope that this envelope replaces, if any.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<self, self>
+     */
+    public function duplicateOf(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'duplicate_of_docusign_envelope_id');
+    }
+
+    /**
      * Get the envelopes that replace this envelope, if any.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<self>
@@ -203,6 +213,16 @@ class DocuSignEnvelope extends Model
     public function replacedBy(): HasMany
     {
         return $this->hasMany(self::class, 'replaces_docusign_envelope_id');
+    }
+
+    /**
+     * Get the envelopes that replace this envelope, if any.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<self>
+     */
+    public function duplicates(): HasMany
+    {
+        return $this->hasMany(self::class, 'duplicate_of_docusign_envelope_id');
     }
 
     /**

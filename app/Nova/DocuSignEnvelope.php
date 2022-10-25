@@ -164,6 +164,11 @@ class DocuSignEnvelope extends Resource
                     ->nullable()
                     ->searchable(),
 
+                BelongsTo::make('Duplicate of Envelope', 'duplicateOf', self::class)
+                    ->hideFromIndex()
+                    ->nullable()
+                    ->searchable(),
+
                 Boolean::make('Lost')
                     ->hideFromIndex(),
 
@@ -172,6 +177,8 @@ class DocuSignEnvelope extends Resource
             ]),
 
             HasMany::make('Replaced By', 'replacedBy', self::class),
+
+            HasMany::make('Duplicates', 'duplicates', self::class),
 
             Panel::make('Timestamps', [
                 DateTime::make('Submitted', 'submitted_at')

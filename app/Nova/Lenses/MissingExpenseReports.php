@@ -37,6 +37,7 @@ class MissingExpenseReports extends Lens
         return $request->withOrdering($request->withFilters(
             $query->whereDoesntHave('expenseReport')
                 ->whereDoesntHave('replacedBy')
+                ->whereDoesntHave('duplicateOf')
                 ->whereIn('type', ['purchase_reimbursement', 'travel_reimbursement'])
                 ->where('lost', '=', false)
                 ->where('internal_cost_transfer', '=', false)
