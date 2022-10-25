@@ -2,11 +2,18 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
+// phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
+
 namespace App\Console\Commands;
 
+use App\Models\Attachment;
 use App\Models\DocuSignEnvelope;
 use App\Models\ExpenseReport;
+use App\Models\ExpenseReportLine;
 use App\Models\ExternalCommitteeMember;
+use App\Models\FundingAllocation;
+use App\Models\FundingAllocationLine;
 use App\Models\User;
 use Illuminate\Console\Command;
 
@@ -38,11 +45,23 @@ class ImportAllModels extends Command
             'model' => ExpenseReport::class,
         ]);
         $this->call('scout:import', [
+            'model' => ExpenseReportLine::class,
+        ]);
+        $this->call('scout:import', [
             'model' => ExternalCommitteeMember::class,
+        ]);
+        $this->call('scout:import', [
+            'model' => FundingAllocation::class,
+        ]);
+        $this->call('scout:import', [
+            'model' => FundingAllocationLine::class,
         ]);
         $this->call('scout:import', [
             'model' => User::class,
         ]);
+        Attachment::all()->each(static function (Attachment $attachment, int $key): void {
+            $attachment->searchable();
+        });
 
         return 0;
     }

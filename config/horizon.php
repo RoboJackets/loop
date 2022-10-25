@@ -170,24 +170,26 @@ return [
 
     'environments' => [
         'production' => [
-            'supervisor' => [
+            'main' => [
                 'connection' => 'redis',
-                'queue' => ['default', 'postmark', 'sensible'],
+                'queue' => ['default', 'postmark', 'sensible', 'meilisearch'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,
                 'block_for' => null,
+                'timeout' => 90,
             ],
         ],
 
         'test' => [
-            'supervisor' => [
+            'main' => [
                 'connection' => 'redis',
-                'queue' => ['default', 'postmark', 'sensible'],
+                'queue' => ['default', 'postmark', 'sensible', 'meilisearch'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,
                 'block_for' => null,
+                'timeout' => 90,
             ],
         ],
     ],

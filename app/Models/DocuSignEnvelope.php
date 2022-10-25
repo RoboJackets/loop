@@ -250,12 +250,17 @@ class DocuSignEnvelope extends Model
             'https://app.sensible.so/extraction/?e='.$this->sensible_extraction_uuid;
     }
 
-    public static function getEnvelopeUuidFromSummaryPdf(string $summary_pdf_text): string
+    public static function getEnvelopeUuidFromSummaryPdf(string $summary_pdf): string
     {
         $summary_text = (new Parser())
-            ->parseContent($summary_pdf_text)
+            ->parseContent($summary_pdf)
             ->getText();
 
+        return self::getEnvelopeUuidFromSummaryText($summary_text);
+    }
+
+    public static function getEnvelopeUuidFromSummaryText(string $summary_text): string
+    {
         $matches = [];
 
         if (preg_match(self::ENVELOPE_ID_REGEX, $summary_text, $matches) !== 1) {

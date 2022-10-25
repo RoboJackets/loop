@@ -7,6 +7,7 @@ use App\Http\Controllers\DocumentDownloadController;
 use App\Http\Controllers\ExpenseReportController;
 use App\Http\Controllers\ExpenseReportLineController;
 use App\Http\Controllers\ExternalCommitteeMemberController;
+use App\Http\Controllers\SyncController;
 use App\Http\Controllers\WorkerController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,9 @@ Route::prefix('/v1/workday/')->middleware(['auth:sanctum', 'can:access-workday']
     Route::put('expense-reports/{expense_report}/lines/{line}', ExpenseReportLineController::class)->scopeBindings();
 
     Route::post('attachments/{attachment}', AttachmentController::class);
+
+    Route::get('sync', [SyncController::class, 'getResourcesToSync']);
+    Route::post('sync', [SyncController::class, 'syncComplete']);
 });
 
 Route::webhooks('/v1/postmark/inbound', 'postmark-inbound');
