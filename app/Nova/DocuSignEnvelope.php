@@ -174,6 +174,9 @@ class DocuSignEnvelope extends Resource
 
                 Boolean::make('Internal Cost Transfer')
                     ->hideFromIndex(),
+
+                Boolean::make('Submission Error')
+                    ->hideFromIndex(),
             ]),
 
             HasMany::make('Replaced By', 'replacedBy', self::class),
