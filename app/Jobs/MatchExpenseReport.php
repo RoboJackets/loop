@@ -71,7 +71,7 @@ class MatchExpenseReport implements ShouldQueue, ShouldBeUnique
                             static function (Attachment $attachment, int $key) use (&$envelope_uuids): void {
                                 try {
                                     $envelope_uuids[] = DocuSignEnvelope::getEnvelopeUuidFromSummaryPdf(
-                                        Storage::disk('local')->path($attachment->filename)
+                                        Storage::disk('local')->get($attachment->filename)
                                     );
                                 } catch (CouldNotExtractEnvelopeUuid|FileNotFoundException) {
                                     return;
