@@ -113,10 +113,10 @@ class SyncController extends Controller
             ->get()
             ->pluck('external_committee_member_id');
 
-        $sync_external_committee_members = collect($expense_reports)
+        $sync_external_committee_members = array_values(collect($expense_reports)
             ->concat($expense_payments)
             ->uniqueStrict()
-            ->toArray();
+            ->toArray());
 
         return response()->json(
             [

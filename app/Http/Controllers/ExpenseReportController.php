@@ -17,6 +17,7 @@ use App\Models\FiscalYear;
 use App\Models\User;
 use App\Util\Workday;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\ItemNotFoundException;
 
 class ExpenseReportController extends Controller
 {
@@ -31,6 +32,7 @@ class ExpenseReportController extends Controller
         'Canceled',
         'Approved',
         'Waiting on Expense Partner',
+        'In Progress',
     ];
 
     private const VALID_PAYMENT_STATUSES = [
@@ -160,16 +162,24 @@ class ExpenseReportController extends Controller
      */
     public function update(ExpenseReport $expense_report, UpdateExpenseReport $request): JsonResponse
     {
+        $c = 1;
+
+        try {
+            Workday::sole($request['body']['children'][1], 'wd:Document_Memo');
+        } catch (ItemNotFoundException) {
+            $c = 2;
+        }
+
         $expense_report_attributes = [
             'status' => Workday::sole($request['body']['children'][0], 'wd:Expense_Report_Status')['value'],
             'external_committee_member_id' => Workday::getInstanceId(
                 Workday::sole($request['body']['children'][0], 'wd:Expense_Payee_for_Expense_Documents--IS')
             ),
             'amount' => Workday::sole($request['body']['children'][0], 'wd:Total_Reimbursement_Amount')['value'],
-            'memo' => Workday::sole($request['body']['children'][1], 'wd:Document_Memo')['value'],
+            'memo' => Workday::sole($request['body']['children'][$c], 'wd:Document_Memo')['value'],
         ];
 
-        $approval_date = Workday::sole($request['body']['children'][1], 'wd:Approval_Date');
+        $approval_date = Workday::sole($request['body']['children'][$c], 'wd:Approval_Date');
 
         $expense_report_attributes['approval_date'] = array_key_exists('value', $approval_date)
             ? Workday::getDate($approval_date)

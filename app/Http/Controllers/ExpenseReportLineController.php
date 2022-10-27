@@ -20,14 +20,21 @@ class ExpenseReportLineController extends Controller
      *
      * @phan-suppress PhanTypeMismatchArgument
      * @phan-suppress PhanTypeMismatchDimFetch
+     * @phan-suppress PhanTypeMismatchArgumentInternal
      */
     public function __invoke(
         ExpenseReport $expense_report,
         ExpenseReportLine $line,
         UpdateExpenseReportLine $request
     ): JsonResponse {
+        $c = 0;
+
+        if (! array_key_exists('children', $request['body']['children'][0])) {
+            $c = 1;
+        }
+
         $attachment_rows = Workday::searchForKeyValuePair(
-            $request['body']['children'][0]['children'][0]['children'],
+            $request['body']['children'][$c]['children'][0]['children'],
             'widget',
             'fileUpload2Row'
         );
