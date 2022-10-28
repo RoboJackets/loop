@@ -185,7 +185,8 @@ class DocuSignEnvelope extends Resource
 
             Panel::make('Timestamps', [
                 DateTime::make('Submitted', 'submitted_at')
-                    ->hideWhenUpdating(),
+                    ->hideWhenUpdating()
+                    ->sortable(),
 
                 DateTime::make('Created', 'created_at')
                     ->onlyOnDetail(),
