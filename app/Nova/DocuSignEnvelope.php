@@ -104,7 +104,8 @@ class DocuSignEnvelope extends Resource
             Select::make('Form Type', 'type')
                 ->sortable()
                 ->options(\App\Models\DocuSignEnvelope::$types)
-                ->displayUsingLabels(),
+                ->displayUsingLabels()
+                ->filterable(),
 
             BelongsTo::make('Pay To', 'payToUser', User::class)
                 ->sortable()
@@ -170,13 +171,16 @@ class DocuSignEnvelope extends Resource
                     ->searchable(),
 
                 Boolean::make('Lost')
-                    ->hideFromIndex(),
+                    ->hideFromIndex()
+                    ->filterable(),
 
                 Boolean::make('Internal Cost Transfer')
-                    ->hideFromIndex(),
+                    ->hideFromIndex()
+                    ->filterable(),
 
                 Boolean::make('Submission Error')
-                    ->hideFromIndex(),
+                    ->hideFromIndex()
+                    ->filterable(),
             ]),
 
             HasMany::make('Replaced By', 'replacedBy', self::class),
@@ -186,7 +190,8 @@ class DocuSignEnvelope extends Resource
             Panel::make('Timestamps', [
                 DateTime::make('Submitted', 'submitted_at')
                     ->hideWhenUpdating()
-                    ->sortable(),
+                    ->sortable()
+                    ->filterable(),
 
                 DateTime::make('Created', 'created_at')
                     ->onlyOnDetail(),
