@@ -57,6 +57,6 @@ class ExpenseReportsPendingPayment extends Value
      */
     public function name(): string
     {
-        return 'Approved Expense Reports Pending Payment';
+        return 'Expense Reports Pending Payment';
     }
 }
