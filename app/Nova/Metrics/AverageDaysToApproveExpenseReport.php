@@ -38,22 +38,24 @@ class AverageDaysToApproveExpenseReport extends Value
 
         return $this->result(
             ceil(
-                ExpenseReport::selectRaw('avg(datediff(approval_date, created_date)) as diff')
-                    ->when(
-                        $range !== 'ALL',
-                        static function (EloquentBuilder $query, bool $range_is_not_all) use ($range): void {
-                            $query->where(
-                                'expense_reports.fiscal_year_id',
-                                static function (QueryBuilder $query) use ($range) {
-                                    $query->select('id')
-                                        ->from('fiscal_years')
-                                        ->where('ending_year', $range);
-                                }
-                            );
-                        }
-                    )
-                    ->whereNotNull('approval_date')
-                    ->sole()->diff
+                floatval(
+                    ExpenseReport::selectRaw('avg(datediff(approval_date, created_date)) as diff')
+                        ->when(
+                            $range !== 'ALL',
+                            static function (EloquentBuilder $query, bool $range_is_not_all) use ($range): void {
+                                $query->where(
+                                    'expense_reports.fiscal_year_id',
+                                    static function (QueryBuilder $query) use ($range) {
+                                        $query->select('id')
+                                            ->from('fiscal_years')
+                                            ->where('ending_year', $range);
+                                    }
+                                );
+                            }
+                        )
+                        ->whereNotNull('approval_date')
+                        ->sole()->diff
+                )
             )
         )
             ->suffix(' days');

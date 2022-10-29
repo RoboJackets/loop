@@ -39,24 +39,26 @@ class AverageDaysToPayExpenseReport extends Value
 
         return $this->result(
             ceil(
-                ExpensePayment::selectRaw('avg(datediff(payment_date, approval_date)) as diff')
-                    ->leftJoin('expense_reports', static function (JoinClause $join): void {
-                        $join->on('expense_payments.workday_instance_id', '=', 'expense_payment_id');
-                    })
-                    ->when(
-                        $range !== 'ALL',
-                        static function (EloquentBuilder $query, bool $range_is_not_all) use ($range): void {
-                            $query->where(
-                                'expense_reports.fiscal_year_id',
-                                static function (QueryBuilder $query) use ($range) {
-                                    $query->select('id')
-                                        ->from('fiscal_years')
-                                        ->where('ending_year', $range);
-                                }
-                            );
-                        }
-                    )
-                    ->sole()->diff
+                floatval(
+                    ExpensePayment::selectRaw('avg(datediff(payment_date, approval_date)) as diff')
+                        ->leftJoin('expense_reports', static function (JoinClause $join): void {
+                            $join->on('expense_payments.workday_instance_id', '=', 'expense_payment_id');
+                        })
+                        ->when(
+                            $range !== 'ALL',
+                            static function (EloquentBuilder $query, bool $range_is_not_all) use ($range): void {
+                                $query->where(
+                                    'expense_reports.fiscal_year_id',
+                                    static function (QueryBuilder $query) use ($range) {
+                                        $query->select('id')
+                                            ->from('fiscal_years')
+                                            ->where('ending_year', $range);
+                                    }
+                                );
+                            }
+                        )
+                        ->sole()->diff
+                )
             )
         )
             ->suffix(' days');
