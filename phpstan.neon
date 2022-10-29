@@ -11,6 +11,8 @@ parameters:
     - stubs/*
     - database/migrations/2022_09_04_164122_create_permission_tables.php
   ignoreErrors:
+    - '#Access to an undefined property App\\Models\\[a-zA-Z]+::\$diff\.#'
+    - '#Access to an undefined property App\\Models\\[a-zA-Z]+::\$total\.#'
     - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$[a-zA-Z_]+\.#'
     - '#Access to an undefined property Laravel\\Nova\\Fields\\ActionFields::\$[a-zA-Z_]+\.#'
     - '#Anonymous function should return int\|string but returns mixed\.#'
@@ -31,6 +33,7 @@ parameters:
     - '#Method App\\Models\\[a-zA-Z]+::getMorphClassStatic\(\) should return string but returns int\|string\|false\.#'
     - '#Method App\\Nova\\[a-zA-Z0-9]+::fields\(\) return type has no value type specified in iterable type array\.#'
     - '#Method App\\Nova\\Actions\\[a-zA-Z]+::handle\(\) return type has no value type specified in iterable type array\.#'
+    - '#Method App\\Nova\\Metrics\\[a-zA-Z]+::ranges\(\) return type has no value type specified in iterable type array\.#'
     - '#Method App\\Util\\Workday::getInstanceId\(\) has parameter \$widget with no value type specified in iterable type array\.#'
     - '#Method App\\Util\\Workday::searchForKeyValuePair\(\) has parameter \$widgets with no value type specified in iterable type array\.#'
     - '#Method App\\Util\\Workday::searchForKeyValuePair\(\) return type has no value type specified in iterable type array\.#'
