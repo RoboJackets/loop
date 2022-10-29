@@ -23,7 +23,7 @@ class AverageDaysToCreateExpenseReport extends Value
      *
      * @var string
      */
-    public $icon = 'inbox-arrow-down';
+    public $icon = 'calendar';
 
     /**
      * The help text for the metric.

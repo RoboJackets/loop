@@ -17,7 +17,7 @@ class ExpensePaymentsPendingReconciliation extends Value
      *
      * @var string
      */
-    public $icon = 'banknotes';
+    public $icon = 'cash';
 
     /**
      * The help text for the metric.

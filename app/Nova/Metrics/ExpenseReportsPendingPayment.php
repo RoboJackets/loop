@@ -17,7 +17,7 @@ class ExpenseReportsPendingPayment extends Value
      *
      * @var string
      */
-    public $icon = 'document-check';
+    public $icon = 'check-circle';
 
     /**
      * The help text for the metric.

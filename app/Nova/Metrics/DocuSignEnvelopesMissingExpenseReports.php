@@ -18,7 +18,7 @@ class DocuSignEnvelopesMissingExpenseReports extends Value
      *
      * @var string
      */
-    public $icon = 'inbox-arrow-down';
+    public $icon = 'inbox-in';
 
     /**
      * The help text for the metric.

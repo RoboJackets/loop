@@ -21,7 +21,7 @@ class AverageDaysToPayExpenseReport extends Value
      *
      * @var string
      */
-    public $icon = 'document-check';
+    public $icon = 'calendar';
 
     /**
      * The help text for the metric.

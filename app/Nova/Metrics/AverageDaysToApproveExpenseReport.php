@@ -20,7 +20,7 @@ class AverageDaysToApproveExpenseReport extends Value
      *
      * @var string
      */
-    public $icon = 'document-magnifying-glass';
+    public $icon = 'calendar';
 
     /**
      * The help text for the metric.
