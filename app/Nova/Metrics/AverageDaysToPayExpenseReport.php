@@ -63,7 +63,7 @@ class AverageDaysToPayExpenseReport extends Value
     }
 
     /**
-     * Get the displayable name of the metric
+     * Get the displayable name of the metric.
      */
     public function name(): string
     {
