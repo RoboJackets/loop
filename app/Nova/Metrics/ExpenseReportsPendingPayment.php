@@ -17,7 +17,7 @@ class ExpenseReportsPendingPayment extends Value
      *
      * @var string
      */
-    public $icon = 'check-circle';
+    public $icon = 'check';
 
     /**
      * The help text for the metric.
@@ -50,5 +50,13 @@ class ExpenseReportsPendingPayment extends Value
     public function ranges(): array
     {
         return [];
+    }
+
+    /**
+     * Get the displayable name of the metric.
+     */
+    public function name(): string
+    {
+        return 'Approved Expense Reports Pending Payment';
     }
 }

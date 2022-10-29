@@ -24,7 +24,7 @@ class ExpensePaymentsPendingReconciliation extends Value
      *
      * @var string
      */
-    public $helpText = 'Expense payments (checks) that have been sent but not yet reconciled';
+    public $helpText = 'Expense payments that have been sent but not yet reconciled';
 
     /**
      * Calculate the value of the metric.

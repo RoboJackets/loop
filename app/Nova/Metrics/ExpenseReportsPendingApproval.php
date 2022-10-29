@@ -17,7 +17,7 @@ class ExpenseReportsPendingApproval extends Value
      *
      * @var string
      */
-    public $icon = 'document-search';
+    public $icon = 'search';
 
     /**
      * The help text for the metric.
