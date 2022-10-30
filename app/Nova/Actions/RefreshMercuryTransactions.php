@@ -79,45 +79,53 @@ class RefreshMercuryTransactions extends Action
 
         $json = json_decode($response->getBody()->getContents(), true);
 
-        foreach ($json['transactions'] as $transaction) {
-            $bank_description = $transaction['bankDescription'];
+        collect($json['transactions'])
+            ->sortBy([
+                ['createdAt', 'asc'],
+                ['postedAt', 'asc'],
+            ])->each(static function (array $transaction, int $key): void {
+                $bank_description = $transaction['bankDescription'];
 
-            $matches = [];
+                $matches = [];
 
-            if (
-                preg_match('/(?<transaction_reference>L\d{12}|M[a-zA-Z0-9]{10})/', $bank_description, $matches) === 1
-            ) {
-                $transaction_reference = $matches['transaction_reference'];
-            } else {
-                $transaction_reference = null;
-            }
+                if (
+                    preg_match(
+                        '/(?<transaction_reference>L\d{12}|M[a-zA-Z0-9]{10})/',
+                        $bank_description ?? '',
+                        $matches
+                    ) === 1
+                ) {
+                    $transaction_reference = $matches['transaction_reference'];
+                } else {
+                    $transaction_reference = null;
+                }
 
-            $matches = [];
+                $matches = [];
 
-            if (preg_match('/Check #?(?<check_number>\d{6,7})/', $transaction['note'], $matches) === 1) {
-                $check_number = $matches['check_number'];
-            } else {
-                $check_number = null;
-            }
+                if (preg_match('/Check #?(?<check_number>\d{6,7})/', $transaction['note'] ?? '', $matches) === 1) {
+                    $check_number = $matches['check_number'];
+                } else {
+                    $check_number = null;
+                }
 
-            BankTransaction::updateOrCreate(
-                [
-                    'bank' => 'mercury',
-                    'bank_transaction_id' => $transaction['id'],
-                ],
-                [
-                    'bank_description' => $bank_description ?? $transaction['counterpartyName'],
-                    'note' => $transaction['note'],
-                    'transaction_reference' => $transaction_reference,
-                    'status' => $transaction['status'],
-                    'transaction_created_at' => $transaction['createdAt'],
-                    'transaction_posted_at' => $transaction['postedAt'],
-                    'net_amount' => $transaction['amount'],
-                    'check_number' => $check_number,
-                    'kind' => $transaction['kind'],
-                ]
-            );
-        }
+                BankTransaction::updateOrCreate(
+                    [
+                        'bank' => 'mercury',
+                        'bank_transaction_id' => $transaction['id'],
+                    ],
+                    [
+                        'bank_description' => $bank_description ?? $transaction['counterpartyName'],
+                        'note' => $transaction['note'],
+                        'transaction_reference' => $transaction_reference,
+                        'status' => $transaction['status'],
+                        'transaction_created_at' => $transaction['createdAt'],
+                        'transaction_posted_at' => $transaction['postedAt'],
+                        'net_amount' => $transaction['amount'],
+                        'check_number' => $check_number,
+                        'kind' => $transaction['kind'],
+                    ]
+                );
+            });
 
         return Action::message('All transactions refreshed!');
     }

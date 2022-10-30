@@ -44,6 +44,7 @@ parameters:
     - '#Offset ''[a-zA-Z_]+'' does not exist on array\|null\.#'
     - '#Parameter \#1 ...\$addresses of method Symfony\\Component\\Mime\\Email::replyTo\(\) expects string\|Symfony\\Component\\Mime\\Address, mixed given\.#'
     - '#Parameter \#1 \$address of method Illuminate\\Mail\\Mailable::[a-z]{2}\(\) expects array\|object\|string, mixed given\.#'
+    - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),mixed>::each\(\) expects callable\(mixed, \(int\|string\)\): mixed, Closure\(array, int\): void given\.#'
     - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),mixed>::each\(\) expects callable\(mixed, \(int\|string\)\): mixed, Closure\(string, int\): void given\.#'
     - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),string>::map\(\) expects callable\(string, \(int\|string\)\): array, Closure\(array, string\): array given\.#'
     - '#Parameter \#1 \$callback of method Laravel\\Nova\\Actions\\Action::canRun\(\) expects Closure\(Laravel\\Nova\\Http\\Requests\\NovaRequest, mixed\): bool, Closure\(Laravel\\Nova\\Http\\Requests\\NovaRequest, App\\Models\\[a-zA-Z]+\): bool given\.#'
