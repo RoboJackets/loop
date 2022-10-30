@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Scout\Searchable;
 
 /**
- * App\Models\BankTransaction
+ * A bank transaction.
  *
  * @property int $id
  * @property string $bank

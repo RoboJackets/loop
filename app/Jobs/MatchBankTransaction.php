@@ -67,10 +67,18 @@ class MatchBankTransaction implements ShouldQueue, ShouldBeUnique
 
                     $expense_payment->bank_transaction_id = $this->bankTransaction->id;
                     $expense_payment->save();
-                } catch (ModelNotFoundException | MultipleRecordsFoundException) {
+                } catch (ModelNotFoundException|MultipleRecordsFoundException) {
                     // nothing to do here, human will need to match manually
                 }
             }
         }
+    }
+
+    /**
+     * The unique ID of the job.
+     */
+    public function uniqueId(): string
+    {
+        return strval($this->bankTransaction->id);
     }
 }
