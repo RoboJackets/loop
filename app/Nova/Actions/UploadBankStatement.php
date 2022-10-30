@@ -69,7 +69,7 @@ class UploadBankStatement extends Action
                             'User-Agent' => 'RoboJackets Loop on '.config('app.url'),
                             'Authorization' => 'Bearer '.config('services.sensible.token'),
                             'Accept' => 'application/json',
-                            'Content-Type' => 'application/pdf',
+                            'Content-Type' => 'application/json',
                         ],
                         'allow_redirects' => false,
                     ]
@@ -78,7 +78,9 @@ class UploadBankStatement extends Action
                 $response = $client->post(
                     config('services.sensible.bank_statements_url'),
                     [
-                        'body' => $fields->bank_statement->get(),
+                        'json' => [
+                            'document' => base64_encode($fields->bank_statement->get()),
+                        ],
                     ]
                 );
 
