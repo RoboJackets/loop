@@ -35,11 +35,17 @@ return [
 
     'sensible' => [
         'url' => env('SENSIBLE_URL'),
+        'bank_statements_url' => env('SENSIBLE_BANK_STATEMENTS_URL'),
         'token' => env('SENSIBLE_TOKEN'),
     ],
 
     'tika' => [
         'url' => env('TIKA_URL'),
+    ],
+
+    'mercury' => [
+        'transactions_url' => env('MERCURY_TRANSACTIONS_URL'),
+        'token' => env('MERCURY_TOKEN'),
     ],
 
     'treasurer_email_address' => env('TREASURER_EMAIL_ADDRESS'),

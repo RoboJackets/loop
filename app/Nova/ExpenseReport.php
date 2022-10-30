@@ -8,6 +8,7 @@ use App\Nova\Actions\MatchExpenseReport;
 use App\Nova\Lenses\UnmatchedExpenseReports;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
@@ -73,7 +74,14 @@ class ExpenseReport extends Resource
             Number::make('Instance ID', 'workday_instance_id')
                 ->onlyOnDetail(),
 
-            Text::make('Status')
+            Badge::make('Status')
+                ->map([
+                    'Paid' => 'success',
+                    'Canceled' => 'danger',
+                    'Approved' => 'success',
+                    'Waiting on Expense Partner' => 'info',
+                    'In Progress' => 'info',
+                ])
                 ->sortable(),
 
             BelongsTo::make('Pay To', 'payTo', ExternalCommitteeMember::class)

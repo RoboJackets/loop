@@ -68,5 +68,11 @@
                 <directory name="app"/>
             </errorLevel>
         </UndefinedInterfaceMethod>
+        <InvalidScalarArgument>
+            <errorLevel type="suppress">
+                <file name="app/Nova/Actions/UploadBankStatement.php"/>
+                <file name="app/Jobs/ProcessSensibleOutput.php"/>
+            </errorLevel>
+        </InvalidScalarArgument>
     </issueHandlers>
 </psalm>

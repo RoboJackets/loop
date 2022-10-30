@@ -7,6 +7,7 @@ namespace App\Nova\Dashboards;
 use App\Nova\Metrics\AverageDaysToApproveExpenseReport;
 use App\Nova\Metrics\AverageDaysToCreateExpenseReport;
 use App\Nova\Metrics\AverageDaysToPayExpenseReport;
+use App\Nova\Metrics\AverageDaysToReconcileExpensePayment;
 use App\Nova\Metrics\DocuSignEnvelopesMissingExpenseReports;
 use App\Nova\Metrics\ExpensePaymentsPendingReconciliation;
 use App\Nova\Metrics\ExpenseReportsPendingApproval;
@@ -44,6 +45,8 @@ class Main extends Dashboard
             AverageDaysToApproveExpenseReport::make()
                 ->width('1/4'),
             AverageDaysToPayExpenseReport::make()
+                ->width('1/4'),
+            AverageDaysToReconcileExpensePayment::make()
                 ->width('1/4'),
         ];
     }
