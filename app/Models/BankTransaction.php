@@ -86,7 +86,10 @@ class BankTransaction extends Model
      * @var array<string>
      */
     public array $searchable_attributes = [
+        'bank',
         'bank_description',
+        'note',
+        'kind',
         'net_amount',
         'transaction_created_at',
         'transaction_posted_at',
