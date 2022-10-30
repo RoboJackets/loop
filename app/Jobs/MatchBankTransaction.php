@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 // phpcs:disable Generic.CodeAnalysis.EmptyStatement.DetectedCatch
+// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.NoSpaceAfter
+// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.NoSpaceBefore
 
 namespace App\Jobs;
 
