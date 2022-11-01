@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\Attachment;
+use App\Models\BankTransaction;
 use App\Models\DocuSignEnvelope;
 use App\Models\ExpensePayment;
 use App\Models\ExpenseReport;
@@ -15,6 +16,7 @@ use App\Models\FundingAllocation;
 use App\Models\FundingAllocationLine;
 use App\Models\User;
 use App\Policies\AttachmentPolicy;
+use App\Policies\BankTransactionPolicy;
 use App\Policies\DocuSignEnvelopePolicy;
 use App\Policies\ExpensePaymentPolicy;
 use App\Policies\ExpenseReportLinePolicy;
@@ -41,6 +43,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Attachment::class => AttachmentPolicy::class,
+        BankTransaction::class => BankTransactionPolicy::class,
         DocuSignEnvelope::class => DocuSignEnvelopePolicy::class,
         ExpensePayment::class => ExpensePaymentPolicy::class,
         ExpenseReport::class => ExpenseReportPolicy::class,

@@ -85,6 +85,9 @@ class ExpensePayment extends Resource
             Currency::make('Amount')
                 ->sortable(),
 
+            BelongsTo::make('Bank Transaction', 'bankTransaction', BankTransaction::class)
+                ->sortable(),
+
             HasMany::make('Expense Reports', 'expenseReports'),
 
             Panel::make('Timestamps', [

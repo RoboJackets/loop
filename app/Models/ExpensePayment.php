@@ -19,8 +19,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property \Illuminate\Support\Carbon $payment_date
  * @property float $amount
  * @property int $transaction_reference
+ * @property int|null $bank_transaction_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\BankTransaction|null $bankTransaction
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExpenseReport> $expenseReports
  * @property-read int|null $expense_reports_count
  * @property-read \App\Models\ExternalCommitteeMember|null $payTo
@@ -36,6 +38,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|ExpensePayment whereReconciled($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExpensePayment whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExpensePayment whereTransactionReference($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExpensePayment whereBankTransactionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExpensePayment whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExpensePayment whereWorkdayInstanceId($value)
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
@@ -86,5 +89,15 @@ class ExpensePayment extends Model
     public function expenseReports(): HasMany
     {
         return $this->hasMany(ExpenseReport::class, 'expense_payment_id', 'workday_instance_id');
+    }
+
+    /**
+     * Get the bank transaction for this expense payment, if any.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\BankTransaction, self>
+     */
+    public function bankTransaction(): BelongsTo
+    {
+        return $this->belongsTo(BankTransaction::class);
     }
 }
