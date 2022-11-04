@@ -58,7 +58,6 @@ RUN --mount=type=secret,id=composer_auth,dst=/app/auth.json,uid=33,gid=33,requir
     mkdir --parents /app/resources/views/ && \
     php artisan nova:publish && \
     php artisan horizon:publish && \
-    sed -i '/HTTPS_ONLY_COOKIES/c\true,' /app/vendor/subfission/cas/src/Subfission/Cas/CasManager.php && \
     sed -i '/"\$1\\n\$2"/c\\' /app/vendor/mrclay/minify/lib/Minify/HTML.php;
 
 # This target is the default, but skipped during pull request builds and in our recommended local build invocation
