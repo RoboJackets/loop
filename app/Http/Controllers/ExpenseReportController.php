@@ -28,12 +28,12 @@ class ExpenseReportController extends Controller
     ];
 
     private const VALID_EXPENSE_REPORT_STATUSES = [
-        'Approved',
-        'Canceled',
         'In Progress',
-        'Paid',
         'Waiting on Cost Center Manager',
         'Waiting on Expense Partner',
+        'Approved',
+        'Paid',
+        'Canceled',
     ];
 
     private const VALID_PAYMENT_STATUSES = [

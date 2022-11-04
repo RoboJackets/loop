@@ -76,11 +76,12 @@ class ExpenseReport extends Resource
 
             Badge::make('Status')
                 ->map([
+                    'In Progress' => 'info',
+                    'Waiting on Cost Center Manager' => 'info',
+                    'Waiting on Expense Partner' => 'info',
+                    'Approved' => 'success',
                     'Paid' => 'success',
                     'Canceled' => 'danger',
-                    'Approved' => 'success',
-                    'Waiting on Expense Partner' => 'info',
-                    'In Progress' => 'info',
                 ])
                 ->sortable(),
 
