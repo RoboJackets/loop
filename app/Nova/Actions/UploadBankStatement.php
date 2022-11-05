@@ -125,6 +125,12 @@ class UploadBankStatement extends Action
                         }
                     } elseif (str_contains(strtolower($bank_description), 'bill pay')) {
                         $matches['transaction_reference'] = $bank_description;
+                    } elseif (str_contains(strtolower($bank_description), 'atm check deposit')) {
+                        if (preg_match('/(?<transaction_reference>\d{7})/', $bank_description, $matches) !== 1) {
+                            throw new Exception(
+                                'Could not extract transaction reference from \''.$bank_description.'\''
+                            );
+                        }
                     } else {
                         throw new Exception('Could not extract transaction reference from \''.$bank_description.'\'');
                     }
