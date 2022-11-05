@@ -15,6 +15,13 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class MatchBankTransaction extends Action
 {
     /**
+     * The displayable name of the action.
+     *
+     * @var string
+     */
+    public $name = 'Find Expense Payment';
+
+    /**
      * Indicates if this action is only available on the resource detail view.
      *
      * @var bool

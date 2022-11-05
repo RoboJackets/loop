@@ -181,7 +181,7 @@ class BankTransaction extends Resource
                 ),
             MatchBankTransaction::make()
                 ->canSee(static fn (NovaRequest $request): bool => true)
-                ->canRun(static fn (NovaRequest $request, \App\Models\ExpenseReport $expenseReport): bool => true),
+                ->canRun(static fn (NovaRequest $request, \App\Models\BankTransaction $bankTransaction): bool => true),
         ];
     }
 }
