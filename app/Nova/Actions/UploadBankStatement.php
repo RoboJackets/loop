@@ -112,7 +112,11 @@ class UploadBankStatement extends Action
                         $matches
                     ) !== 1
                 ) {
-                    throw new Exception('Could not extract transaction reference');
+                    if ($bank_description === 'Check') {
+                        $matches['transaction_reference'] = $transactions[1]['values'][$i]['value'];
+                    } else {
+                        throw new Exception('Could not extract transaction reference');
+                    }
                 }
 
                 $transaction_reference = $matches['transaction_reference'];
