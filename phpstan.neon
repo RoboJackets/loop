@@ -56,6 +56,7 @@ parameters:
     - '#Parameter \#1 \$haystack of function str_ends_with expects string, mixed given\.#'
     - '#Parameter \#1 \$haystack of static method Illuminate\\Support\\Str::startsWith\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$key of function array_key_exists expects int\|string, mixed given\.#'
+    - '#Parameter \#1 \$string of function strtolower expects string, mixed given\.#'
     - '#Parameter \#1 \$string of function substr expects string, mixed given\.#'
     - '#Parameter \#1 \$summary_pdf of static method App\\Models\\DocuSignEnvelope::getEnvelopeUuidFromSummaryPdf\(\) expects string, string\|false given\.#'
     - '#Parameter \#1 \$summary_pdf of static method App\\Models\\DocuSignEnvelope::getEnvelopeUuidFromSummaryPdf\(\) expects string, string\|null given\.#'
