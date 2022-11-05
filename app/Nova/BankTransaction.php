@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\MatchBankTransaction;
 use App\Nova\Actions\RefreshMercuryTransactions;
 use App\Nova\Actions\UploadBankStatement;
 use Laravel\Nova\Fields\Currency;
@@ -178,6 +179,9 @@ class BankTransaction extends Resource
                         \App\Models\ExpenseReport $expenseReport
                     ): bool => $request->user()->can('update-bank-transactions')
                 ),
+            MatchBankTransaction::make()
+                ->canSee(static fn (NovaRequest $request): bool => true)
+                ->canRun(static fn (NovaRequest $request, \App\Models\ExpenseReport $expenseReport): bool => true),
         ];
     }
 }
