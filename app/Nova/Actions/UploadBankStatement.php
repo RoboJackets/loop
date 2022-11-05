@@ -121,6 +121,8 @@ class UploadBankStatement extends Action
                         if (preg_match('/(?<transaction_reference>\d{6})/', $bank_description, $matches) !== 1) {
                             throw new Exception('Could not extract transaction reference');
                         }
+                    } elseif (str_contains(strtolower($bank_description), 'bill pay')) {
+                        $matches['transaction_reference'] = $bank_description;
                     } else {
                         throw new Exception('Could not extract transaction reference');
                     }
