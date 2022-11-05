@@ -114,6 +114,9 @@ class UploadBankStatement extends Action
                 ) {
                     if ($bank_description === 'Check') {
                         $matches['transaction_reference'] = $transactions[1]['values'][$i]['value'];
+                    } elseif ($bank_description === 'International Purchase Transaction Fee') {
+                        $matches['transaction_reference'] = $transactions[0]['values'][$i]['value'].
+                            $transactions[4]['values'][$i]['value'];
                     } elseif (str_contains(strtolower($bank_description), 'paypal')) {
                         if (preg_match('/(?<transaction_reference>\d{6})/', $bank_description, $matches) !== 1) {
                             throw new Exception('Could not extract transaction reference');
