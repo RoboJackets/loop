@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Mail;
 
 use App\Models\DocuSignEnvelope;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -21,8 +22,11 @@ class DocuSignEnvelopeProcessed extends Mailable implements ShouldQueue
      *
      * @param  array<string>  $validation_errors
      */
-    public function __construct(public DocuSignEnvelope $envelope, public array $validation_errors)
-    {
+    public function __construct(
+        public readonly DocuSignEnvelope $envelope,
+        public readonly array $validation_errors,
+        private readonly ?User $user
+    ) {
     }
 
     /**
@@ -30,13 +34,20 @@ class DocuSignEnvelopeProcessed extends Mailable implements ShouldQueue
      */
     public function build(): self
     {
-        return $this->to(config('services.treasurer_email_address'))
-            ->cc(config('services.developer_email_address'))
+        if ($this->user === null) {
+            $this->to(config('services.treasurer_email_address'));
+        } else {
+            $this->to($this->user->email, $this->user->name)
+                ->cc(config('services.treasurer_email_address'));
+        }
+
+        return $this->cc(config('services.developer_email_address'))
             ->withSymfonyMessage(static function (Email $email): void {
                 $email->replyTo(config('services.developer_email_address'));
             })
             ->subject(
-                '[LOOP-'.$this->envelope->id.'] Envelope processed with '.
+                '[LOOP-'.$this->envelope->id.'] '.ucfirst(DocuSignEnvelope::$types[$this->envelope->type])
+                .' form processed with '.
                 (
                     count($this->validation_errors) === 0 ? 'no problems detected' : (
                         count($this->validation_errors) === 1 ? '1 problem detected' :
