@@ -228,7 +228,7 @@ class ProcessSensibleOutput implements ShouldQueue
 
         try {
             $user = User::search($officer_name)
-                ->where('permission_id', Permission::where('name', 'can-access-nova')->sole()->id)
+                ->where('permission_id', Permission::where('name', 'access-nova')->sole()->id)
                 ->get()
                 ->sole();
         } catch (ItemNotFoundException|MultipleItemsFoundException) {
