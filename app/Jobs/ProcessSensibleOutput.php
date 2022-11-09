@@ -233,7 +233,7 @@ class ProcessSensibleOutput implements ShouldQueue
                 ->sole();
         } catch (ItemNotFoundException|MultipleItemsFoundException) {
             $user = null;
-            $this->validation_errors[] = 'Could not determine signing officer, so they did not received this email';
+            $this->validation_errors[] = 'Could not determine signing officer, so they did not receive this email';
         }
 
         Mail::send(new DocuSignEnvelopeProcessed($this->envelope, $this->validation_errors, $user));
