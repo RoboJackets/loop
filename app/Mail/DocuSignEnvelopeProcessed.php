@@ -46,7 +46,7 @@ class DocuSignEnvelopeProcessed extends Mailable implements ShouldQueue
                 $email->replyTo(config('services.developer_email_address'));
             })
             ->subject(
-                '[LOOP-'.$this->envelope->id.'] '.ucfirst(DocuSignEnvelope::$types[$this->envelope->type])
+                '[LOOP-'.$this->envelope->id.'] '.ucfirst(strtolower(DocuSignEnvelope::$types[$this->envelope->type]))
                 .' form processed with '.
                 (
                     count($this->validation_errors) === 0 ? 'no problems detected' : (

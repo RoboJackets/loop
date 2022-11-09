@@ -28,7 +28,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\ItemNotFoundException;
 use Illuminate\Support\MultipleItemsFoundException;
-use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class ProcessSensibleOutput implements ShouldQueue
 {
@@ -228,7 +228,7 @@ class ProcessSensibleOutput implements ShouldQueue
 
         try {
             $user = User::search($officer_name)
-                ->where('permission_id', Permission::where('name', 'access-nova')->sole()->id)
+                ->whereIn('role_id', Role::all()->modelKeys())
                 ->get()
                 ->sole();
         } catch (ItemNotFoundException|MultipleItemsFoundException) {
