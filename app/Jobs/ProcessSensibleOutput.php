@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition.RequiredSingleLineCondition
+// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.NoSpaceAfter
+// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.NoSpaceBefore
 
 namespace App\Jobs;
 
@@ -24,6 +26,9 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\ItemNotFoundException;
+use Illuminate\Support\MultipleItemsFoundException;
+use Spatie\Permission\Models\Role;
 
 class ProcessSensibleOutput implements ShouldQueue
 {
@@ -219,7 +224,19 @@ class ProcessSensibleOutput implements ShouldQueue
             }
         }
 
-        Mail::send(new DocuSignEnvelopeProcessed($this->envelope, $this->validation_errors));
+        $officer_name = $this->getValueOrAddValidationError('officer_name')[0];
+
+        try {
+            $user = User::search($officer_name)
+                ->whereIn('role_id', Role::all()->modelKeys())
+                ->get()
+                ->sole();
+        } catch (ItemNotFoundException|MultipleItemsFoundException) {
+            $user = null;
+            $this->validation_errors[] = 'Could not determine signing officer, so they did not receive this email';
+        }
+
+        Mail::send(new DocuSignEnvelopeProcessed($this->envelope, $this->validation_errors, $user));
 
         try {
             $attachment = Attachment::whereFilename($this->envelope->sofo_form_filename)->sole();
@@ -244,7 +261,7 @@ class ProcessSensibleOutput implements ShouldQueue
      *
      * @phan-suppress PhanTypeArraySuspiciousNullable
      */
-    private function getValueOrAddValidationError(string $field_name): string|float|int|null
+    private function getValueOrAddValidationError(string $field_name): string|float|int|array|null
     {
         $fields = $this->envelope->sensible_output['parsed_document'];
         if (array_key_exists($field_name, $fields) && $fields[$field_name] !== null) {
