@@ -2,16 +2,12 @@
 
 declare(strict_types=1);
 
-// phpcs:disable SlevomatCodingStandard.Namespaces.UseSpacing.IncorrectLinesCountBetweenDifferentTypeOfUse
-
 namespace App\Http\Middleware;
 
 use Closure;
 use Sentry\Event;
 use Sentry\EventHint;
 use Sentry\State\Scope;
-
-use function Sentry\configureScope;
 
 class Sentry
 {
@@ -23,7 +19,7 @@ class Sentry
     public function handle($request, Closure $next)
     {
         if (app()->bound('sentry')) {
-            configureScope(static function (Scope $scope): void {
+            \Sentry\configureScope(static function (Scope $scope): void {
                 if (auth()->check()) {
                     $scope->setUser([
                         'id' => auth()->user()->id,
