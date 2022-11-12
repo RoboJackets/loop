@@ -1,0 +1,5 @@
+{
+    "notPath": [
+        "app/Http/Middleware/Sentry.php"
+    ]
+}

@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Util\QuickBooks;
+use App\Util\Sentry;
 use Illuminate\Foundation\Exceptions\RegisterErrorViewPaths;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use QuickBooksOnline\API\Core\OAuth\OAuth2\OAuth2AccessToken;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class QuickBooksAuthenticationController extends Controller
@@ -43,13 +45,18 @@ class QuickBooksAuthenticationController extends Controller
                         'code' => '400',
                         'message' => 'QuickBooks Company Mismatch',
                     ],
-                    401
+                    400
                 );
             }
 
-            $tokens = QuickBooks::getDataService()->getOAuth2LoginHelper()->exchangeAuthorizationCodeForToken(
-                $request->code,
-                $request->realmId
+            $tokens = Sentry::wrapWithChildSpan(
+                'quickbooks.oauth2_exchange_auth_code_for_tokens',
+                static fn (): OAuth2AccessToken => QuickBooks::getDataService()
+                    ->getOAuth2LoginHelper()
+                    ->exchangeAuthorizationCodeForToken(
+                        $request->code,
+                        $request->realmId
+                    )
             );
 
             $user = $request->user();

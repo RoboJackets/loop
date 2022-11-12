@@ -83,11 +83,13 @@
         <InvalidReturnType>
             <errorLevel type="suppress">
                 <file name="app/Http/Controllers/QuickBooksAuthenticationController.php"/>
+                <file name="app/Util/QuickBooks.php"/>
             </errorLevel>
         </InvalidReturnType>
         <InvalidReturnStatement>
             <errorLevel type="suppress">
                 <file name="app/Http/Controllers/QuickBooksAuthenticationController.php"/>
+                <file name="app/Util/QuickBooks.php"/>
             </errorLevel>
         </InvalidReturnStatement>
         <InvalidPropertyAssignmentValue>

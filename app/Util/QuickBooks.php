@@ -11,6 +11,7 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use QuickBooksOnline\API\Data\IPPAttachable;
 use QuickBooksOnline\API\Data\IPPAttachableRef;
+use QuickBooksOnline\API\Data\IPPAttachableResponse;
 use QuickBooksOnline\API\Data\IPPReferenceType;
 use QuickBooksOnline\API\DataService\DataService;
 
@@ -39,8 +40,6 @@ class QuickBooks
      * Attach a file to a QuickBooks invoice.
      *
      * @phan-suppress PhanTypeMismatchProperty
-     * @phan-suppress PhanPossiblyNullTypeArgumentInternal
-     * @phan-suppress PhanTypeExpectedObjectPropAccess
      */
     public static function uploadAttachmentToInvoice(
         DataService $data_service,
@@ -62,14 +61,20 @@ class QuickBooks
         $attachable->AttachableRef = $attachable_reference;
         $attachable->FileName = basename($filename);
 
-        $response = $data_service->Upload(
-            base64_encode(Storage::disk('local')->get($filename)),
-            basename($filename),
-            'application/pdf',
-            $attachable
+        $response = Sentry::wrapWithChildSpan(
+            'quickbooks.upload_attachment_to_invoice',
+            // @phan-suppress-next-line PhanTypeMismatchReturn
+            static fn (): IPPAttachableResponse => $data_service->Upload(
+                // @phan-suppress-next-line PhanPossiblyNullTypeArgumentInternal
+                base64_encode(Storage::disk('local')->get($filename)),
+                basename($filename),
+                'application/pdf',
+                $attachable
+            )
         );
 
         if ($response->Fault !== null) {
+            // @phan-suppress-next-line PhanTypeMismatchArgument
             throw new QuickBooksFault($response->Fault);
         }
     }

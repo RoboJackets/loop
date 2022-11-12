@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Models\DocuSignEnvelope;
+use App\Util\Sentry;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -31,41 +32,41 @@ class SubmitDocuSignEnvelopeToSensible implements ShouldQueue, ShouldBeUnique
 
     /**
      * Execute the job.
-     *
-     * @phan-suppress PhanTypeArraySuspiciousNullable
      */
     public function handle(): void
     {
-        $client = new Client(
-            [
-                'headers' => [
-                    'User-Agent' => 'RoboJackets Loop on '.config('app.url'),
-                    'Authorization' => 'Bearer '.config('services.sensible.token'),
-                    'Accept' => 'application/json',
-                ],
-                'allow_redirects' => false,
-            ]
+        $json = Sentry::wrapWithChildSpan(
+            'sensible.async_extraction',
+            fn (): array => json_decode(
+                (new Client(
+                    [
+                        'headers' => [
+                            'User-Agent' => 'RoboJackets Loop on '.config('app.url'),
+                            'Authorization' => 'Bearer '.config('services.sensible.token'),
+                            'Accept' => 'application/json',
+                        ],
+                        'allow_redirects' => false,
+                    ]
+                ))->post(
+                    config('services.sensible.url'),
+                    [
+                        'json' => [
+                            'content_type' => 'application/pdf',
+                            'document_url' => URL::signedRoute(
+                                'document.download',
+                                ['envelope' => $this->envelope],
+                                now()->addDay()
+                            ),
+                            'webhook' => [
+                                'payload' => $this->envelope->envelope_uuid,
+                                'url' => URL::signedRoute('webhook-client-sensible', [], now()->addDay()),
+                            ],
+                        ],
+                    ]
+                )->getBody()->getContents(),
+                true
+            )
         );
-
-        $response = $client->post(
-            config('services.sensible.url'),
-            [
-                'json' => [
-                    'content_type' => 'application/pdf',
-                    'document_url' => URL::signedRoute(
-                        'document.download',
-                        ['envelope' => $this->envelope],
-                        now()->addDay()
-                    ),
-                    'webhook' => [
-                        'payload' => $this->envelope->envelope_uuid,
-                        'url' => URL::signedRoute('webhook-client-sensible', [], now()->addDay()),
-                    ],
-                ],
-            ]
-        );
-
-        $json = json_decode($response->getBody()->getContents(), true);
 
         $this->envelope->sensible_extraction_uuid = $json['id'];
         $this->envelope->save();

@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use App\Models\BankTransaction;
+use App\Util\Sentry;
 use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Client;
@@ -62,28 +63,27 @@ class UploadBankStatement extends Action
 
         $sensible_output = Cache::rememberForever(
             'bank_statement_'.$file_hash,
-            static function () use ($fields): array {
-                $client = new Client(
-                    [
-                        'headers' => [
-                            'User-Agent' => 'RoboJackets Loop on '.config('app.url'),
-                            'Authorization' => 'Bearer '.config('services.sensible.token'),
-                            'Accept' => 'application/json',
-                            'Content-Type' => 'application/pdf',
-                        ],
-                        'allow_redirects' => false,
-                    ]
-                );
-
-                $response = $client->post(
-                    config('services.sensible.bank_statements_url'),
-                    [
-                        'body' => $fields->bank_statement->get(),
-                    ]
-                );
-
-                return json_decode($response->getBody()->getContents(), true);
-            }
+            static fn (): array => Sentry::wrapWithChildSpan(
+                'sensible.sync_extraction',
+                static fn (): array => json_decode(
+                    (new Client(
+                        [
+                            'headers' => [
+                                'User-Agent' => 'RoboJackets Loop on '.config('app.url'),
+                                'Authorization' => 'Bearer '.config('services.sensible.token'),
+                                'Accept' => 'application/json',
+                                'Content-Type' => 'application/pdf',
+                            ],
+                            'allow_redirects' => false,
+                        ]
+                    ))->post(
+                        config('services.sensible.bank_statements_url'),
+                        [
+                            'body' => $fields->bank_statement->get(),
+                        ]
+                    )->getBody()->getContents()
+                )
+            )
         );
 
         $bank = $sensible_output['configuration'];

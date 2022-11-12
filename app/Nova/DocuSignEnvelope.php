@@ -141,13 +141,16 @@ class DocuSignEnvelope extends Resource
                     ? 'https://app.qbo.intuit.com/app/invoice?txnId='.$this->quickbooks_invoice_id
                     : null
             )
-                ->displayUsing(fn (): ?int => $this->quickbooks_invoice_document_number),
+                ->displayUsing(fn (): ?int => $this->quickbooks_invoice_document_number)
+                ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks')),
 
             Number::make('QuickBooks Invoice ID', 'quickbooks_invoice_id')
-                ->onlyOnForms(),
+                ->onlyOnForms()
+                ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks')),
 
             Number::make('QuickBooks Invoice Document Number', 'quickbooks_invoice_document_number')
-                ->onlyOnForms(),
+                ->onlyOnForms()
+                ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks')),
 
             BelongsToMany::make('Funding Sources', 'fundingSources', FundingAllocationLine::class)
                 ->fields(new DocuSignFundingSourceFields()),

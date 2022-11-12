@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Exceptions\CouldNotExtractEnvelopeUuid;
+use App\Util\Sentry;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,8 +14,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Scout\Searchable;
-use Sentry\SentrySdk;
-use Sentry\Tracing\SpanContext;
 
 /**
  * An attachment for a DocuSign envelope.
@@ -137,17 +136,9 @@ class Attachment extends Model
 
             $array['full_text'] = Cache::rememberForever(
                 'tika_file_'.$file_hash,
-                static function () use ($filename): string {
-                    $parentSpan = SentrySdk::getCurrentHub()->getSpan();
-
-                    if ($parentSpan !== null) {
-                        $context = new SpanContext();
-                        $context->setOp('tika.extract');
-                        $span = $parentSpan->startChild($context);
-                        SentrySdk::getCurrentHub()->setSpan($span);
-                    }
-
-                    $response = (new Client(
+                static fn (): string => Sentry::wrapWithChildSpan(
+                    'tika.extract',
+                    static fn (): string => (new Client(
                         [
                             'base_uri' => config('services.tika.url'),
                             'headers' => [
@@ -164,23 +155,8 @@ class Attachment extends Model
                         [
                             'body' => Storage::disk('local')->get($filename),
                         ]
-                    );
-
-                    if ($parentSpan !== null) {
-                        // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
-                        $span->finish();
-                        SentrySdk::getCurrentHub()->setSpan($parentSpan);
-                    }
-
-                    if ($response->getStatusCode() !== 200) {
-                        throw new \Exception(
-                            'Tika returned non-200 status code - '.$response->getStatusCode().' - '
-                            .$response->getBody()->getContents()
-                        );
-                    }
-
-                    return $response->getBody()->getContents();
-                }
+                    )->getBody()->getContents()
+                )
             );
 
             try {
