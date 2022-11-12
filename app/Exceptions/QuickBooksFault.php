@@ -1,13 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Exceptions;
 
 use Exception;
-use http\Header\Parser;
 use QuickBooksOnline\API\Data\IPPFault;
 
-class QuickBooksException extends Exception
+class QuickBooksFault extends Exception
 {
+    /**
+     * Construct a new instance.
+     *
+     * @phan-suppress PhanUndeclaredClassProperty
+     */
     public function __construct(IPPFault $fault)
     {
         if ($fault->Error?->Detail !== null) {

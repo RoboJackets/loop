@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Util;
 
-use App\Exceptions\QuickBooksException;
+use App\Exceptions\QuickBooksFault;
 use App\Models\DocuSignEnvelope;
 use App\Models\User;
-use Exception;
-use http\Header\Parser;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use QuickBooksOnline\API\Data\IPPAttachable;
@@ -35,12 +35,19 @@ class QuickBooks
         return $data_service;
     }
 
+    /**
+     * Attach a file to a QuickBooks invoice.
+     *
+     * @phan-suppress PhanTypeMismatchProperty
+     * @phan-suppress PhanPossiblyNullTypeArgumentInternal
+     * @phan-suppress PhanTypeExpectedObjectPropAccess
+     */
     public static function uploadAttachmentToInvoice(
         DataService $data_service,
         DocuSignEnvelope $envelope,
         string $filename
     ): void {
-        if (!Storage::disk('local')->exists($filename)) {
+        if (! Storage::disk('local')->exists($filename)) {
             throw new FileNotFoundException('File \''.$filename.'\' does not exist');
         }
 
@@ -63,7 +70,7 @@ class QuickBooks
         );
 
         if ($response->Fault !== null) {
-            throw new QuickBooksException($response->Fault);
+            throw new QuickBooksFault($response->Fault);
         }
     }
 }

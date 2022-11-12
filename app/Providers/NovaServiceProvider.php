@@ -14,7 +14,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
-use Laravel\Nova\Badge;
 use Laravel\Nova\Menu\Menu;
 use Laravel\Nova\Menu\MenuItem;
 use Laravel\Nova\Nova;
@@ -66,7 +65,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 )
             ) {
                 $menu->append(
-                // @phan-suppress-next-line PhanTypeMismatchArgument
+                    // @phan-suppress-next-line PhanTypeMismatchArgument
                     MenuItem::externalLink(
                         'Connect to QuickBooks',
                         route('quickbooks.start')

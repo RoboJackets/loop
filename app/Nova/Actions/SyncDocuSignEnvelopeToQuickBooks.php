@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova\Actions;
 
 use App\Models\Attachment;
@@ -10,15 +12,10 @@ use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use QuickBooksOnline\API\Data\IPPAttachable;
-use QuickBooksOnline\API\Data\IPPAttachableRef;
-use QuickBooksOnline\API\Data\IPPReferenceType;
-use QuickBooksOnline\API\Data\IPPSalesItemLineDetail;
 use QuickBooksOnline\API\Facades\Invoice;
 
 class SyncDocuSignEnvelopeToQuickBooks extends Action implements ShouldQueue, ShouldBeUnique
@@ -66,6 +63,9 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action implements ShouldQueue, Sh
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\DocuSignEnvelope>  $models
+     *
+     * @phan-suppress PhanTypeMismatchArgument
+     * @phan-suppress PhanTypeMismatchProperty
      */
     public function handle(ActionFields $fields, Collection $models): void
     {
@@ -113,6 +113,8 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action implements ShouldQueue, Sh
      * Get the fields available on the action.
      *
      * @return array<\Laravel\Nova\Fields\Field>
+     *
+     * @phan-suppress PhanTypeInvalidCallableArraySize
      */
     public function fields(NovaRequest $request): array
     {

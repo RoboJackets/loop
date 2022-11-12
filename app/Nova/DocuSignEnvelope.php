@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingBefore
+
 namespace App\Nova;
 
 use App\Nova\Actions\ProcessSensibleOutput;
@@ -257,6 +259,8 @@ class DocuSignEnvelope extends Resource
      * Get the actions available for the resource.
      *
      * @return array<\Laravel\Nova\Actions\Action>
+     *
+     * @phan-suppress PhanTypeMismatchArgumentProbablyReal
      */
     public function actions(NovaRequest $request): array
     {

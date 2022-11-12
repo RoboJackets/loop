@@ -44,6 +44,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property int|null $workday_instance_id
  * @property bool|null $active_employee
  * @property-read string|null $workday_url
+ * @property ?OAuth2AccessToken $quickbooks_tokens
  *
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
@@ -170,6 +171,11 @@ class User extends Authenticatable
             .$this->workday_instance_id.'.htmld';
     }
 
+    /**
+     * Serialize QuickBooks tokens to the database model.
+     *
+     * @phan-suppress PhanTypeMismatchProperty
+     */
     public function setQuickbooksTokensAttribute(OAuth2AccessToken $tokens): void
     {
         $this->quickbooks_access_token = $tokens->getAccessToken();

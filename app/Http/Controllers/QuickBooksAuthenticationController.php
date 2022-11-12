@@ -1,22 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Util\QuickBooks;
 use Illuminate\Foundation\Exceptions\RegisterErrorViewPaths;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use QuickBooksOnline\API\DataService\DataService;
-use Symfony\Component\HttpClient\Exception\ServerException;
+use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class QuickBooksAuthenticationController extends Controller
 {
-    public function redirectToQuickBooks()
+    public function redirectToQuickBooks(): RedirectResponse
     {
         return redirect(QuickBooks::getDataService()->getOAuth2LoginHelper()->getAuthorizationCodeURL());
     }
 
-    public function handleCallback(Request $request)
+    public function handleCallback(Request $request): RedirectResponse|Response
     {
         if ($request->has('error')) {
             (new RegisterErrorViewPaths())();
