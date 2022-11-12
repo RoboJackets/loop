@@ -131,59 +131,67 @@ class Attachment extends Model
         $array = $this->toArray();
 
         $filename = $this->filename;
-        $file_hash = hash_file('sha512', Storage::disk('local')->path($filename));
 
-        $array['full_text'] = Cache::rememberForever(
-            'tika_file_'.$file_hash,
-            static function () use ($filename): string {
-                $parentSpan = SentrySdk::getCurrentHub()->getSpan();
+        if (Storage::disk('local')->exists($filename)) {
+            $file_hash = hash_file('sha512', Storage::disk('local')->path($filename));
 
-                if ($parentSpan !== null) {
-                    $context = new SpanContext();
-                    $context->setOp('tika.extract');
-                    $span = $parentSpan->startChild($context);
-                    SentrySdk::getCurrentHub()->setSpan($span);
-                }
+            $array['full_text'] = Cache::rememberForever(
+                'tika_file_'.$file_hash,
+                static function () use ($filename): string {
+                    $parentSpan = SentrySdk::getCurrentHub()->getSpan();
 
-                $response = (new Client(
-                    [
-                        'base_uri' => config('services.tika.url'),
-                        'headers' => [
-                            'Accept' => 'text/plain',
-                            'Content-Type' => 'application/octet-stream',
-                        ],
-                        'allow_redirects' => false,
-                        'connect_timeout' => 10,
-                        'read_timeout' => 60,
-                        'synchronous' => true,
-                    ]
-                ))->put(
-                    '/tika',
-                    [
-                        'body' => Storage::disk('local')->get($filename),
-                    ]
-                );
+                    if ($parentSpan !== null) {
+                        $context = new SpanContext();
+                        $context->setOp('tika.extract');
+                        $span = $parentSpan->startChild($context);
+                        SentrySdk::getCurrentHub()->setSpan($span);
+                    }
 
-                if ($parentSpan !== null) {
-                    // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
-                    $span->finish();
-                    SentrySdk::getCurrentHub()->setSpan($parentSpan);
-                }
-
-                if ($response->getStatusCode() !== 200) {
-                    throw new \Exception(
-                        'Tika returned non-200 status code - '.$response->getStatusCode().' - '
-                        .$response->getBody()->getContents()
+                    $response = (new Client(
+                        [
+                            'base_uri' => config('services.tika.url'),
+                            'headers' => [
+                                'Accept' => 'text/plain',
+                                'Content-Type' => 'application/octet-stream',
+                            ],
+                            'allow_redirects' => false,
+                            'connect_timeout' => 10,
+                            'read_timeout' => 60,
+                            'synchronous' => true,
+                        ]
+                    ))->put(
+                        '/tika',
+                        [
+                            'body' => Storage::disk('local')->get($filename),
+                        ]
                     );
+
+                    if ($parentSpan !== null) {
+                        // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
+                        $span->finish();
+                        SentrySdk::getCurrentHub()->setSpan($parentSpan);
+                    }
+
+                    if ($response->getStatusCode() !== 200) {
+                        throw new \Exception(
+                            'Tika returned non-200 status code - '.$response->getStatusCode().' - '
+                            .$response->getBody()->getContents()
+                        );
+                    }
+
+                    return $response->getBody()->getContents();
                 }
+            );
 
-                return $response->getBody()->getContents();
+            try {
+                $array['docusign_envelope_uuid'] = DocuSignEnvelope::getEnvelopeUuidFromSummaryText(
+                    $array['full_text']
+                );
+            } catch (CouldNotExtractEnvelopeUuid) {
+                $array['docusign_envelope_uuid'] = null;
             }
-        );
-
-        try {
-            $array['docusign_envelope_uuid'] = DocuSignEnvelope::getEnvelopeUuidFromSummaryText($array['full_text']);
-        } catch (CouldNotExtractEnvelopeUuid) {
+        } else {
+            $array['full_text'] = null;
             $array['docusign_envelope_uuid'] = null;
         }
 

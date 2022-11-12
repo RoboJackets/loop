@@ -6,6 +6,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\ProcessSensibleOutput;
 use App\Nova\Actions\RunSensibleExtraction;
+use App\Nova\Actions\SyncDocuSignEnvelopeToQuickBooks;
 use App\Nova\Lenses\MissingExpenseReports;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -18,6 +19,7 @@ use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphMany;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
@@ -126,10 +128,24 @@ class DocuSignEnvelope extends Resource
             )
                 ->onlyOnDetail(),
 
-            BelongsTo::make('Expense Report', 'expenseReport', ExpenseReport::class)
+            BelongsTo::make('Workday Expense Report', 'expenseReport', ExpenseReport::class)
                 ->sortable()
                 ->nullable()
                 ->searchable(),
+
+            URL::make(
+                'QuickBooks Invoice',
+                fn (): ?string => $this->quickbooks_invoice_id !== null
+                    ? 'https://app.qbo.intuit.com/app/invoice?txnId='.$this->quickbooks_invoice_id
+                    : null
+            )
+                ->displayUsing(fn (): ?int => $this->quickbooks_invoice_document_number),
+
+            Number::make('QuickBooks Invoice ID', 'quickbooks_invoice_id')
+                ->onlyOnForms(),
+
+            Number::make('QuickBooks Invoice Document Number', 'quickbooks_invoice_document_number')
+                ->onlyOnForms(),
 
             BelongsToMany::make('Funding Sources', 'fundingSources', FundingAllocationLine::class)
                 ->fields(new DocuSignFundingSourceFields()),
@@ -247,6 +263,17 @@ class DocuSignEnvelope extends Resource
         return [
             ProcessSensibleOutput::make(),
             RunSensibleExtraction::make(),
+            SyncDocuSignEnvelopeToQuickBooks::make()
+                ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('access-quickbooks'))
+                ->canRun(
+                    static fn (
+                        NovaRequest $request,
+                        \App\Models\DocuSignEnvelope $envelope
+                    ): bool => $request->user()->can('access-quickbooks') &&
+                        $request->user()->quickbooks_access_token !== null &&
+                        ($envelope->type === 'purchase_reimbursement' || $envelope->type === 'travel_reimbursement') &&
+                        $envelope->quickbooks_invoice_id === null
+                ),
         ];
     }
 }

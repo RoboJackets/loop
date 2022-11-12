@@ -42,6 +42,13 @@ class RunSensibleExtraction extends DestructiveAction
     public $confirmText = 'Are you sure you want to submit this document to Sensible?';
 
     /**
+     * Disables action log events for this action.
+     *
+     * @var bool
+     */
+    public $withoutActionEvents = true;
+
+    /**
      * Determine if the filter or action should be available for the given request.
      */
     public function authorizedToSee(Request $request): bool

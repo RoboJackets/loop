@@ -17,7 +17,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
-class SyncController extends Controller
+class WorkdaySyncController extends Controller
 {
     public function getResourcesToSync(): JsonResponse
     {

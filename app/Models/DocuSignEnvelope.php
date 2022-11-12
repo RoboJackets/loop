@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Laravel\Nova\Actions\Actionable;
 use Laravel\Scout\Searchable;
 use Smalot\PdfParser\Parser;
 
@@ -37,6 +38,8 @@ use Smalot\PdfParser\Parser;
  * @property int $internal_cost_transfer
  * @property int|null $duplicate_of_docusign_envelope_id
  * @property int $submission_error
+ * @property int|null $quickbooks_invoice_id
+ * @property int|null $quickbooks_invoice_document_number
  * @property \Illuminate\Support\Carbon|null $submitted_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -82,6 +85,8 @@ use Smalot\PdfParser\Parser;
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereInternalCostTransfer($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereSubmissionError($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereQuickbooksInvoiceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereQuickbooksInvoiceDocumentNumber($value)
  * @method static \Illuminate\Database\Query\Builder|DocuSignEnvelope withTrashed()
  * @method static \Illuminate\Database\Query\Builder|DocuSignEnvelope withoutTrashed()
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
@@ -91,6 +96,7 @@ class DocuSignEnvelope extends Model
     use SoftDeletes;
     use Searchable;
     use GetMorphClassStatic;
+    use Actionable;
 
     private const ENVELOPE_ID_REGEX = '/Envelope Id: (?P<envelopeId>[A-Z0-9]{32})/';
 
