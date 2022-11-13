@@ -84,12 +84,14 @@
             <errorLevel type="suppress">
                 <file name="app/Http/Controllers/QuickBooksAuthenticationController.php"/>
                 <file name="app/Util/QuickBooks.php"/>
+                <file name="app/Nova/Actions/SyncExpensePaymentToQuickBooks.php"/>
             </errorLevel>
         </InvalidReturnType>
         <InvalidReturnStatement>
             <errorLevel type="suppress">
                 <file name="app/Http/Controllers/QuickBooksAuthenticationController.php"/>
                 <file name="app/Util/QuickBooks.php"/>
+                <file name="app/Nova/Actions/SyncExpensePaymentToQuickBooks.php"/>
             </errorLevel>
         </InvalidReturnStatement>
         <InvalidPropertyAssignmentValue>
@@ -98,6 +100,7 @@
                 <file name="app/Jobs/ProcessSensibleOutput.php"/>
                 <file name="app/Nova/Actions/SyncDocuSignEnvelopeToQuickBooks.php"/>
                 <file name="app/Util/QuickBooks.php"/>
+                <file name="app/Nova/Actions/SyncExpensePaymentToQuickBooks.php"/>
             </errorLevel>
         </InvalidPropertyAssignmentValue>
         <UndefinedPropertyFetch>

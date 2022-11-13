@@ -20,12 +20,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property float $amount
  * @property int $transaction_reference
  * @property int|null $bank_transaction_id
+ * @property int|null $quickbooks_payment_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\BankTransaction|null $bankTransaction
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExpenseReport> $expenseReports
  * @property-read int|null $expense_reports_count
  * @property-read \App\Models\ExternalCommitteeMember|null $payTo
+ * @property-read string|null $quickbooks_payment_url
  *
  * @method static \Illuminate\Database\Eloquent\Builder|ExpensePayment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ExpensePayment newQuery()
@@ -41,6 +43,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|ExpensePayment whereBankTransactionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExpensePayment whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExpensePayment whereWorkdayInstanceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExpensePayment whereQuickbooksPaymentId($value)
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class ExpensePayment extends Model
@@ -99,5 +102,12 @@ class ExpensePayment extends Model
     public function bankTransaction(): BelongsTo
     {
         return $this->belongsTo(BankTransaction::class);
+    }
+
+    public function getQuickbooksPaymentUrlAttribute(): ?string
+    {
+        return $this->quickbooks_payment_id === null ?
+            null :
+            'https://app.qbo.intuit.com/app/recvpayment?txnId='.$this->quickbooks_payment_id;
     }
 }

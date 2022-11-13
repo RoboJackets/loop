@@ -15,4 +15,5 @@ return [
         'item_id' => env('QUICKBOOKS_INVOICE_ITEM_ID'),
         'customer_id' => env('QUICKBOOKS_INVOICE_CUSTOMER_ID'),
     ],
+    'payment_method_id' => env('QUICKBOOKS_PAYMENT_METHOD_ID'),
 ];

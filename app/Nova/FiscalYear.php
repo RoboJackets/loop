@@ -44,6 +44,13 @@ class FiscalYear extends Resource
     ];
 
     /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'SOFO';
+
+    /**
      * Get the fields displayed by the resource.
      */
     public function fields(NovaRequest $request): array

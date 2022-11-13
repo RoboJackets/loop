@@ -89,6 +89,13 @@ class DocuSignEnvelope extends Resource
     ];
 
     /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'SOFO';
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
@@ -137,7 +144,8 @@ class DocuSignEnvelope extends Resource
 
             URL::make('QuickBooks Invoice', 'quickbooks_invoice_url')
                 ->displayUsing(fn (): ?int => $this->quickbooks_invoice_document_number)
-                ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks')),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks'))
+                ->hideWhenUpdating(),
 
             Number::make('QuickBooks Invoice ID', 'quickbooks_invoice_id')
                 ->onlyOnForms()
@@ -275,7 +283,11 @@ class DocuSignEnvelope extends Resource
                         $request->user()->quickbooks_access_token !== null &&
                         ($envelope->type === 'purchase_reimbursement' || $envelope->type === 'travel_reimbursement') &&
                         $envelope->quickbooks_invoice_id === null &&
-                        $envelope->pay_to_user_id === null
+                        $envelope->pay_to_user_id === null &&
+                        $envelope->submission_error === false &&
+                        $envelope->internal_cost_transfer === false &&
+                        $envelope->replacedBy()->count() === 0 &&
+                        $envelope->duplicate_of_docusign_envelope_id === null
                 ),
         ];
     }

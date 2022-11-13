@@ -34,9 +34,9 @@ use Smalot\PdfParser\Parser;
  * @property int|null $replaces_docusign_envelope_id
  * @property bool $lost
  * @property int|null $expense_report_id
- * @property int $internal_cost_transfer
+ * @property bool $internal_cost_transfer
  * @property int|null $duplicate_of_docusign_envelope_id
- * @property int $submission_error
+ * @property bool $submission_error
  * @property int|null $quickbooks_invoice_id
  * @property int|null $quickbooks_invoice_document_number
  * @property \Illuminate\Support\Carbon|null $submitted_at
@@ -97,7 +97,7 @@ class DocuSignEnvelope extends Model
     use Searchable;
     use GetMorphClassStatic;
 
-    private const ENVELOPE_ID_REGEX = '/Envelope Id: (?P<envelopeId>[A-Z0-9]{32})/';
+    private const ENVELOPE_ID_REGEX = '/Envelope Id: (?P<envelopeId>[A-F0-9\s]{32,})/';
 
     /**
      * The name of the database table for this model.
@@ -116,6 +116,8 @@ class DocuSignEnvelope extends Model
         'lost' => 'boolean',
         'sensible_output' => 'array',
         'submitted_at' => 'datetime',
+        'submission_error' => 'boolean',
+        'internal_cost_transfer' => 'boolean',
     ];
 
     /**
@@ -308,12 +310,14 @@ class DocuSignEnvelope extends Model
             throw new CouldNotExtractEnvelopeUuid();
         }
 
+        $envelope_id = str_replace([' ', "\n"], [], $matches['envelopeId']);
+
         return Str::lower(
-            Str::substr($matches['envelopeId'], 0, 8).'-'.
-            Str::substr($matches['envelopeId'], 8, 4).'-'.
-            Str::substr($matches['envelopeId'], 12, 4).'-'.
-            Str::substr($matches['envelopeId'], 16, 4).'-'.
-            Str::substr($matches['envelopeId'], 20, 12)
+            Str::substr($envelope_id, 0, 8).'-'.
+            Str::substr($envelope_id, 8, 4).'-'.
+            Str::substr($envelope_id, 12, 4).'-'.
+            Str::substr($envelope_id, 16, 4).'-'.
+            Str::substr($envelope_id, 20, 12)
         );
     }
 }
