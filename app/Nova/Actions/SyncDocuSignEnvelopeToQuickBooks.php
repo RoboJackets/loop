@@ -77,7 +77,6 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
                         'Description' => $envelope->description,
                         'DetailType' => 'SalesItemLineDetail',
                         'SalesItemLineDetail' => [
-                            'Qty' => 1,
                             'ItemRef' => [
                                 'value' => config('quickbooks.invoice.item_id'),
                             ],
