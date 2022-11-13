@@ -14,6 +14,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Menu\Menu;
+use Laravel\Nova\Menu\MenuItem;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use Vyuldashev\NovaPermission\NovaPermissionTool;
@@ -51,6 +53,27 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             if (app()->bound('sentry')) {
                 app('sentry')->captureException($exception);
             }
+        });
+
+        Nova::userMenu(static function (Request $request, Menu $menu): Menu {
+            if (
+                $request->user()->can('access-quickbooks') &&
+                $request->user()->quickbooks_access_token === null ||
+                (
+                    $request->user()->quickbooks_refresh_token_expires_at !== null &&
+                    $request->user()->quickbooks_refresh_token_expires_at < Carbon::now()
+                )
+            ) {
+                $menu->append(
+                    // @phan-suppress-next-line PhanTypeMismatchArgument
+                    MenuItem::externalLink(
+                        'Connect to QuickBooks',
+                        route('quickbooks.start')
+                    )
+                );
+            }
+
+            return $menu;
         });
     }
 

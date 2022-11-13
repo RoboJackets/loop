@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace App\Nova\Actions;
 
 use App\Models\BankTransaction;
+use App\Util\Sentry;
 use GuzzleHttp\Client;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
@@ -50,34 +51,34 @@ class RefreshMercuryTransactions extends Action
      * @param  \Laravel\Nova\Fields\ActionFields  $fields
      * @param  \Illuminate\Support\Collection<int,\App\Models\BankTransaction>  $models
      * @return array<string,string>
-     *
-     * @phan-suppress PhanTypeArraySuspiciousNullable
      */
     public function handle(ActionFields $fields, Collection $models): array
     {
-        $client = new Client(
-            [
-                'headers' => [
-                    'User-Agent' => 'RoboJackets Loop on '.config('app.url'),
-                    'Authorization' => 'Bearer '.config('services.mercury.token'),
-                    'Accept' => 'application/json',
-                ],
-                'allow_redirects' => false,
-            ]
+        $json = Sentry::wrapWithChildSpan(
+            'mercury.retrieve_transactions',
+            static fn (): array => json_decode(
+                (new Client(
+                    [
+                        'headers' => [
+                            'User-Agent' => 'RoboJackets Loop on '.config('app.url'),
+                            'Authorization' => 'Bearer '.config('services.mercury.token'),
+                            'Accept' => 'application/json',
+                        ],
+                        'allow_redirects' => false,
+                    ]
+                ))->get(
+                    config('services.mercury.transactions_url'),
+                    [
+                        'query' => [
+                            'start' => '2020-01-01T00:00:00.00Z',
+                            'limit' => 1000,
+                            'offset' => 0,
+                        ],
+                    ]
+                )->getBody()->getContents(),
+                true
+            )
         );
-
-        $response = $client->get(
-            config('services.mercury.transactions_url'),
-            [
-                'query' => [
-                    'start' => '2020-01-01T00:00:00.00Z',
-                    'limit' => 1000,
-                    'offset' => 0,
-                ],
-            ]
-        );
-
-        $json = json_decode($response->getBody()->getContents(), true);
 
         collect($json['transactions'])
             ->sortBy([

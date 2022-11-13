@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Exceptions\CouldNotExtractEnvelopeUuid;
+use App\Util\Sentry;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,8 +14,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Scout\Searchable;
-use Sentry\SentrySdk;
-use Sentry\Tracing\SpanContext;
 
 /**
  * An attachment for a DocuSign envelope.
@@ -131,59 +130,44 @@ class Attachment extends Model
         $array = $this->toArray();
 
         $filename = $this->filename;
-        $file_hash = hash_file('sha512', Storage::disk('local')->path($filename));
 
-        $array['full_text'] = Cache::rememberForever(
-            'tika_file_'.$file_hash,
-            static function () use ($filename): string {
-                $parentSpan = SentrySdk::getCurrentHub()->getSpan();
+        if (Storage::disk('local')->exists($filename)) {
+            $file_hash = hash_file('sha512', Storage::disk('local')->path($filename));
 
-                if ($parentSpan !== null) {
-                    $context = new SpanContext();
-                    $context->setOp('tika.extract');
-                    $span = $parentSpan->startChild($context);
-                    SentrySdk::getCurrentHub()->setSpan($span);
-                }
+            $array['full_text'] = Cache::rememberForever(
+                'tika_file_'.$file_hash,
+                static fn (): string => Sentry::wrapWithChildSpan(
+                    'tika.extract',
+                    static fn (): string => (new Client(
+                        [
+                            'base_uri' => config('services.tika.url'),
+                            'headers' => [
+                                'Accept' => 'text/plain',
+                                'Content-Type' => 'application/octet-stream',
+                            ],
+                            'allow_redirects' => false,
+                            'connect_timeout' => 10,
+                            'read_timeout' => 60,
+                            'synchronous' => true,
+                        ]
+                    ))->put(
+                        '/tika',
+                        [
+                            'body' => Storage::disk('local')->get($filename),
+                        ]
+                    )->getBody()->getContents()
+                )
+            );
 
-                $response = (new Client(
-                    [
-                        'base_uri' => config('services.tika.url'),
-                        'headers' => [
-                            'Accept' => 'text/plain',
-                            'Content-Type' => 'application/octet-stream',
-                        ],
-                        'allow_redirects' => false,
-                        'connect_timeout' => 10,
-                        'read_timeout' => 60,
-                        'synchronous' => true,
-                    ]
-                ))->put(
-                    '/tika',
-                    [
-                        'body' => Storage::disk('local')->get($filename),
-                    ]
+            try {
+                $array['docusign_envelope_uuid'] = DocuSignEnvelope::getEnvelopeUuidFromSummaryText(
+                    $array['full_text']
                 );
-
-                if ($parentSpan !== null) {
-                    // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
-                    $span->finish();
-                    SentrySdk::getCurrentHub()->setSpan($parentSpan);
-                }
-
-                if ($response->getStatusCode() !== 200) {
-                    throw new \Exception(
-                        'Tika returned non-200 status code - '.$response->getStatusCode().' - '
-                        .$response->getBody()->getContents()
-                    );
-                }
-
-                return $response->getBody()->getContents();
+            } catch (CouldNotExtractEnvelopeUuid) {
+                $array['docusign_envelope_uuid'] = null;
             }
-        );
-
-        try {
-            $array['docusign_envelope_uuid'] = DocuSignEnvelope::getEnvelopeUuidFromSummaryText($array['full_text']);
-        } catch (CouldNotExtractEnvelopeUuid) {
+        } else {
+            $array['full_text'] = null;
             $array['docusign_envelope_uuid'] = null;
         }
 

@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Util\QuickBooks;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Nova\Auth\Impersonatable;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Scout\Searchable;
+use QuickBooksOnline\API\Core\OAuth\OAuth2\OAuth2AccessToken;
 use RoboJackets\MeilisearchIndexSettingsHelper\FirstNameSynonyms;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
@@ -21,6 +24,10 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $first_name
  * @property string $last_name
  * @property string $email
+ * @property string|null $quickbooks_access_token
+ * @property \Illuminate\Support\Carbon|null $quickbooks_access_token_expires_at
+ * @property string|null $quickbooks_refresh_token
+ * @property \Illuminate\Support\Carbon|null $quickbooks_refresh_token_expires_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read string $name
@@ -37,6 +44,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property int|null $workday_instance_id
  * @property bool|null $active_employee
  * @property-read string|null $workday_url
+ * @property ?OAuth2AccessToken $quickbooks_tokens
  *
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
@@ -52,6 +60,10 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUsername($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereActiveEmployee($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereWorkdayInstanceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereQuickbooksAccessToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereQuickbooksAccessTokenExpiresAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereQuickbooksRefreshToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereQuickbooksRefreshTokenExpiresAt($value)
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class User extends Authenticatable
@@ -92,6 +104,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'active_employee' => 'boolean',
+        'quickbooks_access_token_expires_at' => 'datetime',
+        'quickbooks_refresh_token_expires_at' => 'datetime',
     ];
 
     /**
@@ -155,6 +169,51 @@ class User extends Authenticatable
     {
         return $this->workday_instance_id === null ? null : 'https://wd5.myworkday.com/gatech/d/inst/1$37/247$'
             .$this->workday_instance_id.'.htmld';
+    }
+
+    /**
+     * Serialize QuickBooks tokens to the database model.
+     *
+     * @phan-suppress PhanTypeMismatchProperty
+     */
+    public function setQuickbooksTokensAttribute(OAuth2AccessToken $tokens): void
+    {
+        $this->quickbooks_access_token = $tokens->getAccessToken();
+        $this->quickbooks_access_token_expires_at = $tokens->getAccessTokenExpiresAt();
+        $this->quickbooks_refresh_token = $tokens->getRefreshToken();
+        $this->quickbooks_refresh_token_expires_at = $tokens->getRefreshTokenExpiresAt();
+    }
+
+    public function getQuickbooksTokensAttribute(): ?OAuth2AccessToken
+    {
+        if ($this->quickbooks_access_token === null) {
+            return null;
+        } elseif (
+            $this->quickbooks_access_token_expires_at !== null &&
+            $this->quickbooks_access_token_expires_at < Carbon::now()
+        ) {
+            $newTokens = QuickBooks::getDataService()
+                ->getOAuth2LoginHelper()
+                ->refreshAccessTokenWithRefreshToken($this->quickbooks_refresh_token);
+
+            $newTokens->setRealmID(config('quickbooks.company.id'));
+
+            $this->quickbooks_tokens = $newTokens;
+            $this->save();
+
+            return $newTokens;
+        } else {
+            $tokens = new OAuth2AccessToken(
+                cID: config('quickbooks.client.id'),
+                cS: config('quickbooks.client.secret'),
+                atk: $this->quickbooks_access_token,
+                refreshtk: $this->quickbooks_refresh_token
+            );
+
+            $tokens->setRealmID(config('quickbooks.company.id'));
+
+            return $tokens;
+        }
     }
 
     /**

@@ -7,10 +7,9 @@ namespace App\Http\Controllers;
 use Adldap\Laravel\Facades\Adldap;
 use App\Http\Requests\UpsertWorker;
 use App\Models\User;
+use App\Util\Sentry;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
-use Sentry\SentrySdk;
-use Sentry\Tracing\SpanContext;
 
 class WorkerController extends Controller
 {
@@ -40,31 +39,18 @@ class WorkerController extends Controller
         } elseif (User::whereEmail($email)->exists()) {
             $user = User::whereEmail($email)->sole();
         } else {
-            $username_for_email = Cache::remember(
+            $username_for_email = Cache::rememberForever(
                 'uid_'.$email,
-                now()->addDay(),
                 static function () use ($email): ?string {
-                    $parentSpan = SentrySdk::getCurrentHub()->getSpan();
-
-                    if ($parentSpan !== null) {
-                        $context = new SpanContext();
-                        $context->setOp('ldap.get_username_by_email');
-                        $span = $parentSpan->startChild($context);
-                        SentrySdk::getCurrentHub()->setSpan($span);
-                    }
-
-                    $result = Adldap::search()
-                        ->where('mail', '=', $email)
-                        ->select('primaryUid')
-                        ->get()
-                        ->pluck('primaryUid')
-                        ->toArray();
-
-                    if ($parentSpan !== null) {
-                        // @phan-suppress-next-line PhanPossiblyUndeclaredVariable
-                        $span->finish();
-                        SentrySdk::getCurrentHub()->setSpan($parentSpan);
-                    }
+                    $result = Sentry::wrapWithChildSpan(
+                        'ldap.get_username_by_email',
+                        static fn (): array => Adldap::search()
+                            ->where('mail', '=', $email)
+                            ->select('primaryUid')
+                            ->get()
+                            ->pluck('primaryUid')
+                            ->toArray()
+                    );
 
                     return $result === [] ? null : $result[0][0];
                 }

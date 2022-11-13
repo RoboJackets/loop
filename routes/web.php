@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\QuickBooksAuthenticationController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,3 +15,9 @@ declare(strict_types=1);
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::prefix('quickbooks')->middleware(['can:access-quickbooks'])->group(static function (): void {
+    Route::get('/', [QuickBooksAuthenticationController::class, 'redirectToQuickBooks'])->name('quickbooks.start');
+
+    Route::get('complete', [QuickBooksAuthenticationController::class, 'handleCallback'])->name('quickbooks.complete');
+});
