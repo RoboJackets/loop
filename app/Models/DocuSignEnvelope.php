@@ -307,7 +307,7 @@ class DocuSignEnvelope extends Model
         $matches = [];
 
         if (preg_match(self::ENVELOPE_ID_REGEX, $summary_text, $matches) !== 1) {
-            throw new CouldNotExtractEnvelopeUuid();
+            throw new CouldNotExtractEnvelopeUuid('Could not extract envelope UUID from provided text');
         }
 
         $envelope_id = str_replace([' ', "\n"], [], $matches['envelopeId']);
