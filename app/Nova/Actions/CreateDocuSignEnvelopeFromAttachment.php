@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use App\Exceptions\CouldNotExtractEnvelopeUuid;
 use App\Jobs\SubmitDocuSignEnvelopeToSensible;
 use App\Models\DocuSignEnvelope;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class CreateDocuSignEnvelopeFromAttachment extends Action
@@ -52,7 +54,23 @@ class CreateDocuSignEnvelopeFromAttachment extends Action
     {
         $attachment = $models->sole();
 
-        $envelope_uuid = DocuSignEnvelope::getEnvelopeUuidFromSummaryPdf(Storage::get($attachment->filename));
+        if ($fields->parser === 'smalot') {
+            try {
+                $envelope_uuid = DocuSignEnvelope::getEnvelopeUuidFromSummaryPdf(Storage::get($attachment->filename));
+            } catch (CouldNotExtractEnvelopeUuid) {
+                $envelope_uuid = null;
+            }
+        } else {
+            $envelope_uuid = $attachment->toSearchableArray()['docusign_envelope_uuid'];
+        }
+
+        if ($envelope_uuid === null) {
+            return Action::danger(
+                $fields->parser === 'smalot' ?
+                    'Could not extract envelope UUID. Try parsing with Tika.' :
+                    'Could not extract envelope UUID. Are you sure this is a machine-readable envelope?'
+            );
+        }
 
         if (DocuSignEnvelope::whereEnvelopeUuid($envelope_uuid)->exists()) {
             return Action::danger('Envelope already exists.');
@@ -82,6 +100,14 @@ class CreateDocuSignEnvelopeFromAttachment extends Action
      */
     public function fields(NovaRequest $request): array
     {
-        return [];
+        return [
+            Select::make('Parser')
+                ->options([
+                    'tika' => 'Tika',
+                    'smalot' => 'Smalot',
+                ])
+                ->default('smalot')
+                ->required(),
+        ];
     }
 }

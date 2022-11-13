@@ -293,6 +293,14 @@ class DocuSignEnvelope extends Model
             'https://app.qbo.intuit.com/app/invoice?txnId='.$this->quickbooks_invoice_id;
     }
 
+    /**
+     * Extract a DocuSign envelope UUID from a summary PDF.
+     *
+     * @param  string  $summary_pdf
+     * @return string
+     *
+     * @throws CouldNotExtractEnvelopeUuid
+     */
     public static function getEnvelopeUuidFromSummaryPdf(string $summary_pdf): string
     {
         $summary_text = (new Parser())
@@ -302,6 +310,14 @@ class DocuSignEnvelope extends Model
         return self::getEnvelopeUuidFromSummaryText($summary_text);
     }
 
+    /**
+     * Extract a DocuSign envelope UUID from a summary plaintext.
+     *
+     * @param  string  $summary_text
+     * @return string
+     *
+     * @throws CouldNotExtractEnvelopeUuid
+     */
     public static function getEnvelopeUuidFromSummaryText(string $summary_text): string
     {
         $matches = [];
@@ -310,14 +326,21 @@ class DocuSignEnvelope extends Model
             throw new CouldNotExtractEnvelopeUuid('Could not extract envelope UUID from provided text');
         }
 
-        $envelope_id = str_replace([' ', "\n"], [], $matches['envelopeId']);
+        $envelope_uuid = str_replace([' ', "\n"], [], $matches['envelopeId']);
+
+        if (strlen($envelope_uuid) !== 32) {
+            throw new CouldNotExtractEnvelopeUuid(
+                'Could not extract envelope UUID from provided text - candidate string was '
+                .strlen($envelope_uuid).' characters'
+            );
+        }
 
         return Str::lower(
-            Str::substr($envelope_id, 0, 8).'-'.
-            Str::substr($envelope_id, 8, 4).'-'.
-            Str::substr($envelope_id, 12, 4).'-'.
-            Str::substr($envelope_id, 16, 4).'-'.
-            Str::substr($envelope_id, 20, 12)
+            Str::substr($envelope_uuid, 0, 8).'-'.
+            Str::substr($envelope_uuid, 8, 4).'-'.
+            Str::substr($envelope_uuid, 12, 4).'-'.
+            Str::substr($envelope_uuid, 16, 4).'-'.
+            Str::substr($envelope_uuid, 20, 12)
         );
     }
 }
