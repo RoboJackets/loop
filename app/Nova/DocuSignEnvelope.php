@@ -135,12 +135,7 @@ class DocuSignEnvelope extends Resource
                 ->nullable()
                 ->searchable(),
 
-            URL::make(
-                'QuickBooks Invoice',
-                fn (): ?string => $this->quickbooks_invoice_id !== null
-                    ? 'https://app.qbo.intuit.com/app/invoice?txnId='.$this->quickbooks_invoice_id
-                    : null
-            )
+            URL::make('QuickBooks Invoice', 'quickbooks_invoice_url')
                 ->displayUsing(fn (): ?int => $this->quickbooks_invoice_document_number)
                 ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks')),
 
@@ -279,7 +274,8 @@ class DocuSignEnvelope extends Resource
                     ): bool => $request->user()->can('access-quickbooks') &&
                         $request->user()->quickbooks_access_token !== null &&
                         ($envelope->type === 'purchase_reimbursement' || $envelope->type === 'travel_reimbursement') &&
-                        $envelope->quickbooks_invoice_id === null
+                        $envelope->quickbooks_invoice_id === null &&
+                        $envelope->pay_to_user_id === null
                 ),
         ];
     }

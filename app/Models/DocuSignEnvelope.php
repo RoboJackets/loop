@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use Laravel\Nova\Actions\Actionable;
 use Laravel\Scout\Searchable;
 use Smalot\PdfParser\Parser;
 
@@ -53,6 +52,7 @@ use Smalot\PdfParser\Parser;
  * @property-read DocuSignEnvelope|null $replacesEnvelope
  * @property-read \App\Models\ExpenseReport|null $expenseReport
  * @property-read string|null $sensible_extraction_url
+ * @property-read string|null $quickbooks_invoice_url
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DocuSignEnvelope> $replacedBy
  * @property-read int|null $replaced_by_count
  * @property-read DocuSignEnvelope|null $duplicateOf
@@ -96,7 +96,6 @@ class DocuSignEnvelope extends Model
     use SoftDeletes;
     use Searchable;
     use GetMorphClassStatic;
-    use Actionable;
 
     private const ENVELOPE_ID_REGEX = '/Envelope Id: (?P<envelopeId>[A-Z0-9]{32})/';
 
@@ -283,6 +282,13 @@ class DocuSignEnvelope extends Model
         return $this->sensible_extraction_uuid === null ?
             null :
             'https://app.sensible.so/extraction/?e='.$this->sensible_extraction_uuid;
+    }
+
+    public function getQuickbooksInvoiceUrlAttribute(): ?string
+    {
+        return $this->quickbooks_invoice_id === null ?
+            null :
+            'https://app.qbo.intuit.com/app/invoice?txnId='.$this->quickbooks_invoice_id;
     }
 
     public static function getEnvelopeUuidFromSummaryPdf(string $summary_pdf): string

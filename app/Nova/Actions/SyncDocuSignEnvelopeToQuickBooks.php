@@ -8,10 +8,6 @@ use App\Models\Attachment;
 use App\Models\User;
 use App\Util\QuickBooks;
 use App\Util\Sentry;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
@@ -20,11 +16,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use QuickBooksOnline\API\Data\IPPInvoice;
 use QuickBooksOnline\API\Facades\Invoice;
 
-class SyncDocuSignEnvelopeToQuickBooks extends Action implements ShouldQueue, ShouldBeUnique
+class SyncDocuSignEnvelopeToQuickBooks extends Action
 {
-    use InteractsWithQueue;
-    use Queueable;
-
     /**
      * The displayable name of the action.
      *
@@ -54,14 +47,6 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action implements ShouldQueue, Sh
     public $confirmText = 'Are you sure you want to sync this envelope to QuickBooks?';
 
     /**
-     * Create a new action instance.
-     */
-    public function __construct()
-    {
-        $this->queue = 'quickbooks';
-    }
-
-    /**
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\DocuSignEnvelope>  $models
@@ -69,7 +54,7 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action implements ShouldQueue, Sh
      * @phan-suppress PhanTypeMismatchArgument
      * @phan-suppress PhanTypeMismatchProperty
      */
-    public function handle(ActionFields $fields, Collection $models): void
+    public function handle(ActionFields $fields, Collection $models): array
     {
         $user = User::whereId($fields->quickbooks_user_id)->sole();
         $data_service = QuickBooks::getDataService($user);
@@ -113,6 +98,8 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action implements ShouldQueue, Sh
                 QuickBooks::uploadAttachmentToInvoice($data_service, $envelope, $attachment->filename);
             }
         );
+
+        return Action::openInNewTab($envelope->quickbooks_invoice_url);
     }
 
     /**
