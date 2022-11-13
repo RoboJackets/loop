@@ -123,7 +123,7 @@ class Attachment extends Model
     /**
      * Get the indexable data array for the model.
      *
-     * @return array<string,int|string>
+     * @return array<string,int|string|null>
      */
     public function toSearchableArray(): array
     {

@@ -34,9 +34,9 @@ use Smalot\PdfParser\Parser;
  * @property int|null $replaces_docusign_envelope_id
  * @property bool $lost
  * @property int|null $expense_report_id
- * @property int $internal_cost_transfer
+ * @property bool $internal_cost_transfer
  * @property int|null $duplicate_of_docusign_envelope_id
- * @property int $submission_error
+ * @property bool $submission_error
  * @property int|null $quickbooks_invoice_id
  * @property int|null $quickbooks_invoice_document_number
  * @property \Illuminate\Support\Carbon|null $submitted_at
@@ -97,7 +97,7 @@ class DocuSignEnvelope extends Model
     use Searchable;
     use GetMorphClassStatic;
 
-    private const ENVELOPE_ID_REGEX = '/Envelope Id: (?P<envelopeId>[A-Z0-9]{32})/';
+    private const ENVELOPE_ID_REGEX = '/Envelope Id: (?P<envelopeId>[A-F0-9\s]{32,})/';
 
     /**
      * The name of the database table for this model.
@@ -116,6 +116,8 @@ class DocuSignEnvelope extends Model
         'lost' => 'boolean',
         'sensible_output' => 'array',
         'submitted_at' => 'datetime',
+        'submission_error' => 'boolean',
+        'internal_cost_transfer' => 'boolean',
     ];
 
     /**
@@ -291,6 +293,14 @@ class DocuSignEnvelope extends Model
             'https://app.qbo.intuit.com/app/invoice?txnId='.$this->quickbooks_invoice_id;
     }
 
+    /**
+     * Extract a DocuSign envelope UUID from a summary PDF.
+     *
+     * @param  string  $summary_pdf
+     * @return string
+     *
+     * @throws CouldNotExtractEnvelopeUuid
+     */
     public static function getEnvelopeUuidFromSummaryPdf(string $summary_pdf): string
     {
         $summary_text = (new Parser())
@@ -300,20 +310,37 @@ class DocuSignEnvelope extends Model
         return self::getEnvelopeUuidFromSummaryText($summary_text);
     }
 
+    /**
+     * Extract a DocuSign envelope UUID from a summary plaintext.
+     *
+     * @param  string  $summary_text
+     * @return string
+     *
+     * @throws CouldNotExtractEnvelopeUuid
+     */
     public static function getEnvelopeUuidFromSummaryText(string $summary_text): string
     {
         $matches = [];
 
         if (preg_match(self::ENVELOPE_ID_REGEX, $summary_text, $matches) !== 1) {
-            throw new CouldNotExtractEnvelopeUuid();
+            throw new CouldNotExtractEnvelopeUuid('Could not extract envelope UUID from provided text');
+        }
+
+        $envelope_uuid = str_replace([' ', "\n"], [], $matches['envelopeId']);
+
+        if (strlen($envelope_uuid) !== 32) {
+            throw new CouldNotExtractEnvelopeUuid(
+                'Could not extract envelope UUID from provided text - candidate string was '
+                .strlen($envelope_uuid).' characters'
+            );
         }
 
         return Str::lower(
-            Str::substr($matches['envelopeId'], 0, 8).'-'.
-            Str::substr($matches['envelopeId'], 8, 4).'-'.
-            Str::substr($matches['envelopeId'], 12, 4).'-'.
-            Str::substr($matches['envelopeId'], 16, 4).'-'.
-            Str::substr($matches['envelopeId'], 20, 12)
+            Str::substr($envelope_uuid, 0, 8).'-'.
+            Str::substr($envelope_uuid, 8, 4).'-'.
+            Str::substr($envelope_uuid, 12, 4).'-'.
+            Str::substr($envelope_uuid, 16, 4).'-'.
+            Str::substr($envelope_uuid, 20, 12)
         );
     }
 }

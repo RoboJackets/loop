@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\SyncExpensePaymentToQuickBooks;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
@@ -12,6 +14,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 
@@ -88,6 +91,14 @@ class ExpensePayment extends Resource
             BelongsTo::make('Bank Transaction', 'bankTransaction', BankTransaction::class)
                 ->sortable(),
 
+            URL::make('QuickBooks Payment', 'quickbooks_payment_url')
+                ->displayUsing(fn (): ?int => $this->quickbooks_payment_id)
+                ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks')),
+
+            Number::make('QuickBooks Payment ID', 'quickbooks_payment_id')
+                ->onlyOnForms()
+                ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks')),
+
             HasMany::make('Expense Reports', 'expenseReports'),
 
             Panel::make('Timestamps', [
@@ -134,9 +145,23 @@ class ExpensePayment extends Resource
      * Get the actions available for the resource.
      *
      * @return array<\Laravel\Nova\Actions\Action>
+     *
+     * @phan-suppress PhanTypeMismatchArgumentProbablyReal
      */
     public function actions(NovaRequest $request): array
     {
-        return [];
+        return [
+            SyncExpensePaymentToQuickBooks::make()
+                ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('access-quickbooks'))
+                ->canRun(
+                    static fn (
+                        NovaRequest $request,
+                        \App\Models\ExpensePayment $payment
+                    ): bool => $request->user()->can('access-quickbooks') &&
+                        $request->user()->quickbooks_access_token !== null &&
+                        $payment->quickbooks_payment_id === null &&
+                        $payment->payTo->user === null
+                ),
+        ];
     }
 }
