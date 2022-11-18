@@ -40,7 +40,7 @@ class UserPolicy
      */
     public function update(User $actor, User $target): bool
     {
-        return false;
+        return $actor->can('update-users');
     }
 
     /**
