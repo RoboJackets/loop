@@ -117,4 +117,18 @@ class BankTransaction extends Model
     {
         return $this->hasOne(ExpensePayment::class);
     }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string,int|string>
+     */
+    public function toSearchableArray(): array
+    {
+        $array = $this->toArray();
+
+        $array['net_amount'] = strval($this->net_amount);
+
+        return $array;
+    }
 }
