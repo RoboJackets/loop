@@ -120,7 +120,7 @@ class WorkdaySyncController extends Controller
 
         return response()->json(
             [
-                'expense-reports' => $sync_expense_reports,
+                'expense-reports' => array_values($sync_expense_reports),
                 'workers' => $sync_workers,
                 'external-committee-members' => $sync_external_committee_members,
             ]
