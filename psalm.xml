@@ -85,6 +85,7 @@
                 <file name="app/Http/Controllers/QuickBooksAuthenticationController.php"/>
                 <file name="app/Util/QuickBooks.php"/>
                 <file name="app/Nova/Actions/SyncExpensePaymentToQuickBooks.php"/>
+                <file name="app/Models/User.php"/>
             </errorLevel>
         </InvalidReturnType>
         <InvalidReturnStatement>
@@ -92,6 +93,7 @@
                 <file name="app/Http/Controllers/QuickBooksAuthenticationController.php"/>
                 <file name="app/Util/QuickBooks.php"/>
                 <file name="app/Nova/Actions/SyncExpensePaymentToQuickBooks.php"/>
+                <file name="app/Models/User.php"/>
             </errorLevel>
         </InvalidReturnStatement>
         <InvalidPropertyAssignmentValue>
@@ -111,6 +113,7 @@
         <InvalidArgument>
             <errorLevel type="suppress">
                 <file name="app/Util/QuickBooks.php"/>
+                <file name="app/Nova/Actions/UploadBankStatement.php"/>
             </errorLevel>
         </InvalidArgument>
         <InvalidPropertyFetch>
@@ -118,5 +121,15 @@
                 <file name="app/Util/QuickBooks.php"/>
             </errorLevel>
         </InvalidPropertyFetch>
+        <MissingTemplateParam>
+            <errorLevel type="suppress">
+                <file name="app/Nova/Resource.php"/>
+            </errorLevel>
+        </MissingTemplateParam>
+        <RedundantCondition>
+            <errorLevel type="suppress">
+                <file name="app/Nova/Actions/SyncExpensePaymentToQuickBooks.php"/>
+            </errorLevel>
+        </RedundantCondition>
     </issueHandlers>
 </psalm>
