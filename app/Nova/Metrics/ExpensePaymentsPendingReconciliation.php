@@ -38,6 +38,7 @@ class ExpensePaymentsPendingReconciliation extends Value
                     ->whereHas('payTo', static function (Builder $query): void {
                         $query->whereNull('user_id');
                     })
+                    ->whereHas('expenseReports')
                     ->sole()->total
             )
             ->dollars()

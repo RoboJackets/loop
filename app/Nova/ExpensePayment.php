@@ -6,6 +6,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\SyncExpensePaymentToQuickBooks;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
@@ -13,7 +14,7 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
@@ -68,36 +69,58 @@ class ExpensePayment extends Resource
     {
         return [
             Number::make('Check Number', 'transaction_reference')
-                ->sortable(),
+                ->sortable()
+                ->readonly(),
 
             Number::make('Instance ID', 'workday_instance_id')
                 ->onlyOnDetail(),
 
-            Text::make('Status')
-                ->sortable(),
+            Badge::make('Status')
+                ->map([
+                    'Complete' => 'success',
+                    'Canceled' => 'danger',
+                ])
+                ->sortable()
+                ->hideWhenUpdating(),
+
+            Select::make('Status')
+                ->sortable()
+                ->options([
+                    'Complete' => 'Complete',
+                    'Canceled' => 'Canceled',
+                ])
+                ->displayUsingLabels()
+                ->onlyOnForms(),
 
             Boolean::make('Reconciled')
-                ->sortable(),
+                ->sortable()
+                ->readonly(),
 
             BelongsTo::make('Pay To', 'payTo', ExternalCommitteeMember::class)
-                ->sortable(),
+                ->sortable()
+                ->readonly(),
 
             Date::make('Payment Date')
-                ->sortable(),
+                ->sortable()
+                ->readonly(),
 
             Currency::make('Amount')
-                ->sortable(),
+                ->sortable()
+                ->readonly(),
 
             BelongsTo::make('Bank Transaction', 'bankTransaction', BankTransaction::class)
-                ->sortable(),
+                ->sortable()
+                ->readonly(),
 
             URL::make('QuickBooks Payment', 'quickbooks_payment_url')
                 ->displayUsing(fn (): ?int => $this->quickbooks_payment_id)
-                ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks')),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks'))
+                ->hideWhenUpdating(),
 
             Number::make('QuickBooks Payment ID', 'quickbooks_payment_id')
                 ->onlyOnForms()
-                ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks')),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks'))
+                ->hideWhenUpdating(),
 
             HasMany::make('Expense Reports', 'expenseReports'),
 
