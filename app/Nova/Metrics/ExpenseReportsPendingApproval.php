@@ -34,7 +34,7 @@ class ExpenseReportsPendingApproval extends Value
         return $this
             ->result(
                 ExpenseReport::selectRaw('coalesce(sum(amount), 0) as total')
-                    ->whereNotIn('status', ['Paid', 'Canceled'])
+                    ->whereNotIn('status', ['Paid', 'Approved', 'Canceled'])
                     ->whereHas('payTo', static function (Builder $query): void {
                         $query->whereNull('user_id');
                     })
