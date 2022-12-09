@@ -67,7 +67,7 @@ class FundingAllocationLine extends Model
         'description',
         'amount',
     ];
-    
+
     /**
      * Get the fiscal year for this funding allocation.
      *
