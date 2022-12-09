@@ -81,22 +81,6 @@ class BankTransaction extends Model
     ];
 
     /**
-     * The attributes that should be searchable in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public array $searchable_attributes = [
-        'bank',
-        'bank_description',
-        'note',
-        'kind',
-        'net_amount',
-        'transaction_created_at',
-        'transaction_posted_at',
-        'status',
-    ];
-
-    /**
      * List of valid banks and display names for them.
      *
      * @var array<string,string>

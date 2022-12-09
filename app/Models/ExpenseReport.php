@@ -89,16 +89,6 @@ class ExpenseReport extends Model
     ];
 
     /**
-     * The attributes that should be searchable in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public array $searchable_attributes = [
-        'workday_expense_report_id',
-        'memo',
-    ];
-
-    /**
      * Get the route key for the model.
      */
     public function getRouteKeyName(): string

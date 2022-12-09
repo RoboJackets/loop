@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fad1393e6ab579efc60d950ecc318917",
+    "content-hash": "14fb59d1bea6bf23024c136ba124792d",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1872,48 +1872,6 @@
             "time": "2020-07-09T08:09:16+00:00"
         },
         {
-            "name": "haydenpierce/class-finder",
-            "version": "0.4.4",
-            "source": {
-                "type": "git",
-                "url": "git@gitlab.com:hpierce1102/ClassFinder.git",
-                "reference": "94c602870ddf8d4fa2d67fb9bae637d88f9bd76e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/hpierce1102%2FClassFinder/repository/archive.zip?sha=94c602870ddf8d4fa2d67fb9bae637d88f9bd76e",
-                "reference": "94c602870ddf8d4fa2d67fb9bae637d88f9bd76e",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "php": ">=5.3"
-            },
-            "require-dev": {
-                "mikey179/vfsstream": "^1.6",
-                "phpunit/phpunit": "~9.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "HaydenPierce\\ClassFinder\\": "src/",
-                    "HaydenPierce\\ClassFinder\\UnitTest\\": "test/unit"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Hayden Pierce",
-                    "email": "hayden@haydenpierce.com"
-                }
-            ],
-            "description": "A library that can provide of a list of classes in a given namespace",
-            "time": "2022-09-26T22:42:59+00:00"
-        },
-        {
             "name": "htmlmin/htmlmin",
             "version": "v9.0.1",
             "source": {
@@ -2727,16 +2685,16 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v9.5.0",
+            "version": "v9.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "dfffdfc197abe5c71ee1112f774859c7b6649523"
+                "reference": "ea2bac6ea4dd25d5466e3d9736a5bd7fb91022a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/dfffdfc197abe5c71ee1112f774859c7b6649523",
-                "reference": "dfffdfc197abe5c71ee1112f774859c7b6649523",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/ea2bac6ea4dd25d5466e3d9736a5bd7fb91022a4",
+                "reference": "ea2bac6ea4dd25d5466e3d9736a5bd7fb91022a4",
                 "shasum": ""
             },
             "require": {
@@ -2795,7 +2753,7 @@
                 "issues": "https://github.com/laravel/scout/issues",
                 "source": "https://github.com/laravel/scout"
             },
-            "time": "2022-12-06T16:26:44+00:00"
+            "time": "2022-12-08T14:21:17+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -5906,75 +5864,6 @@
                 }
             ],
             "time": "2022-11-05T23:03:38+00:00"
-        },
-        {
-            "name": "robojackets/meilisearch-index-settings-helper",
-            "version": "v0.9.0",
-            "source": {
-                "type": "git",
-                "url": "git@github.gatech.edu:RoboJackets/meilisearch-index-settings-helper.git",
-                "reference": "a8f22c7282b57c316f099fd506701c55e3ebb903"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.robojackets.org/1669675255/robojackets/meilisearch-index-settings-helper/robojackets-meilisearch-index-settings-helper-a8f22c7282b57c316f099fd506701c55e3ebb903-zip-507838.zip",
-                "reference": "a8f22c7282b57c316f099fd506701c55e3ebb903",
-                "shasum": "74b61520974cc5f6b6babe60c1c9fb03baf0d166"
-            },
-            "require": {
-                "haydenpierce/class-finder": "^0.4.3",
-                "http-interop/http-factory-guzzle": "^1.0",
-                "laravel/scout": "^9.4",
-                "meilisearch/meilisearch-php": "^0.26.0"
-            },
-            "require-dev": {
-                "laravel/framework": "*",
-                "phpstan/extension-installer": "^1.0",
-                "robojackets/static-analysis": "*"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "RoboJackets\\MeilisearchIndexSettingsHelper\\MeilisearchIndexSettingsHelperServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "RoboJackets\\MeilisearchIndexSettingsHelper\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "files": [
-                    "vendor/laravel/framework/src/Illuminate/Foundation/helpers.php"
-                ]
-            },
-            "scripts": {
-                "ci": [
-                    "vendor/bin/phpcs --standard=vendor/robojackets/static-analysis/defaults/phpcs.xml .",
-                    "vendor/bin/phpstan analyse --level=max .",
-                    "vendor/bin/phan",
-                    "vendor/bin/psalm"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kristaps Berzinch",
-                    "email": "kristapsberzinch@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Manage Meilisearch indexing settings in Eloquent models",
-            "homepage": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper",
-            "support": {
-                "source": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper/tree/v0.9.0",
-                "issues": "https://github.gatech.edu/RoboJackets/meilisearch-index-settings-helper/issues"
-            },
-            "time": "2022-11-28T22:36:25+00:00"
         },
         {
             "name": "sentry/sdk",
@@ -10488,16 +10377,16 @@
         },
         {
             "name": "netresearch/jsonmapper",
-            "version": "v4.0.0",
+            "version": "v4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cweiske/jsonmapper.git",
-                "reference": "8bbc021a8edb2e4a7ea2f8ad4fa9ec9dce2fcb8d"
+                "reference": "cfa81ea1d35294d64adb9c68aa4cb9e92400e53f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cweiske/jsonmapper/zipball/8bbc021a8edb2e4a7ea2f8ad4fa9ec9dce2fcb8d",
-                "reference": "8bbc021a8edb2e4a7ea2f8ad4fa9ec9dce2fcb8d",
+                "url": "https://api.github.com/repos/cweiske/jsonmapper/zipball/cfa81ea1d35294d64adb9c68aa4cb9e92400e53f",
+                "reference": "cfa81ea1d35294d64adb9c68aa4cb9e92400e53f",
                 "shasum": ""
             },
             "require": {
@@ -10533,9 +10422,9 @@
             "support": {
                 "email": "cweiske@cweiske.de",
                 "issues": "https://github.com/cweiske/jsonmapper/issues",
-                "source": "https://github.com/cweiske/jsonmapper/tree/v4.0.0"
+                "source": "https://github.com/cweiske/jsonmapper/tree/v4.1.0"
             },
-            "time": "2020-12-01T19:48:11+00:00"
+            "time": "2022-12-08T20:46:14+00:00"
         },
         {
             "name": "nunomaduro/collision",
@@ -11289,6 +11178,104 @@
             "time": "2022-11-20T08:52:26+00:00"
         },
         {
+            "name": "phpstan/phpstan-deprecation-rules",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan-deprecation-rules.git",
+                "reference": "e5ccafb0dd8d835dd65d8d7a1a0d2b1b75414682"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan-deprecation-rules/zipball/e5ccafb0dd8d835dd65d8d7a1a0d2b1b75414682",
+                "reference": "e5ccafb0dd8d835dd65d8d7a1a0d2b1b75414682",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1 || ^8.0",
+                "phpstan/phpstan": "^1.0"
+            },
+            "require-dev": {
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "phpstan-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "phpstan": {
+                    "includes": [
+                        "rules.neon"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PHPStan\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan rules for detecting usage of deprecated classes, methods, properties, constants and traits.",
+            "support": {
+                "issues": "https://github.com/phpstan/phpstan-deprecation-rules/issues",
+                "source": "https://github.com/phpstan/phpstan-deprecation-rules/tree/1.0.0"
+            },
+            "time": "2021-09-23T11:02:21+00:00"
+        },
+        {
+            "name": "phpstan/phpstan-strict-rules",
+            "version": "1.4.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan-strict-rules.git",
+                "reference": "23e5f377ee6395a1a04842d3d6ed4bd25e7b44a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/23e5f377ee6395a1a04842d3d6ed4bd25e7b44a6",
+                "reference": "23e5f377ee6395a1a04842d3d6ed4bd25e7b44a6",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0",
+                "phpstan/phpstan": "^1.8.6"
+            },
+            "require-dev": {
+                "nikic/php-parser": "^4.13.0",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "phpstan-extension",
+            "extra": {
+                "phpstan": {
+                    "includes": [
+                        "rules.neon"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PHPStan\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Extra strict and opinionated rules for PHPStan",
+            "support": {
+                "issues": "https://github.com/phpstan/phpstan-strict-rules/issues",
+                "source": "https://github.com/phpstan/phpstan-strict-rules/tree/1.4.4"
+            },
+            "time": "2022-09-21T11:38:17+00:00"
+        },
+        {
             "name": "phpunit/php-code-coverage",
             "version": "9.2.19",
             "source": {
@@ -11608,16 +11595,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.5.26",
+            "version": "9.5.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "851867efcbb6a1b992ec515c71cdcf20d895e9d2"
+                "reference": "a2bc7ffdca99f92d959b3f2270529334030bba38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/851867efcbb6a1b992ec515c71cdcf20d895e9d2",
-                "reference": "851867efcbb6a1b992ec515c71cdcf20d895e9d2",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a2bc7ffdca99f92d959b3f2270529334030bba38",
+                "reference": "a2bc7ffdca99f92d959b3f2270529334030bba38",
                 "shasum": ""
             },
             "require": {
@@ -11690,7 +11677,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.26"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.27"
             },
             "funding": [
                 {
@@ -11706,7 +11693,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-28T06:00:21+00:00"
+            "time": "2022-12-09T07:31:23+00:00"
         },
         {
             "name": "psalm/plugin-laravel",
@@ -13082,16 +13069,16 @@
         },
         {
             "name": "spatie/laravel-ignition",
-            "version": "1.6.1",
+            "version": "1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-ignition.git",
-                "reference": "2b79cf6ed40946b64ac6713d7d2da8a9d87f612b"
+                "reference": "d6e1e1ad93abe280abf41c33f8ea7647dfc0c233"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-ignition/zipball/2b79cf6ed40946b64ac6713d7d2da8a9d87f612b",
-                "reference": "2b79cf6ed40946b64ac6713d7d2da8a9d87f612b",
+                "url": "https://api.github.com/repos/spatie/laravel-ignition/zipball/d6e1e1ad93abe280abf41c33f8ea7647dfc0c233",
+                "reference": "d6e1e1ad93abe280abf41c33f8ea7647dfc0c233",
                 "shasum": ""
             },
             "require": {
@@ -13168,7 +13155,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-10-26T17:39:54+00:00"
+            "time": "2022-12-08T15:31:38+00:00"
         },
         {
             "name": "spatie/laravel-ray",

@@ -20,9 +20,9 @@
         "laravel/scout": "^9.4",
         "laravel/slack-notification-channel": "^2.4",
         "laravel/tinker": "^2.7",
+        "meilisearch/meilisearch-php": "^0.26.0",
         "predis/predis": "^2.0",
         "quickbooks/v3-php-sdk": "^6.0",
-        "robojackets/meilisearch-index-settings-helper": "^0.9.0",
         "sentry/sentry-laravel": "^2.13",
         "smalot/pdfparser": "^2.2",
         "spatie/laravel-csp": "^2.8",
@@ -42,12 +42,17 @@
         "nunomaduro/collision": "^6.1",
         "nunomaduro/larastan": "^2.2",
         "phan/phan": "^5.4",
-        "phpstan/extension-installer": "^1.1",
+        "phpstan/extension-installer": "^1.2",
+        "phpstan/phpstan": "^1.9",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-strict-rules": "^1.4",
         "phpunit/phpunit": "^9.5.10",
         "psalm/plugin-laravel": "^2.0",
-        "slevomat/coding-standard": "^8.4",
+        "slevomat/coding-standard": "^8.6",
         "spatie/laravel-ignition": "^1.0",
-        "spatie/ray": "^1.36"
+        "spatie/ray": "^1.36",
+        "squizlabs/php_codesniffer": "^3.7",
+        "vimeo/psalm": "^5.1"
     },
     "replace": {
         "paragonie/random_compat": "*",
@@ -132,14 +137,6 @@
             "url": "https://nova.laravel.com",
             "only": [
                 "laravel/nova"
-            ]
-        },
-        {
-            "type": "composer",
-            "url": "https://composer.robojackets.org",
-            "only": [
-                "robojackets/*",
-                "oitnetworkservices/*"
             ]
         }
     ]

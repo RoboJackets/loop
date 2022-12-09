@@ -68,7 +68,6 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable
 {
-    use FirstNameSynonyms;
     use HasApiTokens;
     use HasPermissions;
     use HasRoles;
@@ -106,28 +105,6 @@ class User extends Authenticatable
         'active_employee' => 'boolean',
         'quickbooks_access_token_expires_at' => 'datetime',
         'quickbooks_refresh_token_expires_at' => 'datetime',
-    ];
-
-    /**
-     * The attributes that should be searchable in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public array $searchable_attributes = [
-        'first_name',
-        'last_name',
-        'username',
-        'email',
-    ];
-
-    /**
-     * The attributes that can be used for filtering in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public array $filterable_attributes = [
-        'permission_id',
-        'role_id',
     ];
 
     protected string $guard_name = 'web';

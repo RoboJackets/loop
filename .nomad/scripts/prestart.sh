@@ -26,7 +26,7 @@ cp --recursive --verbose public/* /assets/${NOMAD_JOB_NAME}/
 
 if [ ${SCOUT_DRIVER} = "meilisearch" ]
 then
-    php artisan meilisearch:update-index-settings --no-interaction --verbose --only-return-id || true
+    php artisan scout:sync-index-settings --no-interaction --verbose || true
 fi
 
 php artisan record-deployment-timestamp --no-interaction --verbose

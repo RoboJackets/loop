@@ -81,18 +81,6 @@ class Attachment extends Model
     ];
 
     /**
-     * The attributes that should be searchable in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public array $searchable_attributes = [
-        'filename',
-        'workday_comment',
-        'docusign_envelope_uuid',
-        'full_text',
-    ];
-
-    /**
      * Get all the owning payable models.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo<\App\Models\DocuSignEnvelope,\App\Models\Attachment>

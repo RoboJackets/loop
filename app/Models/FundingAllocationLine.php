@@ -67,26 +67,7 @@ class FundingAllocationLine extends Model
         'description',
         'amount',
     ];
-
-    /**
-     * The attributes that should be searchable in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public array $searchable_attributes = [
-        'description',
-        'line_number',
-    ];
-
-    /**
-     * The attributes that can be used for filtering in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public array $filterable_attributes = [
-        'funding_allocation_id',
-    ];
-
+    
     /**
      * Get the fiscal year for this funding allocation.
      *
@@ -118,6 +99,7 @@ class FundingAllocationLine extends Model
         $array = $this->toArray();
 
         $array['funding_allocation_name'] = $this->fundingAllocation->name;
+        $array['amount'] = strval($this->amount);
 
         return $array;
     }

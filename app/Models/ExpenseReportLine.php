@@ -63,15 +63,6 @@ class ExpenseReportLine extends Model
     ];
 
     /**
-     * The attributes that should be searchable in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public array $searchable_attributes = [
-        'memo',
-    ];
-
-    /**
      * Get the user that created this expense report.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\ExpenseReport, self>
@@ -97,5 +88,19 @@ class ExpenseReportLine extends Model
     public function getRouteKeyName(): string
     {
         return 'workday_line_id';
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string,int|string>
+     */
+    public function toSearchableArray(): array
+    {
+        $array = $this->toArray();
+
+        $array['amount'] = strval($this->amount);
+
+        return $array;
     }
 }

@@ -68,16 +68,6 @@ class ExternalCommitteeMember extends Model
     ];
 
     /**
-     * The attributes that should be searchable in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public array $searchable_attributes = [
-        'name',
-        'workday_external_committee_member_id',
-    ];
-
-    /**
      * Get the user for this ECM, if any.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\ExternalCommitteeMember>

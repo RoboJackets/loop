@@ -145,18 +145,6 @@ class DocuSignEnvelope extends Model
     ];
 
     /**
-     * The attributes that should be searchable in Meilisearch.
-     *
-     * @var array<string>
-     */
-    public array $searchable_attributes = [
-        'envelope_uuid',
-        'type',
-        'description',
-        'supplier_name',
-    ];
-
-    /**
      * The attributes that can be used for filtering in Meilisearch.
      *
      * @var array<string>
