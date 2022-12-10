@@ -6,6 +6,7 @@ DB_SOCKET="{{- index .ServiceMeta "socket" | trimSpace -}}"
 {{ end }}
 REDIS_CLIENT="phpredis"
 REDIS_SCHEME="unix"
+REDIS_PORT="-1"
 {{- range service "redis" }}
 REDIS_HOST="{{- index .ServiceMeta "socket" | trimSpace -}}"
 {{ end }}
