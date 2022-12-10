@@ -4,8 +4,10 @@
 {{- range service "mysql" }}
 DB_SOCKET="{{- index .ServiceMeta "socket" | trimSpace -}}"
 {{ end }}
+REDIS_CLIENT="phpredis"
+REDIS_SCHEME="unix"
 {{- range service "redis" }}
-REDIS_PATH="{{- index .ServiceMeta "socket" | trimSpace -}}"
+REDIS_HOST="{{- index .ServiceMeta "socket" | trimSpace -}}"
 {{ end }}
 REDIS_PASSWORD="{{- key "redis/password" | trimSpace -}}"
 {{- range service "meilisearch-v0-30" }}
