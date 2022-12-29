@@ -45,6 +45,22 @@ class ExpensePaymentsReadyToSyncToQuickBooks extends Lens
                         );
                     }
                 )
+                ->whereHas(
+                    'expenseReports',
+                    static function (Builder $query): void {
+                        $query->whereHas(
+                            'envelopes',
+                            static function (Builder $query): void {
+                                $query->whereHas(
+                                    'fiscalYear',
+                                    static function (Builder $query): void {
+                                        $query->where('in_scope_for_quickbooks', '=', true);
+                                    }
+                                );
+                            }
+                        );
+                    }
+                )
                 ->whereDoesntHave(
                     'payTo',
                     static function (Builder $query): void {
