@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignFundingSource whereFundingAllocationLineId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignFundingSource whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignFundingSource whereUpdatedAt($value)
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class DocuSignFundingSource extends Pivot

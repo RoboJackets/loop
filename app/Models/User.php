@@ -63,6 +63,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereQuickbooksAccessTokenExpiresAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereQuickbooksRefreshToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereQuickbooksRefreshTokenExpiresAt($value)
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class User extends Authenticatable

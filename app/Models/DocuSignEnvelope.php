@@ -89,6 +89,7 @@ use Smalot\PdfParser\Parser;
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope whereQuickbooksInvoiceDocumentNumber($value)
  * @method static \Illuminate\Database\Query\Builder|DocuSignEnvelope withTrashed()
  * @method static \Illuminate\Database\Query\Builder|DocuSignEnvelope withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class DocuSignEnvelope extends Model

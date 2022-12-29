@@ -38,6 +38,7 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember whereWorkdayExternalCommitteeMemberId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember whereWorkdayInstanceId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember whereUserId($value)
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class ExternalCommitteeMember extends Model

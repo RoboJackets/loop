@@ -49,6 +49,7 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Query\Builder|Attachment onlyTrashed()
  * @method static \Illuminate\Database\Query\Builder|Attachment withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Attachment withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class Attachment extends Model

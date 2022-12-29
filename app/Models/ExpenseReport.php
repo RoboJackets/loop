@@ -53,6 +53,7 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Eloquent\Builder|ExpenseReport whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExpenseReport whereWorkdayExpenseReportId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExpenseReport whereWorkdayInstanceId($value)
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class ExpenseReport extends Model

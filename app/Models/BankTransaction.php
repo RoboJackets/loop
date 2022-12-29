@@ -44,6 +44,7 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Eloquent\Builder|BankTransaction whereTransactionPostedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|BankTransaction whereTransactionReference($value)
  * @method static \Illuminate\Database\Eloquent\Builder|BankTransaction whereUpdatedAt($value)
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class BankTransaction extends Model

@@ -44,6 +44,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|ExpensePayment whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExpensePayment whereWorkdayInstanceId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExpensePayment whereQuickbooksPaymentId($value)
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class ExpensePayment extends Model

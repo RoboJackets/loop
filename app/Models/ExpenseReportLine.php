@@ -34,6 +34,7 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Eloquent\Builder|ExpenseReportLine whereMemo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExpenseReportLine whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExpenseReportLine whereWorkdayLineId($value)
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class ExpenseReportLine extends Model

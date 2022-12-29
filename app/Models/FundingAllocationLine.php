@@ -40,6 +40,7 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Eloquent\Builder|FundingAllocationLine whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|FundingAllocationLine withTrashed()
  * @method static \Illuminate\Database\Query\Builder|FundingAllocationLine withoutTrashed()
+ *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class FundingAllocationLine extends Model
