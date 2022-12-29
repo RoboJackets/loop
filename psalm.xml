@@ -131,5 +131,10 @@
                 <file name="app/Nova/Actions/SyncExpensePaymentToQuickBooks.php"/>
             </errorLevel>
         </RedundantCondition>
+        <InvalidArrayOffset>
+            <errorLevel type="suppress">
+                <file name="app/Nova/Actions/SyncDocuSignEnvelopeToQuickBooks.php"/>
+            </errorLevel>
+        </InvalidArrayOffset>
     </issueHandlers>
 </psalm>
