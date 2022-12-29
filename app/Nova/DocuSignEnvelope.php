@@ -9,7 +9,8 @@ namespace App\Nova;
 use App\Nova\Actions\ProcessSensibleOutput;
 use App\Nova\Actions\RunSensibleExtraction;
 use App\Nova\Actions\SyncDocuSignEnvelopeToQuickBooks;
-use App\Nova\Lenses\MissingExpenseReports;
+use App\Nova\Lenses\ReimbursementsMissingExpenseReports;
+use App\Nova\Lenses\ReimbursementsMissingInvoices;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -257,7 +258,8 @@ class DocuSignEnvelope extends Resource
     public function lenses(NovaRequest $request): array
     {
         return [
-            MissingExpenseReports::make(),
+            ReimbursementsMissingExpenseReports::make(),
+            ReimbursementsMissingInvoices::make(),
         ];
     }
 

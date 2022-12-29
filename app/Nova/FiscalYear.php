@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;
@@ -62,7 +63,11 @@ class FiscalYear extends Resource
                 ->updateRules('unique:fiscal_years,ending_year,{{resourceId}}')
                 ->default(
                     static fn (Request $request): ?string => self::queryParamFromReferrer($request, 'ending_year')
-                ),
+                )
+                ->sortable(),
+
+            Boolean::make('In Scope for QuickBooks', 'in_scope_for_quickbooks')
+                ->sortable(),
 
             HasMany::make('Funding Allocations'),
 

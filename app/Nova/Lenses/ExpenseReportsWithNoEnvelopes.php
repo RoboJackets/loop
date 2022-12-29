@@ -4,44 +4,37 @@ declare(strict_types=1);
 
 namespace App\Nova\Lenses;
 
-use App\Models\DocuSignEnvelope;
-use App\Nova\User;
+use App\Nova\ExternalCommitteeMember;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Lenses\Lens;
 
-class MissingExpenseReports extends Lens
+class ExpenseReportsWithNoEnvelopes extends Lens
 {
     /**
      * The displayable name of the lens.
      *
      * @var string
      */
-    public $name = 'Reimbursements Missing Expense Reports';
+    public $name = 'Expense Reports with No Envelopes';
 
     /**
      * Get the query builder / paginator for the lens.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DocuSignEnvelope>  $query
-     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DocuSignEnvelope>
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\ExpenseReport>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\ExpenseReport>
      */
     public static function query(LensRequest $request, $query): Builder
     {
         return $request->withOrdering($request->withFilters(
-            $query->whereDoesntHave('expenseReport')
-                ->whereDoesntHave('replacedBy')
-                ->whereDoesntHave('duplicateOf')
-                ->whereIn('type', ['purchase_reimbursement', 'travel_reimbursement'])
-                ->where('lost', '=', false)
-                ->where('internal_cost_transfer', '=', false)
-                ->where('submission_error', '=', false)
+            $query->whereDoesntHave('envelopes')
+                ->whereNotIn('status', ['Canceled', 'Paid'])
         ));
     }
 
@@ -53,23 +46,21 @@ class MissingExpenseReports extends Lens
     public function fields(NovaRequest $request): array
     {
         return [
-            ID::make()
+            Text::make('Number', 'workday_expense_report_id')
                 ->sortable(),
 
-            DateTime::make('Submitted', 'submitted_at')
+            Date::make('Created', 'created_date')
                 ->sortable(),
 
-            Select::make('Form Type', 'type')
+            Text::make('Status')
+                ->sortable(),
+
+            BelongsTo::make('Pay To', 'payTo', ExternalCommitteeMember::class)
+                ->sortable(),
+
+            Text::make('Memo')
                 ->sortable()
-                ->options(DocuSignEnvelope::$types)
-                ->displayUsingLabels(),
-
-            BelongsTo::make('Pay To', 'payToUser', User::class)
-                ->sortable()
-                ->nullable(),
-
-            Text::make('Description')
-                ->sortable(),
+                ->displayUsing(static fn (string $memo): string => Str::limit($memo, 50)),
 
             Currency::make('Amount')
                 ->sortable(),
@@ -101,6 +92,6 @@ class MissingExpenseReports extends Lens
      */
     public function uriKey(): string
     {
-        return 'missing-expense-reports';
+        return 'no-envelopes';
     }
 }
