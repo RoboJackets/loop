@@ -192,7 +192,7 @@ class SyncExpensePaymentToQuickBooks extends Action
                 ->default(strval($request->user()->id))
                 ->required()
                 ->rules('required')
-                ->readonly(),
+                ->withMeta(['extraAttributes' => ['readonly' => true]]),
         ];
     }
 }

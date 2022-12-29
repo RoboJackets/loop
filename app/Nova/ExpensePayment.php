@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Nova\Actions\SyncExpensePaymentToQuickBooks;
+use App\Nova\Lenses\ExpensePaymentsReadyToSyncToQuickBooks;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
@@ -161,7 +162,9 @@ class ExpensePayment extends Resource
      */
     public function lenses(NovaRequest $request): array
     {
-        return [];
+        return [
+            ExpensePaymentsReadyToSyncToQuickBooks::make(),
+        ];
     }
 
     /**

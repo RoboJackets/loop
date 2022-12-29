@@ -72,6 +72,7 @@ parameters:
     - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),string>::map\(\) expects callable\(string, \(int\|string\)\): array, Closure\(array, string\): array given\.#'
     - '#Parameter \#1 \$callback of method Laravel\\Nova\\Actions\\Action::canRun\(\) expects Closure\(Laravel\\Nova\\Http\\Requests\\NovaRequest, mixed\): bool, Closure\(Laravel\\Nova\\Http\\Requests\\NovaRequest, App\\Models\\[a-zA-Z]+\): bool given\.#'
     - '#Parameter \#1 \$callback of method Laravel\\Nova\\Actions\\Action::canRun\(\) expects Closure\(Laravel\\Nova\\Http\\Requests\\NovaRequest, mixed\): bool, Closure\(Laravel\\Nova\\Http\\Requests\\NovaRequest, App\\Models\\[a-zA-Z]+\): true given\.#'
+    - '#Parameter \#1 \$displayCallback of method Laravel\\Nova\\Fields\\Field::displayUsing\(\) expects callable\(mixed, mixed, string\): mixed, Closure\(mixed, App\\Models\\DocuSignEnvelope, string\): int\|null given\.#'
     - '#Parameter \#1 \$displayCallback of method Laravel\\Nova\\Fields\\Field::displayUsing\(\) expects callable\(mixed, mixed, string\): mixed, Closure\(string\): string given\.#'
     - '#Parameter \#1 \$expenseReport of job class App\\Jobs\\MatchExpenseReport constructor expects App\\Models\\ExpenseReport in App\\Jobs\\MatchExpenseReport::dispatch\(\), App\\Models\\ExpenseReport\|null given\.#'
     - '#Parameter \#1 \$fault of class App\\Exceptions\\QuickBooksFault constructor expects QuickBooksOnline\\API\\Data\\IPPFault, QuickBooksOnline\\API\\Data\\com\\intuit\\schema\\finance\\v3\\IPPFault given\.#'

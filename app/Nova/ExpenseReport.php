@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Nova\Actions\MatchExpenseReport;
-use App\Nova\Lenses\UnmatchedExpenseReports;
+use App\Nova\Lenses\ExpenseReportsWithNoEnvelopes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Badge;
@@ -163,7 +163,7 @@ class ExpenseReport extends Resource
     public function lenses(NovaRequest $request): array
     {
         return [
-            UnmatchedExpenseReports::make(),
+            ExpenseReportsWithNoEnvelopes::make(),
         ];
     }
 

@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *
  * @property int $id
  * @property int $ending_year
+ * @property bool $in_scope_for_quickbooks
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DocuSignEnvelope> $envelopes
@@ -29,10 +30,20 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear whereEndingYear($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear whereInScopeForQuickbooks($value)
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
 class FiscalYear extends Model
 {
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string,string>
+     */
+    protected $casts = [
+        'in_scope_for_quickbooks' => 'boolean',
+    ];
+
     /**
      * Get the funding allocations for this fiscal year.
      *
