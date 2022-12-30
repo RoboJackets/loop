@@ -7,6 +7,6 @@ namespace Laravel\Nova\Actions;
 /**
  * @extends \Closure(\Illuminate\Http\Request):bool
  */
-class TAuthoriseCallback
+interface TAuthoriseCallback
 {
 }
