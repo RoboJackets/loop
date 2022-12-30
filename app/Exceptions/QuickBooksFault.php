@@ -11,8 +11,6 @@ class QuickBooksFault extends Exception
 {
     /**
      * Construct a new instance.
-     *
-     * @phan-suppress PhanUndeclaredClassProperty
      */
     public function __construct(IPPFault $fault)
     {

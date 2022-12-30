@@ -62,7 +62,6 @@ class SyncExpensePaymentToQuickBooks extends Action
      * @param  \Illuminate\Support\Collection<int,\App\Models\ExpensePayment>  $models
      *
      * @phan-suppress PhanTypeMismatchArgument
-     * @phan-suppress PhanTypeMismatchProperty
      */
     public function handle(ActionFields $fields, Collection $models): array
     {

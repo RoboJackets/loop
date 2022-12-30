@@ -6,9 +6,6 @@ namespace Laravel\Nova\Actions;
 
 /**
  * @extends \Closure(\Laravel\Nova\Http\Requests\NovaRequest):bool
- *
- * @phan-suppress PhanAccessExtendsFinalClassInternal
- * @phan-suppress PhanUnreferencedClass
  */
 class TAuthoriseCallback
 {

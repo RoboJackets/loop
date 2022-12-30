@@ -152,7 +152,6 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
                             ->mapWithKeys(
                                 static fn (IPPReimburseCharge $item, int $key): array => [
                                     $item->Id => (
-                                        // @phan-suppress-next-line PhanTypeInvalidArrayKey
                                         $item->TxnDate.' | $'.$item->Amount.
                                         ($item->PrivateNote === null ? '' : ' | '.$item->PrivateNote)
                                     ),

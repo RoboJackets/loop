@@ -17,13 +17,12 @@ return [
         'storage/',
         'tests/',
         'vendor/',
+        'stubs/',
     ],
 
     'exclude_file_list' => [
         '.phpstorm.meta.php',
         '_ide_helper.php',
-        'stubs/Permission.php',
-        'stubs/Role.php',
     ],
 
     'suppress_issue_types' => [
