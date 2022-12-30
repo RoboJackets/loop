@@ -73,7 +73,15 @@ class CasAuthenticate
             $user->username = $this->cas->user();
             $user->first_name = $this->cas->getAttribute('givenName');
             $user->last_name = $this->cas->getAttribute('sn');
-            $user->email = $this->cas->getAttribute('email_primary');
+            if (
+                $user->email === null ||
+                (
+                    $user->email !== config('services.treasurer_email_address') &&
+                    $user->email !== config('services.developer_email_address')
+                )
+            ) {
+                $user->email = $this->cas->getAttribute('email_primary');
+            }
             $user->save();
 
             Auth::login($user);
