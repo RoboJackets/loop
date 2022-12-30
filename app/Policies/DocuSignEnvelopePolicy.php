@@ -49,7 +49,7 @@ class DocuSignEnvelopePolicy
      */
     public function delete(User $user, DocuSignEnvelope $docuSignEnvelope): bool
     {
-        return $user->can('delete-docusign-envelopes');
+        return false;
     }
 
     /**
@@ -57,7 +57,7 @@ class DocuSignEnvelopePolicy
      */
     public function restore(User $user, DocuSignEnvelope $docuSignEnvelope): bool
     {
-        return $user->can('delete-docusign-envelopes');
+        return false;
     }
 
     /**

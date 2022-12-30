@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\ResetQuickBooksCredentials;
 use Illuminate\Http\Request;
 use Jeffbeltran\SanctumTokens\SanctumTokens;
 use Laravel\Nova\Fields\Boolean;
@@ -153,7 +154,22 @@ class User extends Resource
      */
     public function actions(NovaRequest $request): array
     {
-        return [];
+        return [
+            ResetQuickBooksCredentials::make()
+                ->canSee(
+                    static fn (NovaRequest $request): bool => $request->user()->can('update-users') &&
+                        $request->user()->can('access-quickbooks')
+                )
+                ->canRun(
+                    static fn (
+                        NovaRequest $request,
+                        \App\Models\User $user
+                    ): bool => $request->user()->can('update-users') &&
+                        $request->user()->can('access-quickbooks') &&
+                        $user->can('access-quickbooks') &&
+                        $user->quickbooks_access_token !== null
+                ),
+        ];
     }
 
     /**
