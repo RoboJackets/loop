@@ -59,7 +59,9 @@ RUN --mount=type=secret,id=composer_auth,dst=/app/auth.json,uid=33,gid=33,requir
     mkdir --parents /app/resources/views/ && \
     php artisan nova:publish && \
     php artisan horizon:publish && \
-    sed -i '/"\$1\\n\$2"/c\\' /app/vendor/mrclay/minify/lib/Minify/HTML.php;
+    sed -i '/"\$1\\n\$2"/c\\' /app/vendor/mrclay/minify/lib/Minify/HTML.php && \
+    sed -i 's/use MeiliSearch/use Meilisearch/g' /app/vendor/laravel/scout/src/ScoutServiceProvider.php && \
+    sed -i 's/use MeiliSearch/use Meilisearch/g' /app/vendor/laravel/scout/src/EngineManager.php;
 
 # This target is the default, but skipped during pull request builds and in our recommended local build invocation
 # precompressed_assets var on the Nomad job must match whether this stage ran or not
