@@ -74,6 +74,7 @@ class ExpensePayment extends Resource
                 ->readonly(),
 
             Number::make('Instance ID', 'workday_instance_id')
+                ->canSee(static fn (Request $request): bool => $request->user()->can('access-workday'))
                 ->onlyOnDetail(),
 
             Badge::make('Status')
@@ -187,5 +188,14 @@ class ExpensePayment extends Resource
                         $payment->payTo->user === null
                 ),
         ];
+    }
+
+    /**
+     * Get the search result subtitle for the resource.
+     */
+    public function subtitle(): string
+    {
+        return $this->payment_date->format('Y-m-d')
+            .' | $'.number_format(abs($this->amount), 2);
     }
 }

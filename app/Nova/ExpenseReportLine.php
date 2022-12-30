@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
@@ -69,7 +70,8 @@ class ExpenseReportLine extends Resource
         return [
             ID::make()->sortable(),
 
-            Number::make('Workday Line ID'),
+            Number::make('Workday Line ID')
+                ->canSee(static fn (Request $request): bool => $request->user()->can('access-workday')),
 
             BelongsTo::make('Expense Report', 'expenseReport', ExpenseReport::class),
 
@@ -121,5 +123,15 @@ class ExpenseReportLine extends Resource
     public function actions(NovaRequest $request): array
     {
         return [];
+    }
+
+    /**
+     * Get the search result subtitle for the resource.
+     */
+    public function subtitle(): string
+    {
+        return $this->expenseReport->created_date->format('Y-m-d')
+            .' | '.$this->memo
+            .' | $'.number_format(abs($this->amount), 2);
     }
 }

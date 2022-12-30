@@ -182,4 +182,15 @@ class BankTransaction extends Resource
                 ->canRun(static fn (NovaRequest $request, \App\Models\BankTransaction $bankTransaction): bool => true),
         ];
     }
+
+    /**
+     * Get the search result subtitle for the resource.
+     */
+    public function subtitle(): string
+    {
+        return ($this->transaction_created_at?->format('Y-m-d') ?? $this->transaction_posted_at?->format('Y-m-d'))
+            .' | '.$this->bank_description
+            .' | '.($this->note === null ? '' : $this->note.' | ')
+            .'$'.number_format(abs($this->net_amount), 2);
+    }
 }

@@ -72,6 +72,7 @@ class ExpenseReport extends Resource
                 ->sortable(),
 
             Number::make('Instance ID', 'workday_instance_id')
+                ->canSee(static fn (Request $request): bool => $request->user()->can('access-workday'))
                 ->onlyOnDetail(),
 
             Badge::make('Status')
@@ -179,5 +180,15 @@ class ExpenseReport extends Resource
                 ->canSee(static fn (NovaRequest $request): bool => true)
                 ->canRun(static fn (NovaRequest $request, \App\Models\ExpenseReport $expenseReport): bool => true),
         ];
+    }
+
+    /**
+     * Get the search result subtitle for the resource.
+     */
+    public function subtitle(): string
+    {
+        return $this->created_date->format('Y-m-d')
+            .' | '.$this->status
+            .' | $'.number_format(abs($this->amount), 2);
     }
 }

@@ -67,6 +67,7 @@ class FiscalYear extends Resource
                 ->sortable(),
 
             Boolean::make('In Scope for QuickBooks', 'in_scope_for_quickbooks')
+                ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks'))
                 ->sortable(),
 
             HasMany::make('Funding Allocations'),

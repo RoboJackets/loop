@@ -291,4 +291,16 @@ class DocuSignEnvelope extends Resource
                 ),
         ];
     }
+
+    /**
+     * Get the search result subtitle for the resource.
+     */
+    public function subtitle(): string
+    {
+        return \App\Models\DocuSignEnvelope::$types[$this->type]
+            .' | '.$this->submitted_at?->format('Y-m-d')
+            .($this->supplier_name === null ? '' : $this->supplier_name.' | ')
+            .' | '.$this->description
+            .' | $'.number_format(abs($this->amount), 2);
+    }
 }

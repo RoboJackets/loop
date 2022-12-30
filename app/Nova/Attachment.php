@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Nova\Actions\CreateDocuSignEnvelopeFromAttachment;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\File;
@@ -32,13 +33,6 @@ class Attachment extends Resource
     public static $model = \App\Models\Attachment::class;
 
     /**
-     * The single value that should be used to represent the resource when being displayed.
-     *
-     * @var string
-     */
-    public static $title = 'id';
-
-    /**
      * The columns that should be searched.
      *
      * @var array<string>
@@ -46,13 +40,6 @@ class Attachment extends Resource
     public static $search = [
         'id',
     ];
-
-    /**
-     * Indicates if the resource should be displayed in the sidebar.
-     *
-     * @var bool
-     */
-    public static $displayInNavigation = false;
 
     /**
      * Get the fields displayed by the resource.
@@ -66,6 +53,7 @@ class Attachment extends Resource
             MorphTo::make('Attachable')
                 ->types([
                     DocuSignEnvelope::class,
+                    ExpenseReportLine::class,
                 ]),
 
             Text::make('Filename')
@@ -80,11 +68,15 @@ class Attachment extends Resource
                 ->disk('local'),
 
             Panel::make('Workday Metadata', [
-                Number::make('Instance ID', 'workday_instance_id')->onlyOnDetail(),
+                Number::make('Instance ID', 'workday_instance_id')
+                    ->canSee(static fn (Request $request): bool => $request->user()->can('access-workday'))
+                    ->onlyOnDetail(),
 
-                BelongsTo::make('Uploaded By', 'uploadedBy', User::class)->onlyOnDetail(),
+                BelongsTo::make('Uploaded By', 'uploadedBy', User::class)
+                    ->onlyOnDetail(),
 
-                DateTime::make('Uploaded At', 'workday_uploaded_at')->onlyOnDetail(),
+                DateTime::make('Uploaded At', 'workday_uploaded_at')
+                    ->onlyOnDetail(),
 
                 Text::make('Comment', 'workday_comment'),
             ]),
@@ -150,5 +142,29 @@ class Attachment extends Resource
                         ->can('access-sensible')
                 ),
         ];
+    }
+
+    /**
+     * Get the value that should be displayed to represent the resource.
+     */
+    public function title(): string
+    {
+        $array = explode('/', $this->filename);
+
+        return end($array);
+    }
+
+    /**
+     * Get the search result subtitle for the resource.
+     */
+    public function subtitle(): string
+    {
+        if ($this->attachable_type === 'docusign-envelope') {
+            return 'DocuSign | '.$this->attachable->submitted_at->format('Y-m-d');
+        } elseif ($this->attachable_type === 'expense-report-line') {
+            return 'Workday | '.$this->workday_uploaded_at->format('Y-m-d');
+        } else {
+            throw new \Exception('Unknown attachable_type '.$this->attachable_type);
+        }
     }
 }

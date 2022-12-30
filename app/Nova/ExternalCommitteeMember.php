@@ -69,6 +69,7 @@ class ExternalCommitteeMember extends Resource
                 ->sortable(),
 
             Number::make('Instance ID', 'workday_instance_id')
+                ->canSee(static fn (Request $request): bool => $request->user()->can('access-workday'))
                 ->onlyOnDetail(),
 
             Text::make('Name')
@@ -143,5 +144,13 @@ class ExternalCommitteeMember extends Resource
     public function actions(NovaRequest $request): array
     {
         return [];
+    }
+
+    /**
+     * Get the search result subtitle for the resource.
+     */
+    public function subtitle(): string
+    {
+        return $this->active ? 'Active' : 'Inactive';
     }
 }

@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use Adldap\Laravel\Facades\Adldap;
 use App\Nova\Actions\ResetQuickBooksCredentials;
+use App\Util\Sentry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Jeffbeltran\SanctumTokens\SanctumTokens;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
@@ -83,6 +86,7 @@ class User extends Resource
                 ->onlyOnDetail(),
 
             Number::make('Instance ID', 'workday_instance_id')
+                ->canSee(static fn (Request $request): bool => $request->user()->can('access-workday'))
                 ->onlyOnDetail(),
 
             URL::make('View in Workday', 'workday_url')
@@ -179,6 +183,37 @@ class User extends Resource
     {
         $role = $this->roles()->orderBy('id')->first();
 
-        return $role === null ? null : ucfirst($role->name);
+        if ($role === null) {
+            $username = $this->username;
+
+            $title = Cache::rememberForever(
+                'title_'.$this->username,
+                static function () use ($username): ?string {
+                    $result = Sentry::wrapWithChildSpan(
+                        'ldap.get_title_by_uid',
+                        static fn (): array => Adldap::search()
+                            ->where('uid', '=', $username)
+                            ->select('title')
+                            ->get()
+                            ->pluck('title')
+                            ->toArray()
+                    );
+
+                    return $result === [] ? null : $result[0][0];
+                }
+            );
+
+            if ($title === null) {
+                if ($this->workday_instance_id === null) {
+                    return null;
+                } else {
+                    return $this->active_employee === true ? 'Georgia Tech Employee' : 'Former Georgia Tech Employee';
+                }
+            } else {
+                return $title;
+            }
+        } else {
+            return ucfirst($role->name);
+        }
     }
 }
