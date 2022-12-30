@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laravel\Nova\Actions;
 
 /**
- * @extends \Closure(\Laravel\Nova\Http\Requests\NovaRequest):bool
+ * @extends \Closure(\Illuminate\Http\Request):bool
  */
 class TAuthoriseCallback
 {
