@@ -299,7 +299,7 @@ class DocuSignEnvelope extends Resource
     {
         return \App\Models\DocuSignEnvelope::$types[$this->type]
             .' | '.$this->submitted_at?->format('Y-m-d')
-            .($this->supplier_name === null ? '' : $this->supplier_name.' | ')
+            .($this->supplier_name === null ? '' : ' | '.$this->supplier_name)
             .' | '.$this->description
             .' | $'.number_format(abs($this->amount), 2);
     }
