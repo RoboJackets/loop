@@ -34,6 +34,7 @@ class ExpenseReportController extends Controller
         'Approved',
         'Paid',
         'Canceled',
+        'Draft',
     ];
 
     private const VALID_PAYMENT_STATUSES = [
