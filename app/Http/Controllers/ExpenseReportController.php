@@ -30,6 +30,7 @@ class ExpenseReportController extends Controller
     private const VALID_EXPENSE_REPORT_STATUSES = [
         'In Progress',
         'Waiting on Cost Center Manager',
+        'Waiting on Gift Manager',
         'Waiting on Expense Partner',
         'Approved',
         'Paid',

@@ -79,6 +79,7 @@ class ExpenseReport extends Resource
                 ->map([
                     'Draft' => 'info',
                     'In Progress' => 'info',
+                    'Waiting on Gift Manager' => 'info',
                     'Waiting on Cost Center Manager' => 'info',
                     'Waiting on Expense Partner' => 'info',
                     'Approved' => 'success',
