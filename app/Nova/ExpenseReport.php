@@ -77,6 +77,7 @@ class ExpenseReport extends Resource
 
             Badge::make('Status')
                 ->map([
+                    // @phan-suppress-next-line PhanTypeInvalidArrayKeyLiteral
                     null => 'danger',
                     'Draft' => 'info',
                     'In Progress' => 'info',
