@@ -77,6 +77,7 @@ class ExpenseReport extends Resource
 
             Badge::make('Status')
                 ->map([
+                    null => 'danger',
                     'Draft' => 'info',
                     'In Progress' => 'info',
                     'Waiting on Gift Manager' => 'info',
