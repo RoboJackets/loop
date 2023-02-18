@@ -159,8 +159,6 @@ class ExpenseReport extends Model
 
     /**
      * Get the workday_url attribute to show this ECM in the Workday UI.
-     *
-     * @return string
      */
     public function getWorkdayUrlAttribute(): string
     {

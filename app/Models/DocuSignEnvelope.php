@@ -285,9 +285,6 @@ class DocuSignEnvelope extends Model
     /**
      * Extract a DocuSign envelope UUID from a summary PDF.
      *
-     * @param  string  $summary_pdf
-     * @return string
-     *
      * @throws CouldNotExtractEnvelopeUuid
      */
     public static function getEnvelopeUuidFromSummaryPdf(string $summary_pdf): string
@@ -301,9 +298,6 @@ class DocuSignEnvelope extends Model
 
     /**
      * Extract a DocuSign envelope UUID from a summary plaintext.
-     *
-     * @param  string  $summary_text
-     * @return string
      *
      * @throws CouldNotExtractEnvelopeUuid
      */

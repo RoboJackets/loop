@@ -53,9 +53,6 @@ class WebhookCall extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return array
      */
     public function fields(NovaRequest $request): array
     {

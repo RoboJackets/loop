@@ -41,7 +41,6 @@ class Sentry
      *
      * @template ReturnType
      *
-     * @param  string  $span_name
      * @param  Closure(): ReturnType  $closure
      * @return ReturnType
      */

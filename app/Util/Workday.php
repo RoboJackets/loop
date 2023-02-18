@@ -30,7 +30,6 @@ class Workday
      * Converts Workday date format to ISO 8601.
      *
      * @param  array<string,array<string,string>>  $widget
-     * @return string
      */
     public static function getDate(array $widget): string
     {
