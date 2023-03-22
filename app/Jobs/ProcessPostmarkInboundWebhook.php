@@ -13,7 +13,7 @@ use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
 
 class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
 {
-    private const FILENAME_SANITIZATION_REGEX = '/(?P<filename>^[!a-zA-Z0-9() .\#-_,]+$)/';
+    private const FILENAME_SANITIZATION_REGEX = '/(?P<filename>^[!a-zA-Z0-9() .\#-_,–]+$)/';
 
     /**
      * The queue this job will run on.
