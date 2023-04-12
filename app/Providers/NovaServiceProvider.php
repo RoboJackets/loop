@@ -65,7 +65,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 )
             ) {
                 $menu->append(
-                    // @phan-suppress-next-line PhanTypeMismatchArgument
                     MenuItem::externalLink(
                         'Connect to QuickBooks',
                         route('quickbooks.start')
