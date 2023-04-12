@@ -5,6 +5,7 @@ declare(strict_types=1);
 // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition.RequiredSingleLineCondition
 // phpcs:disable Squiz.WhiteSpace.OperatorSpacing.NoSpaceAfter
 // phpcs:disable Squiz.WhiteSpace.OperatorSpacing.NoSpaceBefore
+// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingBefore
 
 namespace App\Jobs;
 
@@ -71,9 +72,9 @@ class ProcessSensibleOutput implements ShouldQueue
 
         $envelope->type = $sensible['configuration'];
 
-        $envelope->supplier_name = $envelope->type === 'vendor_payment' ?
-            $this->getValueOrAddValidationError('vendor_name') :
-            null;
+        $envelope->supplier_name = $envelope->type === 'vendor_payment'
+            ? $this->getValueOrAddValidationError('vendor_name')
+            : null;
 
         $envelope->description = $this->getValueOrAddValidationError('description');
 

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingBefore
+
 namespace App\Nova\Actions;
 
 use App\Exceptions\CouldNotExtractEnvelopeUuid;
@@ -66,9 +68,9 @@ class CreateDocuSignEnvelopeFromAttachment extends Action
 
         if ($envelope_uuid === null) {
             return Action::danger(
-                $fields->parser === 'smalot' ?
-                    'Could not extract envelope UUID. Try parsing with Tika.' :
-                    'Could not extract envelope UUID. Are you sure this is a machine-readable envelope?'
+                $fields->parser === 'smalot'
+                    ? 'Could not extract envelope UUID. Try parsing with Tika.'
+                    : 'Could not extract envelope UUID. Are you sure this is a machine-readable envelope?'
             );
         }
 

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingBefore
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -107,8 +109,8 @@ class ExpensePayment extends Model
 
     public function getQuickbooksPaymentUrlAttribute(): ?string
     {
-        return $this->quickbooks_payment_id === null ?
-            null :
-            'https://app.qbo.intuit.com/app/recvpayment?txnId='.$this->quickbooks_payment_id;
+        return $this->quickbooks_payment_id === null
+            ? null
+            : 'https://app.qbo.intuit.com/app/recvpayment?txnId='.$this->quickbooks_payment_id;
     }
 }

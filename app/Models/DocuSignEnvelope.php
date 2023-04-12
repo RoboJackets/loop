@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingBefore
+
 namespace App\Models;
 
 use App\Exceptions\CouldNotExtractEnvelopeUuid;
@@ -270,16 +272,16 @@ class DocuSignEnvelope extends Model
      */
     public function getSensibleExtractionUrlAttribute(): ?string
     {
-        return $this->sensible_extraction_uuid === null ?
-            null :
-            'https://app.sensible.so/extraction/?e='.$this->sensible_extraction_uuid;
+        return $this->sensible_extraction_uuid === null
+            ? null
+            : 'https://app.sensible.so/extraction/?e='.$this->sensible_extraction_uuid;
     }
 
     public function getQuickbooksInvoiceUrlAttribute(): ?string
     {
-        return $this->quickbooks_invoice_id === null ?
-            null :
-            'https://app.qbo.intuit.com/app/invoice?txnId='.$this->quickbooks_invoice_id;
+        return $this->quickbooks_invoice_id === null
+            ? null
+            : 'https://app.qbo.intuit.com/app/invoice?txnId='.$this->quickbooks_invoice_id;
     }
 
     /**
