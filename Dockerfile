@@ -36,6 +36,7 @@ RUN set -eux && \
     sed -i '/systemd_interval/c\systemd_interval = 0' /etc/php/8.2/fpm/php-fpm.conf && \
     sed -i '/error_log/c\error_log = /local/error.log' /etc/php/8.2/fpm/php-fpm.conf && \
     sed -i '/upload_max_filesize/c\upload_max_filesize = 10M' /etc/php/8.2/fpm/php.ini && \
+    sed -i '/post_max_size/c\post_max_size = 10M' /etc/php/8.2/fpm/php.ini && \
     sed -i '/max_file_uploads/c\max_file_uploads = 1' /etc/php/8.2/fpm/php.ini && \
     sed -i '/expose_php/c\expose_php = Off' /etc/php/8.2/fpm/php.ini && \
     sed -i '/expose_php/c\expose_php = Off' /etc/php/8.2/cli/php.ini && \
