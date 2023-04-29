@@ -366,13 +366,13 @@ class ProcessSensibleOutput implements ShouldQueue
             }
 
             if ($line_number === null && $amount !== null) {
-                $this->validation_errors[] = 'Sensible could not extract an amount for '.
+                $this->validation_errors[] = 'Sensible could not extract a line number for '.
                     $allocation->type_display_name.
                     ($allocation->type === 'sga_bill' ? ' '.$allocation->sga_bill_number : '');
             }
 
             if ($line_number !== null && $amount === null) {
-                $this->validation_errors[] = 'Sensible could not extract a line number for '.
+                $this->validation_errors[] = 'Sensible could not extract an amount for '.
                     $allocation->type_display_name.
                     ($allocation->type === 'sga_bill' ? ' '.$allocation->sga_bill_number : '');
             }
