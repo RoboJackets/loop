@@ -414,7 +414,7 @@ class ProcessSensibleOutput implements ShouldQueue
     }
 
     /**
-     * Attach funding sources that only have a single line (Foundation or Agency.)
+     * Attach funding sources that only have a single line (Foundation or Agency).
      *
      * @phan-suppress PhanTypeArraySuspiciousNullable
      */
