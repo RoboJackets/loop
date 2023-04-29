@@ -117,7 +117,7 @@ parameters:
     - '#Parameter \#2 \$subject of function preg_match expects string, mixed given\.#'
     - '#Parameter \#2 \$values of method Spatie\\Csp\\Policies\\Policy::addDirective\(\) expects array\|bool\|string, mixed given\.#'
     - '#Parameter \#3 \$day of static method Carbon\\Carbon::create\(\) expects int\|null, string given\.#'
-    - '#Parameter \#3 \$user of class App\\Mail\\DocuSignEnvelopeProcessed constructor expects App\\Models\\User\|null, mixed given\.#'
+    - '#Parameter \#3 \$user of class App\\Mail\\DocuSignEnvelopeProcessed constructor expects App\\Models\\User\|null, Illuminate\\Database\\Eloquent\\Model\|null given\.#'
     - '#Parameter \#3 \$value of method Adldap\\Query\\Builder::where\(\) expects string\|null, mixed given\.#'
     - '#Parameter \#7 \$tz of static method Carbon\\Carbon::create\(\) expects DateTimeZone\|string\|null, mixed given\.#'
     - '#Parameter \$cID of class QuickBooksOnline\\API\\Core\\OAuth\\OAuth2\\OAuth2AccessToken constructor expects string, mixed given\.#'

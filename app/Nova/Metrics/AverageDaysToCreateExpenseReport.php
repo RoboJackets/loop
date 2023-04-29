@@ -45,24 +45,24 @@ class AverageDaysToCreateExpenseReport extends Value
                     DocuSignEnvelope::selectRaw(
                         'avg(datediff(expense_reports.created_date, docusign_envelopes.submitted_at)) as diff'
                     )
-                    ->leftJoin('expense_reports', static function (JoinClause $join): void {
-                        $join->on('expense_reports.id', '=', 'expense_report_id');
-                    })
-                    ->when(
-                        $range !== 'ALL',
-                        static function (EloquentBuilder $query, bool $range_is_not_all) use ($range): void {
-                            $query->where(
-                                'docusign_envelopes.fiscal_year_id',
-                                static function (QueryBuilder $query) use ($range) {
-                                    $query->select('id')
-                                        ->from('fiscal_years')
-                                        ->where('ending_year', $range);
-                                }
-                            );
-                        }
-                    )
-                    ->whereNotNull('created_date')
-                    ->sole()->diff
+                        ->leftJoin('expense_reports', static function (JoinClause $join): void {
+                            $join->on('expense_reports.id', '=', 'expense_report_id');
+                        })
+                        ->when(
+                            $range !== 'ALL',
+                            static function (EloquentBuilder $query, bool $range_is_not_all) use ($range): void {
+                                $query->where(
+                                    'docusign_envelopes.fiscal_year_id',
+                                    static function (QueryBuilder $query) use ($range) {
+                                        $query->select('id')
+                                            ->from('fiscal_years')
+                                            ->where('ending_year', $range);
+                                    }
+                                );
+                            }
+                        )
+                        ->whereNotNull('created_date')
+                        ->sole()->diff
                 )
             )
         )

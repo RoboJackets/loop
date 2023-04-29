@@ -551,7 +551,7 @@ class ProcessSensibleOutput implements ShouldQueue
     private function getSgaBillFundingAllocation(string $bill_number): ?FundingAllocation
     {
         try {
-             return FundingAllocation::whereType('sga_bill')
+            return FundingAllocation::whereType('sga_bill')
                 ->whereSgaBillNumber($bill_number)
                 ->sole();
         } catch (ModelNotFoundException) {
