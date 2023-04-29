@@ -9,6 +9,7 @@ namespace App\Nova;
 use App\Nova\Actions\ProcessSensibleOutput;
 use App\Nova\Actions\RunSensibleExtraction;
 use App\Nova\Actions\SyncDocuSignEnvelopeToQuickBooks;
+use App\Nova\Actions\UploadDocuSignEnvelope;
 use App\Nova\Lenses\ReimbursementsMissingExpenseReports;
 use App\Nova\Lenses\ReimbursementsMissingInvoices;
 use Illuminate\Http\Request;
@@ -286,6 +287,15 @@ class DocuSignEnvelope extends Resource
                         $envelope->internal_cost_transfer === false &&
                         $envelope->replacedBy()->count() === 0 &&
                         $envelope->duplicate_of_docusign_envelope_id === null
+                ),
+            UploadDocuSignEnvelope::make()
+                ->canSee(
+                    static fn (NovaRequest $request): bool => $request->user()->can('access-sensible')
+                )
+                ->canRun(
+                    static fn (NovaRequest $request, \App\Models\Attachment $attachment): bool => $request
+                        ->user()
+                        ->can('access-sensible')
                 ),
         ];
     }

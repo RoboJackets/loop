@@ -42,7 +42,14 @@ class ProcessSensibleOutput implements ShouldQueue
 
     private const PURCHASE_ORDER_NUMBER_REGEX = '/[A-Za-z]{2,3}-\d{4}-PO-\d+/';
 
-    private const FUNDING_NUMBER_NAMES = ['one', 'two', 'three'];
+    private const FUNDING_NUMBER_NAMES = ['one', 'two', 'three', 'four', 'five'];
+
+    private const FUNDING_ALLOCATION_ROW_NUMBER = [
+        'sga_budget' => 1,
+        'sga_bill' => 2,
+        'foundation' => 3,
+        'agency' => 4,
+    ];
 
     /**
      * Validation errors encountered while processing this Sensible output.
@@ -62,8 +69,10 @@ class ProcessSensibleOutput implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @phan-suppress PhanTypeArraySuspiciousNullable
      * @phan-suppress PhanPossiblyNullTypeArgumentInternal
+     * @phan-suppress PhanTypeArraySuspiciousNull
+     * @phan-suppress PhanTypeArraySuspiciousNullable
+     * @phan-suppress PhanTypeInvalidDimOffset
      */
     public function handle(): void
     {
@@ -82,7 +91,14 @@ class ProcessSensibleOutput implements ShouldQueue
             $this->validation_errors[] = 'Description does not include a RoboJackets purchase order number';
         }
 
-        $envelope->amount = $this->getValueOrAddValidationError('total_amount');
+        if ($this->anyFieldSet('funding_source_table')) {
+            $column = $sensible['parsed_document']['funding_source_table']['columns'][10]['values'];
+            $rows = count($column);
+
+            $envelope->amount = $column[$rows - 1]['value'];
+        } else {
+            $envelope->amount = $this->getValueOrAddValidationError('total_amount');
+        }
 
         if ($envelope->type === 'purchase_reimbursement' || $envelope->type === 'travel_reimbursement') {
             $email = $this->getValueOrAddValidationError('payee_email_address');
@@ -154,24 +170,7 @@ class ProcessSensibleOutput implements ShouldQueue
                 'sga_budget_three_line_number',
                 'sga_budget_three_amount'
             )) {
-                $budget_funding_allocation = null;
-
-                try {
-                    $budget_funding_allocation = FundingAllocation::whereType('sga_budget')
-                        ->whereFiscalYearId($envelope->fiscal_year_id)
-                        ->sole();
-                } catch (ModelNotFoundException) {
-                    $this->validation_errors[] = 'This form references SGA budget lines, but the SGA budget funding '
-                        .'allocation for this fiscal year does not exist in Loop. Create it at '
-                        .route(
-                            'nova.pages.create',
-                            [
-                                'resource' => \App\Nova\FundingAllocation::uriKey(),
-                                'fiscal_year_id' => $envelope->fiscal_year_id,
-                                'type' => 'sga_budget',
-                            ]
-                        );
-                }
+                $budget_funding_allocation = $this->getSgaBudgetFundingAllocation();
 
                 if ($budget_funding_allocation !== null) {
                     $this->attachSgaFundingSources($budget_funding_allocation);
@@ -189,31 +188,40 @@ class ProcessSensibleOutput implements ShouldQueue
                 if ($this->anyFieldSet('sga_bill_number')) {
                     $bill_number = $this->getValueOrAddValidationError('sga_bill_number');
 
-                    $bill_funding_allocation = null;
+                    if ($bill_number !== null) {
+                        $bill_funding_allocation = $this->getSgaBillFundingAllocation($bill_number);
 
-                    try {
-                        $bill_funding_allocation = FundingAllocation::whereType('sga_bill')
-                            ->whereSgaBillNumber($bill_number)
-                            ->sole();
-                    } catch (ModelNotFoundException) {
-                        $this->validation_errors[] = 'This form references SGA bill '.$bill_number
-                            .', but this bill does not exist in Loop. Create it at '
-                            .route(
-                                'nova.pages.create',
-                                [
-                                    'resource' => \App\Nova\FundingAllocation::uriKey(),
-                                    'type' => 'sga_bill',
-                                    'sga_bill_number' => $bill_number,
-                                ]
-                            );
-                    }
-
-                    if ($bill_funding_allocation !== null) {
-                        $this->attachSgaFundingSources($bill_funding_allocation);
+                        if ($bill_funding_allocation !== null) {
+                            $this->attachSgaFundingSources($bill_funding_allocation);
+                        }
                     }
                 } else {
                     $this->validation_errors[] = 'This form references SGA bill lines, but Sensible did not return a '
                         .'bill number';
+                }
+            }
+
+            if ($this->anyFieldSet('funding_source_table')) {
+                $table = $this->envelope->sensible_output['parsed_document']['funding_source_table']['columns'];
+
+                if ($table[10]['values'][1] !== null && $table[10]['values'][1]['value'] > 0) {
+                    $budget_funding_allocation = $this->getSgaBudgetFundingAllocation();
+
+                    if ($budget_funding_allocation !== null) {
+                        $this->attachSgaFundingSourcesFromFundingSourcesTable($budget_funding_allocation, $table);
+                    }
+                }
+
+                if ($table[10]['values'][2] !== null && $table[10]['values'][2]['value'] > 0) {
+                    $bill_number = $this->getValueOrAddValidationError('sga_bill_number_in_table');
+
+                    if ($bill_number !== null) {
+                        $bill_funding_allocation = $this->getSgaBillFundingAllocation($bill_number);
+
+                        if ($bill_funding_allocation !== null) {
+                            $this->attachSgaFundingSourcesFromFundingSourcesTable($bill_funding_allocation, $table);
+                        }
+                    }
                 }
             }
 
@@ -342,72 +350,223 @@ class ProcessSensibleOutput implements ShouldQueue
         }
     }
 
-    private function attachSingleLineFundingSources(string $type): void
+    private function attachSgaFundingSourcesFromFundingSourcesTable(FundingAllocation $allocation, array $table): void
     {
-        if ($this->anyFieldSet($type.'_amount')) {
-            $display_name = FundingAllocation::$types[$type];
+        for ($number = 0; $number < 5; $number++) {
+            $line_number = $table[$number * 2]['values'][self::FUNDING_ALLOCATION_ROW_NUMBER[$allocation->type]];
 
-            $funding_allocation = null;
-
-            try {
-                $funding_allocation = FundingAllocation::whereType($type)
-                    ->whereFiscalYearId($this->envelope->fiscal_year_id)
-                    ->sole();
-            } catch (ModelNotFoundException) {
-                $this->validation_errors[] = 'This form references the '.$display_name.' account, but the funding '
-                    .'allocation for this fiscal year does not exist in Loop. Create it at '
-                    .route(
-                        'nova.pages.create',
-                        [
-                            'resource' => \App\Nova\FundingAllocation::uriKey(),
-                            'type' => $type,
-                            'fiscal_year_id' => $this->envelope->fiscal_year_id,
-                        ]
-                    );
+            if ($line_number !== null) {
+                $line_number = $line_number['value'];
             }
 
-            if ($funding_allocation !== null) {
-                $allocation_line = null;
+            $amount = $table[($number * 2) + 1]['values'][self::FUNDING_ALLOCATION_ROW_NUMBER[$allocation->type]];
+
+            if ($amount !== null) {
+                $amount = $amount['value'];
+            }
+
+            if ($line_number === null && $amount !== null) {
+                $this->validation_errors[] = 'Sensible could not extract an amount for '.
+                    $allocation->type_display_name.
+                    ($allocation->type === 'sga_bill' ? ' '.$allocation->sga_bill_number : '');
+            }
+
+            if ($line_number !== null && $amount === null) {
+                $this->validation_errors[] = 'Sensible could not extract a line number for '.
+                    $allocation->type_display_name.
+                    ($allocation->type === 'sga_bill' ? ' '.$allocation->sga_bill_number : '');
+            }
+
+            if ($line_number !== null && $amount !== null) {
+                $funding_allocation_line = null;
 
                 try {
-                    $allocation_line = FundingAllocationLine::whereFundingAllocationId($funding_allocation->id)
+                    $funding_allocation_line = FundingAllocationLine::whereFundingAllocationId($allocation->id)
+                        ->whereLineNumber($line_number)
                         ->sole();
                 } catch (ModelNotFoundException) {
-                    $this->validation_errors[] = 'This form references the '.$display_name
-                        .' account, but there are no lines under the funding allocation. Create one at '
+                    $this->validation_errors[] = 'This form references '.$allocation->type_display_name.
+                        ($allocation->type === 'sga_bill' ? ' '.$allocation->sga_bill_number : '')
+                        .' line '.$line_number
+                        .', but this line number does not exist in Loop. View the funding allocation at '
                         .route(
-                            'nova.pages.create',
+                            'nova.pages.detail',
                             [
-                                'resource' => \App\Nova\FundingAllocationLine::uriKey(),
-                                'funding_allocation_id' => $funding_allocation->id,
-                                'line_number' => 1,
+                                'resource' => \App\Nova\FundingAllocation::uriKey(),
+                                'resourceId' => $allocation->id,
                             ]
                         );
-                } catch (MultipleRecordsFoundException) {
-                    $this->validation_errors[] = 'This form references the '.$display_name
-                        .' account, but there are multiple lines associated with the funding allocation within Loop,'
-                        .' so one cannot be automatically attached.';
                 }
 
-                if ($allocation_line !== null) {
-                    $amount = $this->getValueOrAddValidationError($type.'_amount');
-
-                    if ($amount !== null) {
-                        DocuSignFundingSource::updateOrCreate(
-                            [
-                                'docusign_envelope_id' => $this->envelope->id,
-                                'funding_allocation_line_id' => $allocation_line->id,
-                            ],
-                            [
-                                'amount' => $amount,
-                            ]
-                        );
-                    } else {
-                        $this->validation_errors[] = 'Attempted to attach a funding source from '.$display_name
-                            .', but the amount was null';
-                    }
+                if ($funding_allocation_line !== null) {
+                    DocuSignFundingSource::updateOrCreate(
+                        [
+                            'docusign_envelope_id' => $this->envelope->id,
+                            'funding_allocation_line_id' => $funding_allocation_line->id,
+                        ],
+                        [
+                            'amount' => $amount,
+                        ]
+                    );
                 }
             }
         }
+    }
+
+    /**
+     * Attach funding sources that only have a single line (Foundation or Agency.)
+     *
+     * @phan-suppress PhanTypeArraySuspiciousNullable
+     */
+    private function attachSingleLineFundingSources(string $type): void
+    {
+        $display_name = FundingAllocation::$types[$type];
+        $allocation_line = null;
+        $amount = null;
+
+        if ($this->anyFieldSet($type.'_amount')) {
+            $allocation_line = $this->getFundingAllocationLine($type);
+
+            if ($allocation_line !== null) {
+                $amount = $this->getValueOrAddValidationError($type.'_amount');
+            }
+        }
+
+        if ($this->anyFieldSet('funding_source_table')) {
+            $col = $this->envelope->sensible_output['parsed_document']['funding_source_table']['columns'][10]['values'];
+
+            if ($col[self::FUNDING_ALLOCATION_ROW_NUMBER[$type]] !== null) {
+                $allocation_line = $this->getFundingAllocationLine($type);
+                $amount = $col[self::FUNDING_ALLOCATION_ROW_NUMBER[$type]]['value'];
+            }
+        }
+
+        if ($allocation_line !== null) {
+            if ($amount !== null) {
+                DocuSignFundingSource::updateOrCreate(
+                    [
+                        'docusign_envelope_id' => $this->envelope->id,
+                        'funding_allocation_line_id' => $allocation_line->id,
+                    ],
+                    [
+                        'amount' => $amount,
+                    ]
+                );
+            } else {
+                $this->validation_errors[] = 'Attempted to attach a funding source from '.$display_name
+                    .', but the amount was null';
+            }
+        }
+    }
+
+    /**
+     * Get a funding allocation line for a single-line funding allocation.
+     *
+     * @phan-suppress PhanTypeMismatchReturn
+     */
+    private function getFundingAllocationLine(string $type): ?FundingAllocationLine
+    {
+        $display_name = FundingAllocation::$types[$type];
+
+        $funding_allocation = null;
+
+        try {
+            $funding_allocation = FundingAllocation::whereType($type)
+                ->whereFiscalYearId($this->envelope->fiscal_year_id)
+                ->sole();
+        } catch (ModelNotFoundException) {
+            $this->validation_errors[] = 'This form references the '.$display_name.' account, but the funding '
+                .'allocation for this fiscal year does not exist in Loop. Create it at '
+                .route(
+                    'nova.pages.create',
+                    [
+                        'resource' => \App\Nova\FundingAllocation::uriKey(),
+                        'type' => $type,
+                        'fiscal_year_id' => $this->envelope->fiscal_year_id,
+                    ]
+                );
+        }
+
+        if ($funding_allocation !== null) {
+            $allocation_line = null;
+
+            try {
+                $allocation_line = FundingAllocationLine::whereFundingAllocationId($funding_allocation->id)
+                    ->sole();
+            } catch (ModelNotFoundException) {
+                $this->validation_errors[] = 'This form references the '.$display_name
+                    .' account, but there are no lines under the funding allocation. Create one at '
+                    .route(
+                        'nova.pages.create',
+                        [
+                            'resource' => \App\Nova\FundingAllocationLine::uriKey(),
+                            'funding_allocation_id' => $funding_allocation->id,
+                            'line_number' => 1,
+                        ]
+                    );
+            } catch (MultipleRecordsFoundException) {
+                $this->validation_errors[] = 'This form references the '.$display_name
+                    .' account, but there are multiple lines associated with the funding allocation within Loop,'
+                    .' so one cannot be automatically attached.';
+            }
+
+            return $allocation_line;
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the SGA budget funding allocation for this envelope.
+     *
+     * @phan-suppress PhanTypeMismatchReturn
+     */
+    private function getSgaBudgetFundingAllocation(): ?FundingAllocation
+    {
+        try {
+            return FundingAllocation::whereType('sga_budget')
+                ->whereFiscalYearId($this->envelope->fiscal_year_id)
+                ->sole();
+        } catch (ModelNotFoundException) {
+            $this->validation_errors[] = 'This form references SGA budget lines, but the SGA budget funding '
+                .'allocation for this fiscal year does not exist in Loop. Create it at '
+                .route(
+                    'nova.pages.create',
+                    [
+                        'resource' => \App\Nova\FundingAllocation::uriKey(),
+                        'fiscal_year_id' => $this->envelope->fiscal_year_id,
+                        'type' => 'sga_budget',
+                    ]
+                );
+        }
+
+        return null;
+    }
+
+    /**
+     * Get an SGA bill funding allocation.
+     *
+     * @phan-suppress PhanTypeMismatchReturn
+     */
+    private function getSgaBillFundingAllocation(string $bill_number): ?FundingAllocation
+    {
+        try {
+             return FundingAllocation::whereType('sga_bill')
+                ->whereSgaBillNumber($bill_number)
+                ->sole();
+        } catch (ModelNotFoundException) {
+            $this->validation_errors[] = 'This form references SGA bill '.$bill_number
+                .', but this bill does not exist in Loop. Create it at '
+                .route(
+                    'nova.pages.create',
+                    [
+                        'resource' => \App\Nova\FundingAllocation::uriKey(),
+                        'type' => 'sga_bill',
+                        'sga_bill_number' => $bill_number,
+                    ]
+                );
+        }
+
+        return null;
     }
 }
