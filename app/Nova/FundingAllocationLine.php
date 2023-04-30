@@ -54,7 +54,7 @@ class FundingAllocationLine extends Resource
      * @var array<string>
      */
     public static $with = [
-        'fundingAllocation',
+        'fundingAllocation.fiscalYear',
     ];
 
     /**
