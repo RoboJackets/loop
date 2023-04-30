@@ -128,7 +128,6 @@ parameters:
     - '#Property App\\Models\\DocuSignEnvelope::\$quickbooks_invoice_id \(int\|null\) does not accept QuickBooksOnline\\API\\Data\\com\\intuit\\schema\\finance\\v3\\IPPid\.#'
     - '#Property App\\Models\\DocuSignEnvelope::\$submitted_at \(Illuminate\\Support\\Carbon\|null\) does not accept Carbon\\CarbonImmutable\|null\.#'
     - '#Property App\\Models\\ExpensePayment::\$quickbooks_payment_id \(int\|null\) does not accept QuickBooksOnline\\API\\Data\\com\\intuit\\schema\\finance\\v3\\IPPid\.#'
-    - '#Property App\\Models\\ExpenseReport::\$expense_payment_id \(int\|null\) does not accept string\.#'
     - '#Property App\\Models\\User::\$quickbooks_access_token_expires_at \(Illuminate\\Support\\Carbon\|null\) does not accept QuickBooksOnline\\API\\Core\\OAuth\\OAuth2\\Date\.#'
     - '#Property App\\Models\\User::\$quickbooks_refresh_token_expires_at \(Illuminate\\Support\\Carbon\|null\) does not accept int\.#'
     - '#Property QuickBooksOnline\\API\\Data\\IPPAttachableRef::\$EntityRef \(QuickBooksOnline\\API\\Data\\com\\intuit\\schema\\finance\\v3\\IPPReferenceType\) does not accept QuickBooksOnline\\API\\Data\\IPPReferenceType\.#'

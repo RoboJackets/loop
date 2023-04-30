@@ -229,51 +229,69 @@ class ExpenseReportController extends Controller
                 );
             }
 
-            ExpensePayment::updateOrCreate(
+            ExpensePayment::upsert(
                 [
-                    'workday_instance_id' => $expense_payment_attributes['workday_instance_id'],
+                    $expense_payment_attributes,
                 ],
-                $expense_payment_attributes
+                [
+                    'workday_instance_id',
+                ],
+                [
+                    'status',
+                    'reconciled',
+                ]
             );
 
             $expense_payment_table = Workday::sole($expense_payment_widgets, 'wd:Expense_Report_SubView');
 
+            $expense_reports_to_upsert = [];
+
             foreach ($expense_payment_table['rows'] as $row) {
                 foreach ($row['cellsMap'] as $cell) {
                     if ($cell['propertyName'] === 'wd:Expense_Report--IS') {
-                        $instance_id = Workday::getInstanceId($cell);
-                        if (ExpenseReport::whereWorkdayInstanceId($instance_id)->exists()) {
-                            $inner_expense_report = ExpenseReport::whereWorkdayInstanceId($instance_id)->sole();
-                            $inner_expense_report->expense_payment_id =
-                                $expense_payment_attributes['workday_instance_id'];
-                            $inner_expense_report->save();
-                        }
+                        $expense_reports_to_upsert[] = Workday::getInstanceId($cell);
                     }
                 }
             }
+
+            ExpenseReport::whereIn('workday_instance_id', $expense_reports_to_upsert)
+                ->update(['expense_payment_id' => $expense_payment_attributes['workday_instance_id']]);
         }
 
         $lines_table = collect(
             Workday::searchForKeyValuePair($request['body']['children'], 'label', 'Expense Lines')
         )->sole(static fn (array $input): bool => $input['widget'] === 'grid');
 
+        $expense_report_lines_to_upsert = [];
+
         foreach ($lines_table['rows'] as $row) {
-            $key_attributes = [
+            $expense_report_line_attributes = [
                 'workday_line_id' => $row['id'],
                 'expense_report_id' => $expense_report['workday_instance_id'],
             ];
-            $update_attributes = [];
 
             foreach ($row['cellsMap'] as $cell) {
                 if ($cell['propertyName'] === 'wd:Charge_Description_Memo') {
-                    $update_attributes['memo'] = array_key_exists('value', $cell) ? $cell['value'] : null;
+                    $expense_report_line_attributes['memo'] = array_key_exists('value', $cell) ? $cell['value'] : null;
                 } elseif ($cell['propertyName'] === 'wd:Converted_Amount') {
-                    $update_attributes['amount'] = $cell['value'];
+                    $expense_report_line_attributes['amount'] = $cell['value'];
                 }
             }
 
-            ExpenseReportLine::updateOrCreate($key_attributes, $update_attributes);
+            $expense_report_lines_to_upsert[] = $expense_report_line_attributes;
         }
+
+        ExpenseReportLine::upsert(
+            $expense_report_lines_to_upsert,
+            [
+                'workday_line_id',
+                'expense_report_id',
+            ],
+            [
+                'memo',
+                'amount',
+            ]
+        );
 
         $expense_report->fill($expense_report_attributes);
         $expense_report->save();
