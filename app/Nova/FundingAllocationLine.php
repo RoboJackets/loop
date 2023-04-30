@@ -49,6 +49,15 @@ class FundingAllocationLine extends Resource
     ];
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<string>
+     */
+    public static $with = [
+        'fundingAllocation',
+    ];
+
+    /**
      * Indicates if the resource should be displayed in the sidebar.
      *
      * @var bool
