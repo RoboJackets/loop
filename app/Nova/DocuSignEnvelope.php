@@ -293,7 +293,7 @@ class DocuSignEnvelope extends Resource
                     static fn (NovaRequest $request): bool => $request->user()->can('access-sensible')
                 )
                 ->canRun(
-                    static fn (NovaRequest $request, \App\Models\Attachment $attachment): bool => $request
+                    static fn (NovaRequest $request, \App\Models\DocuSignEnvelope $envelope): bool => $request
                         ->user()
                         ->can('access-sensible')
                 ),
