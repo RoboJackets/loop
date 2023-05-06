@@ -52,9 +52,8 @@ class ResetQuickBooksCredentials extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\User>  $models
-     * @return array<string,string>
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         $user = $models->sole();
         $user->quickbooks_access_token = null;

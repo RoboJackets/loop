@@ -40,7 +40,7 @@ class MatchBankTransaction extends Action
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\BankTransaction>  $models
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         $bank_transaction = $models->sole();
 

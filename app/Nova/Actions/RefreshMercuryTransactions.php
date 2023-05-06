@@ -49,9 +49,8 @@ class RefreshMercuryTransactions extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\BankTransaction>  $models
-     * @return array<string,string>
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         $json = Sentry::wrapWithChildSpan(
             'mercury.retrieve_transactions',

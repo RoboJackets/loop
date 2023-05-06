@@ -52,7 +52,7 @@ class CreateDocuSignEnvelopeFromAttachment extends Action
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\Attachment>  $models
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         $attachment = $models->sole();
 

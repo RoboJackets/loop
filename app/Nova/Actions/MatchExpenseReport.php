@@ -42,7 +42,7 @@ class MatchExpenseReport extends Action
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\ExpenseReport>  $models
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         $expense_report = $models->sole();
 

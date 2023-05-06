@@ -63,7 +63,7 @@ class SyncExpensePaymentToQuickBooks extends Action
      *
      * @phan-suppress PhanTypeMismatchArgument
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         $user = User::whereId($fields->quickbooks_user_id)->sole();
         $data_service = QuickBooks::getDataService($user);

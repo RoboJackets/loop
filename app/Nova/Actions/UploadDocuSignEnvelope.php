@@ -62,7 +62,7 @@ class UploadDocuSignEnvelope extends Action
      * @phan-suppress PhanTypeMismatchArgument
      * @phan-suppress PhanTypeMismatchProperty
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         $envelope = new DocuSignEnvelope();
         if (Str::contains($fields->envelope_uuid, '-')) {

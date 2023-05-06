@@ -77,9 +77,8 @@ class RunSensibleExtraction extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\DocuSignEnvelope>  $models
-     * @return array<string,string>
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         $envelope = $models->sole();
 

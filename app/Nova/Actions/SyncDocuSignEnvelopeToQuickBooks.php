@@ -56,7 +56,7 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
      * @phan-suppress PhanTypeMismatchArgument
      * @phan-suppress PhanTypeMismatchProperty
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         $user = User::whereId($fields->quickbooks_user_id)->sole();
         $data_service = QuickBooks::getDataService($user);

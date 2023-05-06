@@ -52,11 +52,10 @@ class UploadBankStatement extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\BankTransaction>  $models
-     * @return array<string,string>
      *
      * @phan-suppress PhanTypeMismatchArgumentProbablyReal
      */
-    public function handle(ActionFields $fields, Collection $models): array
+    public function handle(ActionFields $fields, Collection $models)
     {
         $file_hash = hash_file('sha512', $fields->bank_statement->getPathname());
 
