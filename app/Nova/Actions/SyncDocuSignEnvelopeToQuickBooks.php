@@ -82,6 +82,7 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
                 'CurrencyRef' => [
                     'value' => 'USD',
                 ],
+                'DocNumber' => $envelope->id,
                 'Line' => [
                     [
                         'Amount' => $envelope->amount,
