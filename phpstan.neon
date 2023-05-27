@@ -33,6 +33,7 @@ parameters:
     - '#Cannot access offset .+ on mixed\.#'
     - '#Cannot access offset 0 on array\|float\|int\|string\|null\.#'
     - '#Cannot access property \$[a-zA-Z_]+ on App\\Models\\[a-zA-Z]+\|null\.#'
+    - '#Cannot call method addDays\(\) on Illuminate\\Support\\Carbon\|null\.#'
     - '#Cannot call method can\(\) on App\\Models\\User\|null\.#'
     - '#Cannot call method each\(\) on array<App\\Models\\[a-zA-Z]+>\|Illuminate\\Database\\Eloquent\\Collection\.#'
     - '#Cannot call method envelopes\(\) on App\\Models\\ExpenseReport\|null\.#'
