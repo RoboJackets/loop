@@ -92,6 +92,7 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
         $item_ref->value = config('quickbooks.invoice.item_id');
 
         $invoice->TxnDate = $envelope->submitted_at->format('Y/m/d');
+        $invoice->DueDate = $envelope->submitted_at->addDays(30)->format('Y/m/d');
         $invoice->CurrencyRef = $currency_ref;
         $invoice->DocNumber = $envelope->id;
 
