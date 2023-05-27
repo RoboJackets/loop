@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.Commenting.DocComment.MissingShort
+// phpcs:disable SlevomatCodingStandard.PHP.RequireExplicitAssertion.RequiredExplicitAssertion
+
 namespace App\Nova\Actions;
 
 use App\Models\Attachment;
+use App\Models\DocuSignEnvelope;
 use App\Models\User;
 use App\Util\QuickBooks;
 use App\Util\Sentry;
@@ -15,8 +19,8 @@ use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use QuickBooksOnline\API\Data\IPPInvoice;
+use QuickBooksOnline\API\Data\IPPReferenceType;
 use QuickBooksOnline\API\Data\IPPReimburseCharge;
-use QuickBooksOnline\API\Facades\Invoice;
 
 class SyncDocuSignEnvelopeToQuickBooks extends Action
 {
@@ -62,7 +66,7 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
         $data_service = QuickBooks::getDataService($user);
         $envelope = $models->sole();
 
-        $reimburse_charge_response = Sentry::wrapWithChildSpan(
+        $reimburse_charge = Sentry::wrapWithChildSpan(
             'quickbooks.get_reimburse_charge',
             // @phan-suppress-next-line PhanTypeMismatchReturnSuperType
             static fn (): IPPReimburseCharge => $data_service->FindById(
@@ -71,43 +75,50 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
             )
         );
 
-        $invoice_response = Sentry::wrapWithChildSpan(
-            'quickbooks.create_invoice',
+        $invoice = Sentry::wrapWithChildSpan(
+            'quickbooks.get_invoice',
             // @phan-suppress-next-line PhanTypeMismatchReturnSuperType
-            static fn (): IPPInvoice => $data_service->Add(Invoice::create([
-                'TxnDate' => $envelope->submitted_at->format('Y/m/d'),
-                'CustomerRef' => [
-                    'value' => config('quickbooks.invoice.customer_id'),
-                ],
-                'CurrencyRef' => [
-                    'value' => 'USD',
-                ],
-                'DocNumber' => $envelope->id,
-                'Line' => [
-                    [
-                        'Amount' => $envelope->amount,
-                        'Description' => $envelope->description,
-                        'DetailType' => 'SalesItemLineDetail',
-                        'SalesItemLineDetail' => [
-                            'ItemRef' => [
-                                'value' => config('quickbooks.invoice.item_id'),
-                            ],
-                            'ServiceDate' => $reimburse_charge_response->TxnDate,
-                        ],
-                        'LinkedTxn' => [
-                            [
-                                'TxnId' => $fields->quickbooks_reimburse_charge_id,
-                                'TxnType' => 'ReimburseCharge',
-                                'TxnLineId' => 1,
-                            ],
-                        ],
-                    ],
-                ],
-            ]))
+            static fn (): IPPInvoice => $data_service->FindById(
+                'Invoice',
+                // @phan-suppress-next-line PhanUndeclaredClassProperty
+                $reimburse_charge->LinkedTxn->TxnId
+            )
         );
 
-        $envelope->quickbooks_invoice_id = $invoice_response->Id;
-        $envelope->quickbooks_invoice_document_number = $invoice_response->DocNumber;
+        $currency_ref = new IPPReferenceType();
+        $currency_ref->value = 'USD';
+
+        $item_ref = new IPPReferenceType();
+        $item_ref->value = config('quickbooks.invoice.item_id');
+
+        $invoice->TxnDate = $envelope->submitted_at->format('Y/m/d');
+        $invoice->CurrencyRef = $currency_ref;
+        $invoice->DocNumber = $envelope->id;
+
+        /** @var \QuickBooksOnline\API\Data\IPPLine $line */
+        foreach ($invoice->Line as $line) {
+            if (
+                // @phpstan-ignore-next-line
+                $line->DetailType === 'SalesItemLineDetail' &&
+                // @phpstan-ignore-next-line
+                $line->LinkedTxn?->TxnType === 'ReimburseCharge' &&
+                $line->LinkedTxn?->TxnId === $fields->quickbooks_reimburse_charge_id
+            ) {
+                $line->Amount = $envelope->amount;
+                $line->Description = $envelope->description;
+                $line->SalesItemLineDetail->ItemRef = $item_ref;
+                $line->SalesItemLineDetail->ServiceDate = $reimburse_charge->TxnDate;
+            }
+        }
+
+        $invoice = Sentry::wrapWithChildSpan(
+            'quickbooks.update_invoice',
+            // @phan-suppress-next-line PhanTypeMismatchReturnSuperType
+            static fn (): IPPInvoice => $data_service->Update($invoice)
+        );
+
+        $envelope->quickbooks_invoice_id = $invoice->Id;
+        $envelope->quickbooks_invoice_document_number = $invoice->DocNumber;
         $envelope->save();
 
         QuickBooks::uploadAttachmentToInvoice($data_service, $envelope, $envelope->sofo_form_filename);
@@ -130,6 +141,12 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
      */
     public function fields(NovaRequest $request): array
     {
+        $knownInvoiceIds = DocuSignEnvelope::selectRaw('distinct(quickbooks_invoice_id)')
+            ->whereNotNull('quickbooks_invoice_id')
+            ->get()
+            ->pluck('quickbooks_invoice_id')
+            ->toArray();
+
         return [
             Select::make('User', 'quickbooks_user_id')
                 ->options([strval($request->user()->id) => $request->user()->name])
@@ -147,9 +164,20 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
                             Sentry::wrapWithChildSpan(
                                 'quickbooks.query_reimburse_charges',
                                 static fn (): array => QuickBooks::getDataService($request->user())
-                                    ->Query('select * from ReimburseCharge where HasBeenInvoiced = false')
+                                    ->Query(
+                                        'select * from ReimburseCharge where HasBeenInvoiced = true'
+                                        .' and CustomerRef = \''.config('quickbooks.invoice.customer_id').'\''
+                                    )
                             )
                         )
+                            ->filter(
+                                static fn (IPPReimburseCharge $item, int $key): bool => ! in_array(
+                                    // @phan-suppress-next-line PhanUndeclaredClassProperty
+                                    intval($item->LinkedTxn->TxnId),
+                                    $knownInvoiceIds,
+                                    true
+                                )
+                            )
                             ->mapWithKeys(
                                 static fn (IPPReimburseCharge $item, int $key): array => [
                                     $item->Id => (
@@ -164,7 +192,7 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
                 ->required()
                 ->rules('required')
                 ->searchable()
-                ->help('Only expenses that are ready to invoice are shown.'),
+                ->help('Only expenses that have been invoiced and not matched are shown.'),
         ];
     }
 }

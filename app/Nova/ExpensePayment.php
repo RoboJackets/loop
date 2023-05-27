@@ -114,7 +114,7 @@ class ExpensePayment extends Resource
                 ->readonly(),
 
             URL::make('QuickBooks Payment', 'quickbooks_payment_url')
-                ->displayUsing(fn (): ?int => $this->quickbooks_payment_id)
+                ->displayUsing(fn (): int => $this->transaction_reference)
                 ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks'))
                 ->hideWhenUpdating(),
 
