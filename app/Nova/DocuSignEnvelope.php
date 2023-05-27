@@ -290,7 +290,8 @@ class DocuSignEnvelope extends Resource
                 ),
             UploadDocuSignEnvelope::make()
                 ->canSee(
-                    static fn (NovaRequest $request): bool => $request->user()->can('access-sensible')
+                    static fn (NovaRequest $request): bool => $request->user()->can('access-sensible') &&
+                        $request->lens === null
                 )
                 ->canRun(
                     static fn (NovaRequest $request, \App\Models\DocuSignEnvelope $envelope): bool => $request
