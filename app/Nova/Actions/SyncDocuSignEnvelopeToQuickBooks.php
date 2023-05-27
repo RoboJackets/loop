@@ -95,7 +95,7 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
         $invoice->DueDate = $envelope->submitted_at->addDays(30)->format('Y/m/d');
         $invoice->CurrencyRef = $currency_ref;
         $invoice->DocNumber = $envelope->id;
-        $invoice->PrivateNote = $reimburse_charge->PrivateNote . ' | ' . $envelope->description;
+        $invoice->PrivateNote = $reimburse_charge->PrivateNote.' | '.$envelope->description;
 
         /** @var \QuickBooksOnline\API\Data\IPPLine $line */
         foreach ($invoice->Line as $line) {
