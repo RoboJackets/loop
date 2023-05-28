@@ -140,7 +140,6 @@ parameters:
     - '#Property QuickBooksOnline\\API\\Data\\IPPid::\$value \(string\) does not accept mixed\.#'
     - '#Property QuickBooksOnline\\API\\Data\\IPPIntuitEntity::\$AttachableRef \(QuickBooksOnline\\API\\Data\\com\\intuit\\schema\\finance\\v3\\IPPAttachableRef\) does not accept QuickBooksOnline\\API\\Data\\IPPAttachableRef\.#'
     - '#Property QuickBooksOnline\\API\\Data\\IPPLine::\$Amount \(float\) does not accept float\|null\.#'
-    - '#Property QuickBooksOnline\\API\\Data\\IPPLine::\$Description \(string\) does not accept string\|null\.#'
     - '#Property QuickBooksOnline\\API\\Data\\IPPTransaction::\$CurrencyRef \(QuickBooksOnline\\API\\Data\\com\\intuit\\schema\\finance\\v3\\IPPReferenceType\) does not accept QuickBooksOnline\\API\\Data\\IPPReferenceType\.#'
     - '#Property QuickBooksOnline\\API\\Data\\IPPTransaction::\$DocNumber \(string\) does not accept int\.#'
     - '#Using nullsafe property access on non-nullable type QuickBooksOnline\\API\\Data\\com\\intuit\\schema\\finance\\v3\\IPPError\. Use -> instead\.#'
