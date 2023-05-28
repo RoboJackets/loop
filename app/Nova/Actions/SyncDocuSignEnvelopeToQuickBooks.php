@@ -107,7 +107,7 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
                 $line->LinkedTxn?->TxnId === $fields->quickbooks_reimburse_charge_id
             ) {
                 $line->Amount = $envelope->amount;
-                $line->Description = $envelope->description;
+                $line->Description = $reimburse_charge->PrivateNote.' | '.$envelope->description;
                 $line->SalesItemLineDetail->ItemRef = $item_ref;
                 $line->SalesItemLineDetail->ServiceDate = $reimburse_charge->TxnDate;
             }
