@@ -92,8 +92,8 @@ class ProcessSensibleOutput implements ShouldQueue
         }
 
         if ($this->anyFieldSet('funding_source_table')) {
-            if ($this->anyFieldSet("total_approved_below_table")) {
-                $envelope->amount = $this->getValueOrAddValidationError("total_approved_below_table");
+            if ($this->anyFieldSet('total_approved_below_table')) {
+                $envelope->amount = $this->getValueOrAddValidationError('total_approved_below_table');
             } else {
                 $column = $sensible['parsed_document']['funding_source_table']['columns'][10]['values'];
                 $rows = count($column);
