@@ -136,8 +136,6 @@ class SyncExpensePaymentToQuickBooks extends Action
                         }
                     );
 
-                    ray($envelope_amounts_from_lines);
-
                     $lines[] = [
                         'Amount' => $envelope_amounts_from_lines[$envelope->envelope_uuid],
                         'LinkedTxn' => [
