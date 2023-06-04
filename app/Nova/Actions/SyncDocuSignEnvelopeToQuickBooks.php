@@ -161,7 +161,7 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
                 ->options(
                     static fn (): array => Cache::remember(
                         'reimburse_charges',
-                        30,
+                        10,
                         static fn (): array => collect(
                             Sentry::wrapWithChildSpan(
                                 'quickbooks.query_reimburse_charges',
