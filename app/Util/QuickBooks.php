@@ -17,7 +17,7 @@ use QuickBooksOnline\API\DataService\DataService;
 
 class QuickBooks
 {
-    public static function getDataService(?User $user = null): DataService
+    public static function getDataService(User $user = null): DataService
     {
         $data_service = DataService::Configure([
             'auth_mode' => 'oauth2',
