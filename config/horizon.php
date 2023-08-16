@@ -179,7 +179,7 @@ return [
                 'block_for' => null,
                 'timeout' => 10,
             ],
-            'main' => [
+            'meilisearch' => [
                 'connection' => 'redis',
                 'queue' => ['meilisearch'],
                 'balance' => 'simple',
