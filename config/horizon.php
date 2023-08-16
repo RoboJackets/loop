@@ -172,12 +172,21 @@ return [
         'production' => [
             'main' => [
                 'connection' => 'redis',
-                'queue' => ['default', 'postmark', 'sensible', 'meilisearch'],
+                'queue' => ['default', 'postmark', 'sensible'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,
                 'block_for' => null,
                 'timeout' => 10,
+            ],
+            'main' => [
+                'connection' => 'redis',
+                'queue' => ['meilisearch'],
+                'balance' => 'simple',
+                'processes' => 1,
+                'tries' => 1,
+                'block_for' => null,
+                'timeout' => 300,
             ],
         ],
 
