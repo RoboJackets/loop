@@ -32,6 +32,7 @@ parameters:
     - '#Called ''modelKeys'' on Laravel collection, but could have been retrieved as a query\.#'
     - '#Cannot access offset .+ on mixed\.#'
     - '#Cannot access offset 0 on array\|float\|int\|string\|null\.#'
+    - '#Cannot access property \$[a-zA-Z_]+ on App\\Models\\[a-zA-Z]+\|Illuminate\\Database\\Eloquent\\Collection<int, App\\Models\\[a-zA-Z]+>\|null\.#'
     - '#Cannot access property \$[a-zA-Z_]+ on App\\Models\\[a-zA-Z]+\|null\.#'
     - '#Cannot call method addDays\(\) on Illuminate\\Support\\Carbon\|null\.#'
     - '#Cannot call method can\(\) on App\\Models\\User\|null\.#'

@@ -41,9 +41,7 @@ class ExpensePaymentPolicy
      */
     public function update(User $user, ExpensePayment $expensePayment): bool
     {
-        return $user->can('access-workday') &&
-            ! $expensePayment->reconciled &&
-            $expensePayment->status === 'Complete';
+        return false;
     }
 
     /**

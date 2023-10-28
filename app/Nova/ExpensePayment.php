@@ -174,6 +174,23 @@ class ExpensePayment extends Resource
      */
     public function actions(NovaRequest $request): array
     {
+        $resourceId = $request->resourceId ?? $request->resources;
+
+        if ($resourceId === null) {
+            return [];
+        }
+
+        $payment = \App\Models\ExpensePayment::find($resourceId);
+
+        if (
+            $payment->status !== 'Complete' ||
+            $payment->reconciled !== true ||
+            $payment->bank_transaction_id === null ||
+            $payment->bankTransaction->transaction_posted_at === null
+        ) {
+            return [];
+        }
+
         return [
             SyncExpensePaymentToQuickBooks::make()
                 ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('access-quickbooks'))

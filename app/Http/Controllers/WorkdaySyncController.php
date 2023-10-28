@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Jobs\CancelExpensePayments;
 use App\Models\Attachment;
 use App\Models\ExpensePayment;
 use App\Models\ExpenseReport;
@@ -33,10 +34,7 @@ class WorkdaySyncController extends Controller
         $unreconciled_payment = ExpenseReport::whereHas(
             'expensePayment',
             static function (EloquentBuilder $query): void {
-                $query->where('reconciled', '=', false)
-                    ->whereHas('payTo', static function (EloquentBuilder $query): void {
-                        $query->whereDoesntHave('user');
-                    });
+                $query->where('reconciled', '=', false);
             }
         )
             ->get()
@@ -130,6 +128,8 @@ class WorkdaySyncController extends Controller
     public function syncComplete(): JsonResponse
     {
         Cache::put('last_workday_sync', Carbon::now()->unix());
+
+        CancelExpensePayments::dispatch();
 
         return response()->json(
             [
