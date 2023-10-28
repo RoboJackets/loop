@@ -23,6 +23,7 @@ return [
     'exclude_file_list' => [
         '.phpstorm.meta.php',
         '_ide_helper.php',
+        'vendor/inertiajs/inertia-laravel/_ide_helpers.php',
     ],
 
     'suppress_issue_types' => [
