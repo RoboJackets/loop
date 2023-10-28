@@ -1,7 +1,5 @@
 # syntax = docker/dockerfile:1.4
 
-ARG base_image="debian:bookworm-slim"
-
 FROM scratch as backend-source
 
 COPY --link app/ /app/app/
@@ -15,7 +13,7 @@ COPY --link routes/ /app/routes/
 COPY --link storage/ /app/storage/
 COPY --link artisan composer.json composer.lock /app/
 
-FROM ${base_image} as backend-uncompressed
+FROM debian:bookworm-slim as backend-uncompressed
 
 LABEL maintainer="developers@robojackets.org"
 
@@ -47,7 +45,7 @@ RUN set -eux && \
 
 COPY --link --from=composer /usr/bin/composer /usr/bin/composer
 
-COPY --link --from=backend-source --chown=www-data:www-data /app/ /app/
+COPY --link --from=backend-source --chown=33:33 /app/ /app/
 
 WORKDIR /app/
 
