@@ -33,10 +33,7 @@ class WorkdaySyncController extends Controller
         $unreconciled_payment = ExpenseReport::whereHas(
             'expensePayment',
             static function (EloquentBuilder $query): void {
-                $query->where('reconciled', '=', false)
-                    ->whereHas('payTo', static function (EloquentBuilder $query): void {
-                        $query->whereDoesntHave('user');
-                    });
+                $query->where('reconciled', '=', false);
             }
         )
             ->get()
