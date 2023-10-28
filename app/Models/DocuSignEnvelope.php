@@ -96,9 +96,9 @@ use Smalot\PdfParser\Parser;
  */
 class DocuSignEnvelope extends Model
 {
-    use SoftDeletes;
-    use Searchable;
     use GetMorphClassStatic;
+    use Searchable;
+    use SoftDeletes;
 
     private const ENVELOPE_ID_REGEX = '/Envelope Id: (?P<envelopeId>[A-F0-9\s]{32,})/';
 

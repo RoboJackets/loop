@@ -26,7 +26,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 
-class MatchExpenseReport implements ShouldQueue, ShouldBeUnique
+class MatchExpenseReport implements ShouldBeUnique, ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;

@@ -44,8 +44,8 @@ use Laravel\Scout\Searchable;
  */
 class FundingAllocation extends Model
 {
-    use SoftDeletes;
     use Searchable;
+    use SoftDeletes;
 
     /**
      * List of valid types and display names for them.

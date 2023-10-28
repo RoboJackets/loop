@@ -15,7 +15,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\URL;
 
-class SubmitDocuSignEnvelopeToSensible implements ShouldQueue, ShouldBeUnique
+class SubmitDocuSignEnvelopeToSensible implements ShouldBeUnique, ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;

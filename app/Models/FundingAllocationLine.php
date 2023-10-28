@@ -45,8 +45,8 @@ use Laravel\Scout\Searchable;
  */
 class FundingAllocationLine extends Model
 {
-    use SoftDeletes;
     use Searchable;
+    use SoftDeletes;
 
     /**
      * The attributes that should be cast to native types.
