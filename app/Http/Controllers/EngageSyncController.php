@@ -18,7 +18,6 @@ class EngageSyncController extends Controller
             ->pluck('engage_id');
 
         $missing_approved_by_user = EngagePurchaseRequest::whereDoesntHave('approvedBy')
-            ->where('approved', '=', true)
             ->get()
             ->pluck('engage_id');
 
