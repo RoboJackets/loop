@@ -40,7 +40,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
             if ($workday_timestamp !== null) {
                 $workday_data_synced_text = 'more than '.Carbon::createFromTimestamp($workday_timestamp)
-                        ->diffForHumans();
+                    ->diffForHumans();
             }
         }
 
