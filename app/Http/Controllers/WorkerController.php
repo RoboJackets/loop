@@ -17,6 +17,7 @@ class WorkerController extends Controller
      * Handle the incoming request.
      *
      * @phan-suppress PhanTypeMismatchDimFetch
+     * @phan-suppress PhanPluginNonBoolBranch
      */
     public function __invoke(UpsertWorker $request): JsonResponse
     {
@@ -73,6 +74,12 @@ class WorkerController extends Controller
 
         $user->fill($attributes);
         $user->save();
+
+        if ($user->active_employee) {
+            $user->givePermissionTo('access-workday');
+        } else {
+            $user->revokePermissionTo('access-workday');
+        }
 
         return response()->json($user);
     }

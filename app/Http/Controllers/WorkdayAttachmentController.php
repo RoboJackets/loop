@@ -9,7 +9,7 @@ use App\Jobs\MatchExpenseReport;
 use App\Models\Attachment;
 use Illuminate\Http\JsonResponse;
 
-class AttachmentController extends Controller
+class WorkdayAttachmentController extends Controller
 {
     public function __invoke(Attachment $attachment, UploadWorkdayAttachment $request): JsonResponse
     {

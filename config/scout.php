@@ -172,6 +172,26 @@ return [
                     'type',
                     'description',
                     'supplier_name',
+                    'quickbooks_invoice_document_number',
+                ],
+            ],
+            \App\Models\EngagePurchaseRequest::class => [
+                'displayedAttributes' => [
+                    'id',
+                ],
+                'searchableAttributes' => [
+                    'engage_request_number',
+                    'subject',
+                    'description',
+                    'current_step_name',
+                    'payee_first_name',
+                    'payee_last_name',
+                    'payee_address_line_one',
+                    'payee_address_line_two',
+                    'payee_city',
+                    'payee_state',
+                    'payee_zip_code',
+                    'quickbooks_invoice_document_number',
                 ],
             ],
             \App\Models\ExpenseReport::class => [
