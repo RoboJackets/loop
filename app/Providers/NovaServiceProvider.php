@@ -31,29 +31,29 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         $workday_data_synced_text = 'at an unknown time';
 
-        $timestamp = Cache::get('last_workday_sync');
+        $workday_timestamp = Cache::get('last_workday_sync');
 
-        if ($timestamp !== null) {
-            $workday_data_synced_text = Carbon::createFromTimestamp($timestamp)->diffForHumans();
+        if ($workday_timestamp !== null) {
+            $workday_data_synced_text = Carbon::createFromTimestamp($workday_timestamp)->diffForHumans();
         } else {
-            $timestamp = Cache::get('last_deployment');
+            $workday_timestamp = Cache::get('last_deployment');
 
-            if ($timestamp !== null) {
-                $workday_data_synced_text = 'more than '.Carbon::createFromTimestamp($timestamp)->diffForHumans();
+            if ($workday_timestamp !== null) {
+                $workday_data_synced_text = 'more than '.Carbon::createFromTimestamp($workday_timestamp)->diffForHumans();
             }
         }
 
         $engage_data_synced_text = 'at an unknown time';
 
-        $timestamp = Cache::get('last_engage_sync');
+        $engage_timestamp = Cache::get('last_engage_sync');
 
-        if ($timestamp !== null) {
-            $workday_data_synced_text = Carbon::createFromTimestamp($timestamp)->diffForHumans();
+        if ($engage_timestamp !== null) {
+            $engage_data_synced_text = Carbon::createFromTimestamp($engage_timestamp)->diffForHumans();
         } else {
-            $timestamp = Cache::get('last_deployment');
+            $engage_timestamp = Cache::get('last_deployment');
 
-            if ($timestamp !== null) {
-                $workday_data_synced_text = 'more than '.Carbon::createFromTimestamp($timestamp)->diffForHumans();
+            if ($engage_timestamp !== null) {
+                $engage_data_synced_text = 'more than '.Carbon::createFromTimestamp($engage_timestamp)->diffForHumans();
             }
         }
 
