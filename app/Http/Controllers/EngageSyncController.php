@@ -36,6 +36,8 @@ class EngageSyncController extends Controller
             ->uniqueStrict()
             ->toArray();
 
+        sort($request_engage_ids);
+
         return response()->json([
             'requests' => array_values($request_engage_ids),
         ]);

@@ -59,6 +59,8 @@ class EngagePurchaseRequestController extends Controller
             }
         }
 
+        sort($sync_purchase_requests);
+
         return response()->json([
             'requests' => $sync_purchase_requests,
         ]);
