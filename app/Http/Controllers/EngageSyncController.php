@@ -29,15 +29,17 @@ class EngageSyncController extends Controller
             ->get()
             ->pluck('engage_id');
 
-        $request_engage_ids = collect($missing_submitted_by_user)
+        $request_engage_ids = array_values(collect($missing_submitted_by_user)
             ->concat($missing_approved_by_user)
             ->concat($missing_attachments)
             ->concat($not_approved)
             ->uniqueStrict()
-            ->toArray();
+            ->toArray());
+
+        sort($request_engage_ids);
 
         return response()->json([
-            'requests' => array_values($request_engage_ids),
+            'requests' => $request_engage_ids,
         ]);
     }
 

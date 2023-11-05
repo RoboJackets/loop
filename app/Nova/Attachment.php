@@ -50,11 +50,7 @@ class Attachment extends Resource
             ID::make()
                 ->sortable(),
 
-            MorphTo::make('Attachable')
-                ->types([
-                    DocuSignEnvelope::class,
-                    ExpenseReportLine::class,
-                ]),
+            MorphTo::make('Attachable'),
 
             Text::make('Filename')
                 ->displayUsing(static function (string $filename): string {
@@ -78,7 +74,13 @@ class Attachment extends Resource
                 DateTime::make('Uploaded At', 'workday_uploaded_at')
                     ->onlyOnDetail(),
 
-                Text::make('Comment', 'workday_comment'),
+                Text::make('Comment', 'workday_comment')
+                    ->onlyOnDetail(),
+            ]),
+
+            Panel::make('Engage Metadata', [
+                Number::make('Document ID', 'engage_document_id')
+                    ->onlyOnDetail(),
             ]),
 
             Panel::make('Timestamps', [

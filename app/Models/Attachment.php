@@ -72,13 +72,14 @@ class Attachment extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'attachable_type',
         'attachable_id',
+        'attachable_type',
+        'engage_document_id',
         'filename',
-        'workday_instance_id',
-        'workday_uploaded_by_worker_id',
-        'workday_uploaded_at',
         'workday_comment',
+        'workday_instance_id',
+        'workday_uploaded_at',
+        'workday_uploaded_by_worker_id',
     ];
 
     /**
@@ -99,14 +100,6 @@ class Attachment extends Model
     public function uploadedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'workday_uploaded_by_worker_id', 'workday_instance_id');
-    }
-
-    /**
-     * Get the route key for the model.
-     */
-    public function getRouteKeyName(): string
-    {
-        return 'workday_instance_id';
     }
 
     /**
