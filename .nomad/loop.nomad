@@ -301,6 +301,11 @@ EOF
           destination = "/app/storage/app/"
         }
 
+        volume_mount {
+          volume = "assets"
+          destination = "/assets/"
+        }
+
         template {
           data = trimspace(file("conf/.env.tpl"))
 

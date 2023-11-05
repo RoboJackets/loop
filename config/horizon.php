@@ -172,7 +172,7 @@ return [
         'production' => [
             'main' => [
                 'connection' => 'redis',
-                'queue' => ['default', 'postmark', 'sensible'],
+                'queue' => ['default', 'postmark', 'sensible', 'thumbnail'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,
@@ -193,7 +193,7 @@ return [
         'test' => [
             'main' => [
                 'connection' => 'redis',
-                'queue' => ['default', 'postmark', 'sensible', 'meilisearch'],
+                'queue' => ['default', 'postmark', 'sensible', 'meilisearch', 'thumbnail'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,
