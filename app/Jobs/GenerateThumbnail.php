@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -38,6 +39,20 @@ class GenerateThumbnail implements ShouldBeUnique, ShouldQueue
             return;
         }
 
+        $command = 'file --mime-type -b '.escapeshellarg($this->pdf_path);
+        $output = [];
+        $exitCode = -1;
+
+        exec($command, $output, $exitCode);
+
+        if ($exitCode !== 0) {
+            throw new Exception('file returned exit code '.$exitCode.' - '.implode('', $output));
+        }
+
+        if ($output[0] !== 'application/pdf') {
+            return;
+        }
+
         if (file_exists($thumbnail_path)) {
             return;
         }
@@ -51,7 +66,7 @@ class GenerateThumbnail implements ShouldBeUnique, ShouldQueue
         exec($command, $output, $exitCode);
 
         if ($exitCode !== 0) {
-            throw new \Exception('pdftocairo returned exit code '.$exitCode.' - '.implode('', $output));
+            throw new Exception('pdftocairo returned exit code '.$exitCode.' - '.implode('', $output));
         }
     }
 
