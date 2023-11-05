@@ -39,7 +39,9 @@ class GenerateThumbnails extends Command
         });
         DocuSignEnvelope::all()->each(static function (DocuSignEnvelope $envelope, int $key): void {
             GenerateThumbnail::dispatch(Storage::disk('local')->path($envelope->sofo_form_filename));
-            GenerateThumbnail::dispatch(Storage::disk('local')->path($envelope->summary_filename));
+            if ($envelope->summary_filename !== null) {
+                GenerateThumbnail::dispatch(Storage::disk('local')->path($envelope->summary_filename));
+            }
         });
 
         return Command::SUCCESS;
