@@ -67,6 +67,6 @@ class ImportAllModels extends Command
             $attachment->searchable();
         });
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

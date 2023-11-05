@@ -160,10 +160,12 @@ class DocuSignEnvelope extends Resource
 
             Panel::make('Documents', [
                 File::make('SOFO Form', 'sofo_form_filename')
-                    ->disk('local'),
+                    ->disk('local')
+                    ->thumbnail(fn (): ?string => $this->sofo_form_thumbnail_url),
 
                 File::make('Summary', 'summary_filename')
-                    ->disk('local'),
+                    ->disk('local')
+                    ->thumbnail(fn (): ?string => $this->summary_thumbnail_url),
             ]),
 
             MorphMany::make('Attachments', 'attachments', Attachment::class),

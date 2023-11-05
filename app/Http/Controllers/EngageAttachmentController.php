@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UploadEngageAttachment;
+use App\Jobs\GenerateThumbnail;
 use App\Models\Attachment;
 use App\Models\EngagePurchaseRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Storage;
 
 class EngageAttachmentController extends Controller
 {
@@ -28,6 +30,8 @@ class EngageAttachmentController extends Controller
         $file->storeAs('engage/'.$request['documentId'], $file->getClientOriginalName());
 
         $attachment->searchable();
+
+        GenerateThumbnail::dispatch(Storage::disk('local')->path($attachment->filename));
 
         return response()->json($attachment);
     }

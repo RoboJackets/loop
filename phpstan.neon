@@ -58,6 +58,7 @@ parameters:
     - '#Iterating over an object of an unknown class QuickBooksOnline\\API\\Data\\com\\intuit\\schema\\finance\\v3\\IPPLine\.#'
     - '#Method App\\Http\\Controllers\\[a-zA-Z]+::[a-zA-Z]+\(\) should return Illuminate\\Http\\RedirectResponse but returns Illuminate\\Http\\RedirectResponse\|Illuminate\\Routing\\Redirector\.#'
     - '#Method App\\Http\\Middleware\\[a-zA-Z]+::handle\(\) has no return type specified\.#'
+    - '#Method App\\Jobs\\GenerateThumbnail::uniqueId\(\) should return string but returns string\|false\.#'
     - '#Method App\\Jobs\\ProcessSensibleOutput::attachSgaFundingSourcesFromFundingSourcesTable\(\) has parameter \$table with no value type specified in iterable type array\.#'
     - '#Method App\\Jobs\\ProcessSensibleOutput::getValueOrAddValidationError\(\) return type has no value type specified in iterable type array\.#'
     - '#Method App\\Models\\[a-zA-Z]+::[a-zA-Z]+\(\) should return Illuminate\\Database\\Eloquent\\Relations\\MorphTo<App\\Models\\[a-zA-Z]+, App\\Models\\[a-zA-Z]+> but returns Illuminate\\Database\\Eloquent\\Relations\\MorphTo<Illuminate\\Database\\Eloquent\\Model, App\\Models\\[a-zA-Z]+>\.#'

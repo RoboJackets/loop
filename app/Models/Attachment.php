@@ -155,4 +155,23 @@ class Attachment extends Model
 
         return $array;
     }
+
+    public function getThumbnailPathAttribute(): ?string
+    {
+        $full_file_path = Storage::disk('local')->path($this->filename);
+
+        if (! file_exists($full_file_path)) {
+            return null;
+        }
+
+        $extension = str_ends_with($full_file_path, '.jpg') ? '.jpg' : '.png';
+
+        $thumbnail_relative_path = '/thumbnail/'.hash_file('sha512', $full_file_path).$extension;
+
+        if (! Storage::disk('public')->exists($thumbnail_relative_path)) {
+            return null;
+        }
+
+        return $thumbnail_relative_path;
+    }
 }

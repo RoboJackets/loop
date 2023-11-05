@@ -6,6 +6,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\CreateDocuSignEnvelopeFromAttachment;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\File;
@@ -51,6 +52,10 @@ class Attachment extends Resource
                 ->sortable(),
 
             MorphTo::make('Attachable'),
+
+            Avatar::make('Thumbnail', fn (): ?string => $this->thumbnail_path)
+                ->disk('public')
+                ->squared(),
 
             Text::make('Filename')
                 ->displayUsing(static function (string $filename): string {

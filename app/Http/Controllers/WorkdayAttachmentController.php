@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UploadWorkdayAttachment;
+use App\Jobs\GenerateThumbnail;
 use App\Jobs\MatchExpenseReport;
 use App\Models\Attachment;
 use App\Models\ExpenseReport;
 use App\Models\ExpenseReportLine;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Storage;
 
 class WorkdayAttachmentController extends Controller
 {
@@ -25,6 +27,8 @@ class WorkdayAttachmentController extends Controller
 
         MatchExpenseReport::dispatch($attachment->attachable->expenseReport);
         $attachment->searchable();
+
+        GenerateThumbnail::dispatch(Storage::disk('local')->path($attachment->filename));
 
         return response()->json($attachment);
     }

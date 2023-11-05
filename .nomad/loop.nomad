@@ -186,6 +186,11 @@ EOF
         destination = "/app/storage/app/"
       }
 
+      volume_mount {
+        volume = "assets"
+        destination = "/assets/"
+      }
+
       template {
         data = trimspace(file("conf/www.conf"))
 
@@ -299,6 +304,11 @@ EOF
         volume_mount {
           volume = "storage"
           destination = "/app/storage/app/"
+        }
+
+        volume_mount {
+          volume = "assets"
+          destination = "/assets/"
         }
 
         template {
