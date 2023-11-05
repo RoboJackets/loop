@@ -7,6 +7,7 @@ namespace App\Providers;
 use App\Models\Attachment;
 use App\Models\BankTransaction;
 use App\Models\DocuSignEnvelope;
+use App\Models\EngagePurchaseRequest;
 use App\Models\ExpensePayment;
 use App\Models\ExpenseReport;
 use App\Models\ExpenseReportLine;
@@ -18,6 +19,7 @@ use App\Models\User;
 use App\Policies\AttachmentPolicy;
 use App\Policies\BankTransactionPolicy;
 use App\Policies\DocuSignEnvelopePolicy;
+use App\Policies\EngagePurchaseRequestPolicy;
 use App\Policies\ExpensePaymentPolicy;
 use App\Policies\ExpenseReportLinePolicy;
 use App\Policies\ExpenseReportPolicy;
@@ -45,6 +47,7 @@ class AuthServiceProvider extends ServiceProvider
         Attachment::class => AttachmentPolicy::class,
         BankTransaction::class => BankTransactionPolicy::class,
         DocuSignEnvelope::class => DocuSignEnvelopePolicy::class,
+        EngagePurchaseRequest::class => EngagePurchaseRequestPolicy::class,
         ExpensePayment::class => ExpensePaymentPolicy::class,
         ExpenseReport::class => ExpenseReportPolicy::class,
         ExpenseReportLine::class => ExpenseReportLinePolicy::class,

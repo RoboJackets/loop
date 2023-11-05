@@ -94,6 +94,7 @@ class User extends Authenticatable
         'last_name',
         'email',
         'active_employee',
+        'username',
     ];
 
     /**

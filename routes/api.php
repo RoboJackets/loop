@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\DocumentDownloadController;
+use App\Http\Controllers\EngagePurchaseRequestController;
+use App\Http\Controllers\EngageSyncController;
 use App\Http\Controllers\ExpenseReportController;
 use App\Http\Controllers\ExpenseReportLineController;
 use App\Http\Controllers\ExternalCommitteeMemberController;
+use App\Http\Controllers\WorkdayAttachmentController;
 use App\Http\Controllers\WorkdaySyncController;
 use App\Http\Controllers\WorkerController;
 use Illuminate\Support\Facades\Route;
@@ -35,10 +37,17 @@ Route::prefix('/v1/workday/')->middleware(['auth:sanctum', 'can:access-workday']
 
     Route::put('expense-reports/{expense_report}/lines/{line}', ExpenseReportLineController::class)->scopeBindings();
 
-    Route::post('attachments/{attachment}', AttachmentController::class);
+    Route::post('attachments/{attachment}', WorkdayAttachmentController::class);
 
     Route::get('sync', [WorkdaySyncController::class, 'getResourcesToSync']);
     Route::post('sync', [WorkdaySyncController::class, 'syncComplete']);
+});
+
+Route::prefix('/v1/engage/')->middleware(['auth:sanctum', 'can:access-engage'])->group(static function () {
+    Route::resource('purchase-requests', EngagePurchaseRequestController::class)->only('store', 'update');
+
+    Route::get('sync', [EngageSyncController::class, 'getRequestsToSync']);
+    Route::post('sync', [EngageSyncController::class, 'syncComplete']);
 });
 
 Route::webhooks('/v1/postmark/inbound', 'postmark-inbound');
