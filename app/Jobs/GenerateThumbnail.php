@@ -48,7 +48,6 @@ class GenerateThumbnail implements ShouldBeUnique, ShouldQueue
         $output = [];
         $exitCode = -1;
 
-        print($command."\n");
         exec($command, $output, $exitCode);
 
         if ($exitCode !== 0) {
@@ -60,11 +59,11 @@ class GenerateThumbnail implements ShouldBeUnique, ShouldQueue
         }
 
         // Renders PDF to 266px wide, crops out 5 pixels from left, top, and right, resulting in 256px wide image
-        $command = 'pdftocairo -png -singlefile -scale-to-x 266 -scale-to-y -1 -x 5 -y 5 -W 256 \''.$this->pdf_path.'\' \''.$thumbnail_path.'\'';
+        $command = 'pdftocairo -png -singlefile -scale-to-x 266 -scale-to-y -1 -x 5 -y 5 -W 256 \''.
+            $this->pdf_path.'\' \''.$thumbnail_path.'\'';
         $output = [];
         $exitCode = -1;
 
-        print($command."\n");
         exec($command, $output, $exitCode);
 
         if ($exitCode !== 0) {
