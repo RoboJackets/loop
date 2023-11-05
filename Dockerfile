@@ -26,7 +26,7 @@ RUN set -eux && \
     apt-get upgrade -qq --assume-yes && \
     apt-get install -qq --assume-yes \
         php8.2-fpm php8.2-mysql php8.2-xml php8.2-mbstring php8.2-curl php8.2-sqlite php8.2-intl php8.2-uuid \
-        unzip libfcgi-bin default-mysql-client zopfli php8.2-redis php8.2-ldap && \
+        unzip libfcgi-bin default-mysql-client zopfli php8.2-redis php8.2-ldap poppler-utils && \
     apt-get autoremove -qq --assume-yes && \
     mkdir /app && \
     chown www-data:www-data /app && \
