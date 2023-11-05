@@ -9,6 +9,7 @@ namespace App\Console\Commands;
 
 use App\Models\Attachment;
 use App\Models\DocuSignEnvelope;
+use App\Models\EngagePurchaseRequest;
 use App\Models\ExpenseReport;
 use App\Models\ExpenseReportLine;
 use App\Models\ExternalCommitteeMember;
@@ -40,6 +41,9 @@ class ImportAllModels extends Command
     {
         $this->call('scout:import', [
             'model' => DocuSignEnvelope::class,
+        ]);
+        $this->call('scout:import', [
+            'model' => EngagePurchaseRequest::class,
         ]);
         $this->call('scout:import', [
             'model' => ExpenseReport::class,
