@@ -344,7 +344,7 @@ class DocuSignEnvelope extends Model
             return null;
         }
 
-        return $thumbnail_relative_path;
+        return '/storage'.$thumbnail_relative_path;
     }
 
     public function getSummaryThumbnailUrlAttribute(): ?string
