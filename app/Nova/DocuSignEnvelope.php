@@ -13,7 +13,6 @@ use App\Nova\Actions\UploadDocuSignEnvelope;
 use App\Nova\Lenses\ReimbursementsMissingExpenseReports;
 use App\Nova\Lenses\ReimbursementsMissingInvoices;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
@@ -162,17 +161,11 @@ class DocuSignEnvelope extends Resource
             Panel::make('Documents', [
                 File::make('SOFO Form', 'sofo_form_filename')
                     ->disk('local')
-                    ->thumbnail(fn (): string => '/storage/thumbnail/'.hash_file(
-                        'sha512',
-                        Storage::disk('local')->path($this->sofo_form_filename)
-                    ).'.png'),
+                    ->thumbnail(fn (): ?string => $this->sofo_form_thumbnail_url),
 
                 File::make('Summary', 'summary_filename')
                     ->disk('local')
-                    ->thumbnail(fn (): string => '/storage/thumbnail/'.hash_file(
-                        'sha512',
-                        Storage::disk('local')->path($this->summary_filename)
-                    ).'.png'),
+                    ->thumbnail(fn (): ?string => $this->summary_thumbnail_url),
             ]),
 
             MorphMany::make('Attachments', 'attachments', Attachment::class),

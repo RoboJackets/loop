@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
 use Smalot\PdfParser\Parser;
@@ -327,5 +328,43 @@ class DocuSignEnvelope extends Model
             Str::substr($envelope_uuid, 16, 4).'-'.
             Str::substr($envelope_uuid, 20, 12)
         );
+    }
+
+    public function getSofoFormThumbnailUrlAttribute(): ?string
+    {
+        $full_file_path = Storage::disk('local')->path($this->sofo_form_filename);
+
+        if (! file_exists($full_file_path)) {
+            return null;
+        }
+
+        $thumbnail_relative_path = '/thumbnail/'.hash_file('sha512', $full_file_path).'.png';
+
+        if (! Storage::disk('public')->exists($thumbnail_relative_path)) {
+            return null;
+        }
+
+        return $thumbnail_relative_path;
+    }
+
+    public function getSummaryThumbnailUrlAttribute(): ?string
+    {
+        if ($this->summary_filename === null) {
+            return null;
+        }
+
+        $full_file_path = Storage::disk('local')->path($this->sofo_form_filename);
+
+        if (! file_exists($full_file_path)) {
+            return null;
+        }
+
+        $thumbnail_relative_path = '/thumbnail/'.hash_file('sha512', $full_file_path).'.png';
+
+        if (! Storage::disk('public')->exists($thumbnail_relative_path)) {
+            return null;
+        }
+
+        return '/storage'.$thumbnail_relative_path;
     }
 }
