@@ -25,7 +25,6 @@ mkdir --parents /assets/${NOMAD_JOB_NAME}/
 cp --recursive --verbose public/* /assets/${NOMAD_JOB_NAME}/
 
 mkdir --parents /assets/${NOMAD_JOB_NAME}/storage/thumbnail/
-mkdir --parents /app/storage/app/public/thumbnail/
 ln --symbolic /assets/${NOMAD_JOB_NAME}/storage/thumbnail/ /app/storage/app/public/ || true
 
 if [ ${SCOUT_DRIVER} = "meilisearch" ]
