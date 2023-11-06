@@ -32,5 +32,3 @@ if [ ${SCOUT_DRIVER} = "meilisearch" ]
 then
     php artisan scout:sync-index-settings --no-interaction --verbose || true
 fi
-
-php artisan record-deployment-timestamp --no-interaction --verbose

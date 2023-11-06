@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\DataSource;
 use App\Models\EngagePurchaseRequest;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Cache;
 
 class EngageSyncController extends Controller
 {
@@ -45,7 +45,14 @@ class EngageSyncController extends Controller
 
     public function syncComplete(): JsonResponse
     {
-        Cache::put('last_engage_sync', Carbon::now()->unix());
+        DataSource::updateOrCreate(
+            [
+                'name' => 'engage',
+            ],
+            [
+                'synced_at' => Carbon::now(),
+            ]
+        );
 
         return response()->json(
             [

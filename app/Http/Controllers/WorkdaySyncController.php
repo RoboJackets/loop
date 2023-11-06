@@ -8,6 +8,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\CancelExpensePayments;
 use App\Models\Attachment;
+use App\Models\DataSource;
 use App\Models\ExpensePayment;
 use App\Models\ExpenseReport;
 use App\Models\ExpenseReportLine;
@@ -15,7 +16,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class WorkdaySyncController extends Controller
@@ -127,7 +127,14 @@ class WorkdaySyncController extends Controller
 
     public function syncComplete(): JsonResponse
     {
-        Cache::put('last_workday_sync', Carbon::now()->unix());
+        DataSource::updateOrCreate(
+            [
+                'name' => 'workday',
+            ],
+            [
+                'synced_at' => Carbon::now(),
+            ]
+        );
 
         CancelExpensePayments::dispatch();
 

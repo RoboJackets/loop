@@ -167,9 +167,12 @@ class Attachment extends Resource
     public function subtitle(): string
     {
         if ($this->attachable_type === 'docusign-envelope') {
-            return 'DocuSign | '.$this->attachable->submitted_at->format('Y-m-d');
+            return 'DocuSign | '.$this->attachable->submitted_at->format('Y-m-d').' | '.$this->attachable->description;
         } elseif ($this->attachable_type === 'expense-report-line') {
-            return 'Workday | '.$this->workday_uploaded_at->format('Y-m-d');
+            return 'Workday | '.$this->workday_uploaded_at->format('Y-m-d').' | '
+            .$this->attachable->expenseReport->memo;
+        } elseif ($this->attachable_type === 'engage-purchase-request') {
+            return 'Engage | '.$this->attachable->submitted_at->format('Y-m-d').' | '.$this->attachable->subject;
         } else {
             throw new \Exception('Unknown attachable_type '.$this->attachable_type);
         }

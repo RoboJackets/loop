@@ -7,12 +7,12 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\DataSource;
 use App\Models\User;
 use App\Policies\PermissionPolicy;
 use App\Policies\RolePolicy;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Menu\Menu;
 use Laravel\Nova\Menu\MenuItem;
@@ -29,42 +29,31 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         parent::boot();
 
-        $workday_data_synced_text = 'at an unknown time';
+        Nova::footer(static function (Request $request): string {
+            $workday_data_synced_text = 'at an unknown time';
 
-        $workday_timestamp = Cache::get('last_workday_sync');
-
-        if ($workday_timestamp !== null) {
-            $workday_data_synced_text = Carbon::createFromTimestamp($workday_timestamp)->diffForHumans();
-        } else {
-            $workday_timestamp = Cache::get('last_deployment');
+            $workday_timestamp = DataSource::where('name', '=', 'workday')->first()?->synced_at;
 
             if ($workday_timestamp !== null) {
-                $workday_data_synced_text = 'more than '.Carbon::createFromTimestamp($workday_timestamp)
-                    ->diffForHumans();
+                $workday_data_synced_text = $workday_timestamp->diffForHumans();
             }
-        }
 
-        $engage_data_synced_text = 'at an unknown time';
+            $engage_data_synced_text = 'at an unknown time';
 
-        $engage_timestamp = Cache::get('last_engage_sync');
-
-        if ($engage_timestamp !== null) {
-            $engage_data_synced_text = Carbon::createFromTimestamp($engage_timestamp)->diffForHumans();
-        } else {
-            $engage_timestamp = Cache::get('last_deployment');
+            $engage_timestamp = DataSource::where('name', '=', 'engage')->first()?->synced_at;
 
             if ($engage_timestamp !== null) {
-                $engage_data_synced_text = 'more than '.Carbon::createFromTimestamp($engage_timestamp)->diffForHumans();
+                $engage_data_synced_text = $engage_timestamp->diffForHumans();
             }
-        }
 
-        Nova::footer(static fn (Request $request): string => '
+            return '
 <p class="mt-8 text-center text-xs text-80">
     <a class="text-primary dim no-underline" href="https://github.com/RoboJackets/loop">Made with ♥ by RoboJackets</a>
     <span class="px-1">&middot;</span>&nbsp;<span>Workday data synced '.$workday_data_synced_text.'</span>
     <span class="px-1">&middot;</span>&nbsp;<span>Engage data synced '.$engage_data_synced_text.'</span>
 </p>
-');
+';
+        });
         Nova::report(static function (\Throwable $exception): void {
             if (app()->bound('sentry')) {
                 app('sentry')->captureException($exception);
