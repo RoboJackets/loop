@@ -45,7 +45,14 @@ class EngageSyncController extends Controller
 
     public function syncComplete(): JsonResponse
     {
-        DataSource::where('name', '=', 'engage')->update(['synced_at' => Carbon::now()]);
+        DataSource::updateOrCreate(
+            [
+                'name' => 'engage',
+            ],
+            [
+                'synced_at' => Carbon::now(),
+            ]
+        );
 
         return response()->json(
             [

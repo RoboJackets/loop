@@ -127,7 +127,14 @@ class WorkdaySyncController extends Controller
 
     public function syncComplete(): JsonResponse
     {
-        DataSource::where('name', '=', 'workday')->update(['synced_at' => Carbon::now()]);
+        DataSource::updateOrCreate(
+            [
+                'name' => 'workday',
+            ],
+            [
+                'synced_at' => Carbon::now(),
+            ]
+        );
 
         CancelExpensePayments::dispatch();
 
