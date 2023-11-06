@@ -14,6 +14,8 @@ parameters:
   ignoreErrors:
     - '#Access to an undefined property App\\Models\\[a-zA-Z]+::\$diff\.#'
     - '#Access to an undefined property App\\Models\\[a-zA-Z]+::\$total\.#'
+    - '#Access to an undefined property App\\Models\\DocuSignEnvelope\|App\\Models\\ExpenseReportLine::\$description\.#'
+    - '#Access to an undefined property App\\Models\\DocuSignEnvelope\|App\\Models\\ExpenseReportLine::\$subject\.#'
     - '#Access to an undefined property App\\Models\\DocuSignEnvelope\|App\\Models\\ExpenseReportLine::\$submitted_at\.#'
     - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$[a-zA-Z_]+\.#'
     - '#Access to an undefined property Laravel\\Nova\\Fields\\ActionFields::\$[a-zA-Z_]+\.#'
