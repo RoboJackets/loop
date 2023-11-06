@@ -23,4 +23,14 @@ class DataSource extends Model
     protected $casts = [
         'synced_at' => 'datetime',
     ];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'synced_at',
+    ];
 }
