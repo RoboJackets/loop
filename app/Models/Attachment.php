@@ -26,11 +26,13 @@ use Laravel\Scout\Searchable;
  * @property int|null $workday_uploaded_by_worker_id
  * @property \Illuminate\Support\Carbon|null $workday_uploaded_at
  * @property string|null $workday_comment
+ * @property int|null $engage_document_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\DocuSignEnvelope|\App\Models\ExpenseReportLine $attachable
  * @property-read \App\Models\User|null $uploadedBy
+ * @property-read string|null $thumbnail_path
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Attachment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Attachment newQuery()
@@ -46,6 +48,7 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Eloquent\Builder|Attachment whereWorkdayInstanceId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Attachment whereWorkdayUploadedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Attachment whereWorkdayUploadedByWorkerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Attachment whereEngageDocumentId($value)
  * @method static \Illuminate\Database\Query\Builder|Attachment onlyTrashed()
  * @method static \Illuminate\Database\Query\Builder|Attachment withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Attachment withoutTrashed()

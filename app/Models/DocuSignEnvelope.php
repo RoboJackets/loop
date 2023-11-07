@@ -61,6 +61,8 @@ use Smalot\PdfParser\Parser;
  * @property-read DocuSignEnvelope|null $duplicateOf
  * @property-read \Illuminate\Database\Eloquent\Collection|array<DocuSignEnvelope> $duplicates
  * @property-read int|null $duplicates_count
+ * @property-read string|null $sofo_form_thumbnail_url
+ * @property-read string|null $summary_thumbnail_url
  *
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DocuSignEnvelope newQuery()

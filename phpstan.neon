@@ -32,7 +32,6 @@ parameters:
     - '#Argument of an invalid type mixed supplied for foreach, only iterables are supported\.#'
     - '#Binary operation "." between non-falsy-string and array\|float\|int\|string results in an error\.#'
     - '#Called ''modelKeys'' on Laravel collection, but could have been retrieved as a query\.#'
-    - '#Called ''pluck'' on Laravel collection, but could have been retrieved as a query\.#'
     - '#Cannot access offset .+ on mixed\.#'
     - '#Cannot access offset 0 on array\|float\|int\|string\|null\.#'
     - '#Cannot access property \$[a-z]+ on mixed\.#'

@@ -229,7 +229,7 @@ class EngagePurchaseRequest extends Resource
      */
     public function subtitle(): string
     {
-        return $this->submitted_at?->format('Y-m-d')
+        return $this->submitted_at->format('Y-m-d')
             .' | '.$this->current_step_name
             .' | '.$this->subject
             .' | $'.number_format(abs($this->submitted_amount), 2);

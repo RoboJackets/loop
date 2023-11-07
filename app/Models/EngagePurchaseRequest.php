@@ -12,6 +12,84 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 
+/**
+ * An Engage purchase request.
+ *
+ * @property int $id
+ * @property int $engage_id
+ * @property int $engage_request_number
+ * @property string $subject
+ * @property string|null $description
+ * @property bool $approved
+ * @property string $current_step_name
+ * @property float $submitted_amount
+ * @property \Illuminate\Support\Carbon $submitted_at
+ * @property int|null $submitted_by_user_id
+ * @property float|null $approved_amount
+ * @property \Illuminate\Support\Carbon|null $approved_at
+ * @property int|null $approved_by_user_id
+ * @property int|null $payee_user_id
+ * @property string|null $payee_first_name
+ * @property string|null $payee_last_name
+ * @property string|null $payee_address_line_one
+ * @property string|null $payee_address_line_two
+ * @property string|null $payee_city
+ * @property string|null $payee_state
+ * @property string|null $payee_zip_code
+ * @property int|null $expense_report_id
+ * @property int|null $quickbooks_invoice_id
+ * @property int|null $quickbooks_invoice_document_number
+ * @property int $fiscal_year_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\User|null $approvedBy
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Attachment> $attachments
+ * @property-read int|null $attachments_count
+ * @property-read \App\Models\ExpenseReport|null $expenseReport
+ * @property-read \App\Models\FiscalYear $fiscalYear
+ * @property-read string|null $engage_url
+ * @property-read string|null $quickbooks_invoice_url
+ * @property-read \App\Models\User|null $payToUser
+ * @property-read \App\Models\User|null $submittedBy
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest query()
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereApproved($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereApprovedAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereApprovedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereApprovedByUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereCurrentStepName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereEngageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereEngageRequestNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereExpenseReportId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereFiscalYearId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest wherePayeeAddressLineOne($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest wherePayeeAddressLineTwo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest wherePayeeCity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest wherePayeeFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest wherePayeeLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest wherePayeeState($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest wherePayeeUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest wherePayeeZipCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereQuickbooksInvoiceDocumentNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereQuickbooksInvoiceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereSubject($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereSubmittedAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereSubmittedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereSubmittedByUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest withoutTrashed()
+ *
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ */
 class EngagePurchaseRequest extends Model
 {
     use Searchable;
@@ -28,6 +106,7 @@ class EngagePurchaseRequest extends Model
         'submitted_at' => 'datetime',
         'approved_at' => 'datetime',
         'deleted_at' => 'datetime',
+        'approved' => 'boolean',
     ];
 
     /**
