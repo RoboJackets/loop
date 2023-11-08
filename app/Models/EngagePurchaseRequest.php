@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Exceptions\CouldNotExtractEngagePurchaseRequestNumber;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -94,6 +95,8 @@ class EngagePurchaseRequest extends Model
 {
     use Searchable;
     use SoftDeletes;
+
+    private const PURCHASE_REQUEST_NUMBER_REGEX = '/(?:Purchase Request|Request No):\s+(?P<requestNumber>\d{7})/';
 
     /**
      * The attributes that should be cast to native types.
@@ -218,5 +221,16 @@ class EngagePurchaseRequest extends Model
         return $this->engage_id === null
             ? null
             : 'https://gatech.campuslabs.com/engage/finance/robojackets/requests/purchase/'.$this->engage_id;
+    }
+
+    public static function getPurchaseRequestNumberFromText(string $pdf_text): int
+    {
+        $matches = [];
+
+        if (preg_match_all(self::PURCHASE_REQUEST_NUMBER_REGEX, $pdf_text, $matches) === false) {
+            throw new CouldNotExtractEngagePurchaseRequestNumber('preg_match_all returned false');
+        }
+
+        return intval(collect($matches['requestNumber'])->uniqueStrict()->sole());
     }
 }
