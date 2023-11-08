@@ -158,6 +158,16 @@ class ExpenseReport extends Model
     }
 
     /**
+     * Get the Engage purchase requests for this expense report.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\EngagePurchaseRequest>
+     */
+    public function engagePurchaseRequests(): HasMany
+    {
+        return $this->hasMany(EngagePurchaseRequest::class);
+    }
+
+    /**
      * Get the workday_url attribute to show this ECM in the Workday UI.
      */
     public function getWorkdayUrlAttribute(): string
