@@ -49,11 +49,6 @@
                 <file name="app/Nova/Actions/SyncDocuSignEnvelopeToQuickBooks.php"/>
             </errorLevel>
         </UndefinedClass>
-        <InvalidScalarArgument>
-            <errorLevel type="suppress">
-                <file name="app/Jobs/ProcessSensibleOutput.php"/>
-            </errorLevel>
-        </InvalidScalarArgument>
         <InvalidPropertyAssignmentValue>
             <errorLevel type="suppress">
                 <file name="app/Jobs/ProcessSensibleOutput.php"/>
@@ -73,6 +68,7 @@
             <errorLevel type="suppress">
                 <file name="app/Nova/Actions/UploadBankStatement.php"/>
                 <file name="app/Jobs/ProcessSensibleOutput.php"/>
+                <file name="app/Jobs/MatchExpenseReport.php"/>
             </errorLevel>
         </InvalidScalarArgument>
         <UndefinedDocblockClass>

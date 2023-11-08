@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use App\Models\DocuSignEnvelope;
+use App\Models\EngagePurchaseRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\MultipleRecordsFoundException;
 use Illuminate\Support\Collection;
@@ -21,7 +21,7 @@ class MatchExpenseReport extends Action
      *
      * @var string
      */
-    public $name = 'Find DocuSign Envelope';
+    public $name = 'Find Engage Request';
 
     /**
      * Indicates if this action is only available on the resource detail view.
@@ -49,20 +49,20 @@ class MatchExpenseReport extends Action
         \App\Jobs\MatchExpenseReport::dispatchSync($expense_report);
 
         try {
-            $envelope = DocuSignEnvelope::whereExpenseReportId($expense_report->id)->sole();
+            $purchase_request = EngagePurchaseRequest::whereExpenseReportId($expense_report->id)->sole();
 
-            return Action::visit(route(
+            return Action::visit(name: route(
                 'nova.pages.detail',
                 [
-                    'resource' => \App\Nova\DocuSignEnvelope::uriKey(),
-                    'resourceId' => $envelope->id,
+                    'resource' => \App\Nova\EngagePurchaseRequest::uriKey(),
+                    'resourceId' => $purchase_request->id,
                 ],
                 false
             ));
         } catch (ModelNotFoundException) {
-            return Action::danger('Could not find matching DocuSign envelope.');
+            return Action::danger('Could not find matching Engage request.');
         } catch (MultipleRecordsFoundException) {
-            return Action::message('Matched more than one DocuSign envelope.');
+            return Action::message('Matched more than one Engage request.');
         }
     }
 

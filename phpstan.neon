@@ -103,6 +103,7 @@ parameters:
     - '#Parameter \#1 \$name of static method Laravel\\Nova\\Actions\\Action::openInNewTab\(\) expects string, string\|null given\.#'
     - '#Parameter \#1 \$number of function abs expects float, float\|null given\.#'
     - '#Parameter \#1 \$options of method Laravel\\Nova\\Fields\\Select::options\(\) expects \(callable\(\): iterable<int\|string, array{label: string, group\?: string}\|string\|Stringable>\)\|iterable<int\|string, array{label: string, group\?: string}\|string\|Stringable>, Closure\(\): array given\.#'
+    - '#Parameter \#1 \$pdf_text of static method App\\Models\\EngagePurchaseRequest::getPurchaseRequestNumberFromText\(\) expects string, int\|string\|null given\.#'
     - '#Parameter \#1 \$realmID of method QuickBooksOnline\\API\\Core\\OAuth\\OAuth2\\OAuth2AccessToken::setRealmID\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$string of function base64_decode expects string, mixed given\.#'
     - '#Parameter \#1 \$string of function base64_encode expects string, string\|null given\.#'

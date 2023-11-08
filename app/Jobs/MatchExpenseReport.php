@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Exceptions\CouldNotExtractEnvelopeUuid;
+use App\Exceptions\CouldNotExtractEngagePurchaseRequestNumber;
 use App\Models\Attachment;
-use App\Models\DocuSignEnvelope;
+use App\Models\EngagePurchaseRequest;
 use App\Models\ExpenseReport;
 use App\Models\ExpenseReportLine;
 use Illuminate\Bus\Queueable;
@@ -46,38 +46,41 @@ class MatchExpenseReport implements ShouldBeUnique, ShouldQueue
     public function handle(): void
     {
         if ($this->expenseReport->status === 'Canceled') {
-            DocuSignEnvelope::whereExpenseReportId($this->expenseReport->id)
-                ->where('lost', '=', false)
+            EngagePurchaseRequest::whereExpenseReportId($this->expenseReport->id)
                 ->update(['expense_report_id' => null]);
         } else {
             try {
-                $envelope = DocuSignEnvelope::whereAmount($this->expenseReport->amount)
+                $purchase_request = EngagePurchaseRequest::whereApprovedAmount($this->expenseReport->amount)
                     ->whereDoesntHave('expenseReport')
-                    ->whereDoesntHave('replacedBy')
-                    ->whereDoesntHave('duplicateOf')
-                    ->whereIn('type', ['purchase_reimbursement', 'travel_reimbursement'])
-                    ->whereDate('submitted_at', '<=', $this->expenseReport->created_date)
-                    ->where('internal_cost_transfer', '=', false)
+                    ->where('approved', '=', true)
+                    ->whereDate('approved_at', '<=', $this->expenseReport->created_date)
+                    ->where('approved_by_user_id', '=', $this->expenseReport->createdBy->id)
                     ->sole();
 
-                $envelope->expense_report_id = $this->expenseReport->id;
-                $envelope->save();
+                $purchase_request->expense_report_id = $this->expenseReport->id;
+                $purchase_request->save();
             } catch (ModelNotFoundException|MultipleRecordsFoundException) {
-                $envelope_uuids = [];
+                $engage_request_numbers = [];
 
                 $this->expenseReport->lines->each(
-                    static function (ExpenseReportLine $line, int $key) use (&$envelope_uuids): void {
+                    static function (ExpenseReportLine $line, int $key) use (&$engage_request_numbers): void {
                         $line->attachments->each(
-                            static function (Attachment $attachment, int $key) use (&$envelope_uuids): void {
+                            /**
+                             * Find the Engage request number for each attachment, if possible.
+                             *
+                             * @phan-suppress PhanTypeMismatchArgumentNullable
+                             */
+                            static function (Attachment $attachment, int $key) use (&$engage_request_numbers): void {
                                 if (
                                     str_ends_with(strtolower($attachment->filename), '.pdf') &&
                                     Storage::disk('local')->exists($attachment->filename)
                                 ) {
                                     try {
-                                        $envelope_uuids[] = DocuSignEnvelope::getEnvelopeUuidFromSummaryPdf(
-                                            Storage::disk('local')->get($attachment->filename)
-                                        );
-                                    } catch (CouldNotExtractEnvelopeUuid|FileNotFoundException) {
+                                        $engage_request_numbers[] =
+                                            EngagePurchaseRequest::getPurchaseRequestNumberFromText(
+                                                $attachment->toSearchableArray()['full_text']
+                                            );
+                                    } catch (CouldNotExtractEngagePurchaseRequestNumber|FileNotFoundException) {
                                         return;
                                     }
                                 }
@@ -86,21 +89,17 @@ class MatchExpenseReport implements ShouldBeUnique, ShouldQueue
                     }
                 );
 
-                $collection = collect($envelope_uuids)->uniqueStrict();
+                $collection = collect($engage_request_numbers)->uniqueStrict();
 
                 if ($collection->count() === 1) {
                     try {
-                        $envelope = DocuSignEnvelope::whereEnvelopeUuid($collection->sole())
+                        $purchase_request = EngagePurchaseRequest::whereEngageRequestNumber($collection->sole())
                             ->whereDoesntHave('expenseReport')
-                            ->whereDoesntHave('replacedBy')
-                            ->whereDoesntHave('duplicateOf')
-                            ->whereIn('type', ['purchase_reimbursement', 'travel_reimbursement'])
-                            ->where('internal_cost_transfer', '=', false)
-                            ->whereDate('submitted_at', '<=', $this->expenseReport->created_date)
+                            ->where('approved', '=', true)
                             ->sole();
 
-                        $envelope->expense_report_id = $this->expenseReport->id;
-                        $envelope->save();
+                        $purchase_request->expense_report_id = $this->expenseReport->id;
+                        $purchase_request->save();
                     } catch (ModelNotFoundException) {
                         return;
                     }
