@@ -355,7 +355,7 @@ class DocuSignEnvelope extends Model
             return null;
         }
 
-        $full_file_path = Storage::disk('local')->path($this->sofo_form_filename);
+        $full_file_path = Storage::disk('local')->path($this->summary_filename);
 
         if (! file_exists($full_file_path)) {
             return null;
