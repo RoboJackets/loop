@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Util;
 
 use App\Exceptions\QuickBooksFault;
-use App\Models\DocuSignEnvelope;
+use App\Models\EngagePurchaseRequest;
 use App\Models\User;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;
@@ -43,7 +43,7 @@ class QuickBooks
      */
     public static function uploadAttachmentToInvoice(
         DataService $data_service,
-        DocuSignEnvelope $envelope,
+        EngagePurchaseRequest $engage_purchase_request,
         string $filename
     ): void {
         if (! Storage::disk('local')->exists($filename)) {
@@ -52,7 +52,7 @@ class QuickBooks
 
         $entity_reference = new IPPReferenceType();
         $entity_reference->type = 'Invoice';
-        $entity_reference->value = $envelope->quickbooks_invoice_id;
+        $entity_reference->value = $engage_purchase_request->quickbooks_invoice_id;
 
         $attachable_reference = new IPPAttachableRef();
         $attachable_reference->EntityRef = $entity_reference;

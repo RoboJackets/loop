@@ -9,10 +9,11 @@ namespace App\Nova\Actions;
 
 use App\Models\Attachment;
 use App\Models\DocuSignEnvelope;
-use App\Models\User;
+use App\Models\EngagePurchaseRequest;
 use App\Util\QuickBooks;
 use App\Util\Sentry;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
@@ -22,7 +23,7 @@ use QuickBooksOnline\API\Data\IPPInvoice;
 use QuickBooksOnline\API\Data\IPPReferenceType;
 use QuickBooksOnline\API\Data\IPPReimburseCharge;
 
-class SyncDocuSignEnvelopeToQuickBooks extends Action
+class SyncEngagePurchaseRequestToQuickBooks extends Action
 {
     /**
      * The displayable name of the action.
@@ -50,21 +51,19 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
      *
      * @var string
      */
-    public $confirmText = 'Are you sure you want to sync this envelope to QuickBooks?';
+    public $confirmText = 'Are you sure you want to sync this request to QuickBooks?';
 
     /**
      * Perform the action on the given models.
      *
-     * @param  \Illuminate\Support\Collection<int,\App\Models\DocuSignEnvelope>  $models
+     * @param  \Illuminate\Support\Collection<int,\App\Models\EngagePurchaseRequest>  $models
      *
-     * @phan-suppress PhanTypeMismatchArgument
      * @phan-suppress PhanTypeMismatchProperty
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        $user = User::whereId($fields->quickbooks_user_id)->sole();
-        $data_service = QuickBooks::getDataService($user);
-        $envelope = $models->sole();
+        $data_service = QuickBooks::getDataService(Auth::user());
+        $engage_request = $models->sole();
 
         $reimburse_charge = Sentry::wrapWithChildSpan(
             'quickbooks.get_reimburse_charge',
@@ -91,11 +90,11 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
         $item_ref = new IPPReferenceType();
         $item_ref->value = config('quickbooks.invoice.item_id');
 
-        $invoice->TxnDate = $envelope->submitted_at->format('Y/m/d');
-        $invoice->DueDate = $envelope->submitted_at->addDays(30)->format('Y/m/d');
+        $invoice->TxnDate = $engage_request->submitted_at->format('Y/m/d');
+        $invoice->DueDate = $engage_request->submitted_at->addDays(30)->format('Y/m/d');
         $invoice->CurrencyRef = $currency_ref;
-        $invoice->DocNumber = $envelope->id;
-        $invoice->PrivateNote = $reimburse_charge->PrivateNote.' | '.$envelope->description;
+        $invoice->DocNumber = $engage_request->engage_request_number;
+        $invoice->PrivateNote = $reimburse_charge->PrivateNote.' | '.$engage_request->subject;
 
         /** @var \QuickBooksOnline\API\Data\IPPLine $line */
         foreach ($invoice->Line as $line) {
@@ -106,8 +105,7 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
                 $line->LinkedTxn?->TxnType === 'ReimburseCharge' &&
                 $line->LinkedTxn?->TxnId === $fields->quickbooks_reimburse_charge_id
             ) {
-                $line->Amount = $envelope->amount;
-                $line->Description = $reimburse_charge->PrivateNote.' | '.$envelope->description;
+                $line->Description = $reimburse_charge->PrivateNote.' | '.$engage_request->subject;
                 $line->SalesItemLineDetail->ItemRef = $item_ref;
                 $line->SalesItemLineDetail->ServiceDate = $reimburse_charge->TxnDate;
             }
@@ -119,44 +117,47 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
             static fn (): IPPInvoice => $data_service->Update($invoice)
         );
 
-        $envelope->quickbooks_invoice_id = $invoice->Id;
-        $envelope->quickbooks_invoice_document_number = $invoice->DocNumber;
-        $envelope->save();
+        $engage_request->quickbooks_invoice_id = $invoice->Id;
+        $engage_request->quickbooks_invoice_document_number = $invoice->DocNumber;
+        $engage_request->save();
 
-        QuickBooks::uploadAttachmentToInvoice($data_service, $envelope, $envelope->sofo_form_filename);
-
-        $envelope->attachments->each(
-            static function (Attachment $attachment, int $key) use ($data_service, $envelope): void {
-                QuickBooks::uploadAttachmentToInvoice($data_service, $envelope, $attachment->filename);
+        $engage_request->attachments->each(
+            static function (Attachment $attachment, int $key) use ($data_service, $engage_request): void {
+                QuickBooks::uploadAttachmentToInvoice($data_service, $engage_request, $attachment->filename);
             }
         );
 
-        return Action::openInNewTab($envelope->quickbooks_invoice_url);
+        return Action::openInNewTab($engage_request->quickbooks_invoice_url)
+            ->withMessage('Successfully updated QuickBooks invoice!');
     }
 
     /**
      * Get the fields available on the action.
      *
      * @return array<\Laravel\Nova\Fields\Field>
-     *
-     * @phan-suppress PhanTypeInvalidCallableArraySize
      */
     public function fields(NovaRequest $request): array
     {
-        $knownInvoiceIds = DocuSignEnvelope::selectRaw('distinct(quickbooks_invoice_id)')
+        $docusignInvoiceIds = DocuSignEnvelope::selectRaw('distinct(quickbooks_invoice_id)')
             ->whereNotNull('quickbooks_invoice_id')
             ->get()
             ->pluck('quickbooks_invoice_id')
+            ->uniqueStrict()
+            ->toArray();
+
+        $engageInvoiceIds = EngagePurchaseRequest::selectRaw('distinct(quickbooks_invoice_id)')
+            ->whereNotNull('quickbooks_invoice_id')
+            ->get()
+            ->pluck('quickbooks_invoice_id')
+            ->uniqueStrict()
+            ->toArray();
+
+        $allInvoiceIds = collect($docusignInvoiceIds)
+            ->union($engageInvoiceIds)
+            ->uniqueStrict()
             ->toArray();
 
         return [
-            Select::make('User', 'quickbooks_user_id')
-                ->options([strval($request->user()->id) => $request->user()->name])
-                ->default(strval($request->user()->id))
-                ->required()
-                ->rules('required')
-                ->withMeta(['extraAttributes' => ['readonly' => true]]),
-
             Select::make('Billable Expense', 'quickbooks_reimburse_charge_id')
                 ->options(
                     static fn (): array => Cache::remember(
@@ -176,7 +177,7 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
                                 static fn (IPPReimburseCharge $item, int $key): bool => ! in_array(
                                     // @phan-suppress-next-line PhanUndeclaredClassProperty
                                     intval($item->LinkedTxn->TxnId),
-                                    $knownInvoiceIds,
+                                    $allInvoiceIds,
                                     true
                                 )
                             )
@@ -192,7 +193,29 @@ class SyncDocuSignEnvelopeToQuickBooks extends Action
                     )
                 )
                 ->required()
-                ->rules('required')
+                ->rules('required', static function ($attribute, $value, $fail) use ($request): void {
+                    $data_service = QuickBooks::getDataService($request->user());
+
+                    $reimburse_charge = Sentry::wrapWithChildSpan(
+                        'quickbooks.get_reimburse_charge',
+                        // @phan-suppress-next-line PhanTypeMismatchReturnSuperType
+                        static fn (): IPPReimburseCharge => $data_service->FindById(
+                            'ReimburseCharge',
+                            $value
+                        )
+                    );
+
+                    $purchase_request = EngagePurchaseRequest::whereId(
+                        $request->resourceId ?? $request->resources
+                    )->sole();
+
+                    if ($reimburse_charge->Amount !== $purchase_request->approved_amount) {
+                        $fail(
+                            'Billable expense amount does not match the approved amount for this Engage purchase '.
+                            'request.'
+                        );
+                    }
+                })
                 ->searchable()
                 ->help('Only expenses that have been invoiced and not matched are shown.'),
         ];

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\SyncEngagePurchaseRequestToQuickBooks;
 use Illuminate\Http\Request;
+use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -218,10 +220,48 @@ class EngagePurchaseRequest extends Resource
      * Get the actions available for the resource.
      *
      * @return array<\Laravel\Nova\Actions\Action>
+     *
+     * @phan-suppress PhanPluginNonBoolBranch
      */
     public function actions(NovaRequest $request): array
     {
-        return [];
+        $resourceType = $request->resource;
+        $resourceId = $request->resourceId ?? $request->resources;
+        $user = $request->user();
+
+        if ($resourceType === null || $resourceId === null || $user === null) {
+            return [];
+        }
+
+        $engageRequest = \App\Models\EngagePurchaseRequest::whereId($resourceId)->sole();
+
+        if (
+            $engageRequest->quickbooks_invoice_id !== null ||
+            $engageRequest->quickbooks_invoice_document_number !== null
+        ) {
+            return [];
+        }
+
+        if (! $engageRequest->approved) {
+            return [
+                Action::danger(
+                    SyncEngagePurchaseRequestToQuickBooks::make()->name(),
+                    'This request has not been approved yet.'
+                )
+                    ->withoutConfirmation()
+                    ->canRun(static fn (): bool => true),
+            ];
+        }
+
+        return [
+            SyncEngagePurchaseRequestToQuickBooks::make()
+                ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('access-quickbooks'))
+                ->canRun(
+                    static fn (NovaRequest $request, \App\Models\EngagePurchaseRequest $engage): bool => $request
+                        ->user()
+                        ->can('access-quickbooks')
+                ),
+        ];
     }
 
     /**
