@@ -240,20 +240,10 @@ class EngagePurchaseRequest extends Resource
 
         if (
             $engageRequest->quickbooks_invoice_id !== null ||
-            $engageRequest->quickbooks_invoice_document_number !== null
+            $engageRequest->quickbooks_invoice_document_number !== null ||
+            ! $engageRequest->approved
         ) {
             return [];
-        }
-
-        if (! $engageRequest->approved) {
-            return [
-                Action::danger(
-                    SyncEngagePurchaseRequestToQuickBooks::make()->name(),
-                    'This request has not been approved yet.'
-                )
-                    ->withoutConfirmation()
-                    ->canRun(static fn (): bool => true),
-            ];
         }
 
         return [
