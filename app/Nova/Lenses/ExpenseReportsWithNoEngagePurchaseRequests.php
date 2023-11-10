@@ -7,6 +7,7 @@ namespace App\Nova\Lenses;
 use App\Nova\ExternalCommitteeMember;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
@@ -53,7 +54,19 @@ class ExpenseReportsWithNoEngagePurchaseRequests extends Lens
             Date::make('Created', 'created_date')
                 ->sortable(),
 
-            Text::make('Status')
+            Badge::make('Status')
+                ->map([
+                    // @phan-suppress-next-line PhanTypeInvalidArrayKeyLiteral
+                    null => 'danger',
+                    'Draft' => 'info',
+                    'In Progress' => 'info',
+                    'Waiting on Gift Manager' => 'info',
+                    'Waiting on Cost Center Manager' => 'info',
+                    'Waiting on Expense Partner' => 'info',
+                    'Approved' => 'success',
+                    'Paid' => 'success',
+                    'Canceled' => 'danger',
+                ])
                 ->sortable(),
 
             BelongsTo::make('Pay To', 'payTo', ExternalCommitteeMember::class)
