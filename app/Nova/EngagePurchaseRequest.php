@@ -232,6 +232,10 @@ class EngagePurchaseRequest extends Resource
         if ($resourceType === null || $resourceId === null || $user === null) {
             return [];
         }
+        
+        if (! $request->user()->can('access-quickbooks')) {
+            return [];
+        }
 
         $engageRequest = \App\Models\EngagePurchaseRequest::whereId($resourceId)->sole();
 
