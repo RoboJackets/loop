@@ -74,6 +74,8 @@ class FiscalYear extends Resource
 
             HasMany::make('DocuSign Envelopes', 'envelopes'),
 
+            HasMany::make('Engage Requests', 'engagePurchaseRequests', EngagePurchaseRequest::class),
+
             HasMany::make('Expense Reports', 'expenseReports'),
 
             new Panel(

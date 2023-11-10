@@ -66,6 +66,16 @@ class FiscalYear extends Model
     }
 
     /**
+     * Get the Engage purchase requests for this fiscal year.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\EngagePurchaseRequest>
+     */
+    public function engagePurchaseRequests(): HasMany
+    {
+        return $this->hasMany(EngagePurchaseRequest::class);
+    }
+
+    /**
      * Get the expense reports for this fiscal year.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpenseReport>
