@@ -38,7 +38,7 @@ class ExpensePaymentsReadyToSyncToQuickBooks extends Lens
                     'expenseReports',
                     static function (Builder $query): void {
                         $query->whereHas(
-                            'envelopes',
+                            'engagePurchaseRequests',
                             static function (Builder $query): void {
                                 $query->whereNull('quickbooks_invoice_id');
                             }
@@ -49,7 +49,7 @@ class ExpensePaymentsReadyToSyncToQuickBooks extends Lens
                     'expenseReports',
                     static function (Builder $query): void {
                         $query->whereHas(
-                            'envelopes',
+                            'engagePurchaseRequests',
                             static function (Builder $query): void {
                                 $query->whereHas(
                                     'fiscalYear',
@@ -61,6 +61,12 @@ class ExpensePaymentsReadyToSyncToQuickBooks extends Lens
                         );
                     }
                 )
+                ->whereHas(
+                    'bankTransaction',
+                    static function (Builder $query): void {
+                        $query->whereNotNull('transaction_posted_at');
+                    }
+                )
                 ->whereDoesntHave(
                     'payTo',
                     static function (Builder $query): void {
@@ -68,6 +74,7 @@ class ExpensePaymentsReadyToSyncToQuickBooks extends Lens
                     }
                 )
                 ->where('status', '=', 'Complete')
+                ->where('reconciled', '=', true)
         ));
     }
 
