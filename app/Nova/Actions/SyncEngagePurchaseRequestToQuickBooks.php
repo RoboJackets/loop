@@ -127,8 +127,7 @@ class SyncEngagePurchaseRequestToQuickBooks extends Action
             }
         );
 
-        return Action::openInNewTab($engage_request->quickbooks_invoice_url)
-            ->withMessage('Successfully updated QuickBooks invoice!');
+        return Action::openInNewTab($engage_request->quickbooks_invoice_url);
     }
 
     /**
