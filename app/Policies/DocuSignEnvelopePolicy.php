@@ -41,7 +41,7 @@ class DocuSignEnvelopePolicy
      */
     public function update(User $user, DocuSignEnvelope $docuSignEnvelope): bool
     {
-        return $user->can('update-docusign-envelopes');
+        return false;
     }
 
     /**
