@@ -227,11 +227,7 @@ class EngagePurchaseRequest extends Resource
         $resourceId = $request->resourceId ?? $request->resources;
         $user = $request->user();
 
-        if ($resourceId === null || $user === null) {
-            return [];
-        }
-
-        if (! $request->user()->can('access-quickbooks')) {
+        if ($resourceId === null || $user === null || ! $user->can('access-quickbooks')) {
             return [];
         }
 
