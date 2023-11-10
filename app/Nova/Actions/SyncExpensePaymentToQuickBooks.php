@@ -8,20 +8,15 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use App\Exceptions\CouldNotMatchEnvelope;
-use App\Models\Attachment;
-use App\Models\DocuSignEnvelope;
-use App\Models\ExpenseReportLine;
-use App\Models\User;
+use App\Models\EngagePurchaseRequest;
 use App\Util\QuickBooks;
 use App\Util\Sentry;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\ItemNotFoundException;
-use Illuminate\Support\MultipleItemsFoundException;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use QuickBooksOnline\API\Data\IPPPayment;
 use QuickBooksOnline\API\Facades\Payment;
@@ -60,18 +55,27 @@ class SyncExpensePaymentToQuickBooks extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\ExpensePayment>  $models
-     *
-     * @phan-suppress PhanTypeMismatchArgument
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        $user = User::whereId($fields->quickbooks_user_id)->sole();
-        $data_service = QuickBooks::getDataService($user);
+        $data_service = QuickBooks::getDataService(Auth::user());
         $payment = $models->sole();
 
         $lines = [];
 
-        $envelopes_not_synced = DocuSignEnvelope::whereNull('quickbooks_invoice_id')
+        $total_requests = EngagePurchaseRequest::whereHas(
+            'expenseReport',
+            static function (Builder $query) use ($payment): void {
+                $query->where('expense_payment_id', '=', $payment->workday_instance_id);
+            }
+        )
+            ->count();
+
+        if ($total_requests === 0) {
+            return Action::danger('There are no Engage requests associated with this payment');
+        }
+
+        $requests_not_synced = EngagePurchaseRequest::whereNull('quickbooks_invoice_id')
             ->whereHas(
                 'expenseReport',
                 static function (Builder $query) use ($payment): void {
@@ -80,71 +84,33 @@ class SyncExpensePaymentToQuickBooks extends Action
             )
             ->count();
 
-        if ($envelopes_not_synced > 0) {
+        if ($requests_not_synced > 0) {
             return Action::danger(
-                $envelopes_not_synced.' '.($envelopes_not_synced === 1 ? 'envelope has' : 'envelopes have')
+                $requests_not_synced.' '.($requests_not_synced === 1 ? 'request has' : 'requests have')
                 .' not been synced to QuickBooks, and must be synced before this payment can sync'
             );
         }
 
-        DocuSignEnvelope::whereHas(
+        EngagePurchaseRequest::whereHas(
             'expenseReport',
             static function (Builder $query) use ($payment): void {
                 $query->where('expense_payment_id', '=', $payment->workday_instance_id);
             }
         )
             ->get()
-            ->each(static function (DocuSignEnvelope $envelope, int $key) use (&$lines): void {
-                if ($envelope->expenseReport->envelopes()->count() === 1) {
+            ->each(static function (EngagePurchaseRequest $engagePurchaseRequest, int $key) use (&$lines): void {
+                if ($engagePurchaseRequest->expenseReport->engagePurchaseRequests()->count() === 1) {
                     $lines[] = [
-                        'Amount' => $envelope->expenseReport->amount,
+                        'Amount' => $engagePurchaseRequest->expenseReport->amount,
                         'LinkedTxn' => [
                             [
                                 'TxnType' => 'Invoice',
-                                'TxnId' => $envelope->quickbooks_invoice_id,
+                                'TxnId' => $engagePurchaseRequest->quickbooks_invoice_id,
                             ],
                         ],
                     ];
                 } else {
-                    $envelope_amounts_from_lines = [];
-
-                    $envelope->expenseReport->lines->each(
-                        static function (ExpenseReportLine $line, int $key) use (&$envelope_amounts_from_lines): void {
-                            try {
-                                $envelope_uuid = $line->attachments->map(
-                                    static fn (Attachment $attachment, int $key): ?string => $attachment
-                                        ->toSearchableArray()['docusign_envelope_uuid']
-                                )->filter(
-                                    static fn (?string $envelope_uuid, int $key): bool => $envelope_uuid !== null
-                                )
-                                    ->sole();
-                            } catch (MultipleItemsFoundException|ItemNotFoundException $e) {
-                                throw new CouldNotMatchEnvelope(
-                                    'Could not match envelope for expense report line '.$line->id,
-                                    0,
-                                    $e
-                                );
-                            }
-
-                            // @phan-suppress-next-line PhanTypeMismatchArgumentInternal
-                            if (array_key_exists($envelope_uuid, $envelope_amounts_from_lines)) {
-                                $envelope_amounts_from_lines[$envelope_uuid] += $line->amount;
-                            } else {
-                                // @phan-suppress-next-line PhanTypeMismatchDimAssignment
-                                $envelope_amounts_from_lines[$envelope_uuid] = $line->amount;
-                            }
-                        }
-                    );
-
-                    $lines[] = [
-                        'Amount' => $envelope_amounts_from_lines[$envelope->envelope_uuid],
-                        'LinkedTxn' => [
-                            [
-                                'TxnType' => 'Invoice',
-                                'TxnId' => $envelope->quickbooks_invoice_id,
-                            ],
-                        ],
-                    ];
+                    throw new Exception('Expense report is matched to multiple Engage requests');
                 }
             });
 
@@ -163,7 +129,7 @@ class SyncExpensePaymentToQuickBooks extends Action
                     'value' => config('quickbooks.payment_method_id'),
                 ],
                 'Line' => $lines,
-                'TxnDate' => $payment->payment_date->format('Y/m/d'),
+                'TxnDate' => $payment->bankTransaction->transaction_posted_at->format('Y/m/d'),
                 'PaymentRefNum' => $payment->transaction_reference,
             ]))
         );
@@ -178,18 +144,9 @@ class SyncExpensePaymentToQuickBooks extends Action
      * Get the fields available on the action.
      *
      * @return array<\Laravel\Nova\Fields\Field>
-     *
-     * @phan-suppress PhanTypeInvalidCallableArraySize
      */
     public function fields(NovaRequest $request): array
     {
-        return [
-            Select::make('User', 'quickbooks_user_id')
-                ->options([strval($request->user()->id) => $request->user()->name])
-                ->default(strval($request->user()->id))
-                ->required()
-                ->rules('required')
-                ->withMeta(['extraAttributes' => ['readonly' => true]]),
-        ];
+        return [];
     }
 }

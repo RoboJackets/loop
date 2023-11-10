@@ -180,13 +180,15 @@ class ExpensePayment extends Resource
             return [];
         }
 
-        $payment = \App\Models\ExpensePayment::find($resourceId);
+        $payment = \App\Models\ExpensePayment::whereId($resourceId)->sole();
 
         if (
             $payment->status !== 'Complete' ||
             $payment->reconciled !== true ||
             $payment->bank_transaction_id === null ||
-            $payment->bankTransaction->transaction_posted_at === null
+            $payment->bankTransaction->transaction_posted_at === null ||
+            $payment->quickbooks_payment_id !== null ||
+            $payment->payTo->user !== null
         ) {
             return [];
         }
@@ -198,10 +200,7 @@ class ExpensePayment extends Resource
                     static fn (
                         NovaRequest $request,
                         \App\Models\ExpensePayment $payment
-                    ): bool => $request->user()->can('access-quickbooks') &&
-                        $request->user()->quickbooks_access_token !== null &&
-                        $payment->quickbooks_payment_id === null &&
-                        $payment->payTo->user === null
+                    ): bool => $request->user()->can('access-quickbooks')
                 ),
         ];
     }
