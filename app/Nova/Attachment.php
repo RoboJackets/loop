@@ -55,7 +55,8 @@ class Attachment extends Resource
 
             Avatar::make('Thumbnail', fn (): ?string => $this->thumbnail_path)
                 ->disk('public')
-                ->squared(),
+                ->squared()
+                ->disableDownload(),
 
             Text::make('Filename')
                 ->displayUsing(static function (string $filename): string {
