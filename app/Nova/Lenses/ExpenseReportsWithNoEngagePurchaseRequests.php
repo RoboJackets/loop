@@ -15,14 +15,14 @@ use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Lenses\Lens;
 
-class ExpenseReportsWithNoEnvelopes extends Lens
+class ExpenseReportsWithNoEngagePurchaseRequests extends Lens
 {
     /**
      * The displayable name of the lens.
      *
      * @var string
      */
-    public $name = 'Expense Reports with No Envelopes';
+    public $name = 'Expense Reports with No Requests';
 
     /**
      * Get the query builder / paginator for the lens.
@@ -34,6 +34,7 @@ class ExpenseReportsWithNoEnvelopes extends Lens
     {
         return $request->withOrdering($request->withFilters(
             $query->whereDoesntHave('envelopes')
+                ->whereDoesntHave('engagePurchaseRequests')
                 ->whereNotIn('status', ['Canceled', 'Paid'])
         ));
     }
@@ -92,6 +93,6 @@ class ExpenseReportsWithNoEnvelopes extends Lens
      */
     public function uriKey(): string
     {
-        return 'no-envelopes';
+        return 'no-requests';
     }
 }

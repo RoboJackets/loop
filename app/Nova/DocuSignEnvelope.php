@@ -6,8 +6,6 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use App\Nova\Lenses\ReimbursementsMissingExpenseReports;
-use App\Nova\Lenses\ReimbursementsMissingInvoices;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -254,10 +252,7 @@ class DocuSignEnvelope extends Resource
      */
     public function lenses(NovaRequest $request): array
     {
-        return [
-            ReimbursementsMissingExpenseReports::make(),
-            ReimbursementsMissingInvoices::make(),
-        ];
+        return [];
     }
 
     /**
