@@ -51,7 +51,7 @@ class SyncEngagePurchaseRequestToQuickBooks extends Action
      *
      * @var string
      */
-    public $confirmText = 'Are you sure you want to sync this request to QuickBooks?';
+    public $confirmText = 'Select the corresponding billable expense for this Engage request.';
 
     /**
      * Perform the action on the given models.
