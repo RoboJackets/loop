@@ -235,7 +235,7 @@ class EngagePurchaseRequest extends Resource
             $engageRequest->quickbooks_invoice_id !== null ||
             $engageRequest->quickbooks_invoice_document_number !== null ||
             ! $engageRequest->approved ||
-            ! $engageRequest->current_step_name !== 'Check Request Sent'
+            $engageRequest->current_step_name !== 'Check Request Sent'
         ) {
             return [];
         }
