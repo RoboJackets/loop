@@ -6,7 +6,6 @@ namespace App\Nova;
 
 use App\Nova\Actions\SyncEngagePurchaseRequestToQuickBooks;
 use Illuminate\Http\Request;
-use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
