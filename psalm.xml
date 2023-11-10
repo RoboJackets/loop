@@ -79,6 +79,7 @@
                 <file name="app/Util/QuickBooks.php"/>
                 <file name="app/Nova/Actions/SyncExpensePaymentToQuickBooks.php"/>
                 <file name="app/Models/User.php"/>
+                <file name="app/Nova/User.php"/>
             </errorLevel>
         </InvalidReturnType>
         <InvalidReturnStatement>
@@ -87,6 +88,7 @@
                 <file name="app/Util/QuickBooks.php"/>
                 <file name="app/Nova/Actions/SyncExpensePaymentToQuickBooks.php"/>
                 <file name="app/Models/User.php"/>
+                <file name="app/Nova/User.php"/>
             </errorLevel>
         </InvalidReturnStatement>
         <InvalidPropertyAssignmentValue>
@@ -129,5 +131,10 @@
                 <file name="app/Nova/Actions/SyncEngagePurchaseRequestToQuickBooks.php"/>
             </errorLevel>
         </InvalidArrayOffset>
+        <InvalidArrayAccess>
+            <errorLevel type="suppress">
+                <file name="app/Nova/User.php"/>
+            </errorLevel>
+        </InvalidArrayAccess>
     </issueHandlers>
 </psalm>

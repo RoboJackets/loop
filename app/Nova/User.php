@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use Adldap\Laravel\Facades\Adldap;
+use Adldap\Models\Entry;
+use Adldap\Query\Collection;
 use App\Nova\Actions\ResetQuickBooksCredentials;
 use App\Util\Sentry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\ItemNotFoundException;
 use Jeffbeltran\SanctumTokens\SanctumTokens;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
@@ -183,37 +186,64 @@ class User extends Resource
     {
         $role = $this->roles()->orderBy('id')->first();
 
-        if ($role === null) {
-            $username = $this->username;
-
-            $title = Cache::rememberForever(
-                'title_'.$this->username,
-                static function () use ($username): ?string {
-                    $result = Sentry::wrapWithChildSpan(
-                        'ldap.get_title_by_uid',
-                        static fn (): array => Adldap::search()
-                            ->where('uid', '=', $username)
-                            ->select('title')
-                            ->get()
-                            ->pluck('title')
-                            ->toArray()
-                    );
-
-                    return $result === [] ? null : $result[0][0];
-                }
-            );
-
-            if ($title === null) {
-                if ($this->workday_instance_id === null) {
-                    return null;
-                } else {
-                    return $this->active_employee === true ? 'Georgia Tech Employee' : 'Former Georgia Tech Employee';
-                }
-            } else {
-                return $title;
-            }
-        } else {
+        if ($role !== null) {
             return ucfirst($role->name);
         }
+
+        $username = $this->username;
+
+        $title = Cache::rememberForever(
+            'title_'.$this->username,
+            static function () use ($username): ?string {
+                $result = Sentry::wrapWithChildSpan(
+                    'ldap.get_title_by_uid',
+                    static fn (): Collection => Adldap::search()
+                        ->where('uid', '=', $username)
+                        ->select('title', 'ou')
+                        ->get()
+                );
+
+                if ($result->count() === 0) {
+                    return null;
+                } elseif ($result->count() === 1) {
+                    // @phan-suppress-next-line PhanTypeMismatchArgument
+                    return self::whitepagesEntryToString($result->sole());
+                } else {
+                    try {
+                        // @phan-suppress-next-line PhanTypeMismatchArgument
+                        return self::whitepagesEntryToString($result->filter(
+                            static fn (Entry $entry, int $key): bool => ! str_contains(
+                                // @phan-suppress-next-line PhanTypeArraySuspicious
+                                strtolower($entry->title[0]),
+                                'student assistant'
+                            )
+                        )->sole());
+                    } catch (ItemNotFoundException) {
+                        // @phan-suppress-next-line PhanTypeMismatchArgument
+                        return self::whitepagesEntryToString($result->first());
+                    }
+                }
+            }
+        );
+
+        if ($title !== null) {
+            return $title;
+        }
+
+        if ($this->workday_instance_id !== null) {
+            return $this->active_employee === true ? 'Georgia Tech Employee' : 'Former Georgia Tech Employee';
+        }
+
+        return null;
+    }
+
+    /**
+     * Convert a Whitepages directory entry to a string
+     *
+     * @phan-suppress PhanTypeArraySuspicious
+     */
+    private static function whitepagesEntryToString(Entry $entry): string
+    {
+        return $entry->title[0].' | '.$entry->ou[0];
     }
 }
