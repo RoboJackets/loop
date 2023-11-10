@@ -102,7 +102,6 @@ parameters:
     - '#Parameter \#1 \$key of method Tightenco\\Collect\\Support\\Collection<\(int\|string\),mixed>::sole\(\) expects \(callable\(mixed, int\|string\): bool\)\|string\|null, Closure\(array\): bool given\.#'
     - '#Parameter \#1 \$message of method Exception::__construct\(\) expects string, string\|false given\.#'
     - '#Parameter \#1 \$name of static method Laravel\\Nova\\Actions\\Action::openInNewTab\(\) expects string, string\|null given\.#'
-    - '#Parameter \#1 \$num of function round expects float\|int, float\|null given\.#'
     - '#Parameter \#1 \$number of function abs expects float, float\|null given\.#'
     - '#Parameter \#1 \$options of method Laravel\\Nova\\Fields\\Select::options\(\) expects \(callable\(\): iterable<int\|string, array{label: string, group\?: string}\|string\|Stringable>\)\|iterable<int\|string, array{label: string, group\?: string}\|string\|Stringable>, Closure\(\): array given\.#'
     - '#Parameter \#1 \$pdf_text of static method App\\Models\\EngagePurchaseRequest::getPurchaseRequestNumberFromText\(\) expects string, int\|string\|null given\.#'

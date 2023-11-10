@@ -209,7 +209,7 @@ class SyncEngagePurchaseRequestToQuickBooks extends Action
                         $request->resourceId ?? $request->resources
                     )->sole();
 
-                    if (round($reimburse_charge->Amount, 2) !== round($purchase_request->approved_amount, 2)) {
+                    if (floatval($reimburse_charge->Amount) !== $purchase_request->approved_amount) {
                         $fail(
                             'Billable expense amount does not match the approved amount for this Engage purchase '.
                             'request.'
