@@ -126,7 +126,10 @@ class SyncExpensePaymentToQuickBooks extends Action
                     'value' => 'USD',
                 ],
                 'PaymentMethodRef' => [
-                    'value' => config('quickbooks.payment_method_id'),
+                    'value' => config('quickbooks.payment.method_id'),
+                ],
+                'DepositToAccountRef' => [
+                    'value' => config('quickbooks.payment.account_id'),
                 ],
                 'Line' => $lines,
                 'TxnDate' => $payment->bankTransaction->transaction_posted_at->format('Y/m/d'),
