@@ -120,8 +120,7 @@ class EngagePurchaseRequest extends Resource
             URL::make('QuickBooks Invoice', 'quickbooks_invoice_url')
                 ->displayUsing(fn (): ?int => $this->quickbooks_invoice_document_number)
                 ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks'))
-                ->hideWhenUpdating()
-                ->sortable(),
+                ->hideWhenUpdating(),
 
             Number::make('QuickBooks Invoice ID', 'quickbooks_invoice_id')
                 ->onlyOnForms()
