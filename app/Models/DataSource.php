@@ -23,6 +23,13 @@ use Illuminate\Database\Eloquent\Model;
 class DataSource extends Model
 {
     /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'name';
+
+    /**
      * Indicates if the model should be timestamped.
      *
      * @var bool
