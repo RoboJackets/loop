@@ -21,8 +21,8 @@ use Laravel\Scout\Searchable;
  * @property int $engage_request_number
  * @property string $subject
  * @property string|null $description
- * @property bool $approved
  * @property string $current_step_name
+ * @property string $status
  * @property float $submitted_amount
  * @property \Illuminate\Support\Carbon $submitted_at
  * @property int|null $submitted_by_user_id
@@ -58,12 +58,12 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest query()
- * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereApproved($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereApprovedAmount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereApprovedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereApprovedByUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereCurrentStepName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EngagePurchaseRequest whereEngageId($value)
@@ -109,7 +109,6 @@ class EngagePurchaseRequest extends Model
         'submitted_at' => 'datetime',
         'approved_at' => 'datetime',
         'deleted_at' => 'datetime',
-        'approved' => 'boolean',
     ];
 
     /**
@@ -118,7 +117,6 @@ class EngagePurchaseRequest extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'approved',
         'approved_amount',
         'approved_at',
         'approved_by_user_id',
@@ -135,6 +133,7 @@ class EngagePurchaseRequest extends Model
         'payee_last_name',
         'payee_state',
         'payee_zip_code',
+        'status',
         'subject',
         'submitted_amount',
         'submitted_at',

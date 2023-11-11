@@ -8,7 +8,6 @@ use App\Nova\Actions\SyncEngagePurchaseRequestToQuickBooks;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\MorphMany;
@@ -94,6 +93,15 @@ class EngagePurchaseRequest extends Resource
                 ])
                 ->sortable(),
 
+            Badge::make('Status', 'status')
+                ->map([
+                    'Unapproved' => 'info',
+                    'Denied' => 'danger',
+                    'Canceled' => 'danger',
+                    'Approved' => 'success',
+                ])
+                ->sortable(),
+
             Text::make('Subject'),
 
             Text::make('Description')
@@ -156,9 +164,6 @@ class EngagePurchaseRequest extends Resource
             ]),
 
             Panel::make('Approval', [
-                Boolean::make('Approved')
-                    ->onlyOnDetail(),
-
                 Currency::make('Approved Amount')
                     ->onlyOnDetail(),
 
@@ -234,7 +239,7 @@ class EngagePurchaseRequest extends Resource
         if (
             $engageRequest->quickbooks_invoice_id !== null ||
             $engageRequest->quickbooks_invoice_document_number !== null ||
-            ! $engageRequest->approved ||
+            $engageRequest->status !== 'Approved' ||
             $engageRequest->current_step_name !== 'Check Request Sent'
         ) {
             return [];
