@@ -6,10 +6,6 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use App\Nova\Actions\ProcessSensibleOutput;
-use App\Nova\Actions\RunSensibleExtraction;
-use App\Nova\Actions\SyncDocuSignEnvelopeToQuickBooks;
-use App\Nova\Actions\UploadDocuSignEnvelope;
 use App\Nova\Lenses\ReimbursementsMissingExpenseReports;
 use App\Nova\Lenses\ReimbursementsMissingInvoices;
 use Illuminate\Http\Request;
@@ -271,36 +267,7 @@ class DocuSignEnvelope extends Resource
      */
     public function actions(NovaRequest $request): array
     {
-        return [
-            ProcessSensibleOutput::make(),
-            RunSensibleExtraction::make(),
-            SyncDocuSignEnvelopeToQuickBooks::make()
-                ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('access-quickbooks'))
-                ->canRun(
-                    static fn (
-                        NovaRequest $request,
-                        \App\Models\DocuSignEnvelope $envelope
-                    ): bool => $request->user()->can('access-quickbooks') &&
-                        $request->user()->quickbooks_access_token !== null &&
-                        ($envelope->type === 'purchase_reimbursement' || $envelope->type === 'travel_reimbursement') &&
-                        $envelope->quickbooks_invoice_id === null &&
-                        $envelope->pay_to_user_id === null &&
-                        $envelope->submission_error === false &&
-                        $envelope->internal_cost_transfer === false &&
-                        $envelope->replacedBy()->count() === 0 &&
-                        $envelope->duplicate_of_docusign_envelope_id === null
-                ),
-            UploadDocuSignEnvelope::make()
-                ->canSee(
-                    static fn (NovaRequest $request): bool => $request->user()->can('access-sensible') &&
-                        $request->lens === null
-                )
-                ->canRun(
-                    static fn (NovaRequest $request, \App\Models\DocuSignEnvelope $envelope): bool => $request
-                        ->user()
-                        ->can('access-sensible')
-                ),
-        ];
+        return [];
     }
 
     /**

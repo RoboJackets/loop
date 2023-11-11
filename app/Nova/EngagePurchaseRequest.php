@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\SyncEngagePurchaseRequestToQuickBooks;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
@@ -221,7 +222,33 @@ class EngagePurchaseRequest extends Resource
      */
     public function actions(NovaRequest $request): array
     {
-        return [];
+        $resourceId = $request->resourceId ?? $request->resources;
+        $user = $request->user();
+
+        if ($resourceId === null || $user === null || ! $user->can('access-quickbooks')) {
+            return [];
+        }
+
+        $engageRequest = \App\Models\EngagePurchaseRequest::whereId($resourceId)->sole();
+
+        if (
+            $engageRequest->quickbooks_invoice_id !== null ||
+            $engageRequest->quickbooks_invoice_document_number !== null ||
+            ! $engageRequest->approved ||
+            $engageRequest->current_step_name !== 'Check Request Sent'
+        ) {
+            return [];
+        }
+
+        return [
+            SyncEngagePurchaseRequestToQuickBooks::make()
+                ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('access-quickbooks'))
+                ->canRun(
+                    static fn (NovaRequest $request, \App\Models\EngagePurchaseRequest $engage): bool => $request
+                        ->user()
+                        ->can('access-quickbooks')
+                ),
+        ];
     }
 
     /**
