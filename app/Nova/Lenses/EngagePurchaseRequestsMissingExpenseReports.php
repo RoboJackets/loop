@@ -4,46 +4,42 @@ declare(strict_types=1);
 
 namespace App\Nova\Lenses;
 
-use App\Models\DocuSignEnvelope;
-use App\Nova\User;
+use App\Models\EngagePurchaseRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Lenses\Lens;
 
-class ReimbursementsMissingExpenseReports extends Lens
+class EngagePurchaseRequestsMissingExpenseReports extends Lens
 {
     /**
      * The displayable name of the lens.
      *
      * @var string
      */
-    public $name = 'Reimbursements Missing Expense Reports';
+    public $name = 'Engage Requests Missing Expense Reports';
 
     /**
      * Get the query builder / paginator for the lens.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DocuSignEnvelope>  $query
-     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DocuSignEnvelope>
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\EngagePurchaseRequest>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\EngagePurchaseRequest>
      */
     public static function query(LensRequest $request, $query): Builder
     {
         return $request->withOrdering($request->withFilters(
             $query->whereDoesntHave('expenseReport')
-                ->whereDoesntHave('replacedBy')
-                ->whereDoesntHave('duplicateOf')
-                ->whereIn('type', ['purchase_reimbursement', 'travel_reimbursement'])
-                ->where('lost', '=', false)
-                ->where('internal_cost_transfer', '=', false)
-                ->where('submission_error', '=', false)
+                ->where(static function (Builder $query): void {
+                    $query->where('payee_first_name', 'like', '%robojackets%')
+                        ->orWhere('payee_last_name', 'like', '%robojackets%');
+                })
         ));
     }
 
@@ -55,37 +51,54 @@ class ReimbursementsMissingExpenseReports extends Lens
     public function fields(NovaRequest $request): array
     {
         return [
-            ID::make()
+            Number::make('Request Number', 'engage_request_number')
+                ->sortable(),
+
+            Badge::make('Step', 'current_step_name')
+                ->map([
+                    'Submitted' => 'info',
+                    'Send to SOFO Accountant' => 'info',
+                    'Sent back for edits' => 'danger',
+                    'Check Request Sent' => 'success',
+                ])
+                ->sortable(),
+
+            Badge::make('Status', 'status')
+                ->map([
+                    'Unapproved' => 'info',
+                    'Denied' => 'danger',
+                    'Canceled' => 'danger',
+                    'Approved' => 'success',
+                ])
+                ->sortable(),
+
+            Text::make('Subject')
                 ->sortable(),
 
             DateTime::make('Submitted', 'submitted_at')
                 ->sortable(),
 
-            Select::make('Form Type', 'type')
-                ->sortable()
-                ->options(DocuSignEnvelope::$types)
-                ->displayUsingLabels(),
-
-            BelongsTo::make('Pay To', 'payToUser', User::class)
-                ->sortable()
-                ->nullable(),
-
-            Text::make('Description')
+            Currency::make('Submitted Amount')
                 ->sortable(),
 
-            Currency::make('Amount')
+            Currency::make('Approved Amount')
+                ->sortable(),
+
+            Text::make('Payee First Name', 'payee_first_name')
+                ->sortable(),
+
+            Text::make('Payee Last Name', 'payee_last_name')
                 ->sortable(),
 
             URL::make('QuickBooks Invoice', 'quickbooks_invoice_url')
                 ->displayUsing(
                     static fn (
                         $value,
-                        DocuSignEnvelope $resource,
+                        EngagePurchaseRequest $resource,
                         string $attribute
                     ): ?int => $resource->quickbooks_invoice_document_number
                 )
-                ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks'))
-                ->hideWhenUpdating(),
+                ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks')),
         ];
     }
 

@@ -6,12 +6,13 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
-use App\Models\DocuSignEnvelope;
+use App\Models\EngagePurchaseRequest;
+use Illuminate\Database\Eloquent\Builder;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Value;
 use Laravel\Nova\Metrics\ValueResult;
 
-class DocuSignEnvelopesMissingExpenseReports extends Value
+class EngagePurchaseRequestsMissingExpenseReports extends Value
 {
     /**
      * The element's icon.
@@ -25,7 +26,7 @@ class DocuSignEnvelopesMissingExpenseReports extends Value
      *
      * @var string
      */
-    public $helpText = 'Purchase and travel reimbursement forms that have been submitted to SOFO, but have not been entered into Workday yet';
+    public $helpText = 'Engage requests that have been submitted in Engage, but have not been entered into Workday yet';
 
     /**
      * Calculate the value of the metric.
@@ -34,14 +35,13 @@ class DocuSignEnvelopesMissingExpenseReports extends Value
     {
         return $this
             ->result(
-                DocuSignEnvelope::selectRaw('coalesce(sum(amount), 0) as total')
+                EngagePurchaseRequest::selectRaw('coalesce(sum(submitted_amount), 0) as total')
                     ->whereDoesntHave('expenseReport')
-                    ->whereDoesntHave('replacedBy')
-                    ->whereDoesntHave('duplicateOf')
-                    ->whereDoesntHave('payToUser')
-                    ->whereIn('type', ['purchase_reimbursement', 'travel_reimbursement'])
-                    ->where('internal_cost_transfer', '=', false)
-                    ->where('lost', '=', false)
+                    ->where(static function (Builder $query): void {
+                        $query->where('payee_first_name', 'like', '%robojackets%')
+                            ->orWhere('payee_last_name', 'like', '%robojackets%');
+                    })
+                    ->whereNotNull('submitted_at')
                     ->sole()->total
             )
             ->dollars()
@@ -61,7 +61,7 @@ class DocuSignEnvelopesMissingExpenseReports extends Value
      */
     public function name(): string
     {
-        return 'Reimbursements Missing Expense Reports';
+        return 'Engage Requests Missing Expense Reports';
     }
 
     /**
@@ -69,6 +69,6 @@ class DocuSignEnvelopesMissingExpenseReports extends Value
      */
     public function uriKey(): string
     {
-        return 'docusign-envelopes-missing-expense-reports';
+        return 'engage-purchase-requests-missing-expense-reports';
     }
 }

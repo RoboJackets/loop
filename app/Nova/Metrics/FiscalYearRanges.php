@@ -16,6 +16,7 @@ trait FiscalYearRanges
     public function ranges(): array
     {
         $ranges = FiscalYear::whereHas('envelopes')
+            ->orWhereHas('engagePurchaseRequests')
             ->get()
             ->sortByDesc('ending_year')
             ->mapWithKeys(

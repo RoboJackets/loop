@@ -4,51 +4,43 @@ declare(strict_types=1);
 
 namespace App\Nova\Lenses;
 
-use App\Models\DocuSignEnvelope;
 use App\Nova\ExpenseReport;
 use Illuminate\Database\Eloquent\Builder;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Lenses\Lens;
 
-class ReimbursementsMissingInvoices extends Lens
+class EngagePurchaseRequestsMissingInvoices extends Lens
 {
     /**
      * The displayable name of the lens.
      *
      * @var string
      */
-    public $name = 'Reimbursements Missing Invoices';
+    public $name = 'Engage Requests Missing Invoices';
 
     /**
      * Get the query builder / paginator for the lens.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\DocuSignEnvelope>  $query
-     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\DocuSignEnvelope>
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\EngagePurchaseRequest>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\EngagePurchaseRequest>
      */
     public static function query(LensRequest $request, $query): Builder
     {
         return $request->withOrdering($request->withFilters(
             $query->whereNull('quickbooks_invoice_id')
-                ->whereDoesntHave('replacedBy')
-                ->whereDoesntHave('duplicateOf')
-                ->whereDoesntHave('payToUser')
-                ->whereHas(
-                    'fiscalYear',
-                    static function (Builder $query): void {
-                        $query->where('in_scope_for_quickbooks', '=', true);
-                    }
-                )
-                ->whereIn('type', ['purchase_reimbursement', 'travel_reimbursement'])
-                ->where('lost', '=', false)
-                ->where('internal_cost_transfer', '=', false)
-                ->where('submission_error', '=', false)
+                ->where(static function (Builder $query): void {
+                    $query->where('payee_first_name', 'like', '%robojackets%')
+                        ->orWhere('payee_last_name', 'like', '%robojackets%');
+                })
+                ->where('status', '=', 'Approved')
+                ->where('current_step_name', '=', 'Check Request Sent')
         ));
     }
 
@@ -60,27 +52,48 @@ class ReimbursementsMissingInvoices extends Lens
     public function fields(NovaRequest $request): array
     {
         return [
-            ID::make()
+            Number::make('Request Number', 'engage_request_number')
+                ->sortable(),
+
+            Badge::make('Step', 'current_step_name')
+                ->map([
+                    'Submitted' => 'info',
+                    'Send to SOFO Accountant' => 'info',
+                    'Sent back for edits' => 'danger',
+                    'Check Request Sent' => 'success',
+                ])
+                ->sortable(),
+
+            Badge::make('Status', 'status')
+                ->map([
+                    'Unapproved' => 'info',
+                    'Denied' => 'danger',
+                    'Canceled' => 'danger',
+                    'Approved' => 'success',
+                ])
+                ->sortable(),
+
+            Text::make('Subject')
                 ->sortable(),
 
             DateTime::make('Submitted', 'submitted_at')
                 ->sortable(),
 
-            Select::make('Form Type', 'type')
-                ->sortable()
-                ->options(DocuSignEnvelope::$types)
-                ->displayUsingLabels(),
-
-            Text::make('Description')
+            Currency::make('Submitted Amount')
                 ->sortable(),
 
-            Currency::make('Amount')
+            Currency::make('Approved Amount')
+                ->sortable(),
+
+            Text::make('Payee First Name', 'payee_first_name')
+                ->sortable(),
+
+            Text::make('Payee Last Name', 'payee_last_name')
                 ->sortable(),
 
             BelongsTo::make('Workday Expense Report', 'expenseReport', ExpenseReport::class)
                 ->sortable()
-                ->nullable()
-                ->searchable(),
+                ->nullable(),
         ];
     }
 

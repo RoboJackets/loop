@@ -86,7 +86,7 @@ parameters:
     - '#Parameter \#1 \$callback of method Tightenco\\Collect\\Support\\Collection<\(int\|string\),mixed>::filter\(\) expects \(callable\(mixed, int\|string\): bool\)\|null, Closure\(QuickBooksOnline\\API\\Data\\IPPReimburseCharge, int\): bool given\.#'
     - '#Parameter \#1 \$callback of method Tightenco\\Collect\\Support\\Collection<\(int\|string\),mixed>::map\(\) expects callable\(mixed, int\|string\): array, Closure\(array, string\): array given\.#'
     - '#Parameter \#1 \$callback of method Tightenco\\Collect\\Support\\Collection<\(int\|string\),mixed>::mapWithKeys\(\) expects callable\(mixed, int\|string\): array<string>, Closure\(QuickBooksOnline\\API\\Data\\IPPReimburseCharge, int\): non-empty-array<mixed, non-falsy-string> given\.#'
-    - '#Parameter \#1 \$displayCallback of method Laravel\\Nova\\Fields\\Field::displayUsing\(\) expects callable\(mixed, mixed, string\): mixed, Closure\(mixed, App\\Models\\DocuSignEnvelope, string\): \(int\|null\) given\.#'
+    - '#Parameter \#1 \$displayCallback of method Laravel\\Nova\\Fields\\Field::displayUsing\(\) expects callable\(mixed, mixed, string\): mixed, Closure\(mixed, App\\Models\\EngagePurchaseRequest, string\): \(int\|null\) given\.#'
     - '#Parameter \#1 \$displayCallback of method Laravel\\Nova\\Fields\\Field::displayUsing\(\) expects callable\(mixed, mixed, string\): mixed, Closure\(string\): string given\.#'
     - '#Parameter \#1 \$email of static method App\\Http\\Controllers\\EngagePurchaseRequestController::getUserByEmailAddress\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$entry of static method App\\Nova\\User::whitepagesEntryToString\(\) expects Adldap\\Models\\Entry, mixed given\.#'

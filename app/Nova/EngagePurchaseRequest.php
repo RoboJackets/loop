@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use App\Nova\Actions\SyncEngagePurchaseRequestToQuickBooks;
+use App\Nova\Lenses\EngagePurchaseRequestsMissingExpenseReports;
+use App\Nova\Lenses\EngagePurchaseRequestsMissingInvoices;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
@@ -216,7 +218,10 @@ class EngagePurchaseRequest extends Resource
      */
     public function lenses(NovaRequest $request): array
     {
-        return [];
+        return [
+            EngagePurchaseRequestsMissingExpenseReports::make(),
+            EngagePurchaseRequestsMissingInvoices::make(),
+        ];
     }
 
     /**

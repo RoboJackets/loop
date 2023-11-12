@@ -8,7 +8,7 @@ use App\Nova\Metrics\AverageDaysToApproveExpenseReport;
 use App\Nova\Metrics\AverageDaysToCreateExpenseReport;
 use App\Nova\Metrics\AverageDaysToPayExpenseReport;
 use App\Nova\Metrics\AverageDaysToReconcileExpensePayment;
-use App\Nova\Metrics\DocuSignEnvelopesMissingExpenseReports;
+use App\Nova\Metrics\EngagePurchaseRequestsMissingExpenseReports;
 use App\Nova\Metrics\ExpensePaymentsPendingReconciliation;
 use App\Nova\Metrics\ExpenseReportsPendingApproval;
 use App\Nova\Metrics\ExpenseReportsPendingPayment;
@@ -32,7 +32,7 @@ class Main extends Dashboard
     public function cards(): array
     {
         return [
-            DocuSignEnvelopesMissingExpenseReports::make()
+            EngagePurchaseRequestsMissingExpenseReports::make()
                 ->width('1/4'),
             ExpenseReportsPendingApproval::make()
                 ->width('1/4'),
