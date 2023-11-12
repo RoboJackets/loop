@@ -52,7 +52,7 @@ class MatchExpenseReport implements ShouldBeUnique, ShouldQueue
             try {
                 $purchase_request = EngagePurchaseRequest::whereApprovedAmount($this->expenseReport->amount)
                     ->whereDoesntHave('expenseReport')
-                    ->where('approved', '=', true)
+                    ->where('status', '=', 'Approved')
                     ->whereDate('approved_at', '<=', $this->expenseReport->created_date)
                     ->where('approved_by_user_id', '=', $this->expenseReport->createdBy->id)
                     ->sole();

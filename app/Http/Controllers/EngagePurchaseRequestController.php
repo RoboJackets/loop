@@ -34,7 +34,7 @@ class EngagePurchaseRequestController extends Controller
                 ],
                 [
                     'subject' => $item['name'],
-                    'approved' => $item['status'] === 'Approved',
+                    'status' => $item['status'],
                     'current_step_name' => self::cleanFinanceStageName($item['currentStepName']),
                     'submitted_amount' => $item['submittedAmount'],
                     'submitted_at' => $item['submittedOn'] === null ? null : Carbon::parse($item['submittedOn']),
@@ -50,7 +50,7 @@ class EngagePurchaseRequestController extends Controller
                 if ($purchase_request->submitted_by_user_id === null) {
                     $sync_purchase_requests[] = $purchase_request['engage_id'];
                 } elseif (
-                    $purchase_request->approved && (
+                    $purchase_request->status === 'Approved' && (
                         $purchase_request->approved_by_user_id === null || $purchase_request->approved_at === null
                     )
                 ) {
@@ -78,7 +78,7 @@ class EngagePurchaseRequestController extends Controller
             'engage_request_number' => $request['requestNumber'],
             'subject' => $request['subject'],
             'description' => $request['description'],
-            'approved' => $request['status'] === 'Approved',
+            'status' => $request['status'],
             'current_step_name' => self::cleanFinanceStageName($request['financeStage']['name']),
             'submitted_amount' => $request['submitted']['amount'],
             'submitted_at' => $request['submitted']['date'] === null ? null : Carbon::parse(
