@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
-use App\Models\DocuSignEnvelope;
 use App\Models\ExpenseReport;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -14,7 +13,6 @@ use Illuminate\Database\Query\JoinClause;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Value;
 use Laravel\Nova\Metrics\ValueResult;
-use function Clue\StreamFilter\fun;
 
 class AverageDaysToCreateExpenseReport extends Value
 {

@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
-use App\Models\DocuSignEnvelope;
 use App\Models\EngagePurchaseRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Laravel\Nova\Http\Requests\NovaRequest;
