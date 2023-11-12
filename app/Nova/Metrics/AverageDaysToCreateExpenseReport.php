@@ -44,7 +44,7 @@ class AverageDaysToCreateExpenseReport extends Value
                 floatval(
                     ExpenseReport::selectRaw(
                         'avg(datediff(expense_reports.created_date, coalesce(docusign_envelopes.submitted_at, '.
-                        'engage_purchase_requests.submitted_at))) as diff',
+                        'engage_purchase_requests.submitted_at))) as diff'
                     )
                         ->leftJoin('docusign_envelopes', static function (JoinClause $join): void {
                             $join->on('docusign_envelopes.expense_report_id', '=', 'expense_reports.id');
