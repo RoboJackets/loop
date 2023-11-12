@@ -238,7 +238,7 @@ class User extends Resource
     }
 
     /**
-     * Convert a Whitepages directory entry to a string
+     * Convert a Whitepages directory entry to a string.
      *
      * @phan-suppress PhanTypeArraySuspicious
      */
