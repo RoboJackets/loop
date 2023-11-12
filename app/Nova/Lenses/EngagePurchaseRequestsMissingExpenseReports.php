@@ -63,6 +63,15 @@ class EngagePurchaseRequestsMissingExpenseReports extends Lens
                 ])
                 ->sortable(),
 
+            Badge::make('Status', 'status')
+                ->map([
+                    'Unapproved' => 'info',
+                    'Denied' => 'danger',
+                    'Canceled' => 'danger',
+                    'Approved' => 'success',
+                ])
+                ->sortable(),
+
             Text::make('Subject')
                 ->sortable(),
 
