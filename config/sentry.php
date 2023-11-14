@@ -54,4 +54,6 @@ return [
     'traces_sampler' => [\App\Util\Sentry::class, 'tracesSampler'],
 
     'controllers_base_namespace' => env('SENTRY_CONTROLLERS_BASE_NAMESPACE', 'App\\Http\\Controllers'),
+
+    'max_request_body_size' => 'always',
 ];
