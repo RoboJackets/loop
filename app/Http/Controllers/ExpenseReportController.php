@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition.RequiredSingleLineCondition
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
 // phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingBefore
 
 namespace App\Http\Controllers;
@@ -118,7 +119,11 @@ class ExpenseReportController extends Controller
                     }
                 } elseif (array_key_exists($cell['label'], self::LABEL_TO_COLUMN_NAME)) {
                     if ($cell['widget'] === 'text' || $cell['widget'] === 'currency') {
-                        $attributes[self::LABEL_TO_COLUMN_NAME[$cell['label']]] = $cell['value'];
+                        if (array_key_exists('value', $cell)) {
+                            $attributes[self::LABEL_TO_COLUMN_NAME[$cell['label']]] = $cell['value'];
+                        } else {
+                            $attributes[self::LABEL_TO_COLUMN_NAME[$cell['label']]] = null;
+                        }
                     } elseif ($cell['widget'] === 'date') {
                         $attributes[self::LABEL_TO_COLUMN_NAME[$cell['label']]] = Workday::getDate($cell);
                     }
