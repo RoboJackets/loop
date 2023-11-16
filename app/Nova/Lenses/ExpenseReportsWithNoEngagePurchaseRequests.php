@@ -6,7 +6,6 @@ namespace App\Nova\Lenses;
 
 use App\Nova\ExternalCommitteeMember;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
@@ -73,8 +72,7 @@ class ExpenseReportsWithNoEngagePurchaseRequests extends Lens
                 ->sortable(),
 
             Text::make('Memo')
-                ->sortable()
-                ->displayUsing(static fn (string $memo): string => Str::limit($memo, 50)),
+                ->sortable(),
 
             Currency::make('Amount')
                 ->sortable(),

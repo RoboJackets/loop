@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 // phpcs:disable SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition.RequiredSingleLineCondition
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed
 // phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingBefore
 
 namespace App\Http\Controllers;
@@ -118,7 +119,11 @@ class ExpenseReportController extends Controller
                     }
                 } elseif (array_key_exists($cell['label'], self::LABEL_TO_COLUMN_NAME)) {
                     if ($cell['widget'] === 'text' || $cell['widget'] === 'currency') {
-                        $attributes[self::LABEL_TO_COLUMN_NAME[$cell['label']]] = $cell['value'];
+                        if (array_key_exists('value', $cell)) {
+                            $attributes[self::LABEL_TO_COLUMN_NAME[$cell['label']]] = $cell['value'];
+                        } else {
+                            $attributes[self::LABEL_TO_COLUMN_NAME[$cell['label']]] = null;
+                        }
                     } elseif ($cell['widget'] === 'date') {
                         $attributes[self::LABEL_TO_COLUMN_NAME[$cell['label']]] = Workday::getDate($cell);
                     }
@@ -173,13 +178,20 @@ class ExpenseReportController extends Controller
             $c = 2;
         }
 
+        $memo_cell = Workday::sole($request['body']['children'][$c], 'wd:Document_Memo');
+        if (array_key_exists('value', $memo_cell)) {
+            $memo = $memo_cell['value'];
+        } else {
+            $memo = null;
+        }
+
         $expense_report_attributes = [
             'status' => Workday::sole($request['body']['children'][0], 'wd:Expense_Report_Status')['value'],
             'external_committee_member_id' => Workday::getInstanceId(
                 Workday::sole($request['body']['children'][0], 'wd:Expense_Payee_for_Expense_Documents--IS')
             ),
             'amount' => Workday::sole($request['body']['children'][0], 'wd:Total_Reimbursement_Amount')['value'],
-            'memo' => Workday::sole($request['body']['children'][$c], 'wd:Document_Memo')['value'],
+            'memo' => $memo,
         ];
 
         $approval_date = Workday::sole($request['body']['children'][$c], 'wd:Approval_Date');

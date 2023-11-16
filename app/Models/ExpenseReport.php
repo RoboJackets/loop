@@ -15,7 +15,7 @@ use Laravel\Scout\Searchable;
  * @property int $id
  * @property int $workday_instance_id
  * @property string $workday_expense_report_id
- * @property string $memo
+ * @property string|null $memo
  * @property \Illuminate\Support\Carbon $created_date
  * @property \Illuminate\Support\Carbon $approval_date
  * @property int $created_by_worker_id
