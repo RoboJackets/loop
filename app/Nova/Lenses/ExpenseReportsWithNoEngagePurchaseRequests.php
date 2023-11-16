@@ -73,8 +73,7 @@ class ExpenseReportsWithNoEngagePurchaseRequests extends Lens
                 ->sortable(),
 
             Text::make('Memo')
-                ->sortable()
-                ->displayUsing(static fn (string $memo): string => Str::limit($memo, 50)),
+                ->sortable(),
 
             Currency::make('Amount')
                 ->sortable(),

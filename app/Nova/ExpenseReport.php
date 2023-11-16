@@ -94,13 +94,7 @@ class ExpenseReport extends Resource
                 ->sortable(),
 
             Text::make('Memo')
-                ->sortable()
-                ->onlyOnDetail(),
-
-            Text::make('Memo')
-                ->sortable()
-                ->displayUsing(static fn (string $memo): string => Str::limit($memo))
-                ->onlyOnIndex(),
+                ->sortable(),
 
             Date::make('Created Date', 'created_date')
                 ->onlyOnDetail(),
