@@ -6,7 +6,6 @@ namespace App\Nova\Lenses;
 
 use App\Nova\ExternalCommitteeMember;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
