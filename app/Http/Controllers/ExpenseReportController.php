@@ -178,13 +178,20 @@ class ExpenseReportController extends Controller
             $c = 2;
         }
 
+        $memo_cell = Workday::sole($request['body']['children'][$c], 'wd:Document_Memo');
+        if (array_key_exists('value', $memo_cell)) {
+            $memo = $memo_cell['value'];
+        } else {
+            $memo = null;
+        }
+
         $expense_report_attributes = [
             'status' => Workday::sole($request['body']['children'][0], 'wd:Expense_Report_Status')['value'],
             'external_committee_member_id' => Workday::getInstanceId(
                 Workday::sole($request['body']['children'][0], 'wd:Expense_Payee_for_Expense_Documents--IS')
             ),
             'amount' => Workday::sole($request['body']['children'][0], 'wd:Total_Reimbursement_Amount')['value'],
-            'memo' => Workday::sole($request['body']['children'][$c], 'wd:Document_Memo')['value'],
+            'memo' => $memo,
         ];
 
         $approval_date = Workday::sole($request['body']['children'][$c], 'wd:Approval_Date');
