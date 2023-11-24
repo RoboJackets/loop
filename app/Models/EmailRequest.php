@@ -37,7 +37,7 @@ use Laravel\Scout\Searchable;
  * @property-read \App\Models\ExpenseReport|null $expenseReport
  * @property-read \App\Models\FiscalYear|null $fiscalYear
  * @property-read string|null $quickbooks_invoice_url
- * @property-read \App\Models\?string $sensible_extraction_url
+ * @property-read string|null $sensible_extraction_url
  * @property-read string|null $vendor_document_thumbnail_url
  *
  * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest newModelQuery()
@@ -115,8 +115,6 @@ class EmailRequest extends Model
 
     /**
      * Get the sensible_extraction_url attribute to show this request in the Sensible UI.
-     *
-     * @return ?string
      */
     public function getSensibleExtractionUrlAttribute(): ?string
     {
