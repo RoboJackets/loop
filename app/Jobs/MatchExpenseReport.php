@@ -38,6 +38,7 @@ class MatchExpenseReport implements ShouldBeUnique, ShouldQueue
      */
     public function __construct(private readonly ExpenseReport $expenseReport)
     {
+        $this->queue = 'expense-report-match';
     }
 
     /**
@@ -95,7 +96,7 @@ class MatchExpenseReport implements ShouldBeUnique, ShouldQueue
                     try {
                         $purchase_request = EngagePurchaseRequest::whereEngageRequestNumber($collection->sole())
                             ->whereDoesntHave('expenseReport')
-                            ->where('approved', '=', true)
+                            ->where('status', '=', 'Approved')
                             ->sole();
 
                         $purchase_request->expense_report_id = $this->expenseReport->id;
