@@ -23,7 +23,7 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $vendor_document_date
  * @property string $vendor_document_filename
  * @property string|null $sensible_extraction_uuid
- * @property mixed|null $sensible_output
+ * @property array|null $sensible_output
  * @property int|null $expense_report_id
  * @property int|null $quickbooks_invoice_id
  * @property int|null $quickbooks_invoice_document_number
@@ -80,6 +80,7 @@ class EmailRequest extends Model
         'vendor_document_date' => 'date',
         'email_sent_at' => 'datetime',
         'deleted_at' => 'datetime',
+        'sensible_output' => 'array',
     ];
 
     /**
