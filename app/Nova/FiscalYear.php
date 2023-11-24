@@ -76,6 +76,8 @@ class FiscalYear extends Resource
 
             HasMany::make('Engage Requests', 'engagePurchaseRequests', EngagePurchaseRequest::class),
 
+            HasMany::make('Email Requests'),
+
             HasMany::make('Expense Reports', 'expenseReports'),
 
             new Panel(

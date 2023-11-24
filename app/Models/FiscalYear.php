@@ -76,6 +76,16 @@ class FiscalYear extends Model
     }
 
     /**
+     * Get the email requests for this fiscal year.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\EmailRequest>
+     */
+    public function emailRequests(): HasMany
+    {
+        return $this->hasMany(EmailRequest::class);
+    }
+
+    /**
      * Get the expense reports for this fiscal year.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpenseReport>

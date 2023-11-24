@@ -168,6 +168,16 @@ class ExpenseReport extends Model
     }
 
     /**
+     * Get the email requests for this expense report.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\EmailRequest>
+     */
+    public function emailRequests(): HasMany
+    {
+        return $this->hasMany(EmailRequest::class);
+    }
+
+    /**
      * Get the workday_url attribute to show this ECM in the Workday UI.
      */
     public function getWorkdayUrlAttribute(): string

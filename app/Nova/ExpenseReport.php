@@ -121,13 +121,23 @@ class ExpenseReport extends Resource
 
             HasMany::make('Lines', 'lines', ExpenseReportLine::class),
 
-            ...($this->engagePurchaseRequests()->count() === 0 || $this->envelopes()->count() > 0 ? [
-                HasMany::make('DocuSign Envelopes', 'envelopes', DocuSignEnvelope::class),
-            ] : []),
+            ...($this->engagePurchaseRequests()->count() === 0 ||
+                $this->emailRequests()->count() === 0 ||
+                $this->envelopes()->count() > 0 ? [
+                    HasMany::make('DocuSign Envelopes', 'envelopes', DocuSignEnvelope::class),
+                ] : []),
 
-            ...($this->envelopes()->count() === 0 || $this->engagePurchaseRequests()->count() > 0 ? [
-                HasMany::make('Engage Requests', 'engagePurchaseRequests', EngagePurchaseRequest::class),
-            ] : []),
+            ...($this->envelopes()->count() === 0 ||
+                $this->emailRequests()->count() === 0 ||
+                $this->engagePurchaseRequests()->count() > 0 ? [
+                    HasMany::make('Engage Requests', 'engagePurchaseRequests', EngagePurchaseRequest::class),
+                ] : []),
+
+            ...($this->engagePurchaseRequests()->count() === 0 ||
+                $this->envelopes()->count() === 0 ||
+                $this->emailRequests()->count() > 0 ? [
+                    HasMany::make('Email Requests'),
+                ] : []),
 
             Panel::make('Timestamps', [
                 DateTime::make('Created', 'created_at')
