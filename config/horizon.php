@@ -193,7 +193,7 @@ return [
         'test' => [
             'main' => [
                 'connection' => 'redis',
-                'queue' => ['default', 'postmark', 'sensible', 'meilisearch', 'thumbnail'],
+                'queue' => ['default', 'postmark', 'sensible', 'meilisearch', 'thumbnail', 'expense-report-match'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,
