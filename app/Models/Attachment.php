@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.PHP.DisallowReference.DisallowedInheritingVariableByReference
+
 namespace App\Models;
 
 use App\Exceptions\CouldNotExtractEnvelopeUuid;
@@ -118,7 +120,6 @@ class Attachment extends Model
 
         if (Storage::disk('local')->exists($filename)) {
             $file_hash = hash_file('sha512', Storage::disk('local')->path($filename));
-
 
             Cache::lock(name: 'tika_extraction_'.$file_hash, seconds: 360)->block(
                 seconds: 330,
