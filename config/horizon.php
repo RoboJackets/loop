@@ -181,7 +181,7 @@ return [
             ],
             'meilisearch' => [
                 'connection' => 'redis',
-                'queue' => ['meilisearch'],
+                'queue' => ['meilisearch', 'expense-report-match'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,

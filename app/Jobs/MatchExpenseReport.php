@@ -38,6 +38,7 @@ class MatchExpenseReport implements ShouldBeUnique, ShouldQueue
      */
     public function __construct(private readonly ExpenseReport $expenseReport)
     {
+        $this->queue = 'expense-report-match';
     }
 
     /**
