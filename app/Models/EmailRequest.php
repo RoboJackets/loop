@@ -81,6 +81,10 @@ class EmailRequest extends Model
 
     public function getVendorDocumentThumbnailUrlAttribute(): ?string
     {
+        if ($this->vendor_document_filename === null) {
+            return null;
+        }
+
         $full_file_path = Storage::disk('local')->path($this->vendor_document_filename);
 
         if (! file_exists($full_file_path)) {
