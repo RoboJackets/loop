@@ -233,11 +233,11 @@ class EngagePurchaseRequest extends Model
         $collection = collect($matches['requestNumber'])->uniqueStrict();
 
         if ($collection->count() === 0) {
-            throw new CouldNotExtractEngagePurchaseRequestNumber("No request numbers found in text");
+            throw new CouldNotExtractEngagePurchaseRequestNumber('No request numbers found in text');
         }
 
         if ($collection->count() > 1) {
-            throw new CouldNotExtractEngagePurchaseRequestNumber("More than one request number found in text");
+            throw new CouldNotExtractEngagePurchaseRequestNumber('More than one request number found in text');
         }
 
         return intval($collection->sole());
