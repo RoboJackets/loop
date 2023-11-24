@@ -61,7 +61,7 @@ class EmailRequest extends Model
     }
 
     /**
-     * Get the sensible_extraction_url attribute to show this envelope in the Sensible UI.
+     * Get the sensible_extraction_url attribute to show this request in the Sensible UI.
      *
      * @return ?string
      */
