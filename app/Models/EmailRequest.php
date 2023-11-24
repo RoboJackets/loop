@@ -13,6 +13,58 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Scout\Searchable;
 
+/**
+ * An email request.
+ *
+ * @property int $id
+ * @property string|null $vendor_name
+ * @property float|null $vendor_document_amount
+ * @property string|null $vendor_document_reference
+ * @property \Illuminate\Support\Carbon|null $vendor_document_date
+ * @property string $vendor_document_filename
+ * @property string|null $sensible_extraction_uuid
+ * @property mixed|null $sensible_output
+ * @property int|null $expense_report_id
+ * @property int|null $quickbooks_invoice_id
+ * @property int|null $quickbooks_invoice_document_number
+ * @property int|null $fiscal_year_id
+ * @property \Illuminate\Support\Carbon|null $email_sent_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Attachment> $attachments
+ * @property-read int|null $attachments_count
+ * @property-read \App\Models\ExpenseReport|null $expenseReport
+ * @property-read \App\Models\FiscalYear|null $fiscalYear
+ * @property-read string|null $quickbooks_invoice_url
+ * @property-read \App\Models\?string $sensible_extraction_url
+ * @property-read string|null $vendor_document_thumbnail_url
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest query()
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest whereEmailSentAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest whereExpenseReportId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest whereFiscalYearId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest whereQuickbooksInvoiceDocumentNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest whereQuickbooksInvoiceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest whereSensibleExtractionUuid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest whereSensibleOutput($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest whereVendorDocumentAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest whereVendorDocumentDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest whereVendorDocumentFilename($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest whereVendorDocumentReference($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest whereVendorName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailRequest withoutTrashed()
+ *
+ * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ */
 class EmailRequest extends Model
 {
     use Searchable;
