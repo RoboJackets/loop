@@ -119,7 +119,8 @@ class EmailRequest extends Resource
             File::make('Vendor Document', 'vendor_document_filename')
                 ->disk('local')
                 ->thumbnail(fn (): ?string => $this->vendor_document_thumbnail_url)
-                ->rules('required'),
+                ->required()
+                ->creationRules('required'),
 
             Panel::make('Sensible', [
                 URL::make('View in Sensible', 'sensible_extraction_url')
