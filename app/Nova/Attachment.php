@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use App\Nova\Actions\CreateDocuSignEnvelopeFromAttachment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\BelongsTo;
@@ -139,17 +138,7 @@ class Attachment extends Resource
      */
     public function actions(NovaRequest $request): array
     {
-        return [
-            CreateDocuSignEnvelopeFromAttachment::make()
-                ->canSee(
-                    static fn (NovaRequest $request): bool => $request->user()->can('access-sensible')
-                )
-                ->canRun(
-                    static fn (NovaRequest $request, \App\Models\Attachment $attachment): bool => $request
-                        ->user()
-                        ->can('access-sensible')
-                ),
-        ];
+        return [];
     }
 
     /**

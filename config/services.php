@@ -50,5 +50,5 @@ return [
 
     'treasurer_email_address' => env('TREASURER_EMAIL_ADDRESS'),
 
-    'developer_email_address' => env('DEVELOPER_EMAIL_ADDRESS'),
+    'treasurer_name' => env('TREASURER_NAME'),
 ];

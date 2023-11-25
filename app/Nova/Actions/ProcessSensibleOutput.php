@@ -53,7 +53,7 @@ class ProcessSensibleOutput extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Illuminate\Support\Collection<int,\App\Models\DocuSignEnvelope>  $models
+     * @param  \Illuminate\Support\Collection<int,\App\Models\EmailRequest>  $models
      */
     public function handle(ActionFields $fields, Collection $models)
     {
