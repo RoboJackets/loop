@@ -3,7 +3,7 @@ Loop completed processing email request #{{ $email->id }} sent at {{ $email->ema
 The following information was extracted:
 
 Vendor: {{ $email->vendor_name }}
-Amount: ${{ $email->vendor_document_amount }}
+Amount: ${{ number_format(abs($email->vendor_document_amount), 2) }}
 Reference number: {{ $email->vendor_document_reference }}
 Document date: {{ $email->vendor_document_date?->format('Y-m-d') }}
 
