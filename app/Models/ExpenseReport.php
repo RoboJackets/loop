@@ -35,6 +35,10 @@ use Laravel\Scout\Searchable;
  * @property-read int|null $envelopes_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExpenseReportLine> $lines
  * @property-read int|null $lines_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EmailRequest> $emailRequests
+ * @property-read int|null $email_requests_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EngagePurchaseRequest> $engagePurchaseRequests
+ * @property-read int|null $engage_purchase_requests_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|ExpenseReport newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ExpenseReport newQuery()
@@ -165,6 +169,16 @@ class ExpenseReport extends Model
     public function engagePurchaseRequests(): HasMany
     {
         return $this->hasMany(EngagePurchaseRequest::class);
+    }
+
+    /**
+     * Get the email requests for this expense report.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\EmailRequest>
+     */
+    public function emailRequests(): HasMany
+    {
+        return $this->hasMany(EmailRequest::class);
     }
 
     /**

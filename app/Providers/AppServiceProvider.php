@@ -7,6 +7,7 @@ namespace App\Providers;
 use App\Models\Attachment;
 use App\Models\BankTransaction;
 use App\Models\DocuSignEnvelope;
+use App\Models\EmailRequest;
 use App\Models\EngagePurchaseRequest;
 use App\Models\ExpenseReport;
 use App\Models\ExpenseReportLine;
@@ -34,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Relation::morphMap([
             'docusign-envelope' => DocuSignEnvelope::class,
+            'email-request' => EmailRequest::class,
             'engage-purchase-request' => EngagePurchaseRequest::class,
             'expense-report-line' => ExpenseReportLine::class,
         ]);

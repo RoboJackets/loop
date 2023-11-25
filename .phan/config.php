@@ -29,6 +29,8 @@ return [
     'suppress_issue_types' => [
         'PhanAbstractStaticMethodCall',
         'PhanAccessNonStaticToStatic',
+        'PhanCompatibleStandaloneType',
+        'PhanCompatibleTrueType',
         'PhanInvalidFQSENInCallable',
         'PhanPartialTypeMismatchArgument',
         'PhanPartialTypeMismatchArgumentInternal',

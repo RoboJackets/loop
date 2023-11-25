@@ -22,6 +22,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $funding_allocations_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExpenseReport> $expenseReports
  * @property-read int|null $expense_reports_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EmailRequest> $emailRequests
+ * @property-read int|null $email_requests_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EngagePurchaseRequest> $engagePurchaseRequests
+ * @property-read int|null $engage_purchase_requests_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FiscalYear newQuery()
@@ -73,6 +77,16 @@ class FiscalYear extends Model
     public function engagePurchaseRequests(): HasMany
     {
         return $this->hasMany(EngagePurchaseRequest::class);
+    }
+
+    /**
+     * Get the email requests for this fiscal year.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\EmailRequest>
+     */
+    public function emailRequests(): HasMany
+    {
+        return $this->hasMany(EmailRequest::class);
     }
 
     /**
