@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/v1/document/{envelope}', DocumentDownloadController::class)
+Route::get('/v1/document/{email}', DocumentDownloadController::class)
     ->name('document.download')
     ->middleware(['signed']);
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Models\DocuSignEnvelope;
+use App\Models\EmailRequest;
 use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
 
 class ProcessSensibleWebhook extends ProcessWebhookJob
@@ -25,12 +25,11 @@ class ProcessSensibleWebhook extends ProcessWebhookJob
     {
         $payload = $this->webhookCall->payload;
 
-        $envelope = DocuSignEnvelope::whereEnvelopeUuid($payload['payload'])->sole();
+        $email = EmailRequest::whereId($payload['payload'])->sole();
+        $email->sensible_extraction_uuid = $payload['id'];
+        $email->sensible_output = $payload;
+        $email->save();
 
-        $envelope->sensible_extraction_uuid = $payload['id'];
-        $envelope->sensible_output = $payload;
-        $envelope->save();
-
-        ProcessSensibleOutput::dispatch($envelope);
+        ProcessSensibleOutput::dispatch($email);
     }
 }

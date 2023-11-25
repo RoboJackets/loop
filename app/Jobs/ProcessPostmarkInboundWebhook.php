@@ -6,8 +6,9 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Models\Attachment;
-use App\Models\DocuSignEnvelope;
+use App\Models\EmailRequest;
+use App\Models\FiscalYear;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
 
@@ -26,96 +27,32 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
      * Execute the job.
      *
      * @phan-suppress PhanTypeArraySuspiciousNullable
-     * @phan-suppress PhanPossiblyFalseTypeArgument
      */
     public function handle(): void
     {
         $payload = $this->webhookCall->payload;
-        $subject = $payload['Subject'];
+        $date = Carbon::parse($payload['Date']);
 
-        if ($subject === 'Test subject') {
-            return;
-        }
-
-        if (str_starts_with($subject, 'Completed: ') || str_starts_with($subject, 'Fwd: Completed: ')) {
-            /**
-             * Type hint for static analyzers.
-             *
-             * @var array<string, array<array<string, string>>> $payload
-             */
-            $attachments = collect($payload['Attachments']);
-
-            $summary_attachment = $attachments->sole(
-                static fn (array $value, int $key): bool => $value['Name'] === 'Summary.pdf'
-            );
-
-            $sofo_attachment = $attachments->sole(
-                static fn (array $value, int $key): bool => str_starts_with($value['Name'], 'SOFO')
-                    && preg_match(self::FILENAME_SANITIZATION_REGEX, $value['Name']) === 1
-            );
-
-            $envelope_uuid = DocuSignEnvelope::getEnvelopeUuidFromSummaryPdf(
-                base64_decode($summary_attachment['Content'], true)
-            );
-
-            $attachments->each(static function (array $value, int $key): void {
-                if ($value['Name'] === 'Summary.pdf' || str_starts_with($value['Name'], 'SOFO')) {
-                    return;
-                }
-
-                if (preg_match(self::FILENAME_SANITIZATION_REGEX, $value['Name']) !== 1) {
-                    throw new \Exception('Filename does not match regex');
-                }
-            });
-
-            if (DocuSignEnvelope::whereEnvelopeUuid($envelope_uuid)->exists()) {
-                return;
+        collect($payload['Attachments'])->each(static function (array $value, int $key) use ($date): void {
+            if (preg_match(self::FILENAME_SANITIZATION_REGEX, $value['Name']) !== 1) {
+                throw new \Exception('Filename does not match regex');
             }
 
-            $envelope = DocuSignEnvelope::create([
-                'envelope_uuid' => $envelope_uuid,
-                'sofo_form_filename' => 'docusign/'.$envelope_uuid.'/'.$sofo_attachment['Name'],
-                'summary_filename' => 'docusign/'.$envelope_uuid.'/Summary.pdf',
+            $email = EmailRequest::create([
+                'email_sent_at' => $date,
+                'fiscal_year_id' => FiscalYear::fromDate($date)->id,
             ]);
 
-            Storage::makeDirectory('docusign/'.$envelope_uuid);
+            $disk_path = 'email/'.$email->id.'/'.$value['Name'];
 
-            Storage::disk('local')
-                ->put(
-                    'docusign/'.$envelope_uuid.'/Summary.pdf',
-                    base64_decode($summary_attachment['Content'], true)
-                );
+            // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
+            Storage::disk('local')->put($disk_path, base64_decode($value['Content'], true));
 
-            Storage::disk('local')
-                ->put(
-                    'docusign/'.$envelope_uuid.'/'.$sofo_attachment['Name'],
-                    base64_decode($sofo_attachment['Content'], true)
-                );
+            $email->vendor_document_filename = $disk_path;
+            $email->save();
 
-            $attachments->each(static function (array $value, int $key) use ($envelope): void {
-                if ($value['Name'] === 'Summary.pdf' || str_starts_with($value['Name'], 'SOFO')) {
-                    return;
-                }
-
-                if (preg_match(self::FILENAME_SANITIZATION_REGEX, $value['Name']) !== 1) {
-                    throw new \Exception('Filename does not match regex');
-                }
-
-                $disk_path = 'docusign/'.$envelope->envelope_uuid.'/'.$value['Name'];
-
-                // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
-                Storage::disk('local')->put($disk_path, base64_decode($value['Content'], true));
-
-                Attachment::create([
-                    'attachable_type' => $envelope->getMorphClass(),
-                    'attachable_id' => $envelope->id,
-                    'filename' => $disk_path,
-                ]);
-            });
-
-            SubmitDocuSignEnvelopeToSensible::dispatch($envelope);
-        } else {
-            throw new \Exception('Unrecognized subject line');
-        }
+            SubmitEmailRequestToSensible::dispatch($email);
+            GenerateThumbnail::dispatch(Storage::disk('local')->path($email->vendor_document_filename));
+        });
     }
 }

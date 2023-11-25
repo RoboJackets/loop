@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\RunSensibleExtraction;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Code;
@@ -96,9 +97,7 @@ class EmailRequest extends Resource
             BelongsTo::make('Workday Expense Report', 'expenseReport', ExpenseReport::class)
                 ->sortable()
                 ->nullable()
-                ->searchable()
-                ->hideWhenCreating()
-                ->hideWhenUpdating(),
+                ->searchable(),
 
             URL::make('QuickBooks Invoice', 'quickbooks_invoice_url')
                 ->displayUsing(fn (): ?int => $this->quickbooks_invoice_document_number)
@@ -119,7 +118,8 @@ class EmailRequest extends Resource
             File::make('Vendor Document', 'vendor_document_filename')
                 ->disk('local')
                 ->thumbnail(fn (): ?string => $this->vendor_document_thumbnail_url)
-                ->rules('required'),
+                ->required()
+                ->creationRules('required'),
 
             Panel::make('Sensible', [
                 URL::make('View in Sensible', 'sensible_extraction_url')
@@ -191,7 +191,9 @@ class EmailRequest extends Resource
      */
     public function actions(NovaRequest $request): array
     {
-        return [];
+        return [
+            RunSensibleExtraction::make(),
+        ];
     }
 
     /**

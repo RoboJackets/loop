@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Models\DocuSignEnvelope;
+use App\Models\EmailRequest;
 use App\Util\Sentry;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
@@ -15,7 +15,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\URL;
 
-class SubmitDocuSignEnvelopeToSensible implements ShouldBeUnique, ShouldQueue
+class SubmitEmailRequestToSensible implements ShouldBeUnique, ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -25,7 +25,7 @@ class SubmitDocuSignEnvelopeToSensible implements ShouldBeUnique, ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(private readonly DocuSignEnvelope $envelope)
+    public function __construct(private readonly EmailRequest $emailRequest)
     {
         $this->queue = 'sensible';
     }
@@ -54,11 +54,11 @@ class SubmitDocuSignEnvelopeToSensible implements ShouldBeUnique, ShouldQueue
                             'content_type' => 'application/pdf',
                             'document_url' => URL::signedRoute(
                                 'document.download',
-                                ['envelope' => $this->envelope],
+                                ['email' => $this->emailRequest->id],
                                 now()->addDay()
                             ),
                             'webhook' => [
-                                'payload' => $this->envelope->envelope_uuid,
+                                'payload' => $this->emailRequest->id,
                                 'url' => URL::signedRoute('webhook-client-sensible', [], now()->addDay()),
                             ],
                         ],
@@ -68,8 +68,8 @@ class SubmitDocuSignEnvelopeToSensible implements ShouldBeUnique, ShouldQueue
             )
         );
 
-        $this->envelope->sensible_extraction_uuid = $json['id'];
-        $this->envelope->save();
+        $this->emailRequest->sensible_extraction_uuid = $json['id'];
+        $this->emailRequest->save();
     }
 
     /**
@@ -77,6 +77,6 @@ class SubmitDocuSignEnvelopeToSensible implements ShouldBeUnique, ShouldQueue
      */
     public function uniqueId(): string
     {
-        return strval($this->envelope->id);
+        return strval($this->emailRequest->id);
     }
 }

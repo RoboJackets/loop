@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use App\Jobs\SubmitDocuSignEnvelopeToSensible;
+use App\Jobs\SubmitEmailRequestToSensible;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
@@ -76,17 +76,17 @@ class RunSensibleExtraction extends Action
     /**
      * Perform the action on the given models.
      *
-     * @param  \Illuminate\Support\Collection<int,\App\Models\DocuSignEnvelope>  $models
+     * @param  \Illuminate\Support\Collection<int,\App\Models\EmailRequest>  $models
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        $envelope = $models->sole();
+        $email = $models->sole();
 
-        SubmitDocuSignEnvelopeToSensible::dispatchSync($envelope);
+        SubmitEmailRequestToSensible::dispatchSync($email);
 
-        $envelope->refresh();
+        $email->refresh();
 
-        return self::openInNewTab($envelope->sensible_extraction_url);
+        return self::openInNewTab($email->sensible_extraction_url);
     }
 
     /**
