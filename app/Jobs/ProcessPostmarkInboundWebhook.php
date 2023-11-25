@@ -52,7 +52,7 @@ class ProcessPostmarkInboundWebhook extends ProcessWebhookJob
             $email->save();
 
             SubmitEmailRequestToSensible::dispatch($email);
-            GenerateThumbnail::dispatch($disk_path);
+            GenerateThumbnail::dispatch(Storage::disk('local')->path($email->vendor_document_filename));
         });
     }
 }
