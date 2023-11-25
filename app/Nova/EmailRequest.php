@@ -96,9 +96,7 @@ class EmailRequest extends Resource
             BelongsTo::make('Workday Expense Report', 'expenseReport', ExpenseReport::class)
                 ->sortable()
                 ->nullable()
-                ->searchable()
-                ->hideWhenCreating()
-                ->hideWhenUpdating(),
+                ->searchable(),
 
             URL::make('QuickBooks Invoice', 'quickbooks_invoice_url')
                 ->displayUsing(fn (): ?int => $this->quickbooks_invoice_document_number)
