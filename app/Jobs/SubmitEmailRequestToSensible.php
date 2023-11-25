@@ -51,7 +51,6 @@ class SubmitEmailRequestToSensible implements ShouldBeUnique, ShouldQueue
                     config('services.sensible.url'),
                     [
                         'json' => [
-                            'content_type' => 'application/pdf',
                             'document_url' => URL::signedRoute(
                                 'document.download',
                                 ['email' => $this->emailRequest->id],
