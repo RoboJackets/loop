@@ -84,6 +84,16 @@ class EmailRequest extends Model
     ];
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'email_sent_at',
+        'fiscal_year_id',
+    ];
+
+    /**
      * Get the fiscal year for this request.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\FiscalYear, self>
