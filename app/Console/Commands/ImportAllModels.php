@@ -48,9 +48,6 @@ class ImportAllModels extends Command
             'model' => DocuSignEnvelope::class,
         ]);
         $this->call('scout:import', [
-            'model' => EmailRequest::class,
-        ]);
-        $this->call('scout:import', [
             'model' => EngagePurchaseRequest::class,
         ]);
         $this->call('scout:import', [
@@ -73,6 +70,9 @@ class ImportAllModels extends Command
         ]);
         Attachment::all()->each(static function (Attachment $attachment, int $key): void {
             $attachment->searchable();
+        });
+        EmailRequest::all()->each(static function (EmailRequest $emailRequest, int $key): void {
+            $emailRequest->searchable();
         });
 
         return Command::SUCCESS;
