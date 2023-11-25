@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\RunSensibleExtraction;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Code;
@@ -190,7 +191,9 @@ class EmailRequest extends Resource
      */
     public function actions(NovaRequest $request): array
     {
-        return [];
+        return [
+            RunSensibleExtraction::make(),
+        ];
     }
 
     /**
