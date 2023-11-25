@@ -2527,17 +2527,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "4.32.2",
+            "version": "4.32.6",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "fb2495d29f907ee5fa5185f298566aa05dbf538c"
+                "reference": "eb3d46d7b798f54fb5ce41e23d6f0e2e912f18f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-fb2495d29f907ee5fa5185f298566aa05dbf538c-zip-45d431.zip",
-                "reference": "fb2495d29f907ee5fa5185f298566aa05dbf538c",
-                "shasum": "50d5974ca567bca5039fa9e3802af6111bd4b60b"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-eb3d46d7b798f54fb5ce41e23d6f0e2e912f18f8-zip-a2d616.zip",
+                "reference": "eb3d46d7b798f54fb5ce41e23d6f0e2e912f18f8",
+                "shasum": "248288202316049033fad6268a0e6844135b882a"
             },
             "require": {
                 "brick/money": "^0.5.0|^0.6.0|^0.7.0|^0.8.0",
@@ -2647,9 +2647,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v4.32.2"
+                "source": "https://github.com/laravel/nova/tree/v4.32.6"
             },
-            "time": "2023-11-23T13:57:00+00:00"
+            "time": "2023-11-25T17:43:14+00:00"
         },
         {
             "name": "laravel/sanctum",
