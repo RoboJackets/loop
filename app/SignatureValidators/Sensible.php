@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace App\SignatureValidators;
 
-use App\Models\DocuSignEnvelope;
+use App\Models\EmailRequest;
 use Illuminate\Http\Request;
 use Spatie\WebhookClient\SignatureValidator\SignatureValidator;
 use Spatie\WebhookClient\WebhookConfig;
@@ -23,6 +23,6 @@ class Sensible implements SignatureValidator
      */
     public function isValid(Request $request, WebhookConfig $config): bool
     {
-        return DocuSignEnvelope::whereEnvelopeUuid($request->payload)->exists();
+        return EmailRequest::whereId($request->payload)->exists();
     }
 }
