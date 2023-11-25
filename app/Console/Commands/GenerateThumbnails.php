@@ -10,6 +10,7 @@ namespace App\Console\Commands;
 use App\Jobs\GenerateThumbnail;
 use App\Models\Attachment;
 use App\Models\DocuSignEnvelope;
+use App\Models\EmailRequest;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 
@@ -42,6 +43,9 @@ class GenerateThumbnails extends Command
             if ($envelope->summary_filename !== null) {
                 GenerateThumbnail::dispatch(Storage::disk('local')->path($envelope->summary_filename));
             }
+        });
+        EmailRequest::all()->each(static function (EmailRequest $emailRequest, int $key): void {
+            GenerateThumbnail::dispatch(Storage::disk('local')->path($emailRequest->vendor_document_filename));
         });
 
         return Command::SUCCESS;
