@@ -175,6 +175,19 @@ return [
                     'quickbooks_invoice_document_number',
                 ],
             ],
+            \App\Models\EmailRequest::class => [
+                'displayedAttributes' => [
+                    'id',
+                ],
+                'searchableAttributes' => [
+                    'vendor_document_reference',
+                    'vendor_name',
+                    'vendor_document_amount',
+                    'quickbooks_invoice_document_number',
+                    'vendor_document_filename',
+                    'full_text',
+                ],
+            ],
             \App\Models\EngagePurchaseRequest::class => [
                 'displayedAttributes' => [
                     'id',

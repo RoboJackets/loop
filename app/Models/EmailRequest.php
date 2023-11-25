@@ -6,10 +6,14 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Exceptions\CouldNotExtractEnvelopeUuid;
+use App\Util\Sentry;
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Scout\Searchable;
 
@@ -121,6 +125,56 @@ class EmailRequest extends Model
     public function attachments(): MorphMany
     {
         return $this->morphMany(Attachment::class, 'attachable');
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string,int|string|null>
+     */
+    public function toSearchableArray(): array
+    {
+        $array = $this->toArray();
+
+        $filename = $this->vendor_document_filename;
+
+        if (Storage::disk('local')->exists($filename)) {
+            $file_hash = hash_file('sha512', Storage::disk('local')->path($filename));
+
+            Cache::lock(name: 'tika_extraction_'.$file_hash, seconds: 360)->block(
+                seconds: 330,
+                callback: static function () use ($file_hash, $filename, &$array): void {
+                    $array['full_text'] = Cache::rememberForever(
+                        'tika_file_'.$file_hash,
+                        static fn (): string => Sentry::wrapWithChildSpan(
+                            'tika.extract',
+                            static fn (): string => (new Client(
+                                [
+                                    'base_uri' => config('services.tika.url'),
+                                    'headers' => [
+                                        'Accept' => 'text/plain',
+                                        'Content-Type' => 'application/octet-stream',
+                                    ],
+                                    'allow_redirects' => false,
+                                    'connect_timeout' => 10,
+                                    'read_timeout' => 60,
+                                    'synchronous' => true,
+                                ]
+                            ))->put(
+                                '/tika',
+                                [
+                                    'body' => Storage::disk('local')->get($filename),
+                                ]
+                            )->getBody()->getContents()
+                        )
+                    );
+                }
+            );
+        } else {
+            $array['full_text'] = null;
+        }
+
+        return $array;
     }
 
     /**

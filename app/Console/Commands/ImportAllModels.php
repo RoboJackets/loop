@@ -8,7 +8,9 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Models\Attachment;
+use App\Models\BankTransaction;
 use App\Models\DocuSignEnvelope;
+use App\Models\EmailRequest;
 use App\Models\EngagePurchaseRequest;
 use App\Models\ExpenseReport;
 use App\Models\ExpenseReportLine;
@@ -40,7 +42,13 @@ class ImportAllModels extends Command
     public function handle(): int
     {
         $this->call('scout:import', [
+            'model' => BankTransaction::class,
+        ]);
+        $this->call('scout:import', [
             'model' => DocuSignEnvelope::class,
+        ]);
+        $this->call('scout:import', [
+            'model' => EmailRequest::class,
         ]);
         $this->call('scout:import', [
             'model' => EngagePurchaseRequest::class,
