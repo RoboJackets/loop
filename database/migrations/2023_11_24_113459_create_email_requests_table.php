@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
             $table->string('vendor_name')->nullable();
             $table->decimal('vendor_document_amount', 8, 2)->nullable();
-            $table->string('vendor_document_reference')->nullable();
+            $table->string('vendor_document_reference')->nullable()->unique();
             $table->date('vendor_document_date')->nullable();
             $table->string('vendor_document_filename')->nullable()->unique();
             $table->uuid('sensible_extraction_uuid')->nullable()->unique();
