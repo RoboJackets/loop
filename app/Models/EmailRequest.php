@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 // phpcs:disable Squiz.WhiteSpace.OperatorSpacing.SpacingBefore
+// phpcs:disable SlevomatCodingStandard.PHP.DisallowReference.DisallowedInheritingVariableByReference
 
 namespace App\Models;
 
-use App\Exceptions\CouldNotExtractEnvelopeUuid;
 use App\Util\Sentry;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
