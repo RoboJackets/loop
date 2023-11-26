@@ -6,6 +6,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\RunSensibleExtraction;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\Currency;
@@ -71,6 +72,12 @@ class EmailRequest extends Resource
                 ->sortable()
                 ->required()
                 ->rules('required'),
+
+            Avatar::make('Thumbnail', fn (): ?string => $this->thumbnail_path)
+                ->disk('public')
+                ->squared()
+                ->disableDownload()
+                ->onlyOnIndex(),
 
             Text::make('Vendor', 'vendor_name')
                 ->sortable()

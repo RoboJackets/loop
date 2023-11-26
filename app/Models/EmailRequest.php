@@ -194,7 +194,7 @@ class EmailRequest extends Model
             : 'https://app.qbo.intuit.com/app/invoice?txnId='.$this->quickbooks_invoice_id;
     }
 
-    public function getVendorDocumentThumbnailUrlAttribute(): ?string
+    public function getThumbnailPathAttribute(): ?string
     {
         if ($this->vendor_document_filename === null) {
             return null;
@@ -206,12 +206,21 @@ class EmailRequest extends Model
             return null;
         }
 
-        $thumbnail_relative_path = '/thumbnail/'.hash_file('sha512', $full_file_path).'.png';
+        $extension = str_ends_with(strtolower($full_file_path), '.jpg') ? '.jpg' : '.png';
+
+        $thumbnail_relative_path = '/thumbnail/'.hash_file('sha512', $full_file_path).$extension;
 
         if (! Storage::disk('public')->exists($thumbnail_relative_path)) {
             return null;
         }
 
-        return '/storage'.$thumbnail_relative_path;
+        return $thumbnail_relative_path;
+    }
+
+    public function getVendorDocumentThumbnailUrlAttribute(): ?string
+    {
+        $thumbnail_relative_path = $this->getThumbnailPathAttribute();
+
+        return $thumbnail_relative_path === null ? null : '/storage'.$thumbnail_relative_path;
     }
 }
