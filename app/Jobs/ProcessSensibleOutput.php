@@ -43,6 +43,9 @@ class ProcessSensibleOutput implements ShouldQueue
 
     /**
      * Execute the job.
+     *
+     * @phan-suppress PhanPossiblyNullTypeArgumentInternal
+     * @phan-suppress PhanTypeArraySuspiciousNullable
      */
     public function handle(): void
     {
@@ -54,6 +57,7 @@ class ProcessSensibleOutput implements ShouldQueue
             $email->sensible_output['parsed_document']['invoice'] === null
         ) {
             Mail::send(new EmailRequestProcessed($this->emailRequest, ['Sensible could not extract any fields']));
+
             return;
         }
 
