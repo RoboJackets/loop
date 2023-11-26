@@ -93,6 +93,9 @@ class ConvertEmailRequestToAttachment extends Action
             Select::make('Email Request', 'other_request_id')
                 ->options(
                     static fn (): array => EmailRequest::where('id', '!=', $resourceId)
+                        ->whereNotNull('vendor_document_date')
+                        ->whereNotNull('vendor_name')
+                        ->whereNotNull('vendor_document_amount')
                         ->get()
                         ->mapWithKeys(static fn (EmailRequest $emailRequest): array => [
                             strval($emailRequest->id) => $emailRequest->id.
