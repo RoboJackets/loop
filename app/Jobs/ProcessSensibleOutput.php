@@ -48,6 +48,15 @@ class ProcessSensibleOutput implements ShouldQueue
     {
         $email = $this->emailRequest;
 
+        if (
+            ! array_key_exists('parsed_document', $email->sensible_output) ||
+            ! array_key_exists('invoice', $email->sensible_output['parsed_document']) ||
+            $email->sensible_output['parsed_document']['invoice'] === null
+        ) {
+            Mail::send(new EmailRequestProcessed($this->emailRequest, ['Sensible could not extract any fields']));
+            return;
+        }
+
         $email->vendor_name = $this->getValueOrAddValidationError('vendor_name');
         $email->vendor_document_amount = $this->getValueOrAddValidationError('invoice_total');
         $email->vendor_document_reference = $this->getValueOrAddValidationError('invoice_id');
