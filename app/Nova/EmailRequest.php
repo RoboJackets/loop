@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\ConvertEmailRequestToAttachment;
 use App\Nova\Actions\ProcessSensibleOutput;
 use App\Nova\Actions\RunSensibleExtraction;
 use Illuminate\Http\Request;
@@ -200,6 +201,7 @@ class EmailRequest extends Resource
     public function actions(NovaRequest $request): array
     {
         return [
+            ConvertEmailRequestToAttachment::make(),
             ProcessSensibleOutput::make(),
             RunSensibleExtraction::make(),
         ];

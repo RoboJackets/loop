@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Traits\GetMorphClassStatic;
 use App\Util\Sentry;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
@@ -71,6 +72,7 @@ use Laravel\Scout\Searchable;
  */
 class EmailRequest extends Model
 {
+    use GetMorphClassStatic;
     use Searchable;
     use SoftDeletes;
 

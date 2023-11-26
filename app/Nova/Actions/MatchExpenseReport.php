@@ -51,7 +51,7 @@ class MatchExpenseReport extends Action
         try {
             $purchase_request = EngagePurchaseRequest::whereExpenseReportId($expense_report->id)->sole();
 
-            return Action::visit(name: route(
+            return Action::visit(route(
                 'nova.pages.detail',
                 [
                     'resource' => \App\Nova\EngagePurchaseRequest::uriKey(),
