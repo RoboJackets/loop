@@ -16,6 +16,7 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
@@ -129,6 +130,8 @@ class EmailRequest extends Resource
                 ->thumbnail(fn (): ?string => $this->vendor_document_thumbnail_url)
                 ->required()
                 ->creationRules('required'),
+
+            MorphMany::make('Attachments', 'attachments', Attachment::class),
 
             Panel::make('Sensible', [
                 URL::make('View in Sensible', 'sensible_extraction_url')
