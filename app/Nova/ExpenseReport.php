@@ -86,6 +86,7 @@ class ExpenseReport extends Resource
                     'Approved' => 'success',
                     'Paid' => 'success',
                     'Canceled' => 'danger',
+                    'Sent Back' => 'danger',
                 ])
                 ->sortable(),
 
