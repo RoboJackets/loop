@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('email_requests', function (Blueprint $table) {
+        Schema::table('email_requests', static function (Blueprint $table): void {
             $table->string('quickbooks_invoice_document_number')->change();
         });
     }
@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('email_requests', function (Blueprint $table) {
+        Schema::table('email_requests', static function (Blueprint $table): void {
             $table->unsignedSmallInteger('quickbooks_invoice_document_number')->change();
         });
     }
