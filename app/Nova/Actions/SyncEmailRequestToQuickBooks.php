@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
+// phpcs:disable Generic.Formatting.SpaceBeforeCast.NoSpace
 // phpcs:disable SlevomatCodingStandard.PHP.RequireExplicitAssertion.RequiredExplicitAssertion
 
 namespace App\Nova\Actions;
@@ -24,7 +25,7 @@ use QuickBooksOnline\API\Data\IPPInvoice;
 use QuickBooksOnline\API\Data\IPPReferenceType;
 use QuickBooksOnline\API\Data\IPPReimburseCharge;
 
-class SyncEngagePurchaseRequestToQuickBooks extends Action
+class SyncEmailRequestToQuickBooks extends Action
 {
     /**
      * The displayable name of the action.
@@ -52,19 +53,19 @@ class SyncEngagePurchaseRequestToQuickBooks extends Action
      *
      * @var string
      */
-    public $confirmText = 'Select the corresponding billable expense for this Engage request.';
+    public $confirmText = 'Select the corresponding billable expense for this email request.';
 
     /**
      * Perform the action on the given models.
      *
-     * @param  \Illuminate\Support\Collection<int,\App\Models\EngagePurchaseRequest>  $models
+     * @param  \Illuminate\Support\Collection<int,\App\Models\EmailRequest>  $models
      *
      * @phan-suppress PhanTypeMismatchProperty
      */
     public function handle(ActionFields $fields, Collection $models)
     {
         $data_service = QuickBooks::getDataService(Auth::user());
-        $engage_request = $models->sole();
+        $email_request = $models->sole();
 
         $reimburse_charge = Sentry::wrapWithChildSpan(
             'quickbooks.get_reimburse_charge',
@@ -91,11 +92,12 @@ class SyncEngagePurchaseRequestToQuickBooks extends Action
         $item_ref = new IPPReferenceType();
         $item_ref->value = config('quickbooks.invoice.item_id');
 
-        $invoice->TxnDate = $engage_request->submitted_at->format('Y/m/d');
-        $invoice->DueDate = $engage_request->submitted_at->addDays(30)->format('Y/m/d');
+        $invoice->TxnDate = $email_request->email_sent_at->format('Y/m/d');
+        $invoice->DueDate = $email_request->email_sent_at->addDays(30)->format('Y/m/d');
         $invoice->CurrencyRef = $currency_ref;
-        $invoice->DocNumber = $engage_request->engage_request_number;
-        $invoice->PrivateNote = $reimburse_charge->PrivateNote.' | '.$engage_request->subject;
+        $invoice->DocNumber = 'ME'.str_pad((string) $email_request->id, 3, '0', STR_PAD_LEFT);
+        $invoice->PrivateNote = $reimburse_charge->PrivateNote.' | '.$email_request->vendor_name.' | '.
+            $email_request->vendor_document_reference;
 
         /** @var \QuickBooksOnline\API\Data\IPPLine $line */
         foreach ($invoice->Line as $line) {
@@ -106,7 +108,8 @@ class SyncEngagePurchaseRequestToQuickBooks extends Action
                 $line->LinkedTxn?->TxnType === 'ReimburseCharge' &&
                 $line->LinkedTxn?->TxnId === $fields->quickbooks_reimburse_charge_id
             ) {
-                $line->Description = $reimburse_charge->PrivateNote.' | '.$engage_request->subject;
+                $line->Description = $reimburse_charge->PrivateNote.' | '.$email_request->vendor_name.' | '.
+                    $email_request->vendor_document_reference;
                 $line->SalesItemLineDetail->ItemRef = $item_ref;
                 $line->SalesItemLineDetail->ServiceDate = $reimburse_charge->TxnDate;
             }
@@ -118,17 +121,19 @@ class SyncEngagePurchaseRequestToQuickBooks extends Action
             static fn (): IPPInvoice => $data_service->Update($invoice)
         );
 
-        $engage_request->quickbooks_invoice_id = $invoice->Id;
-        $engage_request->quickbooks_invoice_document_number = $invoice->DocNumber;
-        $engage_request->save();
+        $email_request->quickbooks_invoice_id = $invoice->Id;
+        $email_request->quickbooks_invoice_document_number = $invoice->DocNumber;
+        $email_request->save();
 
-        $engage_request->attachments->each(
-            static function (Attachment $attachment, int $key) use ($data_service, $engage_request): void {
-                QuickBooks::uploadAttachmentToInvoice($data_service, $engage_request, $attachment->filename);
+        QuickBooks::uploadAttachmentToInvoice($data_service, $email_request, $email_request->vendor_document_filename);
+
+        $email_request->attachments->each(
+            static function (Attachment $attachment, int $key) use ($data_service, $email_request): void {
+                QuickBooks::uploadAttachmentToInvoice($data_service, $email_request, $attachment->filename);
             }
         );
 
-        return Action::openInNewTab($engage_request->quickbooks_invoice_url);
+        return Action::openInNewTab($email_request->quickbooks_invoice_url);
     }
 
     /**
@@ -213,20 +218,20 @@ class SyncEngagePurchaseRequestToQuickBooks extends Action
                         )
                     );
 
-                    $purchase_request = EngagePurchaseRequest::whereId(
+                    $email_request = EmailRequest::whereId(
                         $request->resourceId ?? $request->resources
                     )->sole();
 
-                    if (floatval($reimburse_charge->Amount) !== $purchase_request->approved_amount) {
+                    if (floatval($reimburse_charge->Amount) !== $email_request->vendor_document_amount) {
                         if (
-                            $purchase_request->expenseReport !== null &&
-                            floatval($reimburse_charge->Amount) === $purchase_request->expenseReport->amount
+                            $email_request->expenseReport !== null &&
+                            floatval($reimburse_charge->Amount) === $email_request->expenseReport->amount
                         ) {
                             return;
                         }
 
                         $fail(
-                            'Billable expense amount does not match the approved amount for this Engage purchase '.
+                            'Billable expense amount does not match the vendor document amount for this email '.
                             'request.'
                         );
                     }

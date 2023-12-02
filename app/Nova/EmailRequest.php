@@ -7,6 +7,7 @@ namespace App\Nova;
 use App\Nova\Actions\ConvertEmailRequestToAttachment;
 use App\Nova\Actions\ProcessSensibleOutput;
 use App\Nova\Actions\RunSensibleExtraction;
+use App\Nova\Actions\SyncEmailRequestToQuickBooks;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\BelongsTo;
@@ -207,6 +208,13 @@ class EmailRequest extends Resource
             ConvertEmailRequestToAttachment::make(),
             ProcessSensibleOutput::make(),
             RunSensibleExtraction::make(),
+            SyncEmailRequestToQuickBooks::make()
+                ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('access-quickbooks'))
+                ->canRun(
+                    static fn (NovaRequest $request, \App\Models\EmailRequest $email): bool => $request
+                        ->user()
+                        ->can('access-quickbooks')
+                ),
         ];
     }
 
