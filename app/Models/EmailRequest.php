@@ -31,7 +31,7 @@ use Laravel\Scout\Searchable;
  * @property array|null $sensible_output
  * @property int|null $expense_report_id
  * @property int|null $quickbooks_invoice_id
- * @property int|null $quickbooks_invoice_document_number
+ * @property string|null $quickbooks_invoice_document_number
  * @property int|null $fiscal_year_id
  * @property \Illuminate\Support\Carbon|null $email_sent_at
  * @property \Illuminate\Support\Carbon|null $created_at
