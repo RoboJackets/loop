@@ -111,7 +111,7 @@ class EmailRequest extends Resource
                 ->searchable(),
 
             URL::make('QuickBooks Invoice', 'quickbooks_invoice_url')
-                ->displayUsing(fn (): ?int => $this->quickbooks_invoice_document_number)
+                ->displayUsing(fn (): ?string => $this->quickbooks_invoice_document_number)
                 ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks'))
                 ->hideWhenUpdating()
                 ->hideWhenCreating(),
@@ -121,7 +121,7 @@ class EmailRequest extends Resource
                 ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks'))
                 ->hideWhenCreating(),
 
-            Number::make('QuickBooks Invoice Document Number', 'quickbooks_invoice_document_number')
+            Text::make('QuickBooks Invoice Document Number', 'quickbooks_invoice_document_number')
                 ->onlyOnForms()
                 ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks'))
                 ->hideWhenCreating(),
