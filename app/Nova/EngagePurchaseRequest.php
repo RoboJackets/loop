@@ -238,9 +238,10 @@ class EngagePurchaseRequest extends Resource
             return [];
         }
 
-        $engageRequest = \App\Models\EngagePurchaseRequest::whereId($resourceId)->sole();
+        $engageRequest = \App\Models\EngagePurchaseRequest::whereId($resourceId)->withTrashed()->sole();
 
         if (
+            $engageRequest->deleted_at !== null ||
             $engageRequest->quickbooks_invoice_id !== null ||
             $engageRequest->quickbooks_invoice_document_number !== null ||
             $engageRequest->status !== 'Approved' ||
