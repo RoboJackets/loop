@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassAfterLastUsed
 // phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter
 
