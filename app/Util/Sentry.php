@@ -25,18 +25,6 @@ class Sentry
     ];
 
     /**
-     * Methods that should be ignored for performance tracing.
-     *
-     * @phan-read-only
-     *
-     * @var array<string>
-     */
-    private static array $ignoreMethods = [
-        'GET',
-        'HEAD',
-    ];
-
-    /**
      * Wrap a closure with a child span for Sentry performance tracing.
      *
      * @template ReturnType
@@ -77,8 +65,6 @@ class Sentry
         if (
             $transactionData !== null &&
             array_key_exists('url', $transactionData) &&
-            array_key_exists('method', $transactionData) &&
-            in_array($transactionData['method'], self::$ignoreMethods, true) &&
             (
                 in_array($transactionData['url'], self::$ignoreUrls, true) ||
                 Str::startsWith($transactionData['url'], '/horizon/')
