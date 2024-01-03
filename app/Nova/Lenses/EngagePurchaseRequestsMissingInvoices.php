@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Lenses;
 
+use App\Models\EngagePurchaseRequest;
 use App\Nova\ExpenseReport;
 use Illuminate\Database\Eloquent\Builder;
 use Laravel\Nova\Fields\Badge;
@@ -28,8 +29,8 @@ class EngagePurchaseRequestsMissingInvoices extends Lens
     /**
      * Get the query builder / paginator for the lens.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\EngagePurchaseRequest>  $query
-     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\EngagePurchaseRequest>
+     * @param  \Illuminate\Database\Eloquent\Builder<EngagePurchaseRequest>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<EngagePurchaseRequest>
      */
     public static function query(LensRequest $request, $query): Builder
     {
@@ -56,12 +57,8 @@ class EngagePurchaseRequestsMissingInvoices extends Lens
                 ->sortable(),
 
             Badge::make('Step', 'current_step_name')
-                ->map([
-                    'Submitted' => 'info',
-                    'Send to SOFO Accountant' => 'info',
-                    'Sent back for edits' => 'danger',
-                    'Check Request Sent' => 'success',
-                ])
+                ->resolveUsing([EngagePurchaseRequest::class, 'fixStepSpelling'])
+                ->map(EngagePurchaseRequest::STEP_NAME_BADGE_MAP)
                 ->sortable(),
 
             Badge::make('Status', 'status')

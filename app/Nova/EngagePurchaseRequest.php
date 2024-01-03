@@ -87,12 +87,8 @@ class EngagePurchaseRequest extends Resource
                 ->sortable(),
 
             Badge::make('Step', 'current_step_name')
-                ->map([
-                    'Submitted' => 'info',
-                    'Send to SOFO Accountant' => 'info',
-                    'Sent back for edits' => 'danger',
-                    'Check Request Sent' => 'success',
-                ])
+                ->resolveUsing([\App\Models\EngagePurchaseRequest::class, 'fixStepSpelling'])
+                ->map(\App\Models\EngagePurchaseRequest::STEP_NAME_BADGE_MAP)
                 ->sortable(),
 
             Badge::make('Status', 'status')

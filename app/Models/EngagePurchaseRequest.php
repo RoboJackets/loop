@@ -98,6 +98,14 @@ class EngagePurchaseRequest extends Model
 
     private const PURCHASE_REQUEST_NUMBER_REGEX = '/(?:Purchase Request|Request No):\s+(?P<requestNumber>\d{7})/';
 
+    public const STEP_NAME_BADGE_MAP = [
+        'Submitted' => 'info',
+        'Send to SOFO Accountant' => 'info',
+        'Submitted to SOFO Accountant' => 'info',
+        'Sent back for edits' => 'danger',
+        'Check Request Sent' => 'success',
+    ];
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -241,5 +249,9 @@ class EngagePurchaseRequest extends Model
         }
 
         return intval($collection->sole());
+    }
+
+    public static function fixStepSpelling(string $stepName): string {
+        return $stepName === 'Submited to SOFO Accountant' ? 'Submitted to SOFO Accountant' : $stepName;
     }
 }
