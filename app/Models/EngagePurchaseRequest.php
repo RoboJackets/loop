@@ -251,7 +251,8 @@ class EngagePurchaseRequest extends Model
         return intval($collection->sole());
     }
 
-    public static function fixStepSpelling(string $stepName): string {
+    public static function fixStepSpelling(string $stepName): string
+    {
         return $stepName === 'Submited to SOFO Accountant' ? 'Submitted to SOFO Accountant' : $stepName;
     }
 }
