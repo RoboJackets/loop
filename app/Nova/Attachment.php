@@ -154,7 +154,9 @@ class Attachment extends Resource
             Storage::disk('local')->exists($attachment->filename)
         ) {
             return [
-                MatchAttachment::make(),
+                MatchAttachment::make()
+                    ->canSee(static fn (NovaRequest $request): true => true)
+                    ->canRun(static fn (NovaRequest $request, \App\Models\Attachment $attachment): true => true),
             ];
         }
 
