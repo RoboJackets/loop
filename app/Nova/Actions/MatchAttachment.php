@@ -8,12 +8,10 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use App\Exceptions\CouldNotExtractEngagePurchaseRequestNumber;
 use App\Models\EngagePurchaseRequest;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\MultipleRecordsFoundException;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Fields\ActionFields;
@@ -46,36 +44,16 @@ class MatchAttachment extends Action
      * Perform the action on the given models.
      *
      * @param  \Illuminate\Support\Collection<int,\App\Models\Attachment>  $models
-     *
-     * @phan-suppress PhanTypeMismatchArgumentNullable
      */
     public function handle(ActionFields $fields, Collection $models): ActionResponse
     {
         $attachment = $models->sole();
 
-        if (
-            str_ends_with(strtolower($attachment->filename), '.pdf') &&
-            Storage::disk('local')->exists($attachment->filename)
-        ) {
-            try {
-                $purchase_request_number = EngagePurchaseRequest::getPurchaseRequestNumberFromText(
-                    $attachment->toSearchableArray()['full_text']
-                );
-            } catch (CouldNotExtractEngagePurchaseRequestNumber|FileNotFoundException) {
-                return ActionResponse::danger('Unable to extract an Engage request number from this attachment.');
-            }
-        } else {
-            return ActionResponse::danger('Attachment isn\'t parseable.');
-        }
+        \App\Jobs\MatchAttachment::dispatchSync($attachment);
 
         try {
-            $purchase_request = EngagePurchaseRequest::whereEngageRequestNumber($purchase_request_number)
-                ->whereDoesntHave('expenseReport')
-                ->where('status', '=', 'Approved')
+            $purchase_request = EngagePurchaseRequest::whereExpenseReportId($attachment->attachable->expenseReport->id)
                 ->sole();
-
-            $purchase_request->expense_report_id = $attachment->attachable->expenseReport->id;
-            $purchase_request->save();
 
             return ActionResponse::visit(route(
                 'nova.pages.detail',
@@ -87,6 +65,8 @@ class MatchAttachment extends Action
             ));
         } catch (ModelNotFoundException) {
             return ActionResponse::danger('Could not find matching Engage request.');
+        } catch (MultipleRecordsFoundException) {
+            return ActionResponse::message('Matched more than one Engage request.');
         }
     }
 
