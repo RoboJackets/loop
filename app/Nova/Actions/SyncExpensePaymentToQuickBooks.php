@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+// phpcs:disable SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition.RequiredSingleLineCondition
 // phpcs:disable SlevomatCodingStandard.PHP.DisallowReference.DisallowedInheritingVariableByReference
 // phpcs:disable Squiz.WhiteSpace.OperatorSpacing.NoSpaceAfter
 // phpcs:disable Squiz.WhiteSpace.OperatorSpacing.NoSpaceBefore
@@ -109,8 +110,37 @@ class SyncExpensePaymentToQuickBooks extends Action
                             ],
                         ],
                     ];
+                } elseif (
+                    $engagePurchaseRequest->expenseReport->engagePurchaseRequests()->sum('approved_amount') ===
+                    $engagePurchaseRequest->expenseReport->amount
+                ) {
+                    $lines[] = [
+                        'Amount' => $engagePurchaseRequest->approved_amount,
+                        'LinkedTxn' => [
+                            [
+                                'TxnType' => 'Invoice',
+                                'TxnId' => $engagePurchaseRequest->quickbooks_invoice_id,
+                            ],
+                        ],
+                    ];
+                } elseif (
+                    $engagePurchaseRequest->expenseReport->engagePurchaseRequests()->sum('submitted_amount') ===
+                    $engagePurchaseRequest->expenseReport->amount
+                ) {
+                    $lines[] = [
+                        'Amount' => $engagePurchaseRequest->submitted_amount,
+                        'LinkedTxn' => [
+                            [
+                                'TxnType' => 'Invoice',
+                                'TxnId' => $engagePurchaseRequest->quickbooks_invoice_id,
+                            ],
+                        ],
+                    ];
                 } else {
-                    throw new Exception('Expense report is matched to multiple Engage requests');
+                    throw new Exception(
+                        'Expense report is matched to multiple Engage requests and unable to automatically determine'.
+                        ' splits'
+                    );
                 }
             });
 
