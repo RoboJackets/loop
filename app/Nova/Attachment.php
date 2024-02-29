@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\MatchAttachment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
@@ -138,6 +140,18 @@ class Attachment extends Resource
      */
     public function actions(NovaRequest $request): array
     {
+        $attachment = \App\Models\Attachment::where('id', '=', $request->resourceId ?? $request->resources)->sole();
+
+        if (
+            $attachment->attachable_type === \App\Models\ExpenseReportLine::getMorphClassStatic() &&
+            str_ends_with(strtolower($attachment->filename), '.pdf') &&
+            Storage::disk('local')->exists($attachment->filename)
+        ) {
+            return [
+                MatchAttachment::make(),
+            ];
+        }
+
         return [];
     }
 
