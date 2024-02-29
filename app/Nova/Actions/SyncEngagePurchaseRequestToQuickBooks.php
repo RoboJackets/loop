@@ -201,36 +201,7 @@ class SyncEngagePurchaseRequestToQuickBooks extends Action
                     )
                 )
                 ->required()
-                ->rules('required', static function ($attribute, $value, $fail) use ($request): void {
-                    $data_service = QuickBooks::getDataService($request->user());
-
-                    $reimburse_charge = Sentry::wrapWithChildSpan(
-                        'quickbooks.get_reimburse_charge',
-                        // @phan-suppress-next-line PhanTypeMismatchReturnSuperType
-                        static fn (): IPPReimburseCharge => $data_service->FindById(
-                            'ReimburseCharge',
-                            $value
-                        )
-                    );
-
-                    $purchase_request = EngagePurchaseRequest::whereId(
-                        $request->resourceId ?? $request->resources
-                    )->sole();
-
-                    if (floatval($reimburse_charge->Amount) !== $purchase_request->approved_amount) {
-                        if (
-                            $purchase_request->expenseReport !== null &&
-                            floatval($reimburse_charge->Amount) === $purchase_request->expenseReport->amount
-                        ) {
-                            return;
-                        }
-
-                        $fail(
-                            'Billable expense amount does not match the approved amount for this Engage purchase '.
-                            'request.'
-                        );
-                    }
-                })
+                ->rules('required')
                 ->searchable()
                 ->help('Only expenses that have been invoiced and not matched are shown.'),
         ];
