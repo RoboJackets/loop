@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// phpcs:disable PSR2.Methods.FunctionCallSignature.SpaceBeforeOpenBracket
+
 namespace App\Nova;
 
 use App\Nova\Actions\MatchAttachment;
