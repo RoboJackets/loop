@@ -111,8 +111,9 @@ class SyncExpensePaymentToQuickBooks extends Action
                         ],
                     ];
                 } elseif (
-                    $engagePurchaseRequest->expenseReport->engagePurchaseRequests()->sum('approved_amount') ===
-                    $engagePurchaseRequest->expenseReport->amount
+                    floatval(
+                        $engagePurchaseRequest->expenseReport->engagePurchaseRequests()->sum('approved_amount')
+                    ) === $engagePurchaseRequest->expenseReport->amount
                 ) {
                     $lines[] = [
                         'Amount' => $engagePurchaseRequest->approved_amount,
@@ -124,8 +125,9 @@ class SyncExpensePaymentToQuickBooks extends Action
                         ],
                     ];
                 } elseif (
-                    $engagePurchaseRequest->expenseReport->engagePurchaseRequests()->sum('submitted_amount') ===
-                    $engagePurchaseRequest->expenseReport->amount
+                    floatval(
+                        $engagePurchaseRequest->expenseReport->engagePurchaseRequests()->sum('submitted_amount')
+                    ) === $engagePurchaseRequest->expenseReport->amount
                 ) {
                     $lines[] = [
                         'Amount' => $engagePurchaseRequest->submitted_amount,
