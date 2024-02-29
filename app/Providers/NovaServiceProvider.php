@@ -63,10 +63,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         Nova::userMenu(static function (Request $request, Menu $menu): Menu {
             if (
                 $request->user()->can('access-quickbooks') &&
-                $request->user()->quickbooks_access_token === null ||
                 (
-                    $request->user()->quickbooks_refresh_token_expires_at !== null &&
-                    $request->user()->quickbooks_refresh_token_expires_at < Carbon::now()
+                    $request->user()->quickbooks_access_token === null ||
+                    (
+                        $request->user()->quickbooks_refresh_token_expires_at !== null &&
+                        $request->user()->quickbooks_refresh_token_expires_at < Carbon::now()
+                    )
                 )
             ) {
                 $menu->append(
