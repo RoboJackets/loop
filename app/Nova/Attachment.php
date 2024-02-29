@@ -140,7 +140,13 @@ class Attachment extends Resource
      */
     public function actions(NovaRequest $request): array
     {
-        $attachment = \App\Models\Attachment::where('id', '=', $request->resourceId ?? $request->resources)->sole();
+        $resourceId = $request->resourceId ?? $request->resources;
+
+        if ($resourceId === null) {
+            return [];
+        }
+
+        $attachment = \App\Models\Attachment::where('id', '=', $resourceId)->sole();
 
         if (
             $attachment->attachable_type === \App\Models\ExpenseReportLine::getMorphClassStatic() &&
