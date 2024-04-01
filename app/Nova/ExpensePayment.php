@@ -184,7 +184,6 @@ class ExpensePayment extends Resource
 
         if (
             $payment->status !== 'Complete' ||
-            $payment->reconciled !== true ||
             $payment->bank_transaction_id === null ||
             $payment->bankTransaction->transaction_posted_at === null ||
             $payment->quickbooks_payment_id !== null ||
