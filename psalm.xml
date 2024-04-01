@@ -31,6 +31,9 @@
                 <directory name="app/Http/Controllers"/>
                 <directory name="app/Observers"/>
                 <file name="app/Mail/EmailRequestProcessed.php"/>
+                <file name="app/Http/Middleware/CasAuthenticate.php"/>
+                <file name="app/Models/FiscalYear.php"/>
+                <file name="app/Providers/NovaServiceProvider.php"/>
             </errorLevel>
         </UndefinedMagicMethod>
         <LessSpecificImplementedReturnType>
