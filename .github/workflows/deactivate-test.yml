@@ -5,7 +5,7 @@ on:
     - cron:  '0 20 * * *'
 
 jobs:
-  deploy:
+  deactivate-test:
     name: Deactivate Test
     permissions:
       id-token: write
