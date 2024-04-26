@@ -211,13 +211,19 @@ class User extends Resource
                 } else {
                     try {
                         // @phan-suppress-next-line PhanTypeMismatchArgument
-                        return self::whitepagesEntryToString($result->filter(
-                            static fn (Entry $entry, int $key): bool => ! str_contains(
+                        return self::whitepagesEntryToString(
+                            $result->filter(static fn (Entry $entry, int $key): bool => ! str_contains(
                                 // @phan-suppress-next-line PhanTypeArraySuspicious
                                 strtolower($entry->title[0]),
                                 'student assistant'
-                            )
-                        )->sole());
+                            ))
+                                ->filter(static fn (Entry $entry, int $key): bool => ! str_contains(
+                                // @phan-suppress-next-line PhanTypeArraySuspicious
+                                    strtolower($entry->title[0]),
+                                    'research assistant'
+                                ))
+                                ->sole()
+                        );
                     } catch (ItemNotFoundException) {
                         // @phan-suppress-next-line PhanTypeMismatchArgument
                         return self::whitepagesEntryToString($result->first());
