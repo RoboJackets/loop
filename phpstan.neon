@@ -18,8 +18,6 @@ parameters:
     - '#Access to an undefined property App\\Models\\DocuSignEnvelope\|App\\Models\\ExpenseReportLine::\$description\.#'
     - '#Access to an undefined property App\\Models\\DocuSignEnvelope\|App\\Models\\ExpenseReportLine::\$subject\.#'
     - '#Access to an undefined property App\\Models\\DocuSignEnvelope\|App\\Models\\ExpenseReportLine::\$submitted_at\.#'
-    - '#Access to an undefined property App\\Models\\DocuSignEnvelope\|App\\Models\\ExpenseReportLine::\$vendor_document_date\.#'
-    - '#Access to an undefined property App\\Models\\DocuSignEnvelope\|App\\Models\\ExpenseReportLine::\$vendor_name\.#'
     - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$[a-zA-Z_]+\.#'
     - '#Access to an undefined property Laravel\\Nova\\Fields\\ActionFields::\$[a-zA-Z_]+\.#'
     - '#Access to property \$[a-zA-Z]+ on an unknown class QuickBooksOnline\\API\\Data\\.+\.#'

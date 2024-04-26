@@ -188,7 +188,8 @@ class Attachment extends Resource
         } elseif ($this->attachable_type === 'engage-purchase-request') {
             return 'Engage | '.$this->attachable->submitted_at->format('Y-m-d').' | '.$this->attachable->subject;
         } elseif ($this->attachable_type === 'email-request') {
-            return 'Email | '.$this->attachable->vendor_document_date.' | '.$this->attachable->vendor_name;
+            return 'Email | '.($this->attachable?->vendor_document_date ?? 'Unknown Date').' | '.
+                ($this->attachable?->vendor_name ?? 'Unknown Vendor');
         } else {
             throw new \Exception('Unknown attachable_type '.$this->attachable_type);
         }
