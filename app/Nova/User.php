@@ -210,15 +210,15 @@ class User extends Resource
                     return self::whitepagesEntryToString($result->sole());
                 } else {
                     try {
-                        // @phan-suppress-next-line PhanTypeMismatchArgument
                         return self::whitepagesEntryToString(
+                            // @phan-suppress-next-line PhanTypeMismatchArgument
                             $result->filter(static fn (Entry $entry, int $key): bool => ! str_contains(
                                 // @phan-suppress-next-line PhanTypeArraySuspicious
                                 strtolower($entry->title[0]),
                                 'student assistant'
                             ))
                                 ->filter(static fn (Entry $entry, int $key): bool => ! str_contains(
-                                // @phan-suppress-next-line PhanTypeArraySuspicious
+                                    // @phan-suppress-next-line PhanTypeArraySuspicious
                                     strtolower($entry->title[0]),
                                     'research assistant'
                                 ))
