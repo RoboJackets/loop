@@ -44,7 +44,7 @@ class FundingAllocation extends Resource
      * @var array<string>
      */
     public static $search = [
-        'fiscal_year.ending_year',
+        'fiscalYear.ending_year',
         'sga_bill_number',
         'type',
     ];

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Adldap\Laravel\Facades\Adldap;
 use App\Http\Requests\UpdateEngagePurchaseRequest;
 use App\Http\Requests\UpsertEngagePurchaseRequests;
 use App\Models\EngagePurchaseRequest;
@@ -14,6 +13,7 @@ use App\Util\Sentry;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use LdapRecord\Container;
 
 class EngagePurchaseRequestController extends Controller
 {
@@ -139,11 +139,11 @@ class EngagePurchaseRequestController extends Controller
 
         $result = Sentry::wrapWithChildSpan(
             'ldap.get_user_by_username',
-            static fn (): array => Adldap::search()
+            static fn (): array => Container::getDefaultConnection()
+                ->query()
                 ->where('uid', '=', $parts[0])
                 ->select('sn', 'givenName', 'primaryUid', 'mail')
                 ->get()
-                ->toArray()
         );
 
         if (count($result) === 0) {
@@ -151,9 +151,9 @@ class EngagePurchaseRequestController extends Controller
         }
 
         $user = User::create([
-            'first_name' => $result[0]->givenname[0],
-            'last_name' => $result[0]->sn[0],
-            'username' => $result[0]->primaryuid[0],
+            'first_name' => $result[0]['givenname'][0],
+            'last_name' => $result[0]['sn'][0],
+            'username' => $result[0]['primaryuid'][0],
             'email' => $email,
         ]);
 

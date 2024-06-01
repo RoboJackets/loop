@@ -77,7 +77,7 @@ class DocuSignEnvelope extends Resource
      * @var array<string>
      */
     public static $search = [
-        'envelope_id',
+        'envelope_uuid',
         'type',
         'description',
         'supplier_name',

@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use Adldap\Laravel\Facades\Adldap;
-use Adldap\Models\Entry;
-use Adldap\Query\Collection;
 use App\Nova\Actions\ResetQuickBooksCredentials;
 use App\Util\Sentry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ItemNotFoundException;
 use Jeffbeltran\SanctumTokens\SanctumTokens;
@@ -22,6 +20,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
+use LdapRecord\Container;
 use Vyuldashev\NovaPermission\Permission;
 use Vyuldashev\NovaPermission\Role;
 
@@ -197,10 +196,11 @@ class User extends Resource
             static function () use ($username): ?string {
                 $result = Sentry::wrapWithChildSpan(
                     'ldap.get_title_by_uid',
-                    static fn (): Collection => Adldap::search()
+                    static fn (): Collection => collect(Container::getDefaultConnection()
+                        ->query()
                         ->where('uid', '=', $username)
                         ->select('title', 'ou')
-                        ->get()
+                        ->get())
                 );
 
                 if ($result->count() === 0) {
@@ -212,14 +212,12 @@ class User extends Resource
                     try {
                         return self::whitepagesEntryToString(
                             // @phan-suppress-next-line PhanTypeMismatchArgument
-                            $result->filter(static fn (Entry $entry, int $key): bool => ! str_contains(
-                                // @phan-suppress-next-line PhanTypeArraySuspicious
-                                strtolower($entry->title[0]),
+                            $result->filter(static fn (array $entry, int $key): bool => ! str_contains(
+                                strtolower($entry['title'][0]),
                                 'student assistant'
                             ))
-                                ->filter(static fn (Entry $entry, int $key): bool => ! str_contains(
-                                    // @phan-suppress-next-line PhanTypeArraySuspicious
-                                    strtolower($entry->title[0]),
+                                ->filter(static fn (array $entry, int $key): bool => ! str_contains(
+                                    strtolower($entry['title'][0]),
                                     'research assistant'
                                 ))
                                 ->sole()
@@ -246,10 +244,10 @@ class User extends Resource
     /**
      * Convert a Whitepages directory entry to a string.
      *
-     * @phan-suppress PhanTypeArraySuspicious
+     * @param  array<string,array<int,string>>  $entry
      */
-    private static function whitepagesEntryToString(Entry $entry): string
+    private static function whitepagesEntryToString(array $entry): string
     {
-        return $entry->title[0].' | '.$entry->ou[0];
+        return $entry['title'][0].' | '.$entry['ou'][0];
     }
 }

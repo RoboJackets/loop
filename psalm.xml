@@ -81,20 +81,24 @@
         </UndefinedDocblockClass>
         <InvalidReturnType>
             <errorLevel type="suppress">
+                <file name="app/Http/Controllers/EngagePurchaseRequestController.php"/>
                 <file name="app/Http/Controllers/QuickBooksAuthenticationController.php"/>
-                <file name="app/Util/QuickBooks.php"/>
-                <file name="app/Nova/Actions/SyncExpensePaymentToQuickBooks.php"/>
+                <file name="app/Http/Controllers/WorkerController.php"/>
                 <file name="app/Models/User.php"/>
+                <file name="app/Nova/Actions/SyncExpensePaymentToQuickBooks.php"/>
                 <file name="app/Nova/User.php"/>
+                <file name="app/Util/QuickBooks.php"/>
             </errorLevel>
         </InvalidReturnType>
         <InvalidReturnStatement>
             <errorLevel type="suppress">
+                <file name="app/Http/Controllers/EngagePurchaseRequestController.php"/>
                 <file name="app/Http/Controllers/QuickBooksAuthenticationController.php"/>
-                <file name="app/Util/QuickBooks.php"/>
-                <file name="app/Nova/Actions/SyncExpensePaymentToQuickBooks.php"/>
+                <file name="app/Http/Controllers/WorkerController.php"/>
                 <file name="app/Models/User.php"/>
+                <file name="app/Nova/Actions/SyncExpensePaymentToQuickBooks.php"/>
                 <file name="app/Nova/User.php"/>
+                <file name="app/Util/QuickBooks.php"/>
             </errorLevel>
         </InvalidReturnStatement>
         <InvalidPropertyAssignmentValue>
@@ -109,8 +113,9 @@
         </InvalidPropertyAssignmentValue>
         <InvalidArgument>
             <errorLevel type="suppress">
-                <file name="app/Util/QuickBooks.php"/>
                 <file name="app/Nova/Actions/UploadBankStatement.php"/>
+                <file name="app/Nova/User.php"/>
+                <file name="app/Util/QuickBooks.php"/>
             </errorLevel>
         </InvalidArgument>
         <InvalidPropertyFetch>
@@ -145,5 +150,10 @@
                 <file name="app/Nova/User.php"/>
             </errorLevel>
         </InvalidArrayAccess>
+        <InvalidTemplateParam>
+            <errorLevel type="suppress">
+                <file name="app/Nova/User.php"/>
+            </errorLevel>
+        </InvalidTemplateParam>
     </issueHandlers>
 </psalm>

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Adldap\Laravel\Facades\Adldap;
 use App\Http\Requests\UpsertWorker;
 use App\Models\User;
 use App\Util\Sentry;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
+use LdapRecord\Container;
 
 class WorkerController extends Controller
 {
@@ -45,15 +45,14 @@ class WorkerController extends Controller
                 static function () use ($email): ?string {
                     $result = Sentry::wrapWithChildSpan(
                         'ldap.get_username_by_email',
-                        static fn (): array => Adldap::search()
+                        static fn (): array => Container::getDefaultConnection()
+                            ->query()
                             ->where('mail', '=', $email)
                             ->select('primaryUid')
                             ->get()
-                            ->pluck('primaryUid')
-                            ->toArray()
                     );
 
-                    return $result === [] ? null : $result[0][0];
+                    return $result === [] ? null : $result[0]['primaryuid'][0];
                 }
             );
 
