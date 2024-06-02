@@ -30,8 +30,9 @@ class Sentry
      * @template ReturnType
      *
      * @param  Closure(): ReturnType  $closure
+     * @return ReturnType
      */
-    public static function wrapWithChildSpan(string $span_name, Closure $closure): ReturnType
+    public static function wrapWithChildSpan(string $span_name, Closure $closure)
     {
         $parentSpan = SentrySdk::getCurrentHub()->getSpan();
 
