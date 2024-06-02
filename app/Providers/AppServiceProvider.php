@@ -68,6 +68,5 @@ class AppServiceProvider extends ServiceProvider
             static fn (Request $request): Limit => Limit::perMinute(60)->by($request->user()?->id ?? $request->ip())
         );
 
-
     }
 }
