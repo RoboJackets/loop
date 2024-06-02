@@ -20,6 +20,11 @@ use App\Models\FundingAllocationLine;
 use App\Models\User;
 use Illuminate\Console\Command;
 
+/**
+ * Imports all models into Scout.
+ *
+ * @phan-suppress PhanUnreferencedClass
+ */
 class ImportAllModels extends Command
 {
     /**

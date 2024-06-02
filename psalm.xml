@@ -48,7 +48,6 @@
         </ImplementedReturnTypeMismatch>
         <UndefinedClass>
             <errorLevel type="suppress">
-                <file name="app/Exceptions/Handler.php" />
                 <file name="app/Providers/NovaServiceProvider.php" />
                 <file name="app/Nova/Actions/SyncEngagePurchaseRequestToQuickBooks.php"/>
                 <file name="app/Nova/Actions/SyncEmailRequestToQuickBooks.php"/>
@@ -66,7 +65,6 @@
         </UndefinedInterfaceMethod>
         <InvalidScalarArgument>
             <errorLevel type="suppress">
-                <file name="app/Nova/Actions/UploadBankStatement.php"/>
                 <file name="app/Jobs/ProcessSensibleOutput.php"/>
                 <file name="app/Jobs/MatchExpenseReport.php"/>
             </errorLevel>
@@ -113,7 +111,6 @@
         </InvalidPropertyAssignmentValue>
         <InvalidArgument>
             <errorLevel type="suppress">
-                <file name="app/Nova/Actions/UploadBankStatement.php"/>
                 <file name="app/Nova/User.php"/>
                 <file name="app/Util/QuickBooks.php"/>
             </errorLevel>

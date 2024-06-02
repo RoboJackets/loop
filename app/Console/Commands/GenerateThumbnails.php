@@ -14,6 +14,11 @@ use App\Models\EmailRequest;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Generates thumbnails for all attachments.
+ *
+ * @phan-suppress PhanUnreferencedClass
+ */
 class GenerateThumbnails extends Command
 {
     /**

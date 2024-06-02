@@ -1,9 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Schedule;
 use UKFast\HealthCheck\Commands\CacheSchedulerRunning;
-
-declare(strict_types=1);
 
 /*
 |--------------------------------------------------------------------------
