@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
@@ -55,7 +56,7 @@ class CasAuthenticate
      *
      * @phan-suppress PhanPluginInconsistentReturnMethod
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         // Run the user update only if they don't have an active session
         if ($this->cas->isAuthenticated() && $request->user() === null) {
