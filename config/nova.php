@@ -102,6 +102,7 @@ return [
     */
 
     'middleware' => [
+        \App\Http\Middleware\CasAuthenticate::class,
         'web',
         HandleInertiaRequests::class,
         DispatchServingNovaEvent::class,
