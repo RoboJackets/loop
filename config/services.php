@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
 
     /*
@@ -53,4 +51,5 @@ return [
     'treasurer_name' => env('TREASURER_NAME'),
 
     'developer_email_address' => env('DEVELOPER_EMAIL_ADDRESS'),
+
 ];
