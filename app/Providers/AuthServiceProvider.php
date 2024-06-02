@@ -69,5 +69,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // nothing to do here, yet
     }
 }
