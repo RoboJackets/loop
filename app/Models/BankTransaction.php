@@ -52,17 +52,6 @@ class BankTransaction extends Model
     use Searchable;
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'net_amount' => 'float',
-        'transaction_created_at' => 'datetime',
-        'transaction_posted_at' => 'datetime',
-    ];
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -92,6 +81,20 @@ class BankTransaction extends Model
         'mercury' => 'Mercury',
         'wells_fargo' => 'Wells Fargo',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'net_amount' => 'float',
+            'transaction_created_at' => 'datetime',
+            'transaction_posted_at' => 'datetime',
+        ];
+    }
 
     /**
      * Get the expense payment for this expense report, if any.

@@ -108,19 +108,6 @@ class EngagePurchaseRequest extends Model
     ];
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'submitted_amount' => 'float',
-        'approved_amount' => 'float',
-        'submitted_at' => 'datetime',
-        'approved_at' => 'datetime',
-        'deleted_at' => 'datetime',
-    ];
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -148,6 +135,22 @@ class EngagePurchaseRequest extends Model
         'submitted_at',
         'submitted_by_user_id',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'submitted_amount' => 'float',
+            'approved_amount' => 'float',
+            'submitted_at' => 'datetime',
+            'approved_at' => 'datetime',
+            'deleted_at' => 'datetime',
+        ];
+    }
 
     /**
      * Get the route key for the model.

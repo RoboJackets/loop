@@ -48,15 +48,6 @@ class ExternalCommitteeMember extends Model
     public const WORKDAY_NAME_REGEX = '/^(?P<name>^[a-zA-Z-\s]+)\s+\(ECM\)(?P<inactive>\s+-\s+Inactive)?$/';
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'active' => 'boolean',
-    ];
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -67,6 +58,18 @@ class ExternalCommitteeMember extends Model
         'name',
         'active',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'active' => 'boolean',
+        ];
+    }
 
     /**
      * Get the user for this ECM, if any.

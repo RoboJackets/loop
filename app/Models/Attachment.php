@@ -63,15 +63,6 @@ class Attachment extends Model
     use SoftDeletes;
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'workday_uploaded_at' => 'datetime',
-    ];
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -86,6 +77,18 @@ class Attachment extends Model
         'workday_uploaded_at',
         'workday_uploaded_by_worker_id',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'workday_uploaded_at' => 'datetime',
+        ];
+    }
 
     /**
      * Get all the owning payable models.

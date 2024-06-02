@@ -97,18 +97,21 @@ class User extends Authenticatable
         'username',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'active_employee' => 'boolean',
-        'quickbooks_access_token_expires_at' => 'datetime',
-        'quickbooks_refresh_token_expires_at' => 'datetime',
-    ];
-
     protected string $guard_name = 'web';
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'active_employee' => 'boolean',
+            'quickbooks_access_token_expires_at' => 'datetime',
+            'quickbooks_refresh_token_expires_at' => 'datetime',
+        ];
+    }
 
     /**
      * Get the ECMs for this user.

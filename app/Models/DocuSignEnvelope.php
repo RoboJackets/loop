@@ -113,20 +113,6 @@ class DocuSignEnvelope extends Model
     protected $table = 'docusign_envelopes';
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'amount' => 'float',
-        'lost' => 'boolean',
-        'sensible_output' => 'array',
-        'submitted_at' => 'datetime',
-        'submission_error' => 'boolean',
-        'internal_cost_transfer' => 'boolean',
-    ];
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -158,6 +144,23 @@ class DocuSignEnvelope extends Model
     public array $filterable_attributes = [
         'fiscal_year_id',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'amount' => 'float',
+            'lost' => 'boolean',
+            'sensible_output' => 'array',
+            'submitted_at' => 'datetime',
+            'submission_error' => 'boolean',
+            'internal_cost_transfer' => 'boolean',
+        ];
+    }
 
     /**
      * Get the default foreign key name for the model.
