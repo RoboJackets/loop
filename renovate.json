@@ -36,6 +36,9 @@
     "js": {
         "enabled": false
     },
+    "docker-compose": {
+        "enabled": false
+    },
     "docker": {
         "major": {
             "enabled": true
