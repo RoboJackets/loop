@@ -9,6 +9,7 @@ use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class CasAuthenticate
 {
@@ -73,13 +74,7 @@ class CasAuthenticate
             $user->username = $this->cas->user();
             $user->first_name = $this->cas->getAttribute('givenName');
             $user->last_name = $this->cas->getAttribute('sn');
-            if (
-                $user->email === null ||
-                (
-                    $user->email !== config('services.treasurer_email_address') &&
-                    $user->email !== config('services.developer_email_address')
-                )
-            ) {
+            if ($user->email === null || ! Str::endsWith($user->email, 'robojackets.org')) {
                 $user->email = $this->cas->getAttribute('email_primary');
             }
             $user->save();
