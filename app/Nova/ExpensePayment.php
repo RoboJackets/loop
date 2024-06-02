@@ -65,7 +65,7 @@ class ExpensePayment extends Resource
      *
      * @return array
      */
-    public function fields(NovaRequest $request)
+    public function fields(NovaRequest $request): array
     {
         return [
             Number::make('Check Number', 'transaction_reference')

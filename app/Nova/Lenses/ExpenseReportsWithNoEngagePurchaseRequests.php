@@ -30,7 +30,7 @@ class ExpenseReportsWithNoEngagePurchaseRequests extends Lens
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\ExpenseReport>  $query
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\ExpenseReport>
      */
-    public static function query(LensRequest $request, $query): Builder
+    public static function query(LensRequest $request, Builder $query): Builder
     {
         return $request->withOrdering($request->withFilters(
             $query->whereDoesntHave('envelopes')
