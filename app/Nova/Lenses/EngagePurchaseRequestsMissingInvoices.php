@@ -32,7 +32,7 @@ class EngagePurchaseRequestsMissingInvoices extends Lens
      * @param  \Illuminate\Database\Eloquent\Builder<EngagePurchaseRequest>  $query
      * @return \Illuminate\Database\Eloquent\Builder<EngagePurchaseRequest>
      */
-    public static function query(LensRequest $request, Builder $query): Builder
+    public static function query(LensRequest $request, $query): Builder
     {
         return $request->withOrdering($request->withFilters(
             $query->whereNull('quickbooks_invoice_id')
