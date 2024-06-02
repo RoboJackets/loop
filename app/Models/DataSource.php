@@ -51,15 +51,6 @@ class DataSource extends Model
     public $timestamps = false;
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'synced_at' => 'datetime',
-    ];
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -68,4 +59,16 @@ class DataSource extends Model
         'name',
         'synced_at',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'synced_at' => 'datetime',
+        ];
+    }
 }

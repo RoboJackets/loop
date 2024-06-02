@@ -8,7 +8,6 @@ namespace App\Nova;
 
 use App\Nova\Actions\MatchBankTransaction;
 use App\Nova\Actions\RefreshMercuryTransactions;
-use App\Nova\Actions\UploadBankStatement;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasOne;
@@ -161,14 +160,6 @@ class BankTransaction extends Resource
     public function actions(NovaRequest $request): array
     {
         return [
-            UploadBankStatement::make()
-                ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('update-bank-transactions'))
-                ->canRun(
-                    static fn (
-                        NovaRequest $request,
-                        \App\Models\ExpenseReport $expenseReport
-                    ): bool => $request->user()->can('update-bank-transactions')
-                ),
             RefreshMercuryTransactions::make()
                 ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('update-bank-transactions'))
                 ->canRun(

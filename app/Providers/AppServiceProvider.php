@@ -15,7 +15,10 @@ use App\Observers\AttachmentObserver;
 use App\Observers\BankTransactionObserver;
 use App\Observers\ExpenseReportLineObserver;
 use App\Observers\ExpenseReportObserver;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -44,5 +47,15 @@ class AppServiceProvider extends ServiceProvider
         BankTransaction::observe(BankTransactionObserver::class);
         ExpenseReport::observe(ExpenseReportObserver::class);
         ExpenseReportLine::observe(ExpenseReportLineObserver::class);
+
+        $this->bootRoute();
+    }
+
+    public function bootRoute(): void
+    {
+        RateLimiter::for(
+            'api',
+            static fn (Request $request): Limit => Limit::perMinute(60)->by($request->user()?->id ?? $request->ip())
+        );
     }
 }

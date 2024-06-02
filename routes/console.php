@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Schedule;
+use UKFast\HealthCheck\Commands\CacheSchedulerRunning;
+
 /*
 |--------------------------------------------------------------------------
 | Console Routes
@@ -12,3 +15,6 @@ declare(strict_types=1);
 | simple approach to interacting with each command's IO methods.
 |
 */
+
+Schedule::command('horizon:snapshot')->everyFiveMinutes();
+Schedule::command(CacheSchedulerRunning::class)->everyMinute();

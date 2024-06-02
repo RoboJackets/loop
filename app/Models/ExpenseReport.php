@@ -65,17 +65,6 @@ class ExpenseReport extends Model
     use Searchable;
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'amount' => 'float',
-        'created_date' => 'date',
-        'approval_date' => 'date',
-    ];
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -92,6 +81,20 @@ class ExpenseReport extends Model
         'status',
         'amount',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'amount' => 'float',
+            'created_date' => 'date',
+            'approval_date' => 'date',
+        ];
+    }
 
     /**
      * Get the route key for the model.

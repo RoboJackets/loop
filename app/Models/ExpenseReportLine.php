@@ -43,15 +43,6 @@ class ExpenseReportLine extends Model
     use Searchable;
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'amount' => 'float',
-    ];
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -62,6 +53,18 @@ class ExpenseReportLine extends Model
         'amount',
         'memo',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'amount' => 'float',
+        ];
+    }
 
     /**
      * Get the user that created this expense report.

@@ -76,7 +76,7 @@ return [
 
     'cache' => [
         'enabled' => env('LDAP_CACHE', true),
-        'driver' => env('CACHE_DRIVER', 'file'),
+        'driver' => env('CACHE_STORE', 'file'),
     ],
 
 ];

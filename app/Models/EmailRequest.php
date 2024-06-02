@@ -77,19 +77,6 @@ class EmailRequest extends Model
     use SoftDeletes;
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'vendor_document_amount' => 'float',
-        'vendor_document_date' => 'date',
-        'email_sent_at' => 'datetime',
-        'deleted_at' => 'datetime',
-        'sensible_output' => 'array',
-    ];
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -98,6 +85,22 @@ class EmailRequest extends Model
         'email_sent_at',
         'fiscal_year_id',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'vendor_document_amount' => 'float',
+            'vendor_document_date' => 'date',
+            'email_sent_at' => 'datetime',
+            'deleted_at' => 'datetime',
+            'sensible_output' => 'array',
+        ];
+    }
 
     /**
      * Get the fiscal year for this request.

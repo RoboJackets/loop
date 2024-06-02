@@ -49,15 +49,6 @@ class FundingAllocationLine extends Model
     use SoftDeletes;
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'amount' => 'float',
-    ];
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -68,6 +59,18 @@ class FundingAllocationLine extends Model
         'description',
         'amount',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'amount' => 'float',
+        ];
+    }
 
     /**
      * Get the fiscal year for this funding allocation.
