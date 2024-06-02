@@ -270,8 +270,6 @@ class DocuSignEnvelope extends Model
 
     /**
      * Get the sensible_extraction_url attribute to show this envelope in the Sensible UI.
-     *
-     * @return ?string
      */
     public function getSensibleExtractionUrlAttribute(): ?string
     {

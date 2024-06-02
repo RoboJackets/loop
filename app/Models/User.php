@@ -140,8 +140,6 @@ class User extends Authenticatable
 
     /**
      * Get the workday_url attribute to show this Worker in the Workday UI.
-     *
-     * @return ?string
      */
     public function getWorkdayUrlAttribute(): ?string
     {
