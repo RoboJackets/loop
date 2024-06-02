@@ -242,7 +242,7 @@ class DocuSignEnvelope extends Model
      */
     public function fundingSources(): BelongsToMany
     {
-        return $this->belongsToMany(FundingAllocationLine::class, 'docusign_funding_sources')
+        return $this->belongsToMany(FundingAllocationLine::class, DocuSignFundingSource::class)
             ->withPivot(['amount'])
             ->withTimestamps()
             ->using(DocuSignFundingSource::class);
@@ -270,8 +270,6 @@ class DocuSignEnvelope extends Model
 
     /**
      * Get the sensible_extraction_url attribute to show this envelope in the Sensible UI.
-     *
-     * @return ?string
      */
     public function getSensibleExtractionUrlAttribute(): ?string
     {
