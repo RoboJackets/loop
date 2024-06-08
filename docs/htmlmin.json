@@ -1,0 +1,10 @@
+{
+    "collapseWhitespace": true,
+    "collapseInlineTagWhitespace": true,
+    "minifyCSS": true,
+    "minifyJS": true,
+    "minifyURLs": "ROOT_PATH_RELATIVE",
+    "removeComments": true,
+    "removeEmptyAttributes": true,
+    "removeEmptyElements": true
+}

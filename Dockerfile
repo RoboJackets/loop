@@ -1,5 +1,46 @@
 # syntax = docker/dockerfile:1.7
 
+FROM python:3.12-bookworm as docs-source
+
+COPY --link docs/ /docs/
+
+WORKDIR /docs/
+
+SHELL ["/bin/bash", "-c"]
+
+RUN set -euxo pipefail && \
+    curl -sSL https://install.python-poetry.org | python3 - && \
+    /root/.local/bin/poetry install --no-interaction && \
+    /root/.local/bin/poetry run sphinx-build -M dirhtml "." "_build" && \
+    find /docs/_build/dirhtml/ -type f -size +0 | while read file; do \
+        filename=$(basename -- "$file"); \
+        extension="${filename##*.}"; \
+        if [ "$extension" = "html" ]; then \
+            python3 /docs/fix-canonical-links.py "$file"; \
+        fi; \
+    done;
+
+FROM node:21.7.3 as docs-minification
+
+COPY --link --from=docs-source /docs/_build/dirhtml/ /docs/
+
+RUN set -eux && \
+    npm install -g npm@latest && \
+    npx html-minifier --input-dir /docs/ --output-dir /docs/ --file-ext html --collapse-whitespace --collapse-inline-tag-whitespace --minify-css --minify-js --minify-urls ROOT_PATH_RELATIVE --remove-comments --remove-empty-attributes --conservative-collapse && \
+    find /docs/ -type f -size +0 | while read file; do \
+        filename=$(basename -- "$file"); \
+        extension="${filename##*.}"; \
+        if [ "$extension" = "js" ]; then \
+            npx terser "$file" --compress --output "$file"; \
+        fi; \
+        if [ "$extension" = "css" ]; then \
+            npx clean-css-cli "$file" -O2 --output "$file"; \
+        fi; \
+        if [ "$extension" = "map" ]; then \
+            rm -f "$file"; \
+        fi; \
+    done;
+
 FROM scratch as backend-source
 
 COPY --link app/ /app/app/
@@ -12,6 +53,7 @@ COPY --link resources/ /app/resources/
 COPY --link routes/ /app/routes/
 COPY --link storage/ /app/storage/
 COPY --link artisan composer.json composer.lock /app/
+COPY --link --from=docs-minification /docs/ /app/public/docs/
 
 FROM ubuntu:noble as backend-uncompressed
 
