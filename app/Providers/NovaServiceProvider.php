@@ -49,6 +49,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             return '
 <p class="mt-8 text-center text-xs text-80">
     <a class="text-primary dim no-underline" href="https://github.com/RoboJackets/loop">Made with ♥ by RoboJackets</a>
+    <span class="px-1">&middot;</span>
+    <a class="text-primary dim no-underline" class="text-muted" href="/docs/">Documentation</a>
     <span class="px-1">&middot;</span>&nbsp;<span>Workday data synced '.$workday_data_synced_text.'</span>
     <span class="px-1">&middot;</span>&nbsp;<span>Engage data synced '.$engage_data_synced_text.'</span>
 </p>
