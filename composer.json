@@ -46,7 +46,7 @@
         "mockery/mockery": "1.6.12",
         "nunomaduro/collision": "8.1.1",
         "phan/phan": "5.4.3",
-        "phpstan/extension-installer": "1.4.0",
+        "phpstan/extension-installer": "1.4.1",
         "phpstan/phpstan": "1.11.4",
         "phpstan/phpstan-deprecation-rules": "1.2.0",
         "phpstan/phpstan-strict-rules": "1.6.0",
