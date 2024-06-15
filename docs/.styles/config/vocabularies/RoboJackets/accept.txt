@@ -1,0 +1,7 @@
+purchase
+(E|e)mail
+blind
+ingest
+PDFs
+(C|c)heck
+deposit
