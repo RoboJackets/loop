@@ -33,6 +33,11 @@
             }
         ]
     },
+    "poetry": {
+        "major": {
+            "enabled": true
+        }
+    },
     "js": {
         "enabled": false
     },
