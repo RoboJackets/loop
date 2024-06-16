@@ -11,14 +11,7 @@ SHELL ["/bin/bash", "-c"]
 RUN set -euxo pipefail && \
     curl -sSL https://install.python-poetry.org | python3 - && \
     /root/.local/bin/poetry install --no-interaction && \
-    /root/.local/bin/poetry run sphinx-build -M dirhtml "." "_build" && \
-    find /docs/_build/dirhtml/ -type f -size +0 | while read file; do \
-        filename=$(basename -- "$file"); \
-        extension="${filename##*.}"; \
-        if [ "$extension" = "html" ]; then \
-            python3 /docs/fix-canonical-links.py "$file"; \
-        fi; \
-    done;
+    /root/.local/bin/poetry run sphinx-build -M dirhtml "." "_build"
 
 FROM node:21.7.3 as docs-minification
 
