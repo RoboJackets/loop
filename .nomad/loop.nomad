@@ -159,6 +159,17 @@ EOF
 
         mount {
           type = "volume"
+          target = "/assets/"
+          source = "assets"
+          readonly = false
+
+          volume_options {
+            no_copy = true
+          }
+        }
+
+        mount {
+          type = "volume"
           target = "/app/storage/app/"
           source = "${NOMAD_JOB_NAME}"
           readonly = false
