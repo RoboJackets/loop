@@ -20,7 +20,6 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\CasAuthenticate::class,
             \App\Http\Middleware\Sentry::class,
             \Spatie\Csp\AddCspHeaders::class,
-            \HTMLMin\HTMLMin\Http\Middleware\MinifyMiddleware::class,
         ]);
     })
     ->withExceptions(static function (Exceptions $exceptions): void {
