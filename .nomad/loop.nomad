@@ -70,19 +70,9 @@ job "loop" {
   type = "service"
 
   group "loop" {
-    volume "assets" {
-      type = "host"
-      source = "assets"
-    }
-
     volume "run" {
       type = "host"
       source = "run"
-    }
-
-    volume "storage" {
-      type = "host"
-      source = "loop_${var.environment_name}_storage"
     }
 
     task "prestart" {
@@ -104,17 +94,23 @@ job "loop" {
           "-c",
           trimspace(file("scripts/prestart.sh"))
         ]
+
+        mount {
+          type = "volume"
+          target = "/assets/"
+          source = "assets"
+          readonly = false
+
+          volume_options {
+            no_copy = true
+          }
+        }
       }
 
       resources {
         cpu = 100
         memory = 128
         memory_max = 2048
-      }
-
-      volume_mount {
-        volume = "assets"
-        destination = "/assets/"
       }
 
       volume_mount {
@@ -157,8 +153,19 @@ EOF
 
         mount {
           type   = "bind"
-          source = "local/fpm/"
+          source = "local/"
           target = "/etc/php/8.3/fpm/pool.d/"
+        }
+
+        mount {
+          type = "volume"
+          target = "/app/storage/app/"
+          source = "${NOMAD_JOB_NAME}"
+          readonly = false
+
+          volume_options {
+            no_copy = false
+          }
         }
 
         entrypoint = [
@@ -181,20 +188,10 @@ EOF
         destination = "/var/opt/nomad/run/"
       }
 
-      volume_mount {
-        volume = "storage"
-        destination = "/app/storage/app/"
-      }
-
-      volume_mount {
-        volume = "assets"
-        destination = "/assets/"
-      }
-
       template {
         data = trimspace(file("conf/www.conf"))
 
-        destination = "local/fpm/www.conf"
+        destination = "local/www.conf"
       }
 
       template {
@@ -288,6 +285,28 @@ EOF
             "-c",
             trimspace(file("scripts/${task.value}.sh"))
           ]
+
+          mount {
+            type = "volume"
+            target = "/assets/"
+            source = "assets"
+            readonly = false
+
+            volume_options {
+              no_copy = true
+            }
+          }
+
+          mount {
+            type = "volume"
+            target = "/app/storage/app/"
+            source = "${NOMAD_JOB_NAME}"
+            readonly = false
+
+            volume_options {
+              no_copy = false
+            }
+          }
         }
 
         resources {
@@ -299,16 +318,6 @@ EOF
         volume_mount {
           volume = "run"
           destination = "/var/opt/nomad/run/"
-        }
-
-        volume_mount {
-          volume = "storage"
-          destination = "/app/storage/app/"
-        }
-
-        volume_mount {
-          volume = "assets"
-          destination = "/assets/"
         }
 
         template {
@@ -334,6 +343,13 @@ EOF
         }
       }
     }
+  }
+
+  reschedule {
+    delay = "10s"
+    delay_function = "fibonacci"
+    max_delay = "60s"
+    unlimited = true
   }
 
   update {
