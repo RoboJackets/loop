@@ -261,6 +261,26 @@ EOF
         mode = "fail"
       }
 
+      action "index-all-models" {
+        command = "/usr/bin/php"
+
+        args = [
+          "-f",
+          "/app/artisan",
+          "scout:import-all",
+        ]
+      }
+
+      action "generate-thumbnails" {
+        command = "/usr/bin/php"
+
+        args = [
+          "-f",
+          "/app/artisan",
+          "generate:thumbnails",
+        ]
+      }
+
       shutdown_delay = var.environment_name == "production" ? "30s" : "0s"
     }
 
