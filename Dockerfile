@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.8
 
-FROM python:3.12-bookworm as docs-source
+FROM python:3.12-bookworm AS docs-source
 
 COPY --link docs/ /docs/
 
@@ -13,7 +13,7 @@ RUN set -euxo pipefail && \
     /root/.local/bin/poetry install --no-interaction && \
     /root/.local/bin/poetry run sphinx-build -M dirhtml "." "_build"
 
-FROM node:21.7.3 as docs-minification
+FROM node:21.7.3 AS docs-minification
 
 COPY --link --from=docs-source /docs/_build/dirhtml/ /docs/
 
@@ -34,7 +34,7 @@ RUN set -eux && \
         fi; \
     done;
 
-FROM scratch as backend-source
+FROM scratch AS backend-source
 
 COPY --link app/ /app/app/
 COPY --link bootstrap/ /app/bootstrap/
@@ -48,7 +48,7 @@ COPY --link storage/ /app/storage/
 COPY --link artisan composer.json composer.lock /app/
 COPY --link --from=docs-minification /docs/ /app/public/docs/
 
-FROM ubuntu:noble as backend-uncompressed
+FROM ubuntu:noble AS backend-uncompressed
 
 LABEL maintainer="developers@robojackets.org"
 
@@ -98,7 +98,7 @@ RUN --mount=type=secret,id=composer_auth,dst=/app/auth.json,uid=33,gid=33,requir
 
 # This target is the default, but skipped during pull request builds and in our recommended local build invocation
 # precompressed_assets var on the Nomad job must match whether this stage ran or not
-FROM backend-uncompressed as backend-compressed
+FROM backend-uncompressed AS backend-compressed
 
 RUN set -eux && \
     cd /app/public/ && \
