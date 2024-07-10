@@ -122,8 +122,6 @@ class EngagePurchaseRequestController extends Controller
 
     /**
      * Return a User given an email address (actually a User Principal Name).
-     *
-     * @phan-suppress PhanTypeMismatchReturnSuperType
      */
     private static function getUserByEmailAddress(string $email): User
     {

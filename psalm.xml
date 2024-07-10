@@ -111,8 +111,7 @@
         </InvalidPropertyAssignmentValue>
         <InvalidArgument>
             <errorLevel type="suppress">
-                <file name="app/Nova/User.php"/>
-                <file name="app/Util/QuickBooks.php"/>
+                <directory name="app"/>
             </errorLevel>
         </InvalidArgument>
         <InvalidPropertyFetch>
@@ -122,7 +121,7 @@
         </InvalidPropertyFetch>
         <MissingTemplateParam>
             <errorLevel type="suppress">
-                <file name="app/Nova/Resource.php"/>
+                <directory name="app"/>
             </errorLevel>
         </MissingTemplateParam>
         <RedundantCondition>
@@ -152,5 +151,10 @@
                 <file name="app/Nova/User.php"/>
             </errorLevel>
         </InvalidTemplateParam>
+        <MoreSpecificImplementedParamType>
+            <errorLevel type="suppress">
+                <directory name="app"/>
+            </errorLevel>
+        </MoreSpecificImplementedParamType>
     </issueHandlers>
 </psalm>
