@@ -64,7 +64,6 @@ class QuickBooks
 
         $response = Sentry::wrapWithChildSpan(
             'quickbooks.upload_attachment_to_invoice',
-            // @phan-suppress-next-line PhanTypeMismatchReturn
             static fn (): IPPAttachableResponse => $data_service->Upload(
                 // @phan-suppress-next-line PhanPossiblyNullTypeArgumentInternal
                 base64_encode(Storage::disk('local')->get($filename)),
