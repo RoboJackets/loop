@@ -6173,16 +6173,16 @@
         },
         {
             "name": "spatie/laravel-failed-job-monitor",
-            "version": "4.3.1",
+            "version": "4.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-failed-job-monitor.git",
-                "reference": "ff7f0906a200768c23207bbd38e264f7fb52c6ef"
+                "reference": "1b4c4d3f051a1033ce6ead5433bea850bbf20878"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/ff7f0906a200768c23207bbd38e264f7fb52c6ef",
-                "reference": "ff7f0906a200768c23207bbd38e264f7fb52c6ef",
+                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/1b4c4d3f051a1033ce6ead5433bea850bbf20878",
+                "reference": "1b4c4d3f051a1033ce6ead5433bea850bbf20878",
                 "shasum": ""
             },
             "require": {
@@ -6236,7 +6236,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-failed-job-monitor/tree/4.3.1"
+                "source": "https://github.com/spatie/laravel-failed-job-monitor/tree/4.3.2"
             },
             "funding": [
                 {
@@ -6244,7 +6244,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-05-02T10:07:57+00:00"
+            "time": "2024-07-16T07:57:24+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
