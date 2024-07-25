@@ -16,6 +16,7 @@ use App\Observers\BankTransactionObserver;
 use App\Observers\ExpenseReportLineObserver;
 use App\Observers\ExpenseReportObserver;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -47,6 +48,13 @@ class AppServiceProvider extends ServiceProvider
         BankTransaction::observe(BankTransactionObserver::class);
         ExpenseReport::observe(ExpenseReportObserver::class);
         ExpenseReportLine::observe(ExpenseReportLineObserver::class);
+
+        Model::shouldBeStrict();
+
+        // Lazy-loading needs to be allowed for console commands due to https://github.com/laravel/scout/issues/462
+        if ($this->app->runningInConsole()) {
+            Model::preventLazyLoading(false);
+        }
 
         $this->bootRoute();
     }
