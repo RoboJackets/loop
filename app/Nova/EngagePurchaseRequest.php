@@ -75,6 +75,17 @@ class EngagePurchaseRequest extends Resource
     public static $group = 'SOFO';
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<string>
+     */
+    public static $with = [
+        'fiscalYear',
+        'submittedBy',
+        'expenseReport',
+    ];
+
+    /**
      * Get the fields displayed by the resource.
      */
     public function fields(NovaRequest $request): array

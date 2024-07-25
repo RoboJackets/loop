@@ -46,6 +46,15 @@ class Attachment extends Resource
     ];
 
     /**
+     * The relationships that should be eager loaded on index queries.
+     *
+     * @var array<string>
+     */
+    public static $with = [
+        'attachable',
+    ];
+
+    /**
      * Get the fields displayed by the resource.
      */
     public function fields(NovaRequest $request): array
