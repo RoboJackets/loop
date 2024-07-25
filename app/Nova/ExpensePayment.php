@@ -67,7 +67,6 @@ class ExpensePayment extends Resource
      */
     public static $with = [
         'payTo',
-        'bankTransaction',
     ];
 
     /**

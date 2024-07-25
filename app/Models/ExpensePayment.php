@@ -77,7 +77,6 @@ class ExpensePayment extends Model
      */
     protected $with = [
         'payTo',
-        'bankTransaction',
     ];
 
     /**
