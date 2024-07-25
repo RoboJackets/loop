@@ -55,6 +55,15 @@ class ExpenseReportLine extends Model
     ];
 
     /**
+     * The relationships that should always be loaded.
+     *
+     * @var array<string>
+     */
+    protected $with = [
+        'expenseReport',
+    ];
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>

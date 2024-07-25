@@ -124,6 +124,17 @@ class DocuSignEnvelope extends Model
     ];
 
     /**
+     * The relationships that should always be loaded.
+     *
+     * @var array<string>
+     */
+    protected $with = [
+        'fiscalYear',
+        'payToUser',
+        'expenseReport',
+    ];
+
+    /**
      * List of valid types and display names for them.
      *
      * @var array<string,string>

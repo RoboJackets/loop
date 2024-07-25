@@ -137,6 +137,19 @@ class EngagePurchaseRequest extends Model
     ];
 
     /**
+     * The relationships that should always be loaded.
+     *
+     * @var array<string>
+     */
+    protected $with = [
+        'fiscalYear',
+        'payToUser',
+        'submittedBy',
+        'approvedBy',
+        'expenseReport',
+    ];
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
