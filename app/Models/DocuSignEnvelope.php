@@ -109,6 +109,8 @@ class DocuSignEnvelope extends Model
      * The name of the database table for this model.
      *
      * @var string
+     *
+     * @phan-read-only
      */
     protected $table = 'docusign_envelopes';
 
@@ -116,6 +118,8 @@ class DocuSignEnvelope extends Model
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
+     *
+     * @phan-read-only
      */
     protected $fillable = [
         'envelope_uuid',
@@ -126,7 +130,9 @@ class DocuSignEnvelope extends Model
     /**
      * The relationships that should always be loaded.
      *
-     * @var array<string>
+     * @var array<int, string>
+     *
+     * @phan-read-only
      */
     protected $with = [
         'fiscalYear',
@@ -151,6 +157,8 @@ class DocuSignEnvelope extends Model
      * The attributes that can be used for filtering in Meilisearch.
      *
      * @var array<string>
+     *
+     * @phan-read-only
      */
     public array $filterable_attributes = [
         'fiscal_year_id',

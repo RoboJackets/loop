@@ -26,6 +26,8 @@ class DataSource extends Model
      * The primary key associated with the table.
      *
      * @var string
+     *
+     * @phan-read-only
      */
     protected $primaryKey = 'name';
 
@@ -33,6 +35,8 @@ class DataSource extends Model
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool
+     *
+     * @phan-read-only
      */
     public $incrementing = false;
 
@@ -40,6 +44,8 @@ class DataSource extends Model
      * The "type" of the auto-incrementing ID.
      *
      * @var string
+     *
+     * @phan-read-only
      */
     protected $keyType = 'string';
 
@@ -47,6 +53,8 @@ class DataSource extends Model
      * Indicates if the model should be timestamped.
      *
      * @var bool
+     *
+     * @phan-read-only
      */
     public $timestamps = false;
 
@@ -54,6 +62,8 @@ class DataSource extends Model
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
+     *
+     * @phan-read-only
      */
     protected $fillable = [
         'name',

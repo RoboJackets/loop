@@ -50,7 +50,9 @@ class FundingAllocation extends Model
     /**
      * The relationships that should always be loaded.
      *
-     * @var array<string>
+     * @var array<int, string>
+     *
+     * @phan-read-only
      */
     protected $with = [
         'fiscalYear',
@@ -74,6 +76,8 @@ class FundingAllocation extends Model
      * The attributes that can be used for filtering in Meilisearch.
      *
      * @var array<string>
+     *
+     * @phan-read-only
      */
     public array $filterable_attributes = [
         'fiscal_year_id',
@@ -83,6 +87,8 @@ class FundingAllocation extends Model
      * The attributes that Nova might think can be used for filtering, but actually can't.
      *
      * @var array<string>
+     *
+     * @phan-read-only
      */
     public array $do_not_filter_on = [
         'funding_allocation_line_id',

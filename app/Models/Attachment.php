@@ -66,6 +66,8 @@ class Attachment extends Model
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
+     *
+     * @phan-read-only
      */
     protected $fillable = [
         'attachable_id',
@@ -81,7 +83,9 @@ class Attachment extends Model
     /**
      * The relationships that should always be loaded.
      *
-     * @var array<string>
+     * @var array<int, string>
+     *
+     * @phan-read-only
      */
     protected $with = [
         'attachable',

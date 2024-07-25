@@ -78,6 +78,8 @@ class User extends Authenticatable
      * The accessors to append to the model's array form.
      *
      * @var array<string>
+     *
+     * @phan-read-only
      */
     protected $appends = [
         'name',
@@ -87,6 +89,8 @@ class User extends Authenticatable
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
+     *
+     * @phan-read-only
      */
     protected $fillable = [
         'workday_instance_id',

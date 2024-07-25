@@ -51,6 +51,8 @@ class ExternalCommitteeMember extends Model
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
+     *
+     * @phan-read-only
      */
     protected $fillable = [
         'workday_instance_id',
@@ -62,7 +64,9 @@ class ExternalCommitteeMember extends Model
     /**
      * The relationships that should always be loaded.
      *
-     * @var array<string>
+     * @var array<int, string>
+     *
+     * @phan-read-only
      */
     protected $with = [
         'user',

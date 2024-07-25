@@ -80,6 +80,8 @@ class EmailRequest extends Model
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
+     *
+     * @phan-read-only
      */
     protected $fillable = [
         'email_sent_at',
@@ -89,7 +91,9 @@ class EmailRequest extends Model
     /**
      * The relationships that should always be loaded.
      *
-     * @var array<string>
+     * @var array<int, string>
+     *
+     * @phan-read-only
      */
     protected $with = [
         'fiscalYear',

@@ -44,6 +44,8 @@ class FiscalYear extends Model
      * The attributes that should be cast to native types.
      *
      * @var array<string,string>
+     *
+     * @phan-read-only
      */
     protected $casts = [
         'in_scope_for_quickbooks' => 'boolean',

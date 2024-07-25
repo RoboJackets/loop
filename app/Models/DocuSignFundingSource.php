@@ -36,6 +36,8 @@ class DocuSignFundingSource extends Pivot
      * The name of the database table for this model.
      *
      * @var string
+     *
+     * @phan-read-only
      */
     public $table = 'docusign_funding_sources';
 
@@ -43,6 +45,8 @@ class DocuSignFundingSource extends Pivot
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool
+     *
+     * @phan-read-only
      */
     public $incrementing = true;
 
