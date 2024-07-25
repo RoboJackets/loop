@@ -33,7 +33,7 @@ class EmailRequestPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create-email-requests');
+        return false;
     }
 
     /**
