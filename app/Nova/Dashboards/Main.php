@@ -9,7 +9,9 @@ use App\Nova\Metrics\AverageDaysToCreateExpenseReport;
 use App\Nova\Metrics\AverageDaysToPayExpenseReport;
 use App\Nova\Metrics\AverageDaysToReconcileExpensePayment;
 use App\Nova\Metrics\EngagePurchaseRequestsMissingExpenseReports;
+use App\Nova\Metrics\ExpensePaymentsInProgress;
 use App\Nova\Metrics\ExpensePaymentsPendingReconciliation;
+use App\Nova\Metrics\ExpenseReportsInProgress;
 use App\Nova\Metrics\ExpenseReportsPendingApproval;
 use App\Nova\Metrics\ExpenseReportsPendingPayment;
 use Laravel\Nova\Dashboards\Main as Dashboard;
@@ -48,6 +50,10 @@ class Main extends Dashboard
                 ->width('1/4'),
             AverageDaysToReconcileExpensePayment::make()
                 ->width('1/4'),
+            ExpenseReportsInProgress::make()
+                ->width('1/2'),
+            ExpensePaymentsInProgress::make()
+                ->width('1/2'),
         ];
     }
 }
