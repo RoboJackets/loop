@@ -36,6 +36,7 @@ class EngagePurchaseRequestsMissingExpenseReports extends Value
         return $this
             ->result(
                 EngagePurchaseRequest::selectRaw('coalesce(sum(submitted_amount), 0) as total')
+                    ->where('status', '!=', 'Canceled')
                     ->whereDoesntHave('expenseReport')
                     ->where(static function (Builder $query): void {
                         $query->where('payee_first_name', 'like', '%robojackets%')

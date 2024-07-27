@@ -36,6 +36,7 @@ class EngagePurchaseRequestsMissingExpenseReports extends Lens
     {
         return $request->withOrdering($request->withFilters(
             $query->whereDoesntHave('expenseReport')
+                ->where('status', '!=', 'Canceled')
                 ->where(static function (Builder $query): void {
                     $query->where('payee_first_name', 'like', '%robojackets%')
                         ->orWhere('payee_last_name', 'like', '%robojackets%');
