@@ -296,7 +296,7 @@ class DocuSignEnvelope extends Resource
             SyncDocuSignEnvelopeToQuickBooks::make()
                 ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('access-quickbooks'))
                 ->canRun(
-                    static fn (NovaRequest $request, \App\Models\EngagePurchaseRequest $engage): bool => $request
+                    static fn (NovaRequest $request, \App\Models\DocuSignEnvelope $envelope): bool => $request
                         ->user()
                         ->can('access-quickbooks')
                 ),
