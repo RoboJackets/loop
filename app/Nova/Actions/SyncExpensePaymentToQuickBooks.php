@@ -161,6 +161,7 @@ class SyncExpensePaymentToQuickBooks extends Action
                 $query->where('expense_payment_id', '=', $payment->workday_instance_id);
             }
         )
+            ->with('expenseReport.lines.attachments')
             ->get()
             ->each(static function (DocuSignEnvelope $envelope, int $key) use (&$lines): void {
                 if ($envelope->expenseReport->envelopes()->count() === 1) {
