@@ -48,9 +48,9 @@
         </ImplementedReturnTypeMismatch>
         <UndefinedClass>
             <errorLevel type="suppress">
-                <file name="app/Providers/NovaServiceProvider.php" />
-                <file name="app/Nova/Actions/SyncEngagePurchaseRequestToQuickBooks.php"/>
-                <file name="app/Nova/Actions/SyncEmailRequestToQuickBooks.php"/>
+                <file name="app/Providers/NovaServiceProvider.php"/>
+                <referencedClass name="QuickBooksOnline\API\Data\com\intuit\schema\finance\v3\IPPLine"/>
+                <referencedClass name="QuickBooksOnline\API\Data\com\intuit\schema\finance\v3\IPPSalesItemLineDetail"/>
             </errorLevel>
         </UndefinedClass>
         <UndefinedMagicPropertyFetch>
@@ -71,10 +71,9 @@
         </InvalidScalarArgument>
         <UndefinedDocblockClass>
             <errorLevel type="suppress">
-                <file name="app/Exceptions/QuickBooksFault.php"/>
-                <file name="app/Models/User.php"/>
-                <file name="app/Nova/Actions/SyncEngagePurchaseRequestToQuickBooks.php"/>
-                <file name="app/Nova/Actions/SyncEmailRequestToQuickBooks.php"/>
+                <referencedClass name="QuickBooksOnline\API\Core\OAuth\OAuth2\Date"/>
+                <referencedClass name="QuickBooksOnline\API\Data\com\intuit\schema\finance\v3\IPPError"/>
+                <referencedClass name="QuickBooksOnline\API\Data\com\intuit\schema\finance\v3\IPPLinkedTxn"/>
             </errorLevel>
         </UndefinedDocblockClass>
         <InvalidReturnType>
@@ -101,12 +100,13 @@
         </InvalidReturnStatement>
         <InvalidPropertyAssignmentValue>
             <errorLevel type="suppress">
-                <file name="app/Models/User.php"/>
                 <file name="app/Jobs/ProcessSensibleOutput.php"/>
-                <file name="app/Util/QuickBooks.php"/>
-                <file name="app/Nova/Actions/SyncExpensePaymentToQuickBooks.php"/>
-                <file name="app/Nova/Actions/SyncEngagePurchaseRequestToQuickBooks.php"/>
+                <file name="app/Models/User.php"/>
+                <file name="app/Nova/Actions/SyncDocuSignEnvelopeToQuickBooks.php"/>
                 <file name="app/Nova/Actions/SyncEmailRequestToQuickBooks.php"/>
+                <file name="app/Nova/Actions/SyncEngagePurchaseRequestToQuickBooks.php"/>
+                <file name="app/Nova/Actions/SyncExpensePaymentToQuickBooks.php"/>
+                <file name="app/Util/QuickBooks.php"/>
             </errorLevel>
         </InvalidPropertyAssignmentValue>
         <InvalidArgument>
@@ -131,14 +131,16 @@
         </RedundantCondition>
         <TypeDoesNotContainType>
             <errorLevel type="suppress">
-                <file name="app/Nova/Actions/SyncEngagePurchaseRequestToQuickBooks.php"/>
+                <file name="app/Nova/Actions/SyncDocuSignEnvelopeToQuickBooks.php"/>
                 <file name="app/Nova/Actions/SyncEmailRequestToQuickBooks.php"/>
+                <file name="app/Nova/Actions/SyncEngagePurchaseRequestToQuickBooks.php"/>
             </errorLevel>
         </TypeDoesNotContainType>
         <InvalidArrayOffset>
             <errorLevel type="suppress">
-                <file name="app/Nova/Actions/SyncEngagePurchaseRequestToQuickBooks.php"/>
+                <file name="app/Nova/Actions/SyncDocuSignEnvelopeToQuickBooks.php"/>
                 <file name="app/Nova/Actions/SyncEmailRequestToQuickBooks.php"/>
+                <file name="app/Nova/Actions/SyncEngagePurchaseRequestToQuickBooks.php"/>
             </errorLevel>
         </InvalidArrayOffset>
         <InvalidArrayAccess>

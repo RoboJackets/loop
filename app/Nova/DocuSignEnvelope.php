@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\SyncDocuSignEnvelopeToQuickBooks;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -273,7 +274,33 @@ class DocuSignEnvelope extends Resource
      */
     public function actions(NovaRequest $request): array
     {
-        return [];
+        $resourceId = $request->resourceId ?? $request->resources;
+        $user = $request->user();
+
+        if ($resourceId === null || $user === null || ! $user->can('access-quickbooks')) {
+            return [];
+        }
+
+        $docuSignEnvelope = \App\Models\DocuSignEnvelope::whereId($resourceId)->withTrashed()->sole();
+
+        if (
+            $docuSignEnvelope->deleted_at !== null ||
+            $docuSignEnvelope->quickbooks_invoice_id !== null ||
+            $docuSignEnvelope->quickbooks_invoice_document_number !== null ||
+            $docuSignEnvelope->expense_report_id === null
+        ) {
+            return [];
+        }
+
+        return [
+            SyncDocuSignEnvelopeToQuickBooks::make()
+                ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('access-quickbooks'))
+                ->canRun(
+                    static fn (NovaRequest $request, \App\Models\EngagePurchaseRequest $engage): bool => $request
+                        ->user()
+                        ->can('access-quickbooks')
+                ),
+        ];
     }
 
     /**

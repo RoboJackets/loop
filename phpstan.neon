@@ -111,6 +111,8 @@ parameters:
     - '#Parameter \$cS of class QuickBooksOnline\\API\\Core\\OAuth\\OAuth2\\OAuth2AccessToken constructor expects string, mixed given\.#'
     - '#PHPDoc type array<string> of property App\\Models\\User::\$appends is not covariant with PHPDoc type array<int, string> of overridden property Illuminate\\Database\\Eloquent\\Model::\$appends\.#'
     - '#Property App\\Models\\[a-zA-Z]+::\$[a-zA-Z_]+ \(string\) does not accept mixed\.#'
+    - '#Property App\\Models\\DocuSignEnvelope::\$quickbooks_invoice_document_number \(int\|null\) does not accept string\.#'
+    - '#Property App\\Models\\DocuSignEnvelope::\$quickbooks_invoice_id \(int\|null\) does not accept QuickBooksOnline\\API\\Data\\com\\intuit\\schema\\finance\\v3\\IPPid\.#'
     - '#Property App\\Models\\EmailRequest::\$[a-z_]+ \(float\|null\) does not accept float\|int\|string\|null\.#'
     - '#Property App\\Models\\EmailRequest::\$[a-z_]+ \(string\|null\) does not accept float\|int\|string\|null\.#'
     - '#Property App\\Models\\EmailRequest::\$quickbooks_invoice_id \(int\|null\) does not accept QuickBooksOnline\\API\\Data\\com\\intuit\\schema\\finance\\v3\\IPPid\.#'

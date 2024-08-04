@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Util;
 
 use App\Exceptions\QuickBooksFault;
+use App\Models\DocuSignEnvelope;
 use App\Models\EmailRequest;
 use App\Models\EngagePurchaseRequest;
 use App\Models\User;
@@ -44,7 +45,7 @@ class QuickBooks
      */
     public static function uploadAttachmentToInvoice(
         DataService $data_service,
-        EngagePurchaseRequest|EmailRequest $request,
+        EngagePurchaseRequest|EmailRequest|DocuSignEnvelope $request,
         string $filename
     ): void {
         if (! Storage::disk('local')->exists($filename)) {
