@@ -62,6 +62,7 @@ parameters:
     - '#Method App\\Nova\\Metrics\\[a-zA-Z]+::calculate\(\) return type has no value type specified in iterable type array\.#'
     - '#Method App\\Nova\\Metrics\\[a-zA-Z]+::ranges\(\) return type has no value type specified in iterable type array\.#'
     - '#Method App\\Nova\\Resource::queryParamFromReferrer\(\) should return string\|null but returns array\|string\.#'
+    - '#Method App\\Nova\\User::subtitle\(\) should return string\|null but returns mixed\.#'
     - '#Method App\\Util\\Workday::getInstanceId\(\) has parameter \$widget with no value type specified in iterable type array\.#'
     - '#Method App\\Util\\Workday::searchForKeyValuePair\(\) has parameter \$widgets with no value type specified in iterable type array\.#'
     - '#Method App\\Util\\Workday::searchForKeyValuePair\(\) return type has no value type specified in iterable type array\.#'
