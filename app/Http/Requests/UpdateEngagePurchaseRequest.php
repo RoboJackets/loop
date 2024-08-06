@@ -57,7 +57,7 @@ class UpdateEngagePurchaseRequest extends FormRequest
             'status' => [
                 'required',
                 'string',
-                'in:Approved,Unapproved,Canceled,Denied',
+                'in:Approved,Unapproved,Canceled,Denied,Completed',
             ],
             'submitted' => [
                 'required',
