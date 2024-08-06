@@ -36,6 +36,7 @@ parameters:
     - '#Cannot call method addDays\(\) on Illuminate\\Support\\Carbon\|null\.#'
     - '#Cannot call method can\(\) on App\\Models\\User\|null\.#'
     - '#Cannot call method each\(\) on array<App\\Models\\[a-zA-Z]+>\|Illuminate\\Database\\Eloquent\\Collection\.#'
+    - '#Cannot call method emailRequests\(\) on App\\Models\\ExpenseReport\|null\.#'
     - '#Cannot call method engagePurchaseRequests\(\) on App\\Models\\ExpenseReport\|null\.#'
     - '#Cannot call method envelopes\(\) on App\\Models\\ExpenseReport\|null\.#'
     - '#Cannot call method format\(\) on Illuminate\\Support\\Carbon\|null\.#'
