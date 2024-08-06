@@ -41,6 +41,7 @@ class EngagePurchaseRequestsMissingExpenseReports extends Lens
                     $query->where('payee_first_name', 'like', '%robojackets%')
                         ->orWhere('payee_last_name', 'like', '%robojackets%');
                 })
+                ->whereNotLike('subject', 'pcard%')
         ));
     }
 

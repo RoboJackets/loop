@@ -40,6 +40,7 @@ class EngagePurchaseRequestsMissingInvoices extends Lens
                     $query->where('payee_first_name', 'like', '%robojackets%')
                         ->orWhere('payee_last_name', 'like', '%robojackets%');
                 })
+                ->whereNotLike('subject', 'pcard%')
                 ->where('status', '=', 'Approved')
                 ->where('current_step_name', '=', 'Check Request Sent')
         ));
