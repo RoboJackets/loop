@@ -11,6 +11,7 @@ namespace App\Nova\Actions;
 
 use App\Models\Attachment;
 use App\Models\DocuSignEnvelope;
+use App\Models\EmailRequest;
 use App\Models\EngagePurchaseRequest;
 use App\Models\ExpenseReportLine;
 use App\Util\QuickBooks;
@@ -97,6 +98,22 @@ class SyncExpensePaymentToQuickBooks extends Action
         if ($envelopes_not_synced > 0) {
             return Action::danger(
                 $envelopes_not_synced.' '.($envelopes_not_synced === 1 ? 'envelope has' : 'envelopes have')
+                .' not been synced to QuickBooks, and must be synced before this payment can sync'
+            );
+        }
+
+        $emails_not_synced = EmailRequest::whereNull('quickbooks_invoice_id')
+            ->whereHas(
+                'expenseReport',
+                static function (Builder $query) use ($payment): void {
+                    $query->where('expense_payment_id', '=', $payment->workday_instance_id);
+                }
+            )
+            ->count();
+
+        if ($emails_not_synced > 0) {
+            return Action::danger(
+                $emails_not_synced.' '.($emails_not_synced === 1 ? 'email has' : 'emails have')
                 .' not been synced to QuickBooks, and must be synced before this payment can sync'
             );
         }
@@ -214,6 +231,46 @@ class SyncExpensePaymentToQuickBooks extends Action
                             ],
                         ],
                     ];
+                }
+            });
+
+        EmailRequest::whereHas(
+            'expenseReport',
+            static function (Builder $query) use ($payment): void {
+                $query->where('expense_payment_id', '=', $payment->workday_instance_id);
+            }
+        )
+            ->get()
+            ->each(static function (EmailRequest $emailRequest, int $key) use (&$lines): void {
+                if ($emailRequest->expenseReport->emailRequests()->count() === 1) {
+                    $lines[] = [
+                        'Amount' => $emailRequest->expenseReport->amount,
+                        'LinkedTxn' => [
+                            [
+                                'TxnType' => 'Invoice',
+                                'TxnId' => $emailRequest->quickbooks_invoice_id,
+                            ],
+                        ],
+                    ];
+                } elseif (
+                    floatval(
+                        $emailRequest->expenseReport->emailRequests()->sum('vendor_document_amount')
+                    ) === $emailRequest->expenseReport->amount
+                ) {
+                    $lines[] = [
+                        'Amount' => $emailRequest->vendor_document_amount,
+                        'LinkedTxn' => [
+                            [
+                                'TxnType' => 'Invoice',
+                                'TxnId' => $emailRequest->quickbooks_invoice_id,
+                            ],
+                        ],
+                    ];
+                } else {
+                    throw new Exception(
+                        'Expense report is matched to multiple email requests and unable to automatically determine'.
+                        ' splits'
+                    );
                 }
             });
 
