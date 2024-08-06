@@ -68,7 +68,7 @@ class UpsertEngagePurchaseRequests extends FormRequest
             'items.*.status' => [
                 'required',
                 'string',
-                'in:Approved,Unapproved,Canceled,Denied',
+                'in:Approved,Unapproved,Canceled,Denied,Completed',
             ],
             'items.*.currentStepName' => [
                 'required',

@@ -66,6 +66,7 @@ class EngagePurchaseRequestsMissingExpenseReports extends Lens
                     'Denied' => 'danger',
                     'Canceled' => 'danger',
                     'Approved' => 'success',
+                    'Completed' => 'success',
                 ])
                 ->sortable(),
 

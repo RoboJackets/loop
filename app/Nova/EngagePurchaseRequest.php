@@ -108,6 +108,7 @@ class EngagePurchaseRequest extends Resource
                     'Denied' => 'danger',
                     'Canceled' => 'danger',
                     'Approved' => 'success',
+                    'Completed' => 'success',
                 ])
                 ->sortable(),
 
