@@ -42,6 +42,7 @@ class EngagePurchaseRequestsMissingExpenseReports extends Value
                         $query->where('payee_first_name', 'like', '%robojackets%')
                             ->orWhere('payee_last_name', 'like', '%robojackets%');
                     })
+                    ->whereNotLike('subject', 'pcard%')
                     ->whereNotNull('submitted_at')
                     ->sole()->total
             )
