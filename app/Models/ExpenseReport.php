@@ -77,6 +77,7 @@ class ExpenseReport extends Model
         'fiscal_year_id',
         'external_committee_member_id',
         'created_by_worker_id',
+        'expense_payment_id',
         'memo',
         'created_date',
         'approval_date',
