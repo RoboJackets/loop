@@ -11,10 +11,11 @@
         "php": "^8.2",
         "ext-redis": "*",
         "ext-uuid": "*",
-        "ans-group/laravel-health-check": "dev-l11-compatibility",
+        "ans-group/laravel-health-check": "2.0.0",
         "apereo/phpcas": "^1.6",
         "directorytree/ldaprecord-laravel": "*",
         "enlightn/enlightn": "^2.8",
+        "enlightn/security-checker": "^2.0",
         "guzzlehttp/guzzle": "^7.5",
         "htmlmin/htmlmin": "dev-master",
         "jeffbeltran/sanctum-tokens": "^2.0",
@@ -148,10 +149,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/RoboJackets/Laravel-HTMLMin.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/laravel-shift/laravel-health-check.git"
         }
     ]
 }
