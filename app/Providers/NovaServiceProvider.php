@@ -84,6 +84,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
             return $menu;
         });
+
+        Nova::withoutNotificationCenter();
     }
 
     /**
