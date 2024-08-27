@@ -135,7 +135,7 @@ class Attachment extends Model
 
         $filename = $this->filename;
 
-        if (Storage::disk('local')->exists($filename)) {
+        if (Storage::disk('local')->exists($filename) && Storage::disk('local')->size($filename) > 0) {
             $file_hash = hash_file('sha512', Storage::disk('local')->path($filename));
 
             Cache::lock(name: 'tika_extraction_'.$file_hash, seconds: 360)->block(
