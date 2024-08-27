@@ -11,10 +11,10 @@ REDIS_PORT="-1"
 REDIS_HOST="{{- index .ServiceMeta "socket" | trimSpace -}}"
 {{ end }}
 REDIS_PASSWORD="{{- key "redis/password" | trimSpace -}}"
-{{- range service "meilisearch-v1-9" }}
+{{- range service "meilisearch-v1-10" }}
 MEILISEARCH_HOST="http://127.0.0.1:{{- .Port -}}"
 {{ end }}
-MEILISEARCH_KEY="{{- key "meilisearch/admin-key-v1.9" | trimSpace -}}"
+MEILISEARCH_KEY="{{- key "meilisearch/admin-key-v1.10" | trimSpace -}}"
 {{- range service "tika" }}
 TIKA_URL="http://127.0.0.1:{{- .Port -}}"
 {{ end }}
