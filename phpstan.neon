@@ -47,6 +47,8 @@ parameters:
     - '#Cannot call method storeAs\(\) on array<int, Illuminate\\Http\\UploadedFile>\|Illuminate\\Http\\UploadedFile\|null\.#'
     - '#Class App\\Nova\\Resource extends generic class Laravel\\Nova\\Resource but does not specify its types: TModel#'
     - '#Dynamic call to static method App\\Models\\[a-zA-Z]+::[a-zA-Z]+\(\)\.#'
+    - '#Dynamic call to static method Illuminate\\Contracts\\Auth\\Guard::check\(\)\.#'
+    - '#Dynamic call to static method Illuminate\\Contracts\\Auth\\Guard::user\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+>::[a-zA-Z]+\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Builder<Illuminate\\Database\\Eloquent\\Model>::[a-zA-Z]+\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Database\\Eloquent\\Relations\\[a-zA-Z]+<App\\Models\\[a-zA-Z]+>::[a-zA-Z]+\(\)\.#'
