@@ -48,7 +48,7 @@
         "nunomaduro/collision": "8.4.0",
         "phan/phan": "5.4.5",
         "phpstan/extension-installer": "1.4.3",
-        "phpstan/phpstan": "1.12.3",
+        "phpstan/phpstan": "1.12.4",
         "phpstan/phpstan-deprecation-rules": "1.2.1",
         "phpstan/phpstan-strict-rules": "1.6.0",
         "psalm/plugin-laravel": "2.11.0",
