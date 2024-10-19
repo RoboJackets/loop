@@ -106,7 +106,7 @@ class ExpensePayment extends Model
     /**
      * Get the expense reports associated with this expense payment.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpenseReport>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpenseReport, self>
      */
     public function expenseReports(): HasMany
     {

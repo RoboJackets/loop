@@ -139,7 +139,7 @@ class EmailRequest extends Model
     /**
      * Get the attachments associated with the request.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Attachment>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Attachment, self>
      */
     public function attachments(): MorphMany
     {

@@ -124,7 +124,7 @@ class FundingAllocationLine extends Model
     /**
      * Get the envelopes for this funding allocation line.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\DocuSignEnvelope>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\DocuSignEnvelope, self>
      */
     public function envelopes(): BelongsToMany
     {

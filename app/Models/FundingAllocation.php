@@ -107,7 +107,7 @@ class FundingAllocation extends Model
     /**
      * Get the lines for this funding allocation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FundingAllocationLine>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FundingAllocationLine, self>
      */
     public function fundingAllocationLines(): HasMany
     {

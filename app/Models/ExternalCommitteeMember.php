@@ -97,7 +97,7 @@ class ExternalCommitteeMember extends Model
     /**
      * Get the expense reports associated with this ECM.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpenseReport>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpenseReport, self>
      */
     public function expenseReports(): HasMany
     {
@@ -107,7 +107,7 @@ class ExternalCommitteeMember extends Model
     /**
      * Get the expense payments associated with this ECM.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpensePayment>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpensePayment, self>
      */
     public function expensePayments(): HasMany
     {

@@ -240,7 +240,7 @@ class DocuSignEnvelope extends Model
     /**
      * Get the envelopes that replace this envelope, if any.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<self>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<self, self>
      */
     public function replacedBy(): HasMany
     {
@@ -250,7 +250,7 @@ class DocuSignEnvelope extends Model
     /**
      * Get the envelopes that replace this envelope, if any.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<self>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<self, self>
      */
     public function duplicates(): HasMany
     {
@@ -260,7 +260,7 @@ class DocuSignEnvelope extends Model
     /**
      * Get the funding sources for this envelope.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\FundingAllocationLine>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\FundingAllocationLine, self>
      */
     public function fundingSources(): BelongsToMany
     {
@@ -273,7 +273,7 @@ class DocuSignEnvelope extends Model
     /**
      * Get the attachments associated with the envelope.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Attachment>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Attachment, self>
      */
     public function attachments(): MorphMany
     {
