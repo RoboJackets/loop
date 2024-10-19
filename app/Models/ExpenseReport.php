@@ -164,7 +164,7 @@ class ExpenseReport extends Model
     /**
      * Get the lines for this expense report.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpenseReportLine>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpenseReportLine, self>
      */
     public function lines(): HasMany
     {
@@ -174,7 +174,7 @@ class ExpenseReport extends Model
     /**
      * Get the envelopes for this expense report.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DocuSignEnvelope>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DocuSignEnvelope, self>
      */
     public function envelopes(): HasMany
     {
@@ -184,7 +184,7 @@ class ExpenseReport extends Model
     /**
      * Get the Engage purchase requests for this expense report.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\EngagePurchaseRequest>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\EngagePurchaseRequest, self>
      */
     public function engagePurchaseRequests(): HasMany
     {
@@ -194,7 +194,7 @@ class ExpenseReport extends Model
     /**
      * Get the email requests for this expense report.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\EmailRequest>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\EmailRequest, self>
      */
     public function emailRequests(): HasMany
     {

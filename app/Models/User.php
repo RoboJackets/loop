@@ -120,7 +120,7 @@ class User extends Authenticatable
     /**
      * Get the ECMs for this user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExternalCommitteeMember>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExternalCommitteeMember, self>
      */
     public function externalCommitteeMembers(): HasMany
     {
@@ -130,7 +130,7 @@ class User extends Authenticatable
     /**
      * Get the expense reports created by this user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpenseReport>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpenseReport, self>
      */
     public function expenseReports(): HasMany
     {

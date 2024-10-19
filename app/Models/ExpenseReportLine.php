@@ -92,7 +92,7 @@ class ExpenseReportLine extends Model
     /**
      * Get the attachments associated with the expense report line.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Attachment>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<\App\Models\Attachment, self>
      */
     public function attachments(): MorphMany
     {

@@ -54,7 +54,7 @@ class FiscalYear extends Model
     /**
      * Get the funding allocations for this fiscal year.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FundingAllocation>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\FundingAllocation, self>
      */
     public function fundingAllocations(): HasMany
     {
@@ -64,7 +64,7 @@ class FiscalYear extends Model
     /**
      * Get the DocuSign envelopes for this fiscal year.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DocuSignEnvelope>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\DocuSignEnvelope, self>
      */
     public function envelopes(): HasMany
     {
@@ -74,7 +74,7 @@ class FiscalYear extends Model
     /**
      * Get the Engage purchase requests for this fiscal year.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\EngagePurchaseRequest>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\EngagePurchaseRequest, self>
      */
     public function engagePurchaseRequests(): HasMany
     {
@@ -84,7 +84,7 @@ class FiscalYear extends Model
     /**
      * Get the email requests for this fiscal year.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\EmailRequest>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\EmailRequest, self>
      */
     public function emailRequests(): HasMany
     {
@@ -94,7 +94,7 @@ class FiscalYear extends Model
     /**
      * Get the expense reports for this fiscal year.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpenseReport>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExpenseReport, self>
      */
     public function expenseReports(): HasMany
     {

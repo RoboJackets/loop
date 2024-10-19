@@ -101,7 +101,7 @@ class BankTransaction extends Model
     /**
      * Get the expense payment for this expense report, if any.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\ExpensePayment>
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\ExpensePayment, self>
      */
     public function expensePayment(): HasOne
     {
