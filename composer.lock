@@ -433,16 +433,16 @@
         },
         {
             "name": "directorytree/ldaprecord",
-            "version": "v3.7.2",
+            "version": "v3.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DirectoryTree/LdapRecord.git",
-                "reference": "93ef5cf4a09990006881e989d44d466a2d29fe4a"
+                "reference": "207c7273f3aa872606406194bbe4e304e87ed9b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DirectoryTree/LdapRecord/zipball/93ef5cf4a09990006881e989d44d466a2d29fe4a",
-                "reference": "93ef5cf4a09990006881e989d44d466a2d29fe4a",
+                "url": "https://api.github.com/repos/DirectoryTree/LdapRecord/zipball/207c7273f3aa872606406194bbe4e304e87ed9b6",
+                "reference": "207c7273f3aa872606406194bbe4e304e87ed9b6",
                 "shasum": ""
             },
             "require": {
@@ -505,7 +505,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-18T13:28:29+00:00"
+            "time": "2024-10-25T05:32:53+00:00"
         },
         {
             "name": "directorytree/ldaprecord-laravel",
@@ -10109,16 +10109,16 @@
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v9.5.4",
+            "version": "v9.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "9eb99ee55935da2178a471fd7d338c18164a7fbe"
+                "reference": "681a071a31e3b85ae080fa98614af0aec511cf6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/9eb99ee55935da2178a471fd7d338c18164a7fbe",
-                "reference": "9eb99ee55935da2178a471fd7d338c18164a7fbe",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/681a071a31e3b85ae080fa98614af0aec511cf6f",
+                "reference": "681a071a31e3b85ae080fa98614af0aec511cf6f",
                 "shasum": ""
             },
             "require": {
@@ -10195,7 +10195,7 @@
                 "issues": "https://github.com/orchestral/testbench/issues",
                 "source": "https://github.com/orchestral/testbench-core"
             },
-            "time": "2024-10-24T03:25:02+00:00"
+            "time": "2024-10-25T14:43:57+00:00"
         },
         {
             "name": "phan/phan",
