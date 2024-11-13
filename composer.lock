@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "db2a1e570940776324e8dde5d69702b9",
+    "content-hash": "6d9f52a60c2fb72b4d440663791abb52",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -2749,16 +2749,16 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v10.11.5",
+            "version": "v10.11.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "e67e2015e2f6f15e0fa033fb2ceb248ba8c5fa36"
+                "reference": "d4c0bbc41f52b4bf315914cfc7046fd485e8d92d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/e67e2015e2f6f15e0fa033fb2ceb248ba8c5fa36",
-                "reference": "e67e2015e2f6f15e0fa033fb2ceb248ba8c5fa36",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/d4c0bbc41f52b4bf315914cfc7046fd485e8d92d",
+                "reference": "d4c0bbc41f52b4bf315914cfc7046fd485e8d92d",
                 "shasum": ""
             },
             "require": {
@@ -2772,8 +2772,11 @@
                 "php": "^8.0",
                 "symfony/console": "^6.0|^7.0"
             },
+            "conflict": {
+                "algolia/algoliasearch-client-php": "<3.2.0|>=5.0.0"
+            },
             "require-dev": {
-                "algolia/algoliasearch-client-php": "^3.2",
+                "algolia/algoliasearch-client-php": "^3.2|^4.0",
                 "meilisearch/meilisearch-php": "^1.0",
                 "mockery/mockery": "^1.0",
                 "orchestra/testbench": "^7.31|^8.11|^9.0",
@@ -2823,7 +2826,7 @@
                 "issues": "https://github.com/laravel/scout/issues",
                 "source": "https://github.com/laravel/scout"
             },
-            "time": "2024-10-30T15:09:56+00:00"
+            "time": "2024-11-13T09:41:16+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -6312,16 +6315,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v7.1.7",
+            "version": "v7.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "3284aafcac338b6e86fd955ee4d794cbe434151a"
+                "reference": "ff04e5b5ba043d2badfb308197b9e6b42883fcd5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/3284aafcac338b6e86fd955ee4d794cbe434151a",
-                "reference": "3284aafcac338b6e86fd955ee4d794cbe434151a",
+                "url": "https://api.github.com/repos/symfony/console/zipball/ff04e5b5ba043d2badfb308197b9e6b42883fcd5",
+                "reference": "ff04e5b5ba043d2badfb308197b9e6b42883fcd5",
                 "shasum": ""
             },
             "require": {
@@ -6385,7 +6388,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v7.1.7"
+                "source": "https://github.com/symfony/console/tree/v7.1.8"
             },
             "funding": [
                 {
@@ -6401,7 +6404,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-05T15:34:55+00:00"
+            "time": "2024-11-06T14:23:19+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -7888,16 +7891,16 @@
         },
         {
             "name": "symfony/string",
-            "version": "v7.1.6",
+            "version": "v7.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "61b72d66bf96c360a727ae6232df5ac83c71f626"
+                "reference": "591ebd41565f356fcd8b090fe64dbb5878f50281"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/61b72d66bf96c360a727ae6232df5ac83c71f626",
-                "reference": "61b72d66bf96c360a727ae6232df5ac83c71f626",
+                "url": "https://api.github.com/repos/symfony/string/zipball/591ebd41565f356fcd8b090fe64dbb5878f50281",
+                "reference": "591ebd41565f356fcd8b090fe64dbb5878f50281",
                 "shasum": ""
             },
             "require": {
@@ -7955,7 +7958,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v7.1.6"
+                "source": "https://github.com/symfony/string/tree/v7.1.8"
             },
             "funding": [
                 {
@@ -7971,7 +7974,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-25T14:20:29+00:00"
+            "time": "2024-11-13T13:31:21+00:00"
         },
         {
             "name": "symfony/translation",
