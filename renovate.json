@@ -62,16 +62,6 @@
     "schedule": [
         "before 4pm every weekday except before 9am every weekday"
     ],
-    "hostRules": [
-        {
-            "matchHost": "nova.laravel.com",
-            "hostType": "packagist",
-            "username": "developers@robojackets.org",
-            "encrypted": {
-                "password": "wcFMA/xDdHCJBTolAQ//R3LOKIDbgqeKma/kMeNW8DYuQ3Me4Yz2reROa98CtZ+Jj/qIpXWtUpwIqZ8bSZvMn0xl99ETCYbKupzysAHwBoCphL1A3bWXtK3ntJUXt+syDAssL4tEDDCoSQYxQPPMyMbHSy54e68ililMUaLVCwPQQufrJt8Vu3+nxgCT3KxX4luZcgwZMht/ho7fvm5sauT/fJV/lILX51wWPJzl69PBr8Rg7x/ozM9oC5FN/a7rJrhaR8LcjJ3lppSO+jFOOjNrdECS9PyyVWhCXCrDOZXXkXOkh5xEJXphqaroZPj3pc9JBOvX0OlLrtEDsSbgvgQCk0Umf6Jv2YqQQCtCLMKsv72N8VBz1HM6l1qh+FGUUl3JMMkAhAbY4j6HXk1tstJkvXyrP9DM6Y6Ma9YI1edY5Xf35705p7qOclQlYBEREUIqBPQBeAurddv0gCTyotTgv9xpnfON461D2gqwyHGHh061PnHXdeVNYHwlhGZrLWpOAsVhhzPYc9IY5maeTB2/EcOvZfAc4TifRL2x/at7COR8TTir5sU43b5pajU4bdZGNX1qvJcIlP64sU9+QlAiK2iFJdcnIJLuSOM7hdPNvHaPbnlz5vAvNFg6JGLU2cq1qA73hbQ6Oj4owBPw0Y7hr/Myc6sVSi5VonOKVx57Sukoj2P0EFMADul0j+7SiAE5RUKC7qLCkAgelolP6RFKOU/SiXdm3xg+FwsXEDhFaOpK2YHSxGuyiP/ehsLHoOdOdEbLBYfVhPOdLQAMtSs+ZhYHU4NITKLHI423Lofhyw6f+8TGF0CX07rUSHtRZ1LcZPB4epL20ck5CLYIZyHSnzlUBU8ElMpkC7U+CgbgqnjkFzdN48Y"
-            }
-        }
-    ],
     "ignoreDeps": [
         "ubuntu"
     ]
