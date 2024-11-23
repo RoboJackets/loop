@@ -1,53 +1,20 @@
 {
     "extends": [
-        "config:base",
+        "config:recommended",
         ":disableMajorUpdates"
     ],
     "prConcurrentLimit": 1,
     "prHourlyLimit": 0,
-    "rebaseStalePrs": true,
+    "rebaseWhen": "behind-base-branch",
     "automerge": true,
     "platformAutomerge": true,
-    "php": {
-        "rangeStrategy": "pin",
-        "lockFileMaintenance": {
-            "enabled": true,
-            "schedule": ["before 4pm every weekday except before 9am every weekday"]
-        },
-        "packageRules": [
-            {
-                "matchDepNames": ["php"],
-                "rangeStrategy": "replace"
-            },
-            {
-              "matchDepTypes": ["require-dev"],
-              "prPriority": -1
-            },
-            {
-              "matchPackagePatterns": ["^laravel/"],
-              "prPriority": 1
-            },
-            {
-              "matchDepNames": ["laravel/framework"],
-              "prPriority": 2
-            }
-        ]
-    },
     "poetry": {
         "major": {
             "enabled": true
         }
     },
-    "js": {
-        "enabled": false
-    },
     "docker-compose": {
         "enabled": false
-    },
-    "docker": {
-        "major": {
-            "enabled": true
-        }
     },
     "github-actions": {
         "major": {
@@ -56,7 +23,9 @@
     },
     "lockFileMaintenance": {
         "enabled": true,
-        "schedule": ["before 4pm every weekday except before 9am every weekday"]
+        "schedule": [
+            "before 4pm every weekday except before 9am every weekday"
+        ]
     },
     "timezone": "America/New_York",
     "schedule": [
@@ -64,5 +33,84 @@
     ],
     "ignoreDeps": [
         "ubuntu"
+    ],
+    "packageRules": [
+        {
+            "matchCategories": [
+                "php"
+            ],
+            "rangeStrategy": "replace",
+            "lockFileMaintenance": {
+                "enabled": true,
+                "schedule": [
+                    "before 4pm every weekday except before 9am every weekday"
+                ]
+            },
+            "matchDepNames": [
+                "php"
+            ]
+        },
+        {
+            "matchCategories": [
+                "php"
+            ],
+            "rangeStrategy": "pin",
+            "lockFileMaintenance": {
+                "enabled": true,
+                "schedule": [
+                    "before 4pm every weekday except before 9am every weekday"
+                ]
+            },
+            "matchDepTypes": [
+                "require-dev"
+            ],
+            "prPriority": -1
+        },
+        {
+            "matchCategories": [
+                "php"
+            ],
+            "rangeStrategy": "pin",
+            "lockFileMaintenance": {
+                "enabled": true,
+                "schedule": [
+                    "before 4pm every weekday except before 9am every weekday"
+                ]
+            },
+            "prPriority": 1,
+            "matchPackageNames": [
+                "/^laravel//"
+            ]
+        },
+        {
+            "matchCategories": [
+                "php"
+            ],
+            "rangeStrategy": "pin",
+            "lockFileMaintenance": {
+                "enabled": true,
+                "schedule": [
+                    "before 4pm every weekday except before 9am every weekday"
+                ]
+            },
+            "matchDepNames": [
+                "laravel/framework"
+            ],
+            "prPriority": 2
+        },
+        {
+            "matchCategories": [
+                "js"
+            ],
+            "enabled": false
+        },
+        {
+            "matchCategories": [
+                "docker"
+            ],
+            "major": {
+                "enabled": true
+            }
+        }
     ]
 }
