@@ -49,6 +49,7 @@
         <UndefinedClass>
             <errorLevel type="suppress">
                 <file name="app/Providers/NovaServiceProvider.php"/>
+                <referencedClass name="Laravel\Sanctum\Laravel\Sanctum\Contracts\HasAbilities"/>
                 <referencedClass name="QuickBooksOnline\API\Data\com\intuit\schema\finance\v3\IPPLine"/>
                 <referencedClass name="QuickBooksOnline\API\Data\com\intuit\schema\finance\v3\IPPSalesItemLineDetail"/>
             </errorLevel>
