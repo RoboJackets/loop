@@ -4,13 +4,6 @@
 {{- range service "mysql" }}
 DB_SOCKET="{{- index .ServiceMeta "socket" | trimSpace -}}"
 {{ end }}
-REDIS_CLIENT="phpredis"
-REDIS_SCHEME="null"
-REDIS_PORT="-1"
-{{- range service "redis" }}
-REDIS_HOST="{{- index .ServiceMeta "socket" | trimSpace -}}"
-{{ end }}
-REDIS_PASSWORD="{{- key "redis/password" | trimSpace -}}"
 {{- range service "meilisearch-v1-10" }}
 MEILISEARCH_HOST="http://127.0.0.1:{{- .Port -}}"
 {{ end }}
@@ -27,3 +20,10 @@ CAS_CLIENT_SERVICE="https://{{- with (key "nginx/hostnames" | parseJSON) -}}{{- 
 CAS_VALIDATION="ca"
 CAS_CERT="/etc/ssl/certs/USERTrust_RSA_Certification_Authority.pem"
 HOME="/secrets/"
+REDIS_CLIENT="phpredis"
+REDIS_SCHEME="null"
+REDIS_PORT="-1"
+REDIS_HOST="/alloc/tmp/redis.sock"
+REDIS_PASSWORD="{{ env "NOMAD_ALLOC_ID" }}"
+REDIS_DB=0
+REDIS_CACHE_DB=1

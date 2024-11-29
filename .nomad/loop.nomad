@@ -70,6 +70,10 @@ job "loop" {
   type = "service"
 
   group "loop" {
+    network {
+      port "resp" {}
+    }
+
     volume "run" {
       type = "host"
       source = "run"
@@ -378,6 +382,89 @@ EOF
 
           change_mode = "noop"
         }
+      }
+    }
+
+    task "redis" {
+      driver = "docker"
+
+      lifecycle {
+        hook = "prestart"
+        sidecar = true
+      }
+
+      config {
+        image = "redis"
+
+        args = [
+          "/usr/local/etc/redis/redis.conf"
+        ]
+
+        force_pull = true
+
+        network_mode = "host"
+
+        mount {
+          type   = "bind"
+          source = "secrets/"
+          target = "/usr/local/etc/redis/"
+        }
+      }
+
+      resources {
+        cpu = 100
+        memory = 256
+        memory_max = 2048
+      }
+
+      template {
+        data = <<EOH
+bind 127.0.0.1
+port {{ env "NOMAD_PORT_resp" }}
+unixsocket /alloc/tmp/redis.sock
+unixsocketperm 777
+requirepass {{ env "NOMAD_ALLOC_ID" }}
+maxmemory {{ env "NOMAD_MEMORY_MAX_LIMIT" }}mb
+maxmemory-policy allkeys-lru
+EOH
+
+        destination = "secrets/redis.conf"
+      }
+
+      service {
+        name = "${NOMAD_JOB_NAME}-redis"
+
+        port = "resp"
+
+        address = "127.0.0.1"
+
+        tags = [
+          "resp"
+        ]
+
+        check {
+          success_before_passing = 3
+          failures_before_critical = 2
+
+          interval = "5s"
+
+          name = "TCP"
+          port = "resp"
+          timeout = "1s"
+          type = "tcp"
+        }
+
+        check_restart {
+          limit = 5
+          grace = "20s"
+        }
+      }
+
+      restart {
+        attempts = 5
+        delay = "10s"
+        interval = "1m"
+        mode = "fail"
       }
     }
   }
