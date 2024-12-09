@@ -466,6 +466,8 @@ EOH
         interval = "1m"
         mode = "fail"
       }
+
+      shutdown_delay = "60s"
     }
   }
 
