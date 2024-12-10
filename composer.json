@@ -20,7 +20,7 @@
         "htmlmin/htmlmin": "dev-master",
         "jeffbeltran/sanctum-tokens": "^2.0",
         "kiritokatklian/nova-permission": "4.0.10",
-        "laravel/framework": "11.34.2",
+        "laravel/framework": "11.35.0",
         "laravel/horizon": "5.29.4",
         "laravel/nova": "4.35.5",
         "laravel/sanctum": "4.0.5",
