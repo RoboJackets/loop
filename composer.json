@@ -23,7 +23,7 @@
         "laravel/framework": "11.35.0",
         "laravel/horizon": "5.29.4",
         "laravel/nova": "4.35.5",
-        "laravel/sanctum": "4.0.5",
+        "laravel/sanctum": "4.0.6",
         "laravel/scout": "10.11.8",
         "laravel/slack-notification-channel": "3.4.1",
         "laravel/tinker": "2.10.0",
