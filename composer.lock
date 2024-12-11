@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fbe8ff697f09f46c606d2c22eff90c4d",
+    "content-hash": "6b5f316ff9501122f0dbe9c4d884349a",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -2742,16 +2742,16 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v10.11.8",
+            "version": "v10.11.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "2effc8c8df14c718de51ceaf0911cefcdb96883b"
+                "reference": "8b3aaf369c5948957b3d504f8999d1a27d9fd800"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/2effc8c8df14c718de51ceaf0911cefcdb96883b",
-                "reference": "2effc8c8df14c718de51ceaf0911cefcdb96883b",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/8b3aaf369c5948957b3d504f8999d1a27d9fd800",
+                "reference": "8b3aaf369c5948957b3d504f8999d1a27d9fd800",
                 "shasum": ""
             },
             "require": {
@@ -2819,7 +2819,7 @@
                 "issues": "https://github.com/laravel/scout/issues",
                 "source": "https://github.com/laravel/scout"
             },
-            "time": "2024-11-26T15:30:32+00:00"
+            "time": "2024-12-10T16:19:43+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -6483,16 +6483,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v7.2.0",
+            "version": "v7.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "23c8aae6d764e2bae02d2a99f7532a7f6ed619cf"
+                "reference": "fefcc18c0f5d0efe3ab3152f15857298868dc2c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/23c8aae6d764e2bae02d2a99f7532a7f6ed619cf",
-                "reference": "23c8aae6d764e2bae02d2a99f7532a7f6ed619cf",
+                "url": "https://api.github.com/repos/symfony/console/zipball/fefcc18c0f5d0efe3ab3152f15857298868dc2c3",
+                "reference": "fefcc18c0f5d0efe3ab3152f15857298868dc2c3",
                 "shasum": ""
             },
             "require": {
@@ -6556,7 +6556,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v7.2.0"
+                "source": "https://github.com/symfony/console/tree/v7.2.1"
             },
             "funding": [
                 {
@@ -6572,7 +6572,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-06T14:24:19+00:00"
+            "time": "2024-12-11T03:49:26+00:00"
         },
         {
             "name": "symfony/css-selector",
