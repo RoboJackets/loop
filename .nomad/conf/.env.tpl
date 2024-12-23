@@ -4,10 +4,10 @@
 {{- range service "mysql" }}
 DB_SOCKET="{{- index .ServiceMeta "socket" | trimSpace -}}"
 {{ end }}
-{{- range service "meilisearch-v1-12-0-rc-6" }}
+{{- range service "meilisearch-v1-12" }}
 MEILISEARCH_HOST="http://127.0.0.1:{{- .Port -}}"
 {{ end }}
-MEILISEARCH_KEY="{{- key "meilisearch/admin-key-v1.12.0-rc.6" | trimSpace -}}"
+MEILISEARCH_KEY="{{- key "meilisearch/admin-key-v1.12" | trimSpace -}}"
 {{- range service "tika" }}
 TIKA_URL="http://127.0.0.1:{{- .Port -}}"
 {{ end }}
