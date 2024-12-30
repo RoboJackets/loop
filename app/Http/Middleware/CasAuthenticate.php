@@ -84,11 +84,11 @@ class CasAuthenticate
         }
 
         if ($this->cas->isAuthenticated() && $request->user() !== null) {
-            //User is authenticated and already has an existing session
+            // User is authenticated and already has an existing session
             return $next($request);
         }
 
-        //User is not authenticated and does not have an existing session
+        // User is not authenticated and does not have an existing session
         if ($request->ajax() || $request->wantsJson()) {
             return response('Unauthorized', 401);
         }
