@@ -4036,12 +4036,12 @@
             "version": "3.8.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/briannesbitt/Carbon.git",
+                "url": "https://github.com/CarbonPHP/carbon.git",
                 "reference": "129700ed449b1f02d70272d2ac802357c8c30c58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/129700ed449b1f02d70272d2ac802357c8c30c58",
+                "url": "https://api.github.com/repos/CarbonPHP/carbon/zipball/129700ed449b1f02d70272d2ac802357c8c30c58",
                 "reference": "129700ed449b1f02d70272d2ac802357c8c30c58",
                 "shasum": ""
             },
@@ -10288,16 +10288,16 @@
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v9.9.0",
+            "version": "v9.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "b605631fa3c779e51bc45d78013a979ddeb0d9fe"
+                "reference": "ad211dc59c830a987eb34c18742f9c7875178eae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/b605631fa3c779e51bc45d78013a979ddeb0d9fe",
-                "reference": "b605631fa3c779e51bc45d78013a979ddeb0d9fe",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/ad211dc59c830a987eb34c18742f9c7875178eae",
+                "reference": "ad211dc59c830a987eb34c18742f9c7875178eae",
                 "shasum": ""
             },
             "require": {
@@ -10377,7 +10377,7 @@
                 "issues": "https://github.com/orchestral/testbench/issues",
                 "source": "https://github.com/orchestral/testbench-core"
             },
-            "time": "2024-12-24T01:10:06+00:00"
+            "time": "2025-01-07T02:00:47+00:00"
         },
         {
             "name": "phan/phan",
