@@ -21,7 +21,7 @@
         "jeffbeltran/sanctum-tokens": "^2.0",
         "kiritokatklian/nova-permission": "4.0.10",
         "laravel/framework": "11.38.2",
-        "laravel/horizon": "5.30.1",
+        "laravel/horizon": "5.30.2",
         "laravel/nova": "4.35.5",
         "laravel/sanctum": "4.0.7",
         "laravel/scout": "10.11.9",
