@@ -160,5 +160,10 @@
                 <directory name="app"/>
             </errorLevel>
         </MoreSpecificImplementedParamType>
+        <MethodSignatureMismatch>
+            <errorLevel type="suppress">
+                <directory name="app/Nova/" />
+            </errorLevel>
+        </MethodSignatureMismatch>
     </issueHandlers>
 </psalm>

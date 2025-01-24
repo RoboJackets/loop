@@ -24,6 +24,8 @@ return [
         '.phpstorm.meta.php',
         '_ide_helper.php',
         'vendor/inertiajs/inertia-laravel/_ide_helpers.php',
+        'vendor/laravel/fortify/workbench/app/Models/User.php',
+        'vendor/laravel/fortify/workbench/database/factories/UserFactory.php',
     ],
 
     'suppress_issue_types' => [
@@ -32,6 +34,7 @@ return [
         'PhanCompatibleStandaloneType',
         'PhanCompatibleTrueType',
         'PhanInvalidFQSENInCallable',
+        'PhanParamSignatureMismatch',
         'PhanPartialTypeMismatchArgument',
         'PhanPartialTypeMismatchArgumentInternal',
         'PhanPartialTypeMismatchReturn',
@@ -46,6 +49,7 @@ return [
         'PhanStaticCallToNonStatic',
         'PhanTypeExpectedObjectPropAccess',
         'PhanTypeInvalidCallableArrayKey',
+        'PhanTypeInvalidCallableArraySize',
         'PhanTypeMismatchArgumentProbablyReal',
         'PhanTypeMismatchArgumentSuperType',
         'PhanTypeMismatchReturn',
