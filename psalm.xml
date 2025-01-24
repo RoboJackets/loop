@@ -66,8 +66,9 @@
         </UndefinedInterfaceMethod>
         <InvalidScalarArgument>
             <errorLevel type="suppress">
-                <file name="app/Jobs/ProcessSensibleOutput.php"/>
                 <file name="app/Jobs/MatchExpenseReport.php"/>
+                <file name="app/Jobs/ProcessSensibleOutput.php"/>
+                <file name="app/Nova/Metrics/ExpensePaymentsInProgress.php"/>
             </errorLevel>
         </InvalidScalarArgument>
         <UndefinedDocblockClass>
