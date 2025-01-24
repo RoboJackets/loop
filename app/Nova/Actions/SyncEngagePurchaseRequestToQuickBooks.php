@@ -68,7 +68,6 @@ class SyncEngagePurchaseRequestToQuickBooks extends Action
 
         $reimburse_charge = Sentry::wrapWithChildSpan(
             'quickbooks.get_reimburse_charge',
-            // @phan-suppress-next-line PhanTypeMismatchReturnSuperType
             static fn (): IPPReimburseCharge => $data_service->FindById(
                 'ReimburseCharge',
                 $fields->quickbooks_reimburse_charge_id
@@ -77,7 +76,6 @@ class SyncEngagePurchaseRequestToQuickBooks extends Action
 
         $invoice = Sentry::wrapWithChildSpan(
             'quickbooks.get_invoice',
-            // @phan-suppress-next-line PhanTypeMismatchReturnSuperType
             static fn (): IPPInvoice => $data_service->FindById(
                 'Invoice',
                 // @phan-suppress-next-line PhanUndeclaredClassProperty
@@ -114,7 +112,6 @@ class SyncEngagePurchaseRequestToQuickBooks extends Action
 
         $invoice = Sentry::wrapWithChildSpan(
             'quickbooks.update_invoice',
-            // @phan-suppress-next-line PhanTypeMismatchReturnSuperType
             static fn (): IPPInvoice => $data_service->Update($invoice)
         );
 

@@ -276,7 +276,6 @@ class SyncExpensePaymentToQuickBooks extends Action
 
         $payment_response = Sentry::wrapWithChildSpan(
             'quickbooks.create_payment',
-            // @phan-suppress-next-line PhanTypeMismatchReturnSuperType
             static fn (): IPPPayment => $data_service->Add(Payment::create([
                 'TotalAmt' => $payment->amount,
                 'CustomerRef' => [
