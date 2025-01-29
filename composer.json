@@ -24,7 +24,7 @@
         "laravel/horizon": "5.30.2",
         "laravel/nova": "5.1.8",
         "laravel/sanctum": "4.0.8",
-        "laravel/scout": "10.12.1",
+        "laravel/scout": "10.12.2",
         "laravel/slack-notification-channel": "3.4.3",
         "laravel/tinker": "2.10.0",
         "meilisearch/meilisearch-php": "^1.3",
