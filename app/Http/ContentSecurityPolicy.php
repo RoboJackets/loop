@@ -66,6 +66,7 @@ class ContentSecurityPolicy extends Policy
         if (config('sentry.dsn') !== '' && config('sentry.dsn') !== null) {
             $this->addDirective(Directive::CONNECT, [
                 Keyword::SELF,
+                // @phan-suppress-next-line PhanTypeMismatchArgumentInternal
                 'https://'.parse_url(config('sentry.dsn'), PHP_URL_HOST),
             ]);
         }

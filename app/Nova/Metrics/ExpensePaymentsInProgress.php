@@ -45,7 +45,6 @@ class ExpensePaymentsInProgress extends Table
                 static fn (ExpensePayment $expensePayment) => MetricTableRow::make()
                     ->icon('cash')
                     ->iconClass('text-sky-500')
-                    // @phan-suppress-next-line PhanTypeMismatchArgument
                     ->title($expensePayment->transaction_reference)
                     ->subtitle($expensePayment->payment_date->format('Y-m-d')
                         .' | $'.number_format(abs($expensePayment->amount), 2))

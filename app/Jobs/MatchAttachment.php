@@ -40,8 +40,6 @@ class MatchAttachment implements ShouldBeUnique, ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @phan-suppress PhanTypeMismatchArgumentNullable
      */
     public function handle(): void
     {
