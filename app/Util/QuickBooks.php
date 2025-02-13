@@ -75,7 +75,6 @@ class QuickBooks
         );
 
         if ($response->Fault !== null) {
-            // @phan-suppress-next-line PhanTypeMismatchArgument
             throw new QuickBooksFault($response->Fault);
         }
     }

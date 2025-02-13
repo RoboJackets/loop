@@ -66,11 +66,6 @@ class MatchExpenseReport implements ShouldBeUnique, ShouldQueue
                 $this->expenseReport->lines->each(
                     static function (ExpenseReportLine $line, int $key) use (&$engage_request_numbers): void {
                         $line->attachments->each(
-                            /**
-                             * Find the Engage request number for each attachment, if possible.
-                             *
-                             * @phan-suppress PhanTypeMismatchArgumentNullable
-                             */
                             static function (Attachment $attachment, int $key) use (&$engage_request_numbers): void {
                                 if (
                                     str_ends_with(strtolower($attachment->filename), '.pdf') &&

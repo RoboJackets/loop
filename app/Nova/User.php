@@ -206,12 +206,10 @@ class User extends Resource
                 if ($result->count() === 0) {
                     return null;
                 } elseif ($result->count() === 1) {
-                    // @phan-suppress-next-line PhanTypeMismatchArgument
                     return self::whitepagesEntryToString($result->sole());
                 } else {
                     try {
                         return self::whitepagesEntryToString(
-                            // @phan-suppress-next-line PhanTypeMismatchArgument
                             $result->filter(static fn (array $entry, int $key): bool => ! str_contains(
                                 strtolower($entry['title'][0]),
                                 'student assistant'
@@ -223,7 +221,6 @@ class User extends Resource
                                 ->sole()
                         );
                     } catch (ItemNotFoundException) {
-                        // @phan-suppress-next-line PhanTypeMismatchArgument
                         return self::whitepagesEntryToString($result->first());
                     }
                 }

@@ -58,7 +58,7 @@ parameters:
     - '#Method App\\Jobs\\GenerateThumbnail::uniqueId\(\) should return string but returns string\|false\.#'
     - '#Method App\\Models\\[a-zA-Z]+::[a-zA-Z]+\(\) should return Illuminate\\Database\\Eloquent\\Relations\\[a-zA-Z]+<App\\Models\\[a-zA-Z]+, App\\Models\\[a-zA-Z]+> but returns Illuminate\\Database\\Eloquent\\Relations\\[a-zA-Z]+<App\\Models\\[a-zA-Z]+, \$this\(App\\Models\\[a-zA-Z]+\)>\.#'
     - '#Method App\\Models\\[a-zA-Z]+::[a-zA-Z]+\(\) should return Illuminate\\Database\\Eloquent\\Relations\\[a-zA-Z]+<App\\Models\\[a-zA-Z]+, App\\Models\\[a-zA-Z]+> but returns Illuminate\\Database\\Eloquent\\Relations\\[a-zA-Z]+<Illuminate\\Database\\Eloquent\\Model, \$this\(App\\Models\\[a-zA-Z]+\)>\.#'
-    - '#Method App\\Models\\[a-zA-Z]+::getMorphClassStatic\(\) should return string but returns int\|string\|false\.#'
+    - '#Method App\\Models\\[a-zA-Z]+::getMorphClassStatic\(\) should return string but returns string\|false\.#'
     - '#Method App\\Nova\\[a-zA-Z0-9]+::fields\(\) return type has no value type specified in iterable type array\.#'
     - '#Method App\\Nova\\Actions\\[a-zA-Z]+::handle\(\) has no return type specified\.#'
     - '#Method App\\Nova\\Lenses\\[a-zA-Z]+::query\(\) should return Illuminate\\Database\\Eloquent\\Builder<App\\Models\\[a-zA-Z]+> but returns Illuminate\\Contracts\\Database\\Eloquent\\Builder\.#'
