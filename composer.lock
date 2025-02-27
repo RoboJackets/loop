@@ -6327,32 +6327,31 @@
         },
         {
             "name": "spatie/laravel-webhook-client",
-            "version": "3.4.2",
+            "version": "3.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-webhook-client.git",
-                "reference": "e71006ab5c25916903a685ae601fb45ed92a0941"
+                "reference": "c7148e271a52b85da666bc7e3e1112b56138568b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/e71006ab5c25916903a685ae601fb45ed92a0941",
-                "reference": "e71006ab5c25916903a685ae601fb45ed92a0941",
+                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/c7148e271a52b85da666bc7e3e1112b56138568b",
+                "reference": "c7148e271a52b85da666bc7e3e1112b56138568b",
                 "shasum": ""
             },
             "require": {
-                "illuminate/bus": "^9.0 || ^10.0 || ^11.0",
-                "illuminate/database": "^9.0 || ^10.0 || ^11.0",
-                "illuminate/support": "^9.0 || ^10.0 || ^11.0",
+                "illuminate/bus": "^9.0 || ^10.0 || ^11.0 || ^12.0",
+                "illuminate/database": "^9.0 || ^10.0 || ^11.0 || ^12.0",
+                "illuminate/support": "^9.0 || ^10.0 || ^11.0 || ^12.0",
                 "php": "^8.1 || ^8.2",
                 "spatie/laravel-package-tools": "^1.11"
             },
             "require-dev": {
-                "larastan/larastan": "^1.0.4 || ^2.2",
-                "orchestra/testbench": "^7.0 || ^8.0 || ^9.0",
+                "orchestra/testbench": "^7.0 || ^8.0 || ^9.0 || ^10.0",
                 "phpstan/extension-installer": "^1.0",
                 "phpstan/phpstan-deprecation-rules": "^1.0",
                 "phpstan/phpstan-phpunit": "^1.0",
-                "phpunit/phpunit": "^9.3 || ^10.5",
+                "phpunit/phpunit": "^9.3 || ^10.5 || ^11.5.3 || ^12.0",
                 "spatie/laravel-ray": "^1.24"
             },
             "type": "library",
@@ -6391,7 +6390,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-webhook-client/issues",
-                "source": "https://github.com/spatie/laravel-webhook-client/tree/3.4.2"
+                "source": "https://github.com/spatie/laravel-webhook-client/tree/3.4.3"
             },
             "funding": [
                 {
@@ -6399,7 +6398,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2024-08-07T07:31:15+00:00"
+            "time": "2025-02-14T13:01:09+00:00"
         },
         {
             "name": "subfission/cas",
