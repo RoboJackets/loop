@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3e8d39645a90374f306febe830ecf4d5",
+    "content-hash": "1b53f34f534bed9311a711dfa36a5231",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -225,16 +225,16 @@
         },
         {
             "name": "brick/math",
-            "version": "0.12.1",
+            "version": "0.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/math.git",
-                "reference": "f510c0a40911935b77b86859eb5223d58d660df1"
+                "reference": "901eddb1e45a8e0f689302e40af871c181ecbe40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/math/zipball/f510c0a40911935b77b86859eb5223d58d660df1",
-                "reference": "f510c0a40911935b77b86859eb5223d58d660df1",
+                "url": "https://api.github.com/repos/brick/math/zipball/901eddb1e45a8e0f689302e40af871c181ecbe40",
+                "reference": "901eddb1e45a8e0f689302e40af871c181ecbe40",
                 "shasum": ""
             },
             "require": {
@@ -243,7 +243,7 @@
             "require-dev": {
                 "php-coveralls/php-coveralls": "^2.2",
                 "phpunit/phpunit": "^10.1",
-                "vimeo/psalm": "5.16.0"
+                "vimeo/psalm": "6.8.8"
             },
             "type": "library",
             "autoload": {
@@ -273,7 +273,7 @@
             ],
             "support": {
                 "issues": "https://github.com/brick/math/issues",
-                "source": "https://github.com/brick/math/tree/0.12.1"
+                "source": "https://github.com/brick/math/tree/0.12.2"
             },
             "funding": [
                 {
@@ -281,7 +281,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-11-29T23:19:16+00:00"
+            "time": "2025-02-26T10:21:45+00:00"
         },
         {
             "name": "brick/money",
@@ -2505,17 +2505,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "5.2.5",
+            "version": "5.2.6",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "ce487ae38cf673edab9ffc0a682a26ffd86b53fb"
+                "reference": "36dc6b56a303a411e6be1b55f0fc44d66c252a67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-ce487ae38cf673edab9ffc0a682a26ffd86b53fb-zip-0e59b0.zip",
-                "reference": "ce487ae38cf673edab9ffc0a682a26ffd86b53fb",
-                "shasum": "0290c5c9118749b8ca706ca322d36d32219be797"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-36dc6b56a303a411e6be1b55f0fc44d66c252a67-zip-d7772f.zip",
+                "reference": "36dc6b56a303a411e6be1b55f0fc44d66c252a67",
+                "shasum": "730791f7cd2a37d590f9a63a5e5e4543dc773b9d"
             },
             "require": {
                 "brick/money": "^0.8|^0.9|^0.10",
@@ -2670,10 +2670,10 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v5.2.5",
+                "source": "https://github.com/laravel/nova/tree/v5.2.6",
                 "issues": "https://github.com/laravel/nova/issues"
             },
-            "time": "2025-02-21T09:39:32+00:00"
+            "time": "2025-02-26T07:50:38+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -7894,16 +7894,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v7.2.0",
+            "version": "v7.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "d34b22ba9390ec19d2dd966c40aa9e8462f27a7e"
+                "reference": "d8f411ff3c7ddc4ae9166fb388d1190a2df5b5cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/d34b22ba9390ec19d2dd966c40aa9e8462f27a7e",
-                "reference": "d34b22ba9390ec19d2dd966c40aa9e8462f27a7e",
+                "url": "https://api.github.com/repos/symfony/process/zipball/d8f411ff3c7ddc4ae9166fb388d1190a2df5b5cf",
+                "reference": "d8f411ff3c7ddc4ae9166fb388d1190a2df5b5cf",
                 "shasum": ""
             },
             "require": {
@@ -7935,7 +7935,7 @@
             "description": "Executes commands in sub-processes",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/process/tree/v7.2.0"
+                "source": "https://github.com/symfony/process/tree/v7.2.4"
             },
             "funding": [
                 {
@@ -7951,7 +7951,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-06T14:24:19+00:00"
+            "time": "2025-02-05T08:33:46+00:00"
         },
         {
             "name": "symfony/psr-http-message-bridge",
@@ -8289,16 +8289,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v7.2.2",
+            "version": "v7.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "e2674a30132b7cc4d74540d6c2573aa363f05923"
+                "reference": "283856e6981286cc0d800b53bd5703e8e363f05a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/e2674a30132b7cc4d74540d6c2573aa363f05923",
-                "reference": "e2674a30132b7cc4d74540d6c2573aa363f05923",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/283856e6981286cc0d800b53bd5703e8e363f05a",
+                "reference": "283856e6981286cc0d800b53bd5703e8e363f05a",
                 "shasum": ""
             },
             "require": {
@@ -8364,7 +8364,7 @@
             "description": "Provides tools to internationalize your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/translation/tree/v7.2.2"
+                "source": "https://github.com/symfony/translation/tree/v7.2.4"
             },
             "funding": [
                 {
@@ -8380,7 +8380,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-12-07T08:18:10+00:00"
+            "time": "2025-02-13T10:27:23+00:00"
         },
         {
             "name": "symfony/translation-contracts",
