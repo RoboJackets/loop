@@ -46,7 +46,7 @@ class ExpensePaymentsInProgress extends Table
                 static fn (ExpensePayment $expensePayment) => MetricTableRow::make()
                     ->icon('cash')
                     ->iconClass('text-sky-500')
-                    ->title($expensePayment->transaction_reference)
+                    ->title(strval($expensePayment->transaction_reference))
                     ->subtitle($expensePayment->payment_date->format('Y-m-d')
                         .' | $'.number_format(abs($expensePayment->amount), 2))
                     ->actions(static fn (): array => [
