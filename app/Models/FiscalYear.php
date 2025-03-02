@@ -40,16 +40,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class FiscalYear extends Model
 {
+
     /**
-     * The attributes that should be cast to native types.
+     * Get the attributes that should be cast.
      *
-     * @var array<string,string>
-     *
-     * @phan-read-only
+     * @return array<string, string>
      */
-    protected $casts = [
-        'in_scope_for_quickbooks' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'in_scope_for_quickbooks' => 'boolean',
+        ];
+    }
 
     /**
      * Get the funding allocations for this fiscal year.
