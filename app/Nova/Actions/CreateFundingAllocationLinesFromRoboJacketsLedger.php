@@ -16,7 +16,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class CreateFundingAllocationLinesFromRoboJacketsLedger extends Action
 {
-    private const LEDGER_LINE_REGEX = '/(?P<line_number>\d+)\s+(?P<description>.+?)\s+\$\s(?P<amount>[0-9,.]+|\-)/';
+    private const string LINE_REGEX = '/(?P<line_number>\d+)\s+(?P<description>.+?)\s+\$\s(?P<amount>[0-9,.]+|\-)/';
 
     /**
      * The displayable name of the action.
@@ -81,7 +81,7 @@ class CreateFundingAllocationLinesFromRoboJacketsLedger extends Action
             ->each(static function (string $line, int $key) use ($funding_allocation_id): void {
                 $matches = [];
 
-                if (preg_match(self::LEDGER_LINE_REGEX, $line, $matches) !== 1) {
+                if (preg_match(self::LINE_REGEX, $line, $matches) !== 1) {
                     throw new Exception('Failed to parse line');
                 }
 

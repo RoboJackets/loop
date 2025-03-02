@@ -96,9 +96,9 @@ class EngagePurchaseRequest extends Model
     use Searchable;
     use SoftDeletes;
 
-    private const PURCHASE_REQUEST_NUMBER_REGEX = '/(?:Purchase Request|Request No):\s+(?P<requestNumber>\d{7})/';
+    private const string PURCHASE_REQUEST_NUM_REGEX = '/(?:Purchase Request|Request No):\s+(?P<requestNumber>\d{7})/';
 
-    public const STEP_NAME_BADGE_MAP = [
+    public const array STEP_NAME_BADGE_MAP = [
         'Saved' => 'info',
         'Submitted' => 'info',
         'Send to SOFO Accountant' => 'info',
@@ -257,7 +257,7 @@ class EngagePurchaseRequest extends Model
     {
         $matches = [];
 
-        if (preg_match_all(self::PURCHASE_REQUEST_NUMBER_REGEX, $pdf_text, $matches) === false) {
+        if (preg_match_all(self::PURCHASE_REQUEST_NUM_REGEX, $pdf_text, $matches) === false) {
             throw new CouldNotExtractEngagePurchaseRequestNumber('preg_match_all returned false');
         }
 

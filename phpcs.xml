@@ -279,9 +279,8 @@
         <exclude-pattern>/stubs/</exclude-pattern>
     </rule>
 
-    <rule ref="SlevomatCodingStandard.TypeHints.UnionTypeHintFormat">
+    <rule ref="SlevomatCodingStandard.TypeHints.DNFTypeHintFormat">
         <properties>
-            <property name="withSpaces" value="no"/>
             <property name="shortNullable" value="yes"/>
             <property name="nullPosition" value="last"/>
         </properties>

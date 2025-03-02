@@ -103,7 +103,7 @@ class DocuSignEnvelope extends Model
     use Searchable;
     use SoftDeletes;
 
-    private const ENVELOPE_ID_REGEX = '/Envelope Id: (?P<envelopeId>[A-F0-9\s]{32,})/';
+    private const string ENVELOPE_ID_REGEX = '/Envelope Id: (?P<envelopeId>[A-F0-9\s]{32,})/';
 
     /**
      * The name of the database table for this model.
