@@ -13,7 +13,7 @@ use Illuminate\Http\Response;
 use QuickBooksOnline\API\Core\OAuth\OAuth2\OAuth2AccessToken;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
-class QuickBooksAuthenticationController extends Controller
+class QuickBooksAuthenticationController
 {
     public function redirectToQuickBooks(): RedirectResponse
     {

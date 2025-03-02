@@ -11,7 +11,7 @@ use App\Models\EngagePurchaseRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 
-class EngageAttachmentController extends Controller
+class EngageAttachmentController
 {
     /**
      * Store a newly uploaded attachment.

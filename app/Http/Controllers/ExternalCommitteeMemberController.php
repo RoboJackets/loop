@@ -8,7 +8,7 @@ use App\Http\Requests\UpsertExternalCommitteeMember;
 use App\Models\ExternalCommitteeMember;
 use Illuminate\Http\JsonResponse;
 
-class ExternalCommitteeMemberController extends Controller
+class ExternalCommitteeMemberController
 {
     /**
      * Handle the incoming request.

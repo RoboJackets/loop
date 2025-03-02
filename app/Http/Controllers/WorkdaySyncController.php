@@ -18,7 +18,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 
-class WorkdaySyncController extends Controller
+class WorkdaySyncController
 {
     public function getResourcesToSync(): JsonResponse
     {

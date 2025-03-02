@@ -8,7 +8,7 @@ use App\Models\EmailRequest;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class DocumentDownloadController extends Controller
+class DocumentDownloadController
 {
     /**
      * Handle the incoming request.

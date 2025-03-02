@@ -13,7 +13,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 
-class ExpenseReportLineController extends Controller
+class ExpenseReportLineController
 {
     /**
      * Update an existing expense report line.

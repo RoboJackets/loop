@@ -13,7 +13,7 @@ use App\Models\ExpenseReportLine;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 
-class WorkdayAttachmentController extends Controller
+class WorkdayAttachmentController
 {
     public function __invoke(
         ExpenseReport $expense_report,

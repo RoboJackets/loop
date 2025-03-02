@@ -15,7 +15,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use LdapRecord\Container;
 
-class EngagePurchaseRequestController extends Controller
+class EngagePurchaseRequestController
 {
     /**
      * Accept Engage API output and create requests based on the data.
