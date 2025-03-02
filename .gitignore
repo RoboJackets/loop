@@ -3,6 +3,7 @@
 /public/hot
 /public/storage
 /storage/*.key
+/storage/pail
 /vendor
 .env
 .env.backup
@@ -13,6 +14,7 @@ auth.json
 npm-debug.log
 yarn-error.log
 /.idea
+/.nova
 /.vscode
 /lang/vendor/
 /public/vendor/
