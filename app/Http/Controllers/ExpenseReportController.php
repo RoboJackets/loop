@@ -22,13 +22,13 @@ use Illuminate\Support\ItemNotFoundException;
 
 class ExpenseReportController
 {
-    private const LABEL_TO_COLUMN_NAME = [
+    private const array LABEL_TO_COLUMN_NAME = [
         'Expense Report Memo' => 'memo',
         'Created Date' => 'created_date',
         'Total Expense Report Amount' => 'amount',
     ];
 
-    private const VALID_EXPENSE_REPORT_STATUSES = [
+    private const array VALID_EXPENSE_REPORT_STATUSES = [
         'Approved',
         'Canceled',
         'Draft',
@@ -40,16 +40,16 @@ class ExpenseReportController
         'Waiting on Gift Manager',
     ];
 
-    private const VALID_PAYMENT_STATUSES = [
+    private const array VALID_PAYMENT_STATUSES = [
         'Complete',
     ];
 
-    private const RECONCILIATION_STATUSES = [
+    private const array RECONCILIATION_STATUSES = [
         'Reconciled' => true,
         'Unreconciled' => false,
     ];
 
-    private const WORKDAY_NAME_REGEX = '/^Expense Report: (?P<expense_report_number>EXP-\d+)( Canceled)?$/';
+    private const string WORKDAY_NAME_REGEX = '/^Expense Report: (?P<expense_report_number>EXP-\d+)( Canceled)?$/';
 
     /**
      * Accept Workday report output and create expense reports based on the data.

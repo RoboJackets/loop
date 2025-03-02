@@ -45,7 +45,7 @@ class ExternalCommitteeMember extends Model
 {
     use Searchable;
 
-    public const WORKDAY_NAME_REGEX = '/^(?P<name>^[a-zA-Z-\s]+)\s+\(ECM\)(?P<inactive>\s+-\s+Inactive)?$/';
+    public const string WORKDAY_NAME_REGEX = '/^(?P<name>^[a-zA-Z-\s]+)\s+\(ECM\)(?P<inactive>\s+-\s+Inactive)?$/';
 
     /**
      * The attributes that are mass assignable.
