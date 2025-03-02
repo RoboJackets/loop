@@ -56,7 +56,8 @@
         "spatie/laravel-ignition": "2.9.0",
         "spatie/ray": "1.41.4",
         "squizlabs/php_codesniffer": "3.11.2",
-        "vimeo/psalm": "5.26.1"
+        "vimeo/psalm": "5.26.1",
+        "laravel/pail": "^1.2.2"
     },
     "replace": {
         "paragonie/random_compat": "*",
@@ -116,6 +117,10 @@
             "vendor/bin/phpstan analyse --level=max .",
             "vendor/bin/phan",
             "vendor/bin/psalm"
+        ],
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite"
         ]
     },
     "extra": {
