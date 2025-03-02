@@ -117,7 +117,6 @@ parameters:
     - '#Parameter \#1 \$string of static method Illuminate\\Support\\Str::of\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$summary_text of static method App\\Models\\DocuSignEnvelope::getEnvelopeUuidFromSummaryText\(\) expects string, mixed given\.#'
     - '#Parameter \#1 \$time of static method Carbon\\Carbon::parse\(\) expects Carbon\\Month\|Carbon\\WeekDay\|DateTimeInterface\|float\|int\|string\|null, mixed given\.#'
-    - '#Parameter \#1 \$title of method Laravel\\Nova\\Metrics\\MetricTableRow::title\(\) expects string\|Stringable, int given\.#'
     - '#Parameter \#1 \$title of static method Illuminate\\Support\\Str::slug\(\) expects string, bool\|string given\.#'
     - '#Parameter \#1 \$to of function redirect expects string\|null, mixed given\.#'
     - '#Parameter \#1 \$uri of method GuzzleHttp\\Client::get\(\) expects Psr\\Http\\Message\\UriInterface\|string, mixed given\.#'
