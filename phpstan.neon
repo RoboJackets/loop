@@ -2,15 +2,12 @@ parameters:
   reportMaybesInPropertyPhpDocTypes: false
   excludePaths:
     - *.blade.php
-    - .phpstorm.meta.php
-    - _ide_helper.php
     - bootstrap/*
     - storage/*
     - tests/*
     - vendor/*
     - stubs/*
     - database/migrations/2022_09_04_164122_create_permission_tables.php
-    - config/broadcasting.php
   ignoreErrors:
     - '#Access to an undefined property App\\Models\\[a-zA-Z]+::\$diff\.#'
     - '#Access to an undefined property App\\Models\\[a-zA-Z]+::\$total\.#'
