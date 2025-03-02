@@ -79,6 +79,22 @@
             },
             "prPriority": 1,
             "matchPackageNames": [
+                "/^spatie//"
+            ]
+        },
+        {
+            "matchCategories": [
+                "php"
+            ],
+            "rangeStrategy": "pin",
+            "lockFileMaintenance": {
+                "enabled": true,
+                "schedule": [
+                    "before 4pm every weekday except before 9am every weekday"
+                ]
+            },
+            "prPriority": 2,
+            "matchPackageNames": [
                 "/^laravel//"
             ]
         },
@@ -96,7 +112,7 @@
             "matchDepNames": [
                 "laravel/framework"
             ],
-            "prPriority": 2
+            "prPriority": 3
         },
         {
             "matchCategories": [
