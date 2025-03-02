@@ -24,7 +24,6 @@ use Illuminate\Support\ItemNotFoundException;
 use Illuminate\Support\MultipleItemsFoundException;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Http\Requests\NovaRequest;
 use QuickBooksOnline\API\Data\IPPPayment;
 use QuickBooksOnline\API\Facades\Payment;
 

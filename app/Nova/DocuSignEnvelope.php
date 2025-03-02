@@ -240,6 +240,7 @@ class DocuSignEnvelope extends Resource
             ]),
         ];
     }
+
     /**
      * Get the actions available for the resource.
      *

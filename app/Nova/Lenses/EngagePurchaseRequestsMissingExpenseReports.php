@@ -102,6 +102,7 @@ class EngagePurchaseRequestsMissingExpenseReports extends Lens
                 ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks')),
         ];
     }
+
     /**
      * Get the URI key for the lens.
      */

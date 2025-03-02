@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class RunSensibleExtraction extends Action
 {
