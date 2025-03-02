@@ -6,11 +6,11 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Observers\AttachmentObserver;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use App\Exceptions\CouldNotExtractEnvelopeUuid;
+use App\Observers\AttachmentObserver;
 use App\Util\Sentry;
 use GuzzleHttp\Client;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;

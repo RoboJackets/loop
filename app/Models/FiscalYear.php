@@ -40,7 +40,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class FiscalYear extends Model
 {
-
     /**
      * Get the attributes that should be cast.
      *
