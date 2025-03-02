@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f681455b54193acbaceeb664ed6d6560",
+    "content-hash": "904732017f212a8d36c09540a1ed6842",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -13131,8 +13131,8 @@
     "stability-flags": {
         "ans-group/laravel-health-check": 20,
         "htmlmin/htmlmin": 20,
-        "subfission/cas": 20,
-        "larastan/larastan": 20
+        "larastan/larastan": 20,
+        "subfission/cas": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
@@ -13141,7 +13141,7 @@
         "ext-redis": "*",
         "ext-uuid": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.3.16"
     },
