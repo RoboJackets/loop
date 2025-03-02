@@ -61,14 +61,4 @@ class ResetQuickBooksCredentials extends Action
 
         return self::message('Successfully cleared QuickBooks credentials!');
     }
-
-    /**
-     * Get the fields available on the action.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    public function fields(NovaRequest $request): array
-    {
-        return [];
-    }
 }

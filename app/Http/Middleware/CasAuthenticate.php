@@ -15,15 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 class CasAuthenticate
 {
     /**
-     * Auth facade.
-     *
-     * @var \Illuminate\Contracts\Auth\Guard
-     *
-     * @phan-read-only
-     */
-    protected $auth;
-
-    /**
      * CAS library interface.
      *
      * @var \Subfission\Cas\CasManager
@@ -45,9 +36,8 @@ class CasAuthenticate
         'sn',
     ];
 
-    public function __construct(Guard $auth)
+    public function __construct()
     {
-        $this->auth = $auth;
         // @phan-suppress-next-line PhanUndeclaredClassReference
         $this->cas = app('cas');
     }

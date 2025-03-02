@@ -107,6 +107,7 @@ class ExpenseReport extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -119,6 +120,7 @@ class ExpenseReport extends Model
     /**
      * Get the route key for the model.
      */
+    #[\Override]
     public function getRouteKeyName(): string
     {
         return 'workday_instance_id';

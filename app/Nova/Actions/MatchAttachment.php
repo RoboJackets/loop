@@ -69,14 +69,4 @@ class MatchAttachment extends Action
             return ActionResponse::message('Matched more than one Engage request.');
         }
     }
-
-    /**
-     * Get the fields available on the action.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    public function fields(NovaRequest $request): array
-    {
-        return [];
-    }
 }

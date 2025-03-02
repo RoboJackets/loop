@@ -23,6 +23,7 @@ class ExpenseReportsInProgress extends Table
     /**
      * Get the displayable name of the metric.
      */
+    #[\Override]
     public function name(): string
     {
         return 'Expense Reports In Progress';

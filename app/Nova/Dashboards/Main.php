@@ -21,6 +21,7 @@ class Main extends Dashboard
     /**
      * Get the displayable name of the dashboard.
      */
+    #[\Override]
     public function name(): string
     {
         return 'Home';
@@ -31,6 +32,7 @@ class Main extends Dashboard
      *
      * @return array<\Laravel\Nova\Card>
      */
+    #[\Override]
     public function cards(): array
     {
         return [

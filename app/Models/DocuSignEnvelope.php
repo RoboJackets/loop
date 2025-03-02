@@ -169,6 +169,7 @@ class DocuSignEnvelope extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -184,6 +185,7 @@ class DocuSignEnvelope extends Model
     /**
      * Get the default foreign key name for the model.
      */
+    #[\Override]
     public function getForeignKey(): string
     {
         return 'docusign_envelope_id';
@@ -192,6 +194,7 @@ class DocuSignEnvelope extends Model
     /**
      * Get the route key for the model.
      */
+    #[\Override]
     public function getRouteKeyName(): string
     {
         return 'envelope_uuid';

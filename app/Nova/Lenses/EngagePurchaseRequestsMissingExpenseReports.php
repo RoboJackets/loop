@@ -32,6 +32,7 @@ class EngagePurchaseRequestsMissingExpenseReports extends Lens
      * @param  \Illuminate\Database\Eloquent\Builder<EngagePurchaseRequest>  $query
      * @return \Illuminate\Database\Eloquent\Builder<EngagePurchaseRequest>
      */
+    #[\Override]
     public static function query(LensRequest $request, $query): Builder
     {
         return $request->withOrdering($request->withFilters(
@@ -50,6 +51,7 @@ class EngagePurchaseRequestsMissingExpenseReports extends Lens
      *
      * @return array<int,\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
@@ -100,30 +102,10 @@ class EngagePurchaseRequestsMissingExpenseReports extends Lens
                 ->canSee(static fn (Request $request): bool => $request->user()->can('access-quickbooks')),
         ];
     }
-
-    /**
-     * Get the cards available on the lens.
-     *
-     * @return array<\Laravel\Nova\Card>
-     */
-    public function cards(NovaRequest $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the filters available for the lens.
-     *
-     * @return array<\Laravel\Nova\Filters\Filter>
-     */
-    public function filters(NovaRequest $request): array
-    {
-        return [];
-    }
-
     /**
      * Get the URI key for the lens.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return 'missing-expense-reports';

@@ -43,12 +43,4 @@ class ExpenseReportsPendingApproval extends Value
             ->dollars()
             ->allowZeroResult();
     }
-
-    /**
-     * Get the ranges available for the metric.
-     */
-    public function ranges(): array
-    {
-        return [];
-    }
 }

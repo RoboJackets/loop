@@ -45,16 +45,9 @@ class ExpenseReportsPendingPayment extends Value
     }
 
     /**
-     * Get the ranges available for the metric.
-     */
-    public function ranges(): array
-    {
-        return [];
-    }
-
-    /**
      * Get the displayable name of the metric.
      */
+    #[\Override]
     public function name(): string
     {
         return 'Expense Reports Pending Payment';

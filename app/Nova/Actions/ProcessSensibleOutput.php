@@ -37,6 +37,7 @@ class ProcessSensibleOutput extends Action
     /**
      * Determine if the filter or action should be available for the given request.
      */
+    #[\Override]
     public function authorizedToSee(Request $request): bool
     {
         return $request->user()->can('access-sensible');
@@ -45,6 +46,7 @@ class ProcessSensibleOutput extends Action
     /**
      * Determine if the action is executable for the given request.
      */
+    #[\Override]
     public function authorizedToRun(Request $request, $model): bool
     {
         return $request->user()->can('access-sensible');
@@ -60,15 +62,5 @@ class ProcessSensibleOutput extends Action
         Job::dispatchSync($models->sole());
 
         return Action::message('Successfully processed Sensible output!');
-    }
-
-    /**
-     * Get the fields available on the action.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    public function fields(NovaRequest $request): array
-    {
-        return [];
     }
 }

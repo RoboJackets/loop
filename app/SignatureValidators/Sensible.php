@@ -21,6 +21,7 @@ class Sensible implements SignatureValidator
      *
      * @see https://community.sensible.so/t/is-there-a-way-to-validate-a-webhook-event-really-came-from-sensible/29
      */
+    #[\Override]
     public function isValid(Request $request, WebhookConfig $config): bool
     {
         return EmailRequest::whereId($request->payload)->exists();

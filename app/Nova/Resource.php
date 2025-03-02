@@ -26,6 +26,7 @@ abstract class Resource extends NovaResource
      *
      * @param  \Laravel\Scout\Builder  $query
      */
+    #[\Override]
     public static function scoutQuery(NovaRequest $request, $query): Builder
     {
         if ($request->viaResource !== null) {

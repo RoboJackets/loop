@@ -128,14 +128,4 @@ class RefreshMercuryTransactions extends Action
 
         return Action::message('All transactions refreshed!');
     }
-
-    /**
-     * Get the fields available on the action.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    public function fields(NovaRequest $request): array
-    {
-        return [];
-    }
 }

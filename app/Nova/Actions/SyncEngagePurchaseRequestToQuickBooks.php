@@ -133,6 +133,7 @@ class SyncEngagePurchaseRequestToQuickBooks extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         $docusignInvoiceIds = DocuSignEnvelope::selectRaw('distinct(quickbooks_invoice_id)')
