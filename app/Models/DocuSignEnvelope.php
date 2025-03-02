@@ -46,20 +46,20 @@ use Smalot\PdfParser\Parser;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attachment> $attachments
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Attachment> $attachments
  * @property-read int|null $attachments_count
  * @property-read \App\Models\FiscalYear|null $fiscalYear
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\FundingAllocationLine> $fundingSources
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\FundingAllocationLine> $fundingSources
  * @property-read int|null $funding_sources_count
  * @property-read \App\Models\User|null $payToUser
  * @property-read DocuSignEnvelope|null $replacesEnvelope
  * @property-read \App\Models\ExpenseReport|null $expenseReport
  * @property-read string|null $sensible_extraction_url
  * @property-read string|null $quickbooks_invoice_url
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DocuSignEnvelope> $replacedBy
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DocuSignEnvelope> $replacedBy
  * @property-read int|null $replaced_by_count
  * @property-read DocuSignEnvelope|null $duplicateOf
- * @property-read \Illuminate\Database\Eloquent\Collection|array<DocuSignEnvelope> $duplicates
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,DocuSignEnvelope> $duplicates
  * @property-read int|null $duplicates_count
  * @property-read string|null $sofo_form_thumbnail_url
  * @property-read string|null $summary_thumbnail_url

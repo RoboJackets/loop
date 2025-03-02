@@ -22,7 +22,7 @@ use Laravel\Scout\Searchable;
  * @property string|null $memo
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attachment> $attachments
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Attachment> $attachments
  * @property-read int|null $attachments_count
  * @property-read \App\Models\ExpenseReport $expenseReport
  *

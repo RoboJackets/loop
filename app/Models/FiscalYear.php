@@ -16,11 +16,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property bool $in_scope_for_quickbooks
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DocuSignEnvelope> $envelopes
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DocuSignEnvelope> $envelopes
  * @property-read int|null $envelopes_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\FundingAllocation> $fundingAllocations
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\FundingAllocation> $fundingAllocations
  * @property-read int|null $funding_allocations_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExpenseReport> $expenseReports
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\ExpenseReport> $expenseReports
  * @property-read int|null $expense_reports_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EmailRequest> $emailRequests
  * @property-read int|null $email_requests_count

@@ -33,9 +33,9 @@ use Laravel\Scout\Searchable;
  * @property-read \App\Models\FiscalYear $fiscalYear
  * @property-read string $workday_url
  * @property-read \App\Models\ExternalCommitteeMember|null $payTo
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DocuSignEnvelope> $envelopes
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DocuSignEnvelope> $envelopes
  * @property-read int|null $envelopes_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExpenseReportLine> $lines
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\ExpenseReportLine> $lines
  * @property-read int|null $lines_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EmailRequest> $emailRequests
  * @property-read int|null $email_requests_count

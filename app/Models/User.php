@@ -30,15 +30,15 @@ use Spatie\Permission\Traits\HasRoles;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read string $name
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Permission\Models\Permission> $permissions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\Spatie\Permission\Models\Permission> $permissions
  * @property-read int|null $permissions_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\Spatie\Permission\Models\Role> $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Sanctum\PersonalAccessToken> $tokens
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExternalCommitteeMember> $externalCommitteeMembers
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\ExternalCommitteeMember> $externalCommitteeMembers
  * @property-read int|null $external_committee_members_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExpenseReport> $expenseReports
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\ExpenseReport> $expenseReports
  * @property-read int|null $expense_reports_count
  * @property int|null $workday_instance_id
  * @property bool|null $active_employee
@@ -77,7 +77,7 @@ class User extends Authenticatable
     /**
      * The accessors to append to the model's array form.
      *
-     * @var array<string>
+     * @var array<int,string>
      *
      * @phan-read-only
      */

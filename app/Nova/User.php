@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ItemNotFoundException;
-use Jeffbeltran\SanctumTokens\SanctumTokens;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
@@ -99,10 +98,6 @@ class User extends Resource
             HasMany::make('External Committee Members', 'externalCommitteeMembers'),
 
             HasMany::make('Expense Reports', 'expenseReports'),
-
-            SanctumTokens::make()
-                ->hideAbilities()
-                ->canSee(static fn (Request $request): bool => $request->user()->can('update-user-tokens')),
 
             MorphToMany::make('Roles', 'roles', Role::class)
                 ->canSee(static fn (Request $request): bool => $request->user()->can('update-user-permissions')),
