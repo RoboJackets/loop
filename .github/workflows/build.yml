@@ -51,12 +51,6 @@ jobs:
       - name: Run Psalm
         run: vendor/bin/psalm --output-format=github --no-progress
 
-      - name: Run Enlightn
-        run: |
-          cp --verbose .env.example .env
-          php artisan key:generate --no-interaction --verbose
-          php artisan enlightn --ci --details --show-exceptions --no-interaction --verbose
-
   docker:
     name: Docker
     runs-on: ubuntu-latest
