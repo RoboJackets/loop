@@ -40,7 +40,6 @@ COPY --link app/ /app/app/
 COPY --link bootstrap/ /app/bootstrap/
 COPY --link config/ /app/config/
 COPY --link database/ /app/database/
-COPY --link lang/ /app/lang/
 COPY --link public/ /app/public/
 COPY --link resources/ /app/resources/
 COPY --link routes/ /app/routes/
