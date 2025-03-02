@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Observers\BankTransactionObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Scout\Searchable;
@@ -47,6 +49,7 @@ use Laravel\Scout\Searchable;
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
+#[ObservedBy([BankTransactionObserver::class])]
 class BankTransaction extends Model
 {
     use Searchable;
@@ -89,6 +92,7 @@ class BankTransaction extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [

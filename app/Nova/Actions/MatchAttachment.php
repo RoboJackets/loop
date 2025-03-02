@@ -15,7 +15,6 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Actions\ActionResponse;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class MatchAttachment extends Action
 {
@@ -68,15 +67,5 @@ class MatchAttachment extends Action
         } catch (MultipleRecordsFoundException) {
             return ActionResponse::message('Matched more than one Engage request.');
         }
-    }
-
-    /**
-     * Get the fields available on the action.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    public function fields(NovaRequest $request): array
-    {
-        return [];
     }
 }

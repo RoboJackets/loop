@@ -22,9 +22,9 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read string $workday_url
  * @property-read \App\Models\User|null $user
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExpenseReport> $expenseReports
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\ExpenseReport> $expenseReports
  * @property-read int|null $expense_reports_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExpensePayment> $expensePayments
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\ExpensePayment> $expensePayments
  * @property-read int|null $expense_payments_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|ExternalCommitteeMember newModelQuery()
@@ -77,6 +77,7 @@ class ExternalCommitteeMember extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [

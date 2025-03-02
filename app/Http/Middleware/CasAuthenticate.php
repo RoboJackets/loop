@@ -6,22 +6,13 @@ namespace App\Http\Middleware;
 
 use App\Models\User;
 use Closure;
-use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 class CasAuthenticate
 {
-    /**
-     * Auth facade.
-     *
-     * @var \Illuminate\Contracts\Auth\Guard
-     *
-     * @phan-read-only
-     */
-    protected $auth;
-
     /**
      * CAS library interface.
      *
@@ -44,9 +35,8 @@ class CasAuthenticate
         'sn',
     ];
 
-    public function __construct(Guard $auth)
+    public function __construct()
     {
-        $this->auth = $auth;
         // @phan-suppress-next-line PhanUndeclaredClassReference
         $this->cas = app('cas');
     }
@@ -54,9 +44,9 @@ class CasAuthenticate
     /**
      * Handle an incoming request.
      *
-     * @phan-suppress PhanPluginInconsistentReturnMethod
+     * @phan-suppress PhanTypeMismatchReturn
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         // Run the user update only if they don't have an active session
         if ($this->cas->isAuthenticated() && $request->user() === null) {
@@ -93,6 +83,6 @@ class CasAuthenticate
             return response('Unauthorized', 401);
         }
 
-        $this->cas->authenticate();
+        return $this->cas->authenticate();
     }
 }

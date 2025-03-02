@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Observers\ExpenseReportObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -31,9 +33,9 @@ use Laravel\Scout\Searchable;
  * @property-read \App\Models\FiscalYear $fiscalYear
  * @property-read string $workday_url
  * @property-read \App\Models\ExternalCommitteeMember|null $payTo
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\DocuSignEnvelope> $envelopes
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\DocuSignEnvelope> $envelopes
  * @property-read int|null $envelopes_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExpenseReportLine> $lines
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\ExpenseReportLine> $lines
  * @property-read int|null $lines_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EmailRequest> $emailRequests
  * @property-read int|null $email_requests_count
@@ -60,6 +62,7 @@ use Laravel\Scout\Searchable;
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
+#[ObservedBy([ExpenseReportObserver::class])]
 class ExpenseReport extends Model
 {
     use Searchable;
@@ -104,6 +107,7 @@ class ExpenseReport extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -116,6 +120,7 @@ class ExpenseReport extends Model
     /**
      * Get the route key for the model.
      */
+    #[\Override]
     public function getRouteKeyName(): string
     {
         return 'workday_instance_id';

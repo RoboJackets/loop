@@ -10,7 +10,6 @@ use Illuminate\Database\MultipleRecordsFoundException;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class MatchBankTransaction extends Action
 {
@@ -62,15 +61,5 @@ class MatchBankTransaction extends Action
         } catch (MultipleRecordsFoundException) {
             return Action::message('Matched more than one expense payment.');
         }
-    }
-
-    /**
-     * Get the fields available on the action.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    public function fields(NovaRequest $request): array
-    {
-        return [];
     }
 }

@@ -13,7 +13,6 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class RefreshMercuryTransactions extends Action
 {
@@ -127,15 +126,5 @@ class RefreshMercuryTransactions extends Action
             });
 
         return Action::message('All transactions refreshed!');
-    }
-
-    /**
-     * Get the fields available on the action.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    public function fields(NovaRequest $request): array
-    {
-        return [];
     }
 }

@@ -53,6 +53,7 @@ class EngagePurchaseRequestsMissingExpenseReports extends Value
     /**
      * Get the ranges available for the metric.
      */
+    #[\Override]
     public function ranges(): array
     {
         return [];
@@ -61,6 +62,7 @@ class EngagePurchaseRequestsMissingExpenseReports extends Value
     /**
      * Get the displayable name of the metric.
      */
+    #[\Override]
     public function name(): string
     {
         return 'Engage Requests Missing Expense Reports';
@@ -69,6 +71,7 @@ class EngagePurchaseRequestsMissingExpenseReports extends Value
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return 'engage-purchase-requests-missing-expense-reports';

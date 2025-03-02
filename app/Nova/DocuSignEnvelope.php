@@ -42,16 +42,18 @@ class DocuSignEnvelope extends Resource
     public static $model = \App\Models\DocuSignEnvelope::class;
 
     /**
-     * Get the displayble label of the resource.
+     * Get the displayable label of the resource.
      */
+    #[\Override]
     public static function label(): string
     {
         return 'DocuSign Envelopes';
     }
 
     /**
-     * Get the displayble singular label of the resource.
+     * Get the displayable singular label of the resource.
      */
+    #[\Override]
     public static function singularLabel(): string
     {
         return 'DocuSign Envelope';
@@ -60,6 +62,7 @@ class DocuSignEnvelope extends Resource
     /**
      * Get the URI key for the resource.
      */
+    #[\Override]
     public static function uriKey(): string
     {
         return 'docusign-envelopes';
@@ -106,6 +109,7 @@ class DocuSignEnvelope extends Resource
     /**
      * Get the fields displayed by the resource.
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [
@@ -238,40 +242,11 @@ class DocuSignEnvelope extends Resource
     }
 
     /**
-     * Get the cards available for the request.
-     *
-     * @return array<\Laravel\Nova\Card>
-     */
-    public function cards(NovaRequest $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the filters available for the resource.
-     *
-     * @return array<\Laravel\Nova\Filters\Filter>
-     */
-    public function filters(NovaRequest $request): array
-    {
-        return [];
-    }
-
-    /**
-     * Get the lenses available for the resource.
-     *
-     * @return array<\Laravel\Nova\Lenses\Lens>
-     */
-    public function lenses(NovaRequest $request): array
-    {
-        return [];
-    }
-
-    /**
      * Get the actions available for the resource.
      *
      * @return array<\Laravel\Nova\Actions\Action>
      */
+    #[\Override]
     public function actions(NovaRequest $request): array
     {
         $resourceId = $request->resourceId ?? $request->resources;
@@ -306,6 +281,7 @@ class DocuSignEnvelope extends Resource
     /**
      * Get the search result subtitle for the resource.
      */
+    #[\Override]
     public function subtitle(): string
     {
         return \App\Models\DocuSignEnvelope::$types[$this->type]

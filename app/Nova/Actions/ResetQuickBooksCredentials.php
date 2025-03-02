@@ -7,7 +7,6 @@ namespace App\Nova\Actions;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class ResetQuickBooksCredentials extends Action
 {
@@ -60,15 +59,5 @@ class ResetQuickBooksCredentials extends Action
         $user->save();
 
         return self::message('Successfully cleared QuickBooks credentials!');
-    }
-
-    /**
-     * Get the fields available on the action.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    public function fields(NovaRequest $request): array
-    {
-        return [];
     }
 }

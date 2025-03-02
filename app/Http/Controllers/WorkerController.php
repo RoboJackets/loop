@@ -11,7 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 use LdapRecord\Container;
 
-class WorkerController extends Controller
+class WorkerController
 {
     /**
      * Handle the incoming request.

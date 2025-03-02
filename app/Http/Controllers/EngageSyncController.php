@@ -9,7 +9,7 @@ use App\Models\EngagePurchaseRequest;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 
-class EngageSyncController extends Controller
+class EngageSyncController
 {
     public function getRequestsToSync(): JsonResponse
     {

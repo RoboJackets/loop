@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\BankTransaction|null $bankTransaction
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\ExpenseReport> $expenseReports
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\ExpenseReport> $expenseReports
  * @property-read int|null $expense_reports_count
  * @property-read \App\Models\ExternalCommitteeMember|null $payTo
  * @property-read string|null $quickbooks_payment_url
@@ -84,6 +84,7 @@ class ExpensePayment extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [

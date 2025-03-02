@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Observers\ExpenseReportLineObserver;
 use App\Traits\GetMorphClassStatic;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -20,7 +22,7 @@ use Laravel\Scout\Searchable;
  * @property string|null $memo
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\Attachment> $attachments
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\Attachment> $attachments
  * @property-read int|null $attachments_count
  * @property-read \App\Models\ExpenseReport $expenseReport
  *
@@ -37,6 +39,7 @@ use Laravel\Scout\Searchable;
  *
  * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
  */
+#[ObservedBy([ExpenseReportLineObserver::class])]
 class ExpenseReportLine extends Model
 {
     use GetMorphClassStatic;
@@ -72,6 +75,7 @@ class ExpenseReportLine extends Model
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -102,6 +106,7 @@ class ExpenseReportLine extends Model
     /**
      * Get the route key for the model.
      */
+    #[\Override]
     public function getRouteKeyName(): string
     {
         return 'workday_line_id';

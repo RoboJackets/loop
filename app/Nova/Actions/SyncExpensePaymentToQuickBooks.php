@@ -24,7 +24,6 @@ use Illuminate\Support\ItemNotFoundException;
 use Illuminate\Support\MultipleItemsFoundException;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Http\Requests\NovaRequest;
 use QuickBooksOnline\API\Data\IPPPayment;
 use QuickBooksOnline\API\Facades\Payment;
 
@@ -300,15 +299,5 @@ class SyncExpensePaymentToQuickBooks extends Action
         $payment->save();
 
         return Action::openInNewTab($payment->quickbooks_payment_url);
-    }
-
-    /**
-     * Get the fields available on the action.
-     *
-     * @return array<\Laravel\Nova\Fields\Field>
-     */
-    public function fields(NovaRequest $request): array
-    {
-        return [];
     }
 }

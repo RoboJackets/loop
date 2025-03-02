@@ -81,6 +81,7 @@ class ConvertEmailRequestToAttachment extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         $resourceId = $request->resourceId ?? $request->resources;

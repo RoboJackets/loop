@@ -21,7 +21,7 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\FiscalYear $fiscalYear
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Models\FundingAllocationLine> $fundingAllocationLines
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\App\Models\FundingAllocationLine> $fundingAllocationLines
  * @property-read int|null $funding_allocation_lines_count
  * @property-read string $name
  * @property-read string|null $type_display_name

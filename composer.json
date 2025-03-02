@@ -8,19 +8,17 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "ext-redis": "*",
         "ext-uuid": "*",
-        "ans-group/laravel-health-check": "2.0.1",
+        "ans-group/laravel-health-check": "dev-l12-compatibility",
         "apereo/phpcas": "^1.6",
         "directorytree/ldaprecord-laravel": "*",
-        "enlightn/enlightn": "^2.8",
         "enlightn/security-checker": "^2.0",
-        "guzzlehttp/guzzle": "^7.5",
+        "guzzlehttp/guzzle": "^7.8",
         "htmlmin/htmlmin": "dev-master",
-        "jeffbeltran/sanctum-tokens": "1.0.0",
         "kiritokatklian/nova-permission": "5.1.1",
-        "laravel/framework": "11.44.0",
+        "laravel/framework": "^12.0",
         "laravel/horizon": "5.30.3",
         "laravel/nova": "5.2.6",
         "laravel/sanctum": "4.0.8",
@@ -29,34 +27,35 @@
         "laravel/tinker": "2.10.1",
         "meilisearch/meilisearch-php": "1.13.0",
         "quickbooks/v3-php-sdk": "^6.0",
-        "sentry/sentry-laravel": "^4.3",
+        "sentry/sentry-laravel": "^4.13",
         "smalot/pdfparser": "^2.2",
-        "spatie/laravel-csp": "^2.9",
+        "spatie/laravel-csp": "^2.10",
         "spatie/laravel-failed-job-monitor": "^4.3",
-        "spatie/laravel-permission": "^6.2",
-        "spatie/laravel-webhook-client": "^3.3",
-        "subfission/cas": "^5.0",
-        "symfony/http-client": "^7.0",
-        "symfony/postmark-mailer": "^7.0"
+        "spatie/laravel-permission": "^6.12",
+        "spatie/laravel-webhook-client": "^3.4",
+        "subfission/cas": "dev-master",
+        "symfony/http-client": "^7.2",
+        "symfony/postmark-mailer": "^7.2"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "3.5.3",
+        "barryvdh/laravel-ide-helper": "3.5.5",
         "fakerphp/faker": "1.24.1",
-        "larastan/larastan": "2.9.12",
+        "larastan/larastan": "dev-l12-compatibility",
         "laravel/pint": "1.21.0",
         "mockery/mockery": "1.6.12",
-        "nunomaduro/collision": "8.5.0",
+        "nunomaduro/collision": "^8.6",
         "phan/phan": "5.4.5",
         "phpstan/extension-installer": "1.4.3",
-        "phpstan/phpstan": "1.12.15",
-        "phpstan/phpstan-deprecation-rules": "1.2.1",
-        "phpstan/phpstan-strict-rules": "1.6.1",
-        "psalm/plugin-laravel": "2.11.0",
+        "phpstan/phpstan": "2.1.6",
+        "phpstan/phpstan-deprecation-rules": "2.0.1",
+        "phpstan/phpstan-strict-rules": "2.0.3",
+        "psalm/plugin-laravel": "^3.0",
         "slevomat/coding-standard": "8.15.0",
-        "spatie/laravel-ignition": "2.9.0",
+        "spatie/laravel-ignition": "2.9.1",
         "spatie/ray": "1.41.4",
         "squizlabs/php_codesniffer": "3.11.2",
-        "vimeo/psalm": "5.26.1"
+        "vimeo/psalm": "6.7.0",
+        "laravel/pail": "^1.2.2"
     },
     "replace": {
         "paragonie/random_compat": "*",
@@ -116,6 +115,10 @@
             "vendor/bin/phpstan analyse --level=max .",
             "vendor/bin/phan",
             "vendor/bin/psalm"
+        ],
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite"
         ]
     },
     "extra": {
@@ -136,7 +139,7 @@
             "php-http/discovery": true
         },
         "platform": {
-            "php": "8.3.6"
+            "php": "8.3.16"
         }
     },
     "minimum-stability": "stable",
@@ -155,7 +158,15 @@
         },
         {
             "type": "vcs",
-            "url": "https://github.com/AryeoHQ/sanctum-tokens.git"
+            "url": "https://github.com/RoboJackets/cas.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/laravel-shift/larastan.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/laravel-shift/laravel-health-check.git"
         }
     ]
 }

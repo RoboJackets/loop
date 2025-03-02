@@ -8,6 +8,7 @@
 >
     <projectFiles>
         <directory name="app" />
+        <directory name="config" />
         <ignoreFiles>
             <directory name="vendor" />
         </ignoreFiles>
@@ -18,11 +19,6 @@
                 <directory name="app" />
             </errorLevel>
         </TooManyArguments>
-        <TooManyTemplateParams>
-            <errorLevel type="suppress">
-                <directory name="app" />
-            </errorLevel>
-        </TooManyTemplateParams>
         <UndefinedMagicMethod>
             <errorLevel type="suppress">
                 <directory name="app/Nova" />
@@ -41,11 +37,6 @@
                 <directory name="app/Models" />
             </errorLevel>
         </LessSpecificImplementedReturnType>
-        <ImplementedReturnTypeMismatch>
-            <errorLevel type="suppress">
-                <directory name="app/Models" />
-            </errorLevel>
-        </ImplementedReturnTypeMismatch>
         <UndefinedClass>
             <errorLevel type="suppress">
                 <file name="app/Providers/NovaServiceProvider.php"/>
@@ -56,7 +47,27 @@
         </UndefinedClass>
         <UndefinedMagicPropertyFetch>
             <errorLevel type="suppress">
-                <directory name="app/Nova"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$active"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$active_employee"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$bankTransaction"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$bank_transaction_id"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$do_not_filter_on"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$expenseReport"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$filterable_attributes"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$id"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$payTo"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$quickbooks_payment_id"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$reconciled"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$status"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$vendor_document_amount"/>
+                <referencedProperty name="Illuminate\Http\Request::$code"/>
+                <referencedProperty name="Illuminate\Http\Request::$payload"/>
+                <referencedProperty name="Illuminate\Http\Request::$realmId"/>
+                <referencedProperty name="Laravel\Nova\Fields\ActionFields::$lines_from_jacketpages"/>
+                <referencedProperty name="Laravel\Nova\Fields\ActionFields::$lines_from_ledger"/>
+                <referencedProperty name="Laravel\Nova\Fields\ActionFields::$other_request_id"/>
+                <referencedProperty name="Laravel\Nova\Fields\ActionFields::$quickbooks_reimburse_charge_id"/>
+                <referencedProperty name="Laravel\Nova\Http\Requests\NovaRequest::$range"/>
             </errorLevel>
         </UndefinedMagicPropertyFetch>
         <UndefinedInterfaceMethod>
@@ -94,6 +105,7 @@
                 <file name="app/Http/Controllers/EngagePurchaseRequestController.php"/>
                 <file name="app/Http/Controllers/QuickBooksAuthenticationController.php"/>
                 <file name="app/Http/Controllers/WorkerController.php"/>
+                <file name="app/Http/Middleware/CasAuthenticate.php"/>
                 <file name="app/Models/User.php"/>
                 <file name="app/Nova/Actions/SyncExpensePaymentToQuickBooks.php"/>
                 <file name="app/Nova/User.php"/>
@@ -116,21 +128,11 @@
                 <directory name="app"/>
             </errorLevel>
         </InvalidArgument>
-        <InvalidPropertyFetch>
-            <errorLevel type="suppress">
-                <file name="app/Util/QuickBooks.php"/>
-            </errorLevel>
-        </InvalidPropertyFetch>
         <MissingTemplateParam>
             <errorLevel type="suppress">
                 <directory name="app"/>
             </errorLevel>
         </MissingTemplateParam>
-        <RedundantCondition>
-            <errorLevel type="suppress">
-                <file name="app/Nova/Actions/SyncExpensePaymentToQuickBooks.php"/>
-            </errorLevel>
-        </RedundantCondition>
         <TypeDoesNotContainType>
             <errorLevel type="suppress">
                 <file name="app/Nova/Actions/SyncDocuSignEnvelopeToQuickBooks.php"/>
@@ -145,15 +147,11 @@
                 <file name="app/Nova/Actions/SyncEngagePurchaseRequestToQuickBooks.php"/>
             </errorLevel>
         </InvalidArrayOffset>
-        <InvalidArrayAccess>
-            <errorLevel type="suppress">
-                <file name="app/Nova/User.php"/>
-            </errorLevel>
-        </InvalidArrayAccess>
         <InvalidTemplateParam>
             <errorLevel type="suppress">
-                <file name="app/Nova/User.php"/>
                 <directory name="app/Models/"/>
+                <directory name="app/Nova/Actions/"/>
+                <file name="app/Nova/User.php"/>
             </errorLevel>
         </InvalidTemplateParam>
         <MoreSpecificImplementedParamType>
@@ -166,5 +164,133 @@
                 <directory name="app/Nova/" />
             </errorLevel>
         </MethodSignatureMismatch>
+        <UnusedClass>
+            <errorLevel type="suppress">
+                <directory name="app/Console/Commands/"/>
+                <directory name="app/Http/Controllers/"/>
+                <directory name="app/Http/Middleware/"/>
+                <directory name="app/Policies/"/>
+                <referencedClass name="App\HorizonHealthCheck"/>
+                <referencedClass name="App\Http\ContentSecurityPolicy"/>
+                <referencedClass name="App\Nova\FundingAllocation"/>
+                <referencedClass name="App\Nova\WebhookCall"/>
+                <referencedClass name="App\Providers\AppServiceProvider"/>
+                <referencedClass name="App\Providers\HorizonServiceProvider"/>
+                <referencedClass name="App\Providers\NovaServiceProvider"/>
+            </errorLevel>
+        </UnusedClass>
+        <UnusedClosureParam>
+            <errorLevel type="suppress">
+                <directory name="app/Console/Commands/"/>
+                <directory name="app/Http/Controllers/"/>
+                <directory name="app/Http/Middleware/"/>
+                <directory name="app/Jobs/"/>
+                <directory name="app/Mail/"/>
+                <directory name="app/Nova/"/>
+                <file name="app/Providers/NovaServiceProvider.php"/>
+            </errorLevel>
+        </UnusedClosureParam>
+        <PossiblyUnusedParam>
+            <errorLevel type="suppress">
+                <directory name="app/Http/Controllers/"/>
+                <directory name="app/Nova/Actions/"/>
+                <directory name="app/Nova/Metrics/"/>
+                <directory name="app/Policies/"/>
+            </errorLevel>
+        </PossiblyUnusedParam>
+        <PossiblyUnusedMethod>
+            <errorLevel type="suppress">
+                <directory name="app/Http/Middleware/"/>
+                <directory name="app/Http/Requests/"/>
+                <directory name="app/Jobs/"/>
+                <directory name="app/Models/"/>
+                <directory name="app/Nova/Actions/"/>
+                <directory name="app/Nova/Metrics/"/>
+                <directory name="app/Observers/"/>
+                <directory name="app/Policies/"/>
+                <referencedMethod name="App\HorizonHealthCheck::__construct"/>
+                <referencedMethod name="App\Mail\EmailRequestProcessed::build"/>
+                <referencedMethod name="App\Util\Sentry::tracesSampler"/>
+            </errorLevel>
+        </PossiblyUnusedMethod>
+        <InvalidOperand>
+            <errorLevel type="suppress">
+                <directory name="app/Jobs/"/>
+                <directory name="app/Mail/"/>
+                <directory name="app/Models/"/>
+                <directory name="app/Nova/Actions/"/>
+                <directory name="app/Nova/Metrics/"/>
+            </errorLevel>
+        </InvalidOperand>
+        <FalsableReturnStatement>
+            <errorLevel type="suppress">
+                <file name="app/Jobs/GenerateThumbnail.php"/>
+            </errorLevel>
+        </FalsableReturnStatement>
+        <UndefinedMagicPropertyAssignment>
+            <errorLevel type="suppress">
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$bank_transaction_id"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$expense_report_id"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$sensible_extraction_uuid"/>
+                <referencedProperty name="Illuminate\Database\Eloquent\Model::$sensible_output"/>
+            </errorLevel>
+        </UndefinedMagicPropertyAssignment>
+        <PossiblyUnusedProperty>
+            <errorLevel type="suppress">
+                <directory name="app/Nova/"/>
+                <referencedProperty name="App\Models\DocuSignEnvelope::$filterable_attributes"/>
+                <referencedProperty name="App\Models\FundingAllocation::$do_not_filter_on"/>
+                <referencedProperty name="App\Models\FundingAllocation::$filterable_attributes"/>
+            </errorLevel>
+        </PossiblyUnusedProperty>
+        <UndefinedThisPropertyFetch>
+            <errorLevel type="suppress">
+                <referencedProperty name="App\Nova\Attachment::$attachable"/>
+                <referencedProperty name="App\Nova\Attachment::$attachable_type"/>
+                <referencedProperty name="App\Nova\Attachment::$filename"/>
+                <referencedProperty name="App\Nova\Attachment::$thumbnail_path"/>
+                <referencedProperty name="App\Nova\Attachment::$workday_uploaded_at"/>
+                <referencedProperty name="App\Nova\BankTransaction::$bank"/>
+                <referencedProperty name="App\Nova\BankTransaction::$bank_description"/>
+                <referencedProperty name="App\Nova\BankTransaction::$bank_transaction_id"/>
+                <referencedProperty name="App\Nova\BankTransaction::$net_amount"/>
+                <referencedProperty name="App\Nova\BankTransaction::$note"/>
+                <referencedProperty name="App\Nova\BankTransaction::$transaction_posted_at"/>
+                <referencedProperty name="App\Nova\DocuSignEnvelope::$amount"/>
+                <referencedProperty name="App\Nova\DocuSignEnvelope::$description"/>
+                <referencedProperty name="App\Nova\DocuSignEnvelope::$quickbooks_invoice_document_number"/>
+                <referencedProperty name="App\Nova\DocuSignEnvelope::$sofo_form_thumbnail_url"/>
+                <referencedProperty name="App\Nova\DocuSignEnvelope::$submitted_at"/>
+                <referencedProperty name="App\Nova\DocuSignEnvelope::$summary_thumbnail_url"/>
+                <referencedProperty name="App\Nova\DocuSignEnvelope::$supplier_name"/>
+                <referencedProperty name="App\Nova\DocuSignEnvelope::$type"/>
+                <referencedProperty name="App\Nova\EmailRequest::$quickbooks_invoice_document_number"/>
+                <referencedProperty name="App\Nova\EmailRequest::$thumbnail_path"/>
+                <referencedProperty name="App\Nova\EmailRequest::$vendor_document_amount"/>
+                <referencedProperty name="App\Nova\EmailRequest::$vendor_document_date"/>
+                <referencedProperty name="App\Nova\EmailRequest::$vendor_document_thumbnail_url"/>
+                <referencedProperty name="App\Nova\EmailRequest::$vendor_name"/>
+                <referencedProperty name="App\Nova\EngagePurchaseRequest::$current_step_name"/>
+                <referencedProperty name="App\Nova\EngagePurchaseRequest::$quickbooks_invoice_document_number"/>
+                <referencedProperty name="App\Nova\EngagePurchaseRequest::$subject"/>
+                <referencedProperty name="App\Nova\EngagePurchaseRequest::$submitted_amount"/>
+                <referencedProperty name="App\Nova\EngagePurchaseRequest::$submitted_at"/>
+                <referencedProperty name="App\Nova\ExpensePayment::$amount"/>
+                <referencedProperty name="App\Nova\ExpensePayment::$payment_date"/>
+                <referencedProperty name="App\Nova\ExpensePayment::$transaction_reference"/>
+                <referencedProperty name="App\Nova\ExpenseReport::$amount"/>
+                <referencedProperty name="App\Nova\ExpenseReport::$created_date"/>
+                <referencedProperty name="App\Nova\ExpenseReport::$status"/>
+                <referencedProperty name="App\Nova\ExpenseReportLine::$amount"/>
+                <referencedProperty name="App\Nova\ExpenseReportLine::$expenseReport"/>
+                <referencedProperty name="App\Nova\ExpenseReportLine::$memo"/>
+                <referencedProperty name="App\Nova\ExternalCommitteeMember::$active"/>
+                <referencedProperty name="App\Nova\FundingAllocationLine::$amount"/>
+                <referencedProperty name="App\Nova\FundingAllocationLine::$description"/>
+                <referencedProperty name="App\Nova\User::$active_employee"/>
+                <referencedProperty name="App\Nova\User::$username"/>
+                <referencedProperty name="App\Nova\User::$workday_instance_id"/>
+            </errorLevel>
+        </UndefinedThisPropertyFetch>
     </issueHandlers>
 </psalm>

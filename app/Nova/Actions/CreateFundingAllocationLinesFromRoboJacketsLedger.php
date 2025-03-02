@@ -50,6 +50,7 @@ class CreateFundingAllocationLinesFromRoboJacketsLedger extends Action
     /**
      * Determine if the filter or action should be available for the given request.
      */
+    #[\Override]
     public function authorizedToSee(Request $request): bool
     {
         return $request->user()->can('create-funding-allocations');
@@ -58,6 +59,7 @@ class CreateFundingAllocationLinesFromRoboJacketsLedger extends Action
     /**
      * Determine if the action is executable for the given request.
      */
+    #[\Override]
     public function authorizedToRun(Request $request, $model): bool
     {
         return $request->user()->can('create-funding-allocations');
@@ -109,6 +111,7 @@ class CreateFundingAllocationLinesFromRoboJacketsLedger extends Action
      *
      * @return array<\Laravel\Nova\Fields\Field>
      */
+    #[\Override]
     public function fields(NovaRequest $request): array
     {
         return [

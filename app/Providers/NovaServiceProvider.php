@@ -25,6 +25,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     /**
      * Bootstrap any application services.
      */
+    #[\Override]
     public function boot(): void
     {
         parent::boot();
@@ -91,6 +92,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     /**
      * Register the Nova routes.
      */
+    #[\Override]
     protected function routes(): void
     {
         Nova::routes()->register();
@@ -101,6 +103,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      *
      * This gate determines who can access Nova in non-local environments.
      */
+    #[\Override]
     protected function gate(): void
     {
         Gate::define('viewNova', static fn (User $user): bool => $user->can('access-nova'));
@@ -111,6 +114,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      *
      * @return array<\Laravel\Nova\Dashboard>
      */
+    #[\Override]
     protected function dashboards(): array
     {
         return [
@@ -123,6 +127,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      *
      * @return array<\Laravel\Nova\Tool>
      */
+    #[\Override]
     public function tools(): array
     {
         return [

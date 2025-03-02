@@ -20,7 +20,7 @@ use App\Util\Workday;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\ItemNotFoundException;
 
-class ExpenseReportController extends Controller
+class ExpenseReportController
 {
     private const LABEL_TO_COLUMN_NAME = [
         'Expense Report Memo' => 'memo',
