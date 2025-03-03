@@ -13121,7 +13121,7 @@
         "ext-redis": "*",
         "ext-uuid": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.3.16"
     },
