@@ -40,7 +40,7 @@
     "require-dev": {
         "barryvdh/laravel-ide-helper": "3.5.5",
         "fakerphp/faker": "1.24.1",
-        "larastan/larastan": "dev-l12-compatibility",
+        "larastan/larastan": "3.1.0",
         "laravel/pint": "1.21.0",
         "mockery/mockery": "1.6.12",
         "nunomaduro/collision": "8.6.1",
@@ -159,10 +159,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/RoboJackets/cas.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/laravel-shift/larastan.git"
         },
         {
             "type": "vcs",
