@@ -116,6 +116,24 @@
         },
         {
             "matchCategories": [
+                "php"
+            ],
+            "lockFileMaintenance": {
+                "enabled": true,
+                "schedule": [
+                    "before 4pm every weekday except before 9am every weekday"
+                ]
+            },
+            "matchDepNames": [
+                "laravel/nova"
+            ],
+            "registryUrls": [
+                "https://nova.laravel.com"
+            ],
+            "changelogUrl": "https://nova.laravel.com/releases"
+        },
+        {
+            "matchCategories": [
                 "js"
             ],
             "enabled": false
