@@ -60,6 +60,10 @@ class Sentry
             return 0;
         }
 
+        if ($context->getTransactionContext()?->getName() === 'horizon:snapshot') {
+            return 0;
+        }
+
         if ($context->getParentSampled() === true) {
             return 1;
         }
