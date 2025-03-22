@@ -56,6 +56,10 @@ class Sentry
 
     public static function tracesSampler(SamplingContext $context): float
     {
+        if ($context->getTransactionContext()?->getName() === 'health-check:cache-scheduler-running') {
+            return 0;
+        }
+
         if ($context->getParentSampled() === true) {
             return 1;
         }
