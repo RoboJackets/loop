@@ -11,7 +11,7 @@
         "php": "^8.3",
         "ext-redis": "*",
         "ext-uuid": "*",
-        "ans-group/laravel-health-check": "dev-l12-compatibility",
+        "ans-group/laravel-health-check": "2.1.1",
         "apereo/phpcas": "^1.6",
         "directorytree/ldaprecord-laravel": "*",
         "enlightn/security-checker": "^2.0",
@@ -159,10 +159,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/RoboJackets/cas.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/laravel-shift/laravel-health-check.git"
         }
     ]
 }
