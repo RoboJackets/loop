@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "44335a4f71639bcde4442b03c4bb46fb",
+    "content-hash": "d0861669e059b801d4051419c30ef264",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -11762,16 +11762,16 @@
         },
         {
             "name": "psalm/plugin-laravel",
-            "version": "v3.0.1",
+            "version": "v3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/psalm-plugin-laravel.git",
-                "reference": "93d59ee162c2995931d049911ac1b065f75cf5ab"
+                "reference": "8ec1ec7dc6c088d1f16511d29b70b6de19da542f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/93d59ee162c2995931d049911ac1b065f75cf5ab",
-                "reference": "93d59ee162c2995931d049911ac1b065f75cf5ab",
+                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/8ec1ec7dc6c088d1f16511d29b70b6de19da542f",
+                "reference": "8ec1ec7dc6c088d1f16511d29b70b6de19da542f",
                 "shasum": ""
             },
             "require": {
@@ -11791,7 +11791,7 @@
                 "php": "^8.2",
                 "symfony/console": "^7.1",
                 "symfony/finder": "^7.1",
-                "vimeo/psalm": "^6.0"
+                "vimeo/psalm": "dev-master || ^6.0 || ^7.0.0-beta1"
             },
             "require-dev": {
                 "laravel/framework": "^11.35 || ^12.0",
@@ -11834,9 +11834,9 @@
             ],
             "support": {
                 "issues": "https://github.com/psalm/psalm-plugin-laravel/issues",
-                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v3.0.1"
+                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v3.0.2"
             },
-            "time": "2025-02-26T22:07:18+00:00"
+            "time": "2025-03-20T19:09:30+00:00"
         },
         {
             "name": "revolt/event-loop",
