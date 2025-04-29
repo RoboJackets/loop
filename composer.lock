@@ -11025,16 +11025,16 @@
         },
         {
             "name": "orchestra/sidekick",
-            "version": "v1.1.1",
+            "version": "v1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/sidekick.git",
-                "reference": "ebdf88caa31735f7d00f289f070d4e9772774174"
+                "reference": "bc47409229e55a9a2861fd55f77d7d79ffa09b05"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/sidekick/zipball/ebdf88caa31735f7d00f289f070d4e9772774174",
-                "reference": "ebdf88caa31735f7d00f289f070d4e9772774174",
+                "url": "https://api.github.com/repos/orchestral/sidekick/zipball/bc47409229e55a9a2861fd55f77d7d79ffa09b05",
+                "reference": "bc47409229e55a9a2861fd55f77d7d79ffa09b05",
                 "shasum": ""
             },
             "require": {
@@ -11045,7 +11045,7 @@
             "require-dev": {
                 "laravel/framework": "^9.52.16|^10.48.29|^11.44.1|^12.1.1|^13.0",
                 "laravel/pint": "^1.4",
-                "phpstan/phpstan": "^2.1",
+                "phpstan/phpstan": "^2.1.12",
                 "phpunit/phpunit": "^9.6|^10.0|^11.0|^12.0",
                 "symfony/process": "^6.0|^7.0"
             },
@@ -11073,27 +11073,27 @@
             "description": "Packages Toolkit Utilities and Helpers for Laravel",
             "support": {
                 "issues": "https://github.com/orchestral/sidekick/issues",
-                "source": "https://github.com/orchestral/sidekick/tree/v1.1.1"
+                "source": "https://github.com/orchestral/sidekick/tree/v1.1.5"
             },
-            "time": "2025-04-05T16:44:56+00:00"
+            "time": "2025-04-25T03:48:23+00:00"
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v10.2.1",
+            "version": "v10.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "87f7e0e08e601756a444d7ac48027656ebeacf01"
+                "reference": "beed0fa81c3bb37b67e348d0963a33c5f1933fe5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/87f7e0e08e601756a444d7ac48027656ebeacf01",
-                "reference": "87f7e0e08e601756a444d7ac48027656ebeacf01",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/beed0fa81c3bb37b67e348d0963a33c5f1933fe5",
+                "reference": "beed0fa81c3bb37b67e348d0963a33c5f1933fe5",
                 "shasum": ""
             },
             "require": {
                 "composer-runtime-api": "^2.2",
-                "orchestra/sidekick": "^1.1.0",
+                "orchestra/sidekick": "^1.1.5",
                 "php": "^8.2",
                 "symfony/deprecation-contracts": "^2.5|^3.0",
                 "symfony/polyfill-php83": "^1.31"
@@ -11108,12 +11108,12 @@
             "require-dev": {
                 "fakerphp/faker": "^1.24",
                 "laravel/framework": "^12.1.1",
-                "laravel/pint": "^1.21",
+                "laravel/pint": "^1.22",
                 "laravel/serializable-closure": "^1.3|^2.0.4",
                 "mockery/mockery": "^1.6.10",
-                "phpstan/phpstan": "^2.1",
+                "phpstan/phpstan": "^2.1.12",
                 "phpunit/phpunit": "^10.5.35|^11.5.3|^12.0.1",
-                "spatie/laravel-ray": "^1.39.1",
+                "spatie/laravel-ray": "^1.40.2",
                 "symfony/process": "^7.2.0",
                 "symfony/yaml": "^7.2.0",
                 "vlucas/phpdotenv": "^5.6.1"
@@ -11168,7 +11168,7 @@
                 "issues": "https://github.com/orchestral/testbench/issues",
                 "source": "https://github.com/orchestral/testbench-core"
             },
-            "time": "2025-04-13T01:12:52+00:00"
+            "time": "2025-04-27T05:36:02+00:00"
         },
         {
             "name": "phan/phan",
@@ -12180,16 +12180,16 @@
         },
         {
             "name": "spatie/backtrace",
-            "version": "1.7.1",
+            "version": "1.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/backtrace.git",
-                "reference": "0f2477c520e3729de58e061b8192f161c99f770b"
+                "reference": "9807de6b8fecfaa5b3d10650985f0348b02862b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/backtrace/zipball/0f2477c520e3729de58e061b8192f161c99f770b",
-                "reference": "0f2477c520e3729de58e061b8192f161c99f770b",
+                "url": "https://api.github.com/repos/spatie/backtrace/zipball/9807de6b8fecfaa5b3d10650985f0348b02862b2",
+                "reference": "9807de6b8fecfaa5b3d10650985f0348b02862b2",
                 "shasum": ""
             },
             "require": {
@@ -12227,7 +12227,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/backtrace/tree/1.7.1"
+                "source": "https://github.com/spatie/backtrace/tree/1.7.2"
             },
             "funding": [
                 {
@@ -12239,7 +12239,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2024-12-02T13:28:15+00:00"
+            "time": "2025-04-28T14:55:53+00:00"
         },
         {
             "name": "spatie/error-solutions",
