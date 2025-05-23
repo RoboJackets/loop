@@ -102,7 +102,7 @@ class EngagePurchaseRequest extends Model
         'Saved' => 'info',
         'Submitted' => 'info',
         'Send to SOFO Accountant' => 'info',
-        'Submitted to SOFO Accountant' => 'info',
+        'Submitted to SOFO/CRC Accountant' => 'info',
         'Sent back for edits' => 'danger',
         'Check Request Sent' => 'success',
     ];
@@ -276,6 +276,6 @@ class EngagePurchaseRequest extends Model
 
     public static function fixStepSpelling(string $stepName): string
     {
-        return $stepName === 'Submited to SOFO Accountant' ? 'Submitted to SOFO Accountant' : $stepName;
+        return $stepName === 'Submited to SOFO/CRC Accountant' ? 'Submitted to SOFO/CRC Accountant' : $stepName;
     }
 }
