@@ -13,7 +13,7 @@ RUN set -euxo pipefail && \
     /root/.local/bin/poetry install --no-interaction && \
     /root/.local/bin/poetry run sphinx-build -M dirhtml "." "_build"
 
-FROM node:22.15.0 AS docs-minification
+FROM node:22.16.0 AS docs-minification
 
 COPY --link --from=docs-source /docs/_build/dirhtml/ /docs/
 
