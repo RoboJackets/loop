@@ -79,6 +79,7 @@ class ExpenseReport extends Resource
                 ->sortable(),
 
             BelongsTo::make('Fiscal Year', 'fiscalYear', FiscalYear::class)
+                ->filterable()
                 ->sortable(),
 
             Number::make('Instance ID', 'workday_instance_id')
@@ -86,6 +87,7 @@ class ExpenseReport extends Resource
                 ->onlyOnDetail(),
 
             Badge::make('Status')
+                ->filterable()
                 ->map([
                     // @phan-suppress-next-line PhanTypeInvalidArrayKeyLiteral
                     null => 'danger',
@@ -102,6 +104,7 @@ class ExpenseReport extends Resource
                 ->sortable(),
 
             BelongsTo::make('Pay To', 'payTo', ExternalCommitteeMember::class)
+                ->filterable()
                 ->sortable(),
 
             Text::make('Memo')
