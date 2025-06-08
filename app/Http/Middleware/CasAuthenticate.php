@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Jobs\AttachAccessWorkdayPermission;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
@@ -69,6 +70,8 @@ class CasAuthenticate
                 $user->email = $this->cas->getAttribute('email_primary');
             }
             $user->save();
+
+            AttachAccessWorkdayPermission::dispatch($user);
 
             Auth::login($user);
         }
