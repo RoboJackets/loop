@@ -20,7 +20,6 @@ class AttachAccessWorkdayPermission implements ShouldBeUnique, ShouldQueue
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;
-    use Queueable;
     use SerializesModels;
 
     /**
