@@ -292,5 +292,10 @@
                 <referencedProperty name="App\Nova\User::$workday_instance_id"/>
             </errorLevel>
         </UndefinedThisPropertyFetch>
+        <PossiblyUnusedReturnValue>
+            <errorLevel type="suppress">
+                <file name="app/Models/User.php"/>
+            </errorLevel>
+        </PossiblyUnusedReturnValue>
     </issueHandlers>
 </psalm>
