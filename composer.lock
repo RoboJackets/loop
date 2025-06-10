@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "016f685a0bc2ae6cf0ef0a0c32aa2a25",
+    "content-hash": "a97f569c44f90c0c466c44d7efcc6c33",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -2275,17 +2275,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "5.7.1",
+            "version": "5.7.2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "b09104b59dd0a7541352af7adf7757f5f6f9c43c"
+                "reference": "cab491f15b738636f24492ae17df1e9da4623418"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-b09104b59dd0a7541352af7adf7757f5f6f9c43c-zip-826512.zip",
-                "reference": "b09104b59dd0a7541352af7adf7757f5f6f9c43c",
-                "shasum": "998e2e2acc0e48894f80de9832051e603b813bc1"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-cab491f15b738636f24492ae17df1e9da4623418-zip-75397f.zip",
+                "reference": "cab491f15b738636f24492ae17df1e9da4623418",
+                "shasum": "d34243609dae1269585a566335285b1bab0afccd"
             },
             "require": {
                 "brick/money": "^0.8|^0.9|^0.10",
@@ -2295,7 +2295,7 @@
                 "inertiajs/inertia-laravel": "^1.3.2|^2.0",
                 "laravel/fortify": "^1.25.4",
                 "nesbot/carbon": "^2.62.1|^3.4",
-                "orchestra/sidekick": "^1.2.4",
+                "orchestra/sidekick": "^1.2.9",
                 "php": "^8.1",
                 "rap2hpoutre/fast-excel": "^5.4",
                 "spatie/once": "^3.0",
@@ -2450,10 +2450,10 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v5.7.1",
+                "source": "https://github.com/laravel/nova/tree/v5.7.2",
                 "issues": "https://github.com/laravel/nova/issues"
             },
-            "time": "2025-05-19T09:08:14+00:00"
+            "time": "2025-06-02T08:14:22+00:00"
         },
         {
             "name": "laravel/prompts",
