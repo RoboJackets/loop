@@ -147,6 +147,9 @@ return [
                     'docusign_envelope_uuid',
                     'full_text',
                 ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true,
+                ],
             ],
             \App\Models\BankTransaction::class => [
                 'displayedAttributes' => [
@@ -162,6 +165,9 @@ return [
                     'transaction_posted_at',
                     'status',
                 ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true,
+                ],
             ],
             \App\Models\DocuSignEnvelope::class => [
                 'displayedAttributes' => [
@@ -173,6 +179,9 @@ return [
                     'description',
                     'supplier_name',
                     'quickbooks_invoice_document_number',
+                ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true,
                 ],
             ],
             \App\Models\EmailRequest::class => [
@@ -186,6 +195,9 @@ return [
                     'quickbooks_invoice_document_number',
                     'vendor_document_filename',
                     'full_text',
+                ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true,
                 ],
             ],
             \App\Models\EngagePurchaseRequest::class => [
@@ -206,6 +218,9 @@ return [
                     'payee_zip_code',
                     'quickbooks_invoice_document_number',
                 ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true,
+                ],
             ],
             \App\Models\ExpenseReport::class => [
                 'displayedAttributes' => [
@@ -214,6 +229,9 @@ return [
                 'searchableAttributes' => [
                     'workday_expense_report_id',
                     'memo',
+                ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true,
                 ],
             ],
             \App\Models\ExpenseReportLine::class => [
@@ -224,6 +242,9 @@ return [
                     'memo',
                     'amount',
                 ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true,
+                ],
             ],
             \App\Models\ExternalCommitteeMember::class => [
                 'displayedAttributes' => [
@@ -232,6 +253,9 @@ return [
                 'searchableAttributes' => [
                     'name',
                     'workday_external_committee_member_id',
+                ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true,
                 ],
             ],
             \App\Models\FundingAllocation::class => [
@@ -242,6 +266,9 @@ return [
                     'sga_bill_number',
                     'type',
                     'fiscal_year_ending_year',
+                ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true,
                 ],
             ],
             \App\Models\FundingAllocationLine::class => [
@@ -256,6 +283,9 @@ return [
                 ],
                 'filterableAttributes' => [
                     'funding_allocation_id',
+                ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true,
                 ],
             ],
             \App\Models\User::class => [
@@ -2684,6 +2714,9 @@ return [
                     'zayn' => [
                         'zane',
                     ],
+                ],
+                'typoTolerance' => [
+                    'disableOnNumbers' => true,
                 ],
             ],
         ],
