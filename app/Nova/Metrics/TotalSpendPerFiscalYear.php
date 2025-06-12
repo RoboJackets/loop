@@ -44,7 +44,7 @@ class TotalSpendPerFiscalYear extends Trend
             ->leftJoin('fiscal_years', static function (JoinClause $join): void {
                 $join->on('fiscal_years.id', '=', 'engage_purchase_requests.fiscal_year_id');
             })
-            ->where('status', '=', 'Completed')
+            ->whereIn('status', ['Approved', 'Completed'])
             ->where('current_step_name', '=', 'Check Request Sent')
             ->whereNull('deleted_at')
             ->whereNotNull('fiscal_year_id')
