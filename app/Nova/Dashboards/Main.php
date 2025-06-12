@@ -14,6 +14,9 @@ use App\Nova\Metrics\ExpensePaymentsPendingReconciliation;
 use App\Nova\Metrics\ExpenseReportsInProgress;
 use App\Nova\Metrics\ExpenseReportsPendingApproval;
 use App\Nova\Metrics\ExpenseReportsPendingPayment;
+use App\Nova\Metrics\RoboJacketsPaymentsPerFiscalYear;
+use App\Nova\Metrics\StudentPaymentsPerFiscalYear;
+use App\Nova\Metrics\TotalSpendPerFiscalYear;
 use Laravel\Nova\Dashboards\Main as Dashboard;
 
 class Main extends Dashboard
@@ -56,6 +59,9 @@ class Main extends Dashboard
                 ->width('1/2'),
             ExpensePaymentsInProgress::make()
                 ->width('1/2'),
+            TotalSpendPerFiscalYear::make(),
+            RoboJacketsPaymentsPerFiscalYear::make(),
+            StudentPaymentsPerFiscalYear::make(),
         ];
     }
 }
