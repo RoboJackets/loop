@@ -72,6 +72,7 @@ class StudentPaymentsPerFiscalYear extends Trend
     /**
      * Get the URI key for the metric.
      */
+    #[\Override]
     public function uriKey(): string
     {
         return 'student-payments-per-fiscal-year';
