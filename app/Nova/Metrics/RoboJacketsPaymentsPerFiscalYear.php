@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Metrics;
 
+use App\Models\FiscalYear;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -26,43 +27,54 @@ class RoboJacketsPaymentsPerFiscalYear extends Trend
      */
     public function calculate(NovaRequest $request): TrendResult
     {
+        $payments = DB::query()
+            ->select('fiscal_year_ending_year')
+            ->selectRaw('sum(expense_payments.amount) as amount')
+            ->from(DB::query()
+                ->selectRaw('distinct expense_payments.id as expense_payment_id')
+                ->selectRaw('min(fiscal_years.ending_year) as fiscal_year_ending_year')
+                ->from('expense_payments')
+                ->leftJoin('expense_reports', static function (JoinClause $join): void {
+                    $join->on(
+                        'expense_reports.expense_payment_id',
+                        '=',
+                        'expense_payments.workday_instance_id'
+                    );
+                })
+                ->leftJoin('fiscal_years', static function (JoinClause $join): void {
+                    $join->on('fiscal_years.id', '=', 'expense_reports.fiscal_year_id');
+                })
+                ->where('expense_payments.status', '=', 'Complete')
+                ->groupBy('expense_payments.id')
+            )
+            ->leftJoin('expense_payments', static function (JoinClause $join): void {
+                $join->on('expense_payment_id', '=', 'expense_payments.id');
+            })
+            ->leftJoin('external_committee_members', static function (JoinClause $join): void {
+                $join->on(
+                    'external_committee_members.workday_instance_id',
+                    '=',
+                    'expense_payments.external_committee_member_id'
+                );
+            })
+            ->whereNull('external_committee_members.user_id')
+            ->groupBy('fiscal_year_ending_year')
+            ->orderBy('fiscal_year_ending_year')
+            ->get()
+            ->mapWithKeys(static fn (object $row): array => [$row->fiscal_year_ending_year => $row->amount]);
+
         return (new TrendResult())
             ->trend(
-                DB::query()
-                    ->select('fiscal_year_ending_year')
-                    ->selectRaw('sum(expense_payments.amount) as amount')
-                    ->from(DB::query()
-                        ->selectRaw('distinct expense_payments.id as expense_payment_id')
-                        ->selectRaw('min(fiscal_years.ending_year) as fiscal_year_ending_year')
-                        ->from('expense_payments')
-                        ->leftJoin('expense_reports', static function (JoinClause $join): void {
-                            $join->on(
-                                'expense_reports.expense_payment_id',
-                                '=',
-                                'expense_payments.workday_instance_id'
-                            );
-                        })
-                        ->leftJoin('fiscal_years', static function (JoinClause $join): void {
-                            $join->on('fiscal_years.id', '=', 'expense_reports.fiscal_year_id');
-                        })
-                        ->where('expense_payments.status', '=', 'Complete')
-                        ->groupBy('expense_payments.id')
-                    )
-                    ->leftJoin('expense_payments', static function (JoinClause $join): void {
-                        $join->on('expense_payment_id', '=', 'expense_payments.id');
-                    })
-                    ->leftJoin('external_committee_members', static function (JoinClause $join): void {
-                        $join->on(
-                            'external_committee_members.workday_instance_id',
-                            '=',
-                            'expense_payments.external_committee_member_id'
-                        );
-                    })
-                    ->whereNull('external_committee_members.user_id')
-                    ->groupBy('fiscal_year_ending_year')
-                    ->orderBy('fiscal_year_ending_year')
+                FiscalYear::whereHas('envelopes')
+                    ->orWhereHas('engagePurchaseRequests')
+                    ->orWhereHas('emailRequests')
+                    ->orderBy('ending_year', 'asc')
                     ->get()
-                    ->mapWithKeys(static fn (object $row): array => [$row->fiscal_year_ending_year => $row->amount])
+                    ->mapWithKeys(
+                        static fn (FiscalYear $fiscalYear): array => [
+                            $fiscalYear->ending_year => $payments->get($fiscalYear->ending_year, 0),
+                        ]
+                    )
                     ->toArray()
             )
             ->showLatestValue()

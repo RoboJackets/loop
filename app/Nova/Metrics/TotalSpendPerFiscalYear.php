@@ -7,6 +7,7 @@ namespace App\Nova\Metrics;
 use App\Models\DocuSignEnvelope;
 use App\Models\EmailRequest;
 use App\Models\EngagePurchaseRequest;
+use App\Models\FiscalYear;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -59,23 +60,34 @@ class TotalSpendPerFiscalYear extends Trend
             ->whereNotNull('fiscal_year_id')
             ->groupBy('ending_year');
 
+        $total_spend = DB::query()
+            ->select('ending_year')
+            ->selectRaw('sum(spend) as spend')
+            ->fromSub(
+                query: $docusign_spend
+                    ->union($engage_spend)
+                    ->union($email_spend),
+                as: 'all_spend'
+            )
+            ->groupBy('ending_year')
+            ->orderBy('ending_year')
+            ->get()
+            ->mapWithKeys(
+                static fn (object $fiscal_year): array => [
+                    $fiscal_year->ending_year => $fiscal_year->spend,
+                ]
+            );
+
         return (new TrendResult())
             ->trend(
-                DB::query()
-                    ->select('ending_year')
-                    ->selectRaw('sum(spend) as spend')
-                    ->fromSub(
-                        query: $docusign_spend
-                            ->union($engage_spend)
-                            ->union($email_spend),
-                        as: 'all_spend'
-                    )
-                    ->groupBy('ending_year')
-                    ->orderBy('ending_year')
+                FiscalYear::whereHas('envelopes')
+                    ->orWhereHas('engagePurchaseRequests')
+                    ->orWhereHas('emailRequests')
+                    ->orderBy('ending_year', 'asc')
                     ->get()
                     ->mapWithKeys(
-                        static fn (object $fiscal_year): array => [
-                            $fiscal_year->ending_year => $fiscal_year->spend,
+                        static fn (FiscalYear $fiscalYear): array => [
+                            $fiscalYear->ending_year => $total_spend->get($fiscalYear->ending_year, 0),
                         ]
                     )
                     ->toArray()
