@@ -31,7 +31,7 @@
         "smalot/pdfparser": "^2.2",
         "spatie/laravel-csp": "2.10.3",
         "spatie/laravel-failed-job-monitor": "4.3.4",
-        "spatie/laravel-permission": "6.19.0",
+        "spatie/laravel-permission": "6.20.0",
         "spatie/laravel-webhook-client": "3.4.3",
         "subfission/cas": "dev-master",
         "symfony/http-client": "^7.2",
