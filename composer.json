@@ -17,7 +17,7 @@
         "enlightn/security-checker": "^2.0",
         "guzzlehttp/guzzle": "^7.8",
         "htmlmin/htmlmin": "dev-master",
-        "kiritokatklian/nova-permission": "5.1.1",
+        "kiritokatklian/nova-permission": "5.1.2",
         "laravel/framework": "12.19.3",
         "laravel/horizon": "5.33.1",
         "laravel/nova": "5.7.3",
