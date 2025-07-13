@@ -512,7 +512,7 @@ EOH
 
       resources {
         cpu = 100
-        memory = 256
+        memory = 128
         memory_max = 8096
       }
 
@@ -651,7 +651,7 @@ EOH
 
       resources {
         cpu = 1000
-        memory = 512
+        memory = 128
         memory_max = 4096
       }
 
