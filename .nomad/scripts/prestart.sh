@@ -25,8 +25,3 @@ cp --recursive --verbose public/* /assets/${NOMAD_JOB_NAME}/
 
 mkdir --parents /assets/${NOMAD_JOB_NAME}/storage/thumbnail/
 ln --symbolic /assets/${NOMAD_JOB_NAME}/storage/thumbnail/ /app/storage/app/public/ || true
-
-if [ ${SCOUT_DRIVER} = "meilisearch" ]
-then
-    php artisan scout:sync-index-settings --no-interaction --verbose || true
-fi

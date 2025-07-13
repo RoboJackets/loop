@@ -4,13 +4,6 @@
 {{- range service "mysql" }}
 DB_SOCKET="{{- index .ServiceMeta "socket" | trimSpace -}}"
 {{ end }}
-{{- range service "meilisearch-v1-15" }}
-MEILISEARCH_HOST="http://127.0.0.1:{{- .Port -}}"
-{{ end }}
-MEILISEARCH_KEY="{{- key "meilisearch/admin-key-v1.15" | trimSpace -}}"
-{{- range service "tika" }}
-TIKA_URL="http://127.0.0.1:{{- .Port -}}"
-{{ end }}
 {{ range $key, $value := (key (printf "loop/%s" (slice (env "NOMAD_JOB_NAME") 5)) | parseJSON) -}}
 {{- $key | trimSpace -}}={{- $value | toJSON }}
 {{ end -}}
@@ -27,3 +20,6 @@ REDIS_HOST="/alloc/tmp/redis.sock"
 REDIS_PASSWORD="{{ env "NOMAD_ALLOC_ID" }}"
 REDIS_DB=0
 REDIS_CACHE_DB=1
+MEILISEARCH_HOST="http://127.0.0.1:{{- env "NOMAD_PORT_meilisearch" -}}"
+MEILISEARCH_KEY="{{- env "NOMAD_ALLOC_ID" -}}"
+TIKA_URL="http://127.0.0.1:{{- env "NOMAD_PORT_tika" -}}""

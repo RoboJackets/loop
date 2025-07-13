@@ -71,7 +71,9 @@ job "loop" {
 
   group "loop" {
     network {
-      port "resp" {}
+      port "redis" {}
+      port "meilisearch" {}
+      port "tika" {}
     }
 
     volume "run" {
@@ -426,7 +428,7 @@ EOF
       template {
         data = <<EOH
 bind 127.0.0.1
-port {{ env "NOMAD_PORT_resp" }}
+port {{ env "NOMAD_PORT_redis" }}
 unixsocket /alloc/tmp/redis.sock
 unixsocketperm 777
 requirepass {{ env "NOMAD_ALLOC_ID" }}
@@ -440,7 +442,7 @@ EOH
       service {
         name = "${NOMAD_JOB_NAME}-redis"
 
-        port = "resp"
+        port = "redis"
 
         address = "127.0.0.1"
 
@@ -455,7 +457,7 @@ EOH
           interval = "5s"
 
           name = "TCP"
-          port = "resp"
+          port = "redis"
           timeout = "1s"
           type = "tcp"
         }
@@ -474,6 +476,222 @@ EOH
       }
 
       shutdown_delay = "60s"
+    }
+
+    task "meilisearch" {
+      driver = "docker"
+
+      lifecycle {
+        hook = "prestart"
+        sidecar = true
+      }
+
+      config {
+        image = "getmeili/meilisearch"
+
+        entrypoint = [
+          "/bin/meilisearch",
+          "--db-path",
+          "${NOMAD_TASK_DIR}",
+          "--http-addr",
+          "127.0.0.1:${NOMAD_PORT_meilisearch}",
+          "--env",
+          "production",
+          "--max-indexing-memory",
+          "4Gb",
+          "--http-payload-size-limit",
+          "100Mb",
+          "--master-key",
+          "${NOMAD_ALLOC_ID}"
+        ]
+
+        force_pull = true
+
+        network_mode = "host"
+      }
+
+      resources {
+        cpu = 100
+        memory = 256
+        memory_max = 8096
+      }
+
+      service {
+        name = "${NOMAD_JOB_NAME}-meilisearch"
+
+        port = "meilisearch"
+
+        address = "127.0.0.1"
+
+        tags = [
+          "http"
+        ]
+
+        check {
+          success_before_passing = 3
+          failures_before_critical = 2
+
+          interval = "1s"
+
+          name = "HTTP"
+          path = "/health"
+          port = "meilisearch"
+          protocol = "http"
+          timeout = "1s"
+          type = "http"
+        }
+
+        check_restart {
+          limit = 5
+          grace = "20s"
+        }
+      }
+
+      restart {
+        attempts = 5
+        delay = "10s"
+        interval = "1m"
+        mode = "fail"
+      }
+    }
+
+    task "poststart" {
+      driver = "docker"
+
+      consul {}
+
+      lifecycle {
+        hook = "poststart"
+        sidecar = false
+      }
+
+      config {
+        image = var.image
+
+        network_mode = "host"
+
+        entrypoint = [
+          "/bin/bash",
+          "-xeuo",
+          "pipefail",
+          "-c",
+          trimspace(file("scripts/poststart.sh"))
+        ]
+      }
+
+      resources {
+        cpu = 100
+        memory = 128
+        memory_max = 2048
+      }
+
+      restart {
+        attempts = 5
+        delay = "10s"
+        interval = "1m"
+        mode = "fail"
+      }
+
+      volume_mount {
+        volume = "run"
+        destination = "/var/opt/nomad/run/"
+      }
+
+      template {
+        data = trimspace(file("conf/.env.tpl"))
+
+        destination = "/secrets/.env"
+        env = true
+
+        change_mode = "restart"
+      }
+
+      template {
+        data = "DOCKER_IMAGE_DIGEST=\"${split("@", var.image)[1]}\""
+
+        destination = "/secrets/.docker_image_digest"
+        env = true
+
+        change_mode = "noop"
+      }
+
+      template {
+        data = trimspace(file("conf/.my.cnf"))
+
+        destination = "/secrets/.my.cnf"
+
+        change_mode = "noop"
+      }
+    }
+
+    task "tika" {
+      driver = "docker"
+
+      lifecycle {
+        hook = "prestart"
+        sidecar = true
+      }
+
+      config {
+        image = "apache/tika:latest-full"
+
+        force_pull = true
+
+        network_mode = "host"
+
+        args = [
+          "--host=127.0.0.1",
+          "--port=${NOMAD_PORT_tika}"
+        ]
+      }
+
+      env {
+        JAVA_OPTS = "-Xms2048M -Xmx4096M -XX:MaxDirectMemorySize=256M"
+      }
+
+      resources {
+        cpu = 1000
+        memory = 512
+        memory_max = 4096
+      }
+
+      service {
+        name = "${NOMAD_JOB_NAME}-tika"
+
+        port = "tika"
+
+        address = "127.0.0.1"
+
+        tags = [
+          "http"
+        ]
+
+        check {
+          success_before_passing = 3
+          failures_before_critical = 2
+
+          interval = "1s"
+
+          name = "HTTP"
+          path = "/tika"
+          port = "tika"
+          protocol = "http"
+          timeout = "1s"
+          type = "http"
+        }
+
+        check_restart {
+          limit = 5
+          grace = "20s"
+        }
+      }
+
+      restart {
+        attempts = 5
+        delay = "10s"
+        interval = "1m"
+        mode = "fail"
+      }
     }
   }
 
