@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "392d237e9e4f39557c4d475655fde9db",
+    "content-hash": "0e421ec0916466facc7c6d9908ec4e69",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -2581,16 +2581,16 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v10.16.0",
+            "version": "v10.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "5d56b6116a05d004e6a5d16a8ed95c2dc089b587"
+                "reference": "66b064ab1f987560d1edfbc10f46557fddfed600"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/5d56b6116a05d004e6a5d16a8ed95c2dc089b587",
-                "reference": "5d56b6116a05d004e6a5d16a8ed95c2dc089b587",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/66b064ab1f987560d1edfbc10f46557fddfed600",
+                "reference": "66b064ab1f987560d1edfbc10f46557fddfed600",
                 "shasum": ""
             },
             "require": {
@@ -2658,7 +2658,7 @@
                 "issues": "https://github.com/laravel/scout/issues",
                 "source": "https://github.com/laravel/scout"
             },
-            "time": "2025-07-08T15:09:47+00:00"
+            "time": "2025-07-22T15:54:45+00:00"
         },
         {
             "name": "laravel/serializable-closure",
