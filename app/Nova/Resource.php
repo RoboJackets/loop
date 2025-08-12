@@ -18,6 +18,8 @@ use Laravel\Scout\Builder;
  * @mixin TModel  @phan-suppress-current-line PhanInvalidMixin
  *
  * @method string getKey()
+ *
+ * @extends \Laravel\Nova\Resource<\Illuminate\Database\Eloquent\Model>
  */
 abstract class Resource extends NovaResource
 {

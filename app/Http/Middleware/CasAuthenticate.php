@@ -38,7 +38,6 @@ class CasAuthenticate
 
     public function __construct()
     {
-        // @phan-suppress-next-line PhanUndeclaredClassReference
         $this->cas = app('cas');
     }
 

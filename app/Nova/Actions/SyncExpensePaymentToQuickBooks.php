@@ -211,11 +211,9 @@ class SyncExpensePaymentToQuickBooks extends Action
                                 );
                             }
 
-                            // @phan-suppress-next-line PhanTypeMismatchArgumentInternal
                             if (array_key_exists($envelope_uuid, $envelope_amounts_from_lines)) {
                                 $envelope_amounts_from_lines[$envelope_uuid] += $line->amount;
                             } else {
-                                // @phan-suppress-next-line PhanTypeMismatchDimAssignment
                                 $envelope_amounts_from_lines[$envelope_uuid] = $line->amount;
                             }
                         }
