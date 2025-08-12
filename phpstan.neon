@@ -42,7 +42,6 @@ parameters:
     - '#Cannot call method save\(\) on App\\Models\\User\|null\.#'
     - '#Cannot call method storeAs\(\) on Illuminate\\Http\\UploadedFile\|null\.#'
     - '#Class App\\Models\\[a-zA-Z]+ has PHPDoc tag @property for property \$sensible_output with no value type specified in iterable type array\.#'
-    - '#Class App\\Nova\\Resource extends generic class Laravel\\Nova\\Resource but does not specify its types: TModel#'
     - '#Dynamic call to static method App\\Models\\[a-zA-Z]+::[a-zA-Z]+\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Contracts\\Auth\\Guard::check\(\)\.#'
     - '#Dynamic call to static method Illuminate\\Contracts\\Auth\\Guard::user\(\)\.#'
