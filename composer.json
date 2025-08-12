@@ -46,7 +46,7 @@
         "laravel/pint": "1.24.0",
         "mockery/mockery": "1.6.12",
         "nunomaduro/collision": "8.8.2",
-        "phan/phan": "5.4.6",
+        "phan/phan": "5.5.1",
         "phpstan/extension-installer": "1.4.3",
         "phpstan/phpstan": "2.1.17",
         "phpstan/phpstan-deprecation-rules": "2.0.3",
