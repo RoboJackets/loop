@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "03513af13ce64edb37b290b053f9c265",
+    "content-hash": "4c6897a8fbfeb5c91e8df9866adb6d50",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -11828,16 +11828,16 @@
         },
         {
             "name": "psalm/plugin-laravel",
-            "version": "v3.0.3",
+            "version": "v3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/psalm-plugin-laravel.git",
-                "reference": "7beecad02e029f8d5446385b4f26a4b0522df622"
+                "reference": "364a35e28d45cabaece26f2a2e51e50fc43e99b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/7beecad02e029f8d5446385b4f26a4b0522df622",
-                "reference": "7beecad02e029f8d5446385b4f26a4b0522df622",
+                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/364a35e28d45cabaece26f2a2e51e50fc43e99b4",
+                "reference": "364a35e28d45cabaece26f2a2e51e50fc43e99b4",
                 "shasum": ""
             },
             "require": {
@@ -11900,9 +11900,9 @@
             ],
             "support": {
                 "issues": "https://github.com/psalm/psalm-plugin-laravel/issues",
-                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v3.0.3"
+                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v3.0.4"
             },
-            "time": "2025-06-06T13:12:42+00:00"
+            "time": "2025-08-12T18:13:40+00:00"
         },
         {
             "name": "revolt/event-loop",
