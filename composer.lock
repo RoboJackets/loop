@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e24722af3d56a6dc0ef2cdffaa170f3f",
+    "content-hash": "2a640fe8d6bf5b7ae1d744349f621edd",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -2198,16 +2198,16 @@
         },
         {
             "name": "laravel/horizon",
-            "version": "v5.33.2",
+            "version": "v5.33.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "baa36725ed24dbbcd7ddb4ba3dcfd4c0f22028ed"
+                "reference": "aabcd425b34005182acc4c22aae48692684cb765"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/baa36725ed24dbbcd7ddb4ba3dcfd4c0f22028ed",
-                "reference": "baa36725ed24dbbcd7ddb4ba3dcfd4c0f22028ed",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/aabcd425b34005182acc4c22aae48692684cb765",
+                "reference": "aabcd425b34005182acc4c22aae48692684cb765",
                 "shasum": ""
             },
             "require": {
@@ -2272,9 +2272,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/horizon/issues",
-                "source": "https://github.com/laravel/horizon/tree/v5.33.2"
+                "source": "https://github.com/laravel/horizon/tree/v5.33.3"
             },
-            "time": "2025-08-05T02:30:15+00:00"
+            "time": "2025-08-11T14:55:49+00:00"
         },
         {
             "name": "laravel/nova",
