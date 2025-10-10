@@ -51,6 +51,13 @@
             ]
         },
         {
+            "rangeStrategy": "replace",
+            "matchDepNames": [
+                "python"
+            ],
+            "allowedVersions": "^3.15"
+        },
+        {
             "matchCategories": [
                 "php"
             ],
