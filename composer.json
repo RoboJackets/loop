@@ -54,7 +54,7 @@
         "psalm/plugin-laravel": "3.0.4",
         "slevomat/coding-standard": "8.24.0",
         "spatie/laravel-ignition": "2.9.1",
-        "spatie/ray": "1.43.1",
+        "spatie/ray": "1.44.1",
         "squizlabs/php_codesniffer": "4.0.0",
         "vimeo/psalm": "6.13.1"
     },
