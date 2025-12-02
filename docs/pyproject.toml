@@ -12,7 +12,7 @@ sphinx = "8.2.3"
 sphinx-autobuild = "2025.8.25"
 sphinxext-opengraph = "0.13.0"
 sphinxcontrib-httpdomain = "1.8.1"
-proselint = "0.14.0"
+proselint = "0.16.0"
 furo = {git = "https://github.com/pradyunsg/furo"}
 
 [build-system]
