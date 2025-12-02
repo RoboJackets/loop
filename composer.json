@@ -23,7 +23,7 @@
         "laravel/nova": "5.7.6",
         "laravel/sanctum": "4.2.1",
         "laravel/scout": "10.22.1",
-        "laravel/slack-notification-channel": "3.6.0",
+        "laravel/slack-notification-channel": "3.7.0",
         "laravel/tinker": "2.10.2",
         "meilisearch/meilisearch-php": "1.16.1",
         "quickbooks/v3-php-sdk": "^6.0",
