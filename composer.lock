@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "881a4a590acb0a6078c11fdb6f5841ff",
+    "content-hash": "707e7aecdf777b4e235c2b2a4f461dfd",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -1981,16 +1981,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v12.42.0",
+            "version": "v12.43.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "509b33095564c5165366d81bbaa0afaac28abe75"
+                "reference": "9f875fad08f5d409b4c33293eca34f7af36e8ecf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/509b33095564c5165366d81bbaa0afaac28abe75",
-                "reference": "509b33095564c5165366d81bbaa0afaac28abe75",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/9f875fad08f5d409b4c33293eca34f7af36e8ecf",
+                "reference": "9f875fad08f5d409b4c33293eca34f7af36e8ecf",
                 "shasum": ""
             },
             "require": {
@@ -2199,7 +2199,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-12-09T15:51:23+00:00"
+            "time": "2025-12-16T15:27:26+00:00"
         },
         {
             "name": "laravel/horizon",
