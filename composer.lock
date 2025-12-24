@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7cfb5f9fc0affdb9c16059ec83e0fa7d",
+    "content-hash": "10511b8d3477f4b5634131ccd1b947c2",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -13062,16 +13062,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "7.0.0-beta13",
+            "version": "7.0.0-beta14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "e66308f7b3f539704639aca7c8e80aa699ff8afe"
+                "reference": "e66ca9901442421cbdec6c571899410922e22ff6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/e66308f7b3f539704639aca7c8e80aa699ff8afe",
-                "reference": "e66308f7b3f539704639aca7c8e80aa699ff8afe",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/e66ca9901442421cbdec6c571899410922e22ff6",
+                "reference": "e66ca9901442421cbdec6c571899410922e22ff6",
                 "shasum": ""
             },
             "require": {
@@ -13097,8 +13097,8 @@
                 "php": "~8.1.31 || ~8.2.27 || ~8.3.16 || ~8.4.3 || ~8.5.0",
                 "sebastian/diff": "^4.0 || ^5.0 || ^6.0 || ^7.0",
                 "spatie/array-to-xml": "^2.17.0 || ^3.0",
-                "symfony/console": "^6.0 || ^7.0",
-                "symfony/filesystem": "~6.3.12 || ~6.4.3 || ^7.0.3",
+                "symfony/console": "^6.0 || ^7.0 || ^8.0",
+                "symfony/filesystem": "~6.3.12 || ~6.4.3 || ^7.0.3 || ^8.0",
                 "symfony/polyfill-php84": "^1.31.0"
             },
             "provide": {
@@ -13120,7 +13120,7 @@
                 "psalm/plugin-phpunit": "^0.19",
                 "slevomat/coding-standard": "^8.4",
                 "squizlabs/php_codesniffer": "^3.6",
-                "symfony/process": "^6.0 || ^7.0"
+                "symfony/process": "^6.0 || ^7.0 || ^8.0"
             },
             "suggest": {
                 "ext-curl": "In order to send data to shepherd",
@@ -13176,7 +13176,7 @@
                 "issues": "https://github.com/vimeo/psalm/issues",
                 "source": "https://github.com/vimeo/psalm"
             },
-            "time": "2025-12-10T09:32:03+00:00"
+            "time": "2025-12-23T17:03:58+00:00"
         },
         {
             "name": "webmozart/assert",
