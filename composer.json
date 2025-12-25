@@ -38,7 +38,7 @@
         "symfony/postmark-mailer": "^7.2"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "3.5.5",
+        "barryvdh/laravel-ide-helper": "3.6.1",
         "danog/advanced-json-rpc": "3.2.2",
         "fakerphp/faker": "1.24.1",
         "larastan/larastan": "3.4.0",
