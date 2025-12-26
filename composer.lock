@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c7e775afbd36db2c6996e7fe0100ae4f",
+    "content-hash": "7cfc2be8ea425f9100d97d886d5ec510",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -10729,16 +10729,16 @@
         },
         {
             "name": "larastan/larastan",
-            "version": "v3.4.0",
+            "version": "v3.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/larastan/larastan.git",
-                "reference": "1042fa0c2ee490bb6da7381f3323f7292ad68222"
+                "reference": "ff3725291bc4c7e6032b5a54776e3e5104c86db9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/larastan/larastan/zipball/1042fa0c2ee490bb6da7381f3323f7292ad68222",
-                "reference": "1042fa0c2ee490bb6da7381f3323f7292ad68222",
+                "url": "https://api.github.com/repos/larastan/larastan/zipball/ff3725291bc4c7e6032b5a54776e3e5104c86db9",
+                "reference": "ff3725291bc4c7e6032b5a54776e3e5104c86db9",
                 "shasum": ""
             },
             "require": {
@@ -10752,7 +10752,7 @@
                 "illuminate/pipeline": "^11.44.2 || ^12.4.1",
                 "illuminate/support": "^11.44.2 || ^12.4.1",
                 "php": "^8.2",
-                "phpstan/phpstan": "^2.1.11"
+                "phpstan/phpstan": "^2.1.32"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^13",
@@ -10765,7 +10765,8 @@
                 "phpunit/phpunit": "^10.5.35 || ^11.5.15"
             },
             "suggest": {
-                "orchestra/testbench": "Using Larastan for analysing a package needs Testbench"
+                "orchestra/testbench": "Using Larastan for analysing a package needs Testbench",
+                "phpmyadmin/sql-parser": "Install to enable Larastan's optional phpMyAdmin-based SQL parser automatically"
             },
             "type": "phpstan-extension",
             "extra": {
@@ -10806,7 +10807,7 @@
             ],
             "support": {
                 "issues": "https://github.com/larastan/larastan/issues",
-                "source": "https://github.com/larastan/larastan/tree/v3.4.0"
+                "source": "https://github.com/larastan/larastan/tree/v3.8.1"
             },
             "funding": [
                 {
@@ -10814,7 +10815,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-04-22T09:44:59+00:00"
+            "time": "2025-12-11T16:37:35+00:00"
         },
         {
             "name": "laravel/pail",
@@ -11700,16 +11701,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.17",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "89b5ef665716fa2a52ecd2633f21007a6a349053"
-            },
+            "version": "2.1.33",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/89b5ef665716fa2a52ecd2633f21007a6a349053",
-                "reference": "89b5ef665716fa2a52ecd2633f21007a6a349053",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9e800e6bee7d5bd02784d4c6069b48032d16224f",
+                "reference": "9e800e6bee7d5bd02784d4c6069b48032d16224f",
                 "shasum": ""
             },
             "require": {
@@ -11754,7 +11750,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-05-21T20:55:28+00:00"
+            "time": "2025-12-05T10:24:31+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
@@ -11805,21 +11801,21 @@
         },
         {
             "name": "phpstan/phpstan-strict-rules",
-            "version": "2.0.4",
+            "version": "2.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-strict-rules.git",
-                "reference": "3e139cbe67fafa3588e1dbe27ca50f31fdb6236a"
+                "reference": "d6211c46213d4181054b3d77b10a5c5cb0d59538"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/3e139cbe67fafa3588e1dbe27ca50f31fdb6236a",
-                "reference": "3e139cbe67fafa3588e1dbe27ca50f31fdb6236a",
+                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/d6211c46213d4181054b3d77b10a5c5cb0d59538",
+                "reference": "d6211c46213d4181054b3d77b10a5c5cb0d59538",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.4 || ^8.0",
-                "phpstan/phpstan": "^2.0.4"
+                "phpstan/phpstan": "^2.1.29"
             },
             "require-dev": {
                 "php-parallel-lint/php-parallel-lint": "^1.2",
@@ -11847,9 +11843,9 @@
             "description": "Extra strict and opinionated rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-strict-rules/issues",
-                "source": "https://github.com/phpstan/phpstan-strict-rules/tree/2.0.4"
+                "source": "https://github.com/phpstan/phpstan-strict-rules/tree/2.0.7"
             },
-            "time": "2025-03-18T11:42:40+00:00"
+            "time": "2025-09-26T11:19:08+00:00"
         },
         {
             "name": "psalm/plugin-laravel",
