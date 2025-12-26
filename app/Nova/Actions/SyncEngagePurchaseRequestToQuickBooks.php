@@ -98,9 +98,7 @@ class SyncEngagePurchaseRequestToQuickBooks extends Action
         /** @var \QuickBooksOnline\API\Data\IPPLine $line */
         foreach ($invoice->Line as $line) {
             if (
-                // @phpstan-ignore-next-line
                 $line->DetailType === 'SalesItemLineDetail' &&
-                // @phpstan-ignore-next-line
                 $line->LinkedTxn?->TxnType === 'ReimburseCharge' &&
                 $line->LinkedTxn?->TxnId === $fields->quickbooks_reimburse_charge_id
             ) {

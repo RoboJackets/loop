@@ -31,11 +31,6 @@ class Sentry
                     $request = $event->getRequest();
 
                     if (array_key_exists('headers', $request)) {
-                        /**
-                         * Type hint so phpstan knows what this is.
-                         *
-                         * @var array<string,array<string>> $request['headers']
-                         */
                         $request['headers'] = collect($request['headers'])->map(
                             static function (array $values, string $header): array {
                                 if (
