@@ -39,7 +39,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "3.5.5",
-        "danog/advanced-json-rpc": "3.2.2",
+        "danog/advanced-json-rpc": "3.2.3",
         "fakerphp/faker": "1.24.1",
         "laravel/pail": "1.2.4",
         "laravel/pint": "1.27.0",
