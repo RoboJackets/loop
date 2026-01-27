@@ -31,3 +31,10 @@ jobs:
         continue-on-error: true
         run: |
           nomad stop loop-test
+
+      - name: Stop production
+        env:
+          NOMAD_ADDR: https://nomad.bcdc.robojackets.net
+        continue-on-error: true
+        run: |
+          nomad stop loop-production
