@@ -2,7 +2,7 @@ name: Deactivate Test
 
 on:
   schedule:
-    - cron:  '0 20 * * *'
+    - cron:  '0 21 * * *'
 
 jobs:
   deactivate-test:
