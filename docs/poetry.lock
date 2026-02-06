@@ -742,21 +742,6 @@ standalone = ["Sphinx (>=5)"]
 test = ["html5lib", "pytest"]
 
 [[package]]
-name = "sphinxcontrib-httpdomain"
-version = "2.0.0"
-description = "Sphinx extension that provides a domain for documenting HTTP APIs."
-optional = false
-python-versions = ">=3.10"
-groups = ["main"]
-files = [
-    {file = "sphinxcontrib_httpdomain-2.0.0-py3-none-any.whl", hash = "sha256:e968775c9994f8139cb6ff91e1f6a8557396a2cc08073997eed10d9b39f96df3"},
-    {file = "sphinxcontrib_httpdomain-2.0.0.tar.gz", hash = "sha256:9e4e8733bf41ee4d9d5f9eb4dbf3cc2c22a665221ba42c5c3ae181b98af8855d"},
-]
-
-[package.dependencies]
-sphinx = ">=6.0"
-
-[[package]]
 name = "sphinxcontrib-jsmath"
 version = "1.0.1"
 description = "A sphinx extension which renders display math in HTML via JavaScript"
@@ -1088,4 +1073,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "53a49b9969ea6cc5172bf13c3a89b87d43be11750b3e7bbfca0a2edeed112020"
+content-hash = "7fde97ca985e550e0644a8a09ea84d51719828a5f3a3b9ec2a4cd69113f11328"
