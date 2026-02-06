@@ -18,7 +18,6 @@ extensions = [
     "sphinx.ext.extlinks",
     "sphinx.ext.autosectionlabel",
     "sphinxext.opengraph",
-    "sphinxcontrib.httpdomain",
 ]
 
 templates_path = ['_templates']
