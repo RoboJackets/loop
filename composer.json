@@ -24,7 +24,7 @@
         "laravel/sanctum": "4.3.1",
         "laravel/scout": "10.23.1",
         "laravel/slack-notification-channel": "3.7.0",
-        "laravel/tinker": "2.11.0",
+        "laravel/tinker": "2.11.1",
         "meilisearch/meilisearch-php": "1.16.1",
         "quickbooks/v3-php-sdk": "^6.0",
         "sentry/sentry-laravel": "^4.13",
