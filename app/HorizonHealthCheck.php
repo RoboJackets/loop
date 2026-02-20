@@ -23,7 +23,7 @@ class HorizonHealthCheck extends HealthCheck
     protected string $name = 'horizon';
 
     /**
-     * Construct a new instance of this health check
+     * Construct a new instance of this health check.
      *
      * @psalm-mutation-free
      */
