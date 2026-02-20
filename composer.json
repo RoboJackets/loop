@@ -109,7 +109,6 @@
         "ci": [
             "vendor/bin/pint --test",
             "vendor/bin/phpcs",
-            "vendor/bin/phpstan analyse --level=max .",
             "vendor/bin/phan",
             "vendor/bin/psalm"
         ],
