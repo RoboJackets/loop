@@ -35,6 +35,8 @@ class ProcessSensibleOutput implements ShouldQueue
 
     /**
      * Create a new job instance.
+     *
+     * @psalm-mutation-free
      */
     public function __construct(private readonly EmailRequest $emailRequest)
     {
@@ -79,6 +81,8 @@ class ProcessSensibleOutput implements ShouldQueue
      * Get a field value from Sensible or add a validation error to the array.
      *
      * @phan-suppress PhanTypeArraySuspiciousNullable
+     *
+     * @psalm-external-mutation-free
      */
     private function getValueOrAddValidationError(string $field_name): string|float|int|null
     {

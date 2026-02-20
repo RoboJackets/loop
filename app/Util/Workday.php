@@ -8,6 +8,8 @@ class Workday
 {
     /**
      * Inspired by https://stackoverflow.com/a/1019126.
+     *
+     * @psalm-pure
      */
     public static function searchForKeyValuePair(array $widgets, string $key, string $value): array
     {
@@ -30,6 +32,8 @@ class Workday
      * Converts Workday date format to ISO 8601.
      *
      * @param  array<string,array<string,string>>  $widget
+     *
+     * @psalm-pure
      */
     public static function getDate(array $widget): string
     {
@@ -38,6 +42,8 @@ class Workday
 
     /**
      * Extracts the instance ID from a widget.
+     *
+     * @psalm-pure
      */
     public static function getInstanceId(array $widget): string
     {

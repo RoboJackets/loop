@@ -117,6 +117,8 @@ class ExternalCommitteeMember extends Model
 
     /**
      * Get the workday_url attribute to show this ECM in the Workday UI.
+     *
+     * @psalm-mutation-free
      */
     public function getWorkdayUrlAttribute(): string
     {

@@ -14,6 +14,8 @@ class FiscalYearPolicy
 
     /**
      * Determine whether the user can view any models.
+     *
+     * @psalm-pure
      */
     public function viewAny(User $user): true
     {
@@ -22,6 +24,8 @@ class FiscalYearPolicy
 
     /**
      * Determine whether the user can view the model.
+     *
+     * @psalm-pure
      */
     public function view(User $user, FiscalYear $fiscalYear): true
     {
@@ -46,6 +50,8 @@ class FiscalYearPolicy
 
     /**
      * Determine whether the user can delete the model.
+     *
+     * @psalm-pure
      */
     public function delete(User $user, FiscalYear $fiscalYear): false
     {
@@ -54,6 +60,8 @@ class FiscalYearPolicy
 
     /**
      * Determine whether the user can restore the model.
+     *
+     * @psalm-pure
      */
     public function restore(User $user, FiscalYear $fiscalYear): false
     {
@@ -62,6 +70,8 @@ class FiscalYearPolicy
 
     /**
      * Determine whether the user can permanently delete the model.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, FiscalYear $fiscalYear): false
     {

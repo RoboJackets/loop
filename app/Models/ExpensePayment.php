@@ -124,6 +124,11 @@ class ExpensePayment extends Model
         return $this->belongsTo(BankTransaction::class);
     }
 
+    /**
+     * Get the quickbooks_payment_url attribute to show this payment in QuickBooks Online.
+     *
+     * @psalm-mutation-free
+     */
     public function getQuickbooksPaymentUrlAttribute(): ?string
     {
         return $this->quickbooks_payment_id === null

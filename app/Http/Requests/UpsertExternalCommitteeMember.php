@@ -16,6 +16,8 @@ class UpsertExternalCommitteeMember extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * @psalm-pure
      */
     public function authorize(): true
     {
@@ -26,6 +28,8 @@ class UpsertExternalCommitteeMember extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * @return array<string, array<string>>
+     *
+     * @psalm-pure
      */
     public function rules(): array
     {

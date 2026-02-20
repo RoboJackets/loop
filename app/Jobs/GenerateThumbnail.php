@@ -22,6 +22,8 @@ class GenerateThumbnail implements ShouldBeUnique, ShouldQueue
 
     /**
      * Create a new job instance.
+     *
+     * @psalm-mutation-free
      */
     public function __construct(private readonly string $original_file_path)
     {

@@ -210,6 +210,8 @@ class User extends Resource
      * Convert a Whitepages directory entry to a string.
      *
      * @param  array<string,array<int,string>>  $entry
+     *
+     * @psalm-pure
      */
     private static function whitepagesEntryToString(array $entry): string
     {

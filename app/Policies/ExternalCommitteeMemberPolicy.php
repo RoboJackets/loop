@@ -14,6 +14,8 @@ class ExternalCommitteeMemberPolicy
 
     /**
      * Determine whether the user can view any models.
+     *
+     * @psalm-pure
      */
     public function viewAny(User $user): true
     {
@@ -22,6 +24,8 @@ class ExternalCommitteeMemberPolicy
 
     /**
      * Determine whether the user can view the model.
+     *
+     * @psalm-pure
      */
     public function view(User $user, ExternalCommitteeMember $externalCommitteeMember): true
     {
@@ -30,6 +34,8 @@ class ExternalCommitteeMemberPolicy
 
     /**
      * Determine whether the user can create models.
+     *
+     * @psalm-pure
      */
     public function create(User $user): false
     {
@@ -46,6 +52,8 @@ class ExternalCommitteeMemberPolicy
 
     /**
      * Determine whether the user can delete the model.
+     *
+     * @psalm-pure
      */
     public function delete(User $user, ExternalCommitteeMember $externalCommitteeMember): false
     {
@@ -54,6 +62,8 @@ class ExternalCommitteeMemberPolicy
 
     /**
      * Determine whether the user can restore the model.
+     *
+     * @psalm-pure
      */
     public function restore(User $user, ExternalCommitteeMember $externalCommitteeMember): false
     {
@@ -62,6 +72,8 @@ class ExternalCommitteeMemberPolicy
 
     /**
      * Determine whether the user can permanently delete the model.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, ExternalCommitteeMember $externalCommitteeMember): false
     {

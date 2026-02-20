@@ -109,6 +109,11 @@ class EngagePurchaseRequestController
         return response()->json($purchaseRequest);
     }
 
+    /**
+     * Simplify the finance stage name.
+     *
+     * @psalm-pure
+     */
     private static function cleanFinanceStageName(string $input): string
     {
         if (str_contains($input, ':')) {

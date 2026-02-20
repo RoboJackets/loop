@@ -144,6 +144,8 @@ class User extends Authenticatable
 
     /**
      * Get the name associated with the User.
+     *
+     * @psalm-mutation-free
      */
     public function getNameAttribute(): string
     {
@@ -152,6 +154,8 @@ class User extends Authenticatable
 
     /**
      * Get the workday_url attribute to show this Worker in the Workday UI.
+     *
+     * @psalm-mutation-free
      */
     public function getWorkdayUrlAttribute(): ?string
     {

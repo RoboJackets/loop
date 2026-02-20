@@ -14,6 +14,8 @@ class FundingAllocationPolicy
 
     /**
      * Determine whether the user can view any models.
+     *
+     * @psalm-pure
      */
     public function viewAny(User $user): true
     {
@@ -22,6 +24,8 @@ class FundingAllocationPolicy
 
     /**
      * Determine whether the user can view the model.
+     *
+     * @psalm-pure
      */
     public function view(User $user, FundingAllocation $fundingAllocation): true
     {
@@ -62,6 +66,8 @@ class FundingAllocationPolicy
 
     /**
      * Determine whether the user can permanently delete the model.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, FundingAllocation $fundingAllocation): false
     {

@@ -11,6 +11,8 @@ class QuickBooksFault extends Exception
 {
     /**
      * Construct a new instance.
+     *
+     * @psalm-mutation-free
      */
     public function __construct(IPPFault $fault)
     {

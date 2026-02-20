@@ -24,6 +24,8 @@ class SubmitEmailRequestToSensible implements ShouldBeUnique, ShouldQueue
 
     /**
      * Create a new job instance.
+     *
+     * @psalm-mutation-free
      */
     public function __construct(private readonly EmailRequest $emailRequest)
     {
@@ -73,6 +75,8 @@ class SubmitEmailRequestToSensible implements ShouldBeUnique, ShouldQueue
 
     /**
      * The unique ID of the job.
+     *
+     * @psalm-mutation-free
      */
     public function uniqueId(): string
     {
