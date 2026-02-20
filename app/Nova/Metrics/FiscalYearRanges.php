@@ -6,6 +6,11 @@ namespace App\Nova\Metrics;
 
 use App\Models\FiscalYear;
 
+/**
+ * Shared definition for metrics that can be meaningfully filtered by fiscal year.
+ *
+ * @psalm-immutable
+ */
 trait FiscalYearRanges
 {
     /**
