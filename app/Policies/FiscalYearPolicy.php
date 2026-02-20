@@ -15,7 +15,7 @@ class FiscalYearPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user): true
     {
         return true;
     }
@@ -23,7 +23,7 @@ class FiscalYearPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, FiscalYear $fiscalYear): bool
+    public function view(User $user, FiscalYear $fiscalYear): true
     {
         return true;
     }
@@ -47,7 +47,7 @@ class FiscalYearPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, FiscalYear $fiscalYear): bool
+    public function delete(User $user, FiscalYear $fiscalYear): false
     {
         return false;
     }
@@ -55,7 +55,7 @@ class FiscalYearPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, FiscalYear $fiscalYear): bool
+    public function restore(User $user, FiscalYear $fiscalYear): false
     {
         return false;
     }
@@ -63,7 +63,7 @@ class FiscalYearPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, FiscalYear $fiscalYear): bool
+    public function forceDelete(User $user, FiscalYear $fiscalYear): false
     {
         return false;
     }

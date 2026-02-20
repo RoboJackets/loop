@@ -15,7 +15,7 @@ class ExpensePaymentPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user): true
     {
         return true;
     }
@@ -23,7 +23,7 @@ class ExpensePaymentPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, ExpensePayment $expensePayment): bool
+    public function view(User $user, ExpensePayment $expensePayment): true
     {
         return true;
     }
@@ -31,7 +31,7 @@ class ExpensePaymentPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user): false
     {
         return false;
     }
@@ -39,7 +39,7 @@ class ExpensePaymentPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, ExpensePayment $expensePayment): bool
+    public function update(User $user, ExpensePayment $expensePayment): false
     {
         return false;
     }
@@ -47,7 +47,7 @@ class ExpensePaymentPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, ExpensePayment $expensePayment): bool
+    public function delete(User $user, ExpensePayment $expensePayment): false
     {
         return false;
     }
@@ -55,7 +55,7 @@ class ExpensePaymentPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, ExpensePayment $expensePayment): bool
+    public function restore(User $user, ExpensePayment $expensePayment): false
     {
         return false;
     }
@@ -63,7 +63,7 @@ class ExpensePaymentPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, ExpensePayment $expensePayment): bool
+    public function forceDelete(User $user, ExpensePayment $expensePayment): false
     {
         return false;
     }

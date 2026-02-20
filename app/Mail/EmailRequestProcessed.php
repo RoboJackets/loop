@@ -33,7 +33,7 @@ class EmailRequestProcessed extends Mailable implements ShouldQueue
     /**
      * Build the message.
      */
-    public function build(): self
+    public function build(): static
     {
         $this->to(config('services.treasurer_email_address'), config('services.treasurer_name'));
 

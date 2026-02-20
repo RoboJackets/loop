@@ -187,8 +187,8 @@ class ExpenseReport extends Resource
     {
         return [
             MatchExpenseReport::make()
-                ->canSee(static fn (NovaRequest $request): bool => true)
-                ->canRun(static fn (NovaRequest $request, \App\Models\ExpenseReport $expenseReport): bool => true),
+                ->canSee(static fn (NovaRequest $request): true => true)
+                ->canRun(static fn (NovaRequest $request, \App\Models\ExpenseReport $expenseReport): true => true),
         ];
     }
 

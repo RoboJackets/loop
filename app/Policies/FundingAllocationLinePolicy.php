@@ -15,7 +15,7 @@ class FundingAllocationLinePolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user): true
     {
         return true;
     }
@@ -23,7 +23,7 @@ class FundingAllocationLinePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, FundingAllocationLine $fundingAllocationLine): bool
+    public function view(User $user, FundingAllocationLine $fundingAllocationLine): true
     {
         return true;
     }
@@ -63,7 +63,7 @@ class FundingAllocationLinePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, FundingAllocationLine $fundingAllocationLine): bool
+    public function forceDelete(User $user, FundingAllocationLine $fundingAllocationLine): false
     {
         return false;
     }

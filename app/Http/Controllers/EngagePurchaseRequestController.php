@@ -137,7 +137,7 @@ class EngagePurchaseRequestController
 
         $result = Sentry::wrapWithChildSpan(
             'ldap.get_user_by_username',
-            static fn (): array => Container::getDefaultConnection()
+            static fn (): array|\LdapRecord\Query\Collection => Container::getDefaultConnection()
                 ->query()
                 ->where('uid', '=', $parts[0])
                 ->select('sn', 'givenName', 'primaryUid', 'mail')
