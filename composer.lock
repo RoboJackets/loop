@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "33ac1b83fe5138bd54fa8d037bd6e070",
+    "content-hash": "4642fcdb953dc358a190035107352718",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -12721,16 +12721,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "7.0.0-beta14",
+            "version": "7.0.0-beta15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "e66ca9901442421cbdec6c571899410922e22ff6"
+                "reference": "90bb719c909380be79f7bb788751041f7bc8efb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/e66ca9901442421cbdec6c571899410922e22ff6",
-                "reference": "e66ca9901442421cbdec6c571899410922e22ff6",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/90bb719c909380be79f7bb788751041f7bc8efb2",
+                "reference": "90bb719c909380be79f7bb788751041f7bc8efb2",
                 "shasum": ""
             },
             "require": {
@@ -12754,7 +12754,7 @@
                 "netresearch/jsonmapper": "^5.0",
                 "nikic/php-parser": "^5.0.0",
                 "php": "~8.1.31 || ~8.2.27 || ~8.3.16 || ~8.4.3 || ~8.5.0",
-                "sebastian/diff": "^4.0 || ^5.0 || ^6.0 || ^7.0",
+                "sebastian/diff": "^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0",
                 "spatie/array-to-xml": "^2.17.0 || ^3.0",
                 "symfony/console": "^6.0 || ^7.0 || ^8.0",
                 "symfony/filesystem": "~6.3.12 || ~6.4.3 || ^7.0.3 || ^8.0",
@@ -12835,7 +12835,7 @@
                 "issues": "https://github.com/vimeo/psalm/issues",
                 "source": "https://github.com/vimeo/psalm"
             },
-            "time": "2025-12-23T17:03:58+00:00"
+            "time": "2026-02-19T21:55:44+00:00"
         },
         {
             "name": "webmozart/assert",
