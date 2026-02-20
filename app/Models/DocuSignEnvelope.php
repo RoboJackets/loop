@@ -295,6 +295,8 @@ class DocuSignEnvelope extends Model
 
     /**
      * Get the sensible_extraction_url attribute to show this envelope in the Sensible UI.
+     *
+     * @psalm-mutation-free
      */
     public function getSensibleExtractionUrlAttribute(): ?string
     {
@@ -303,6 +305,11 @@ class DocuSignEnvelope extends Model
             : 'https://app.sensible.so/extraction/?e='.$this->sensible_extraction_uuid;
     }
 
+    /**
+     * Get the quickbooks_invoice_url attribute to show this envelope in QuickBooks Online.
+     *
+     * @psalm-mutation-free
+     */
     public function getQuickbooksInvoiceUrlAttribute(): ?string
     {
         return $this->quickbooks_invoice_id === null

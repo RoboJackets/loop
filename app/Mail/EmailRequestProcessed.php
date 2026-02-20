@@ -25,6 +25,8 @@ class EmailRequestProcessed extends Mailable implements ShouldQueue
      * Create a new message instance.
      *
      * @param  array<string>  $validation_errors
+     *
+     * @psalm-mutation-free
      */
     public function __construct(public readonly EmailRequest $email, public readonly array $validation_errors)
     {
@@ -33,7 +35,7 @@ class EmailRequestProcessed extends Mailable implements ShouldQueue
     /**
      * Build the message.
      */
-    public function build(): self
+    public function build(): static
     {
         $this->to(config('services.treasurer_email_address'), config('services.treasurer_name'));
 

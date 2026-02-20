@@ -239,6 +239,11 @@ class EngagePurchaseRequest extends Model
         return $this->belongsTo(ExpenseReport::class);
     }
 
+    /**
+     * Get the quickbooks_invoice_url attribute to show this request in QuickBooks Online.
+     *
+     * @psalm-mutation-free
+     */
     public function getQuickbooksInvoiceUrlAttribute(): ?string
     {
         return $this->quickbooks_invoice_id === null
@@ -246,6 +251,11 @@ class EngagePurchaseRequest extends Model
             : 'https://app.qbo.intuit.com/app/invoice?txnId='.$this->quickbooks_invoice_id;
     }
 
+    /**
+     * Get the engage_url attribute to show this request in Engage.
+     *
+     * @psalm-mutation-free
+     */
     public function getEngageUrlAttribute(): ?string
     {
         return $this->engage_id === null
@@ -274,6 +284,11 @@ class EngagePurchaseRequest extends Model
         return intval($collection->sole());
     }
 
+    /**
+     * Fix spelling error in the step name.
+     *
+     * @psalm-pure
+     */
     public static function fixStepSpelling(string $stepName): string
     {
         return $stepName === 'Submited to SOFO/CRC Accountant' ? 'Submitted to SOFO/CRC Accountant' : $stepName;

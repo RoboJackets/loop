@@ -7,7 +7,9 @@ namespace App\Traits;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 /**
- * This is a copy of a function that Laravel provides dynamically.
+ * This is a static copy of a function that Laravel provides dynamically.
+ *
+ * @psalm-immutable
  */
 trait GetMorphClassStatic
 {

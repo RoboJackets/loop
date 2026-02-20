@@ -116,6 +116,8 @@ class FundingAllocation extends Model
 
     /**
      * Get the display name for this funding allocation.
+     *
+     * @psalm-external-mutation-free
      */
     public function getNameAttribute(): string
     {
@@ -125,6 +127,8 @@ class FundingAllocation extends Model
 
     /**
      * Get the type display name for this funding allocation.
+     *
+     * @psalm-external-mutation-free
      */
     public function getTypeDisplayNameAttribute(): ?string
     {

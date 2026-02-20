@@ -14,16 +14,20 @@ class FundingAllocationLinePolicy
 
     /**
      * Determine whether the user can view any models.
+     *
+     * @psalm-pure
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user): true
     {
         return true;
     }
 
     /**
      * Determine whether the user can view the model.
+     *
+     * @psalm-pure
      */
-    public function view(User $user, FundingAllocationLine $fundingAllocationLine): bool
+    public function view(User $user, FundingAllocationLine $fundingAllocationLine): true
     {
         return true;
     }
@@ -62,8 +66,10 @@ class FundingAllocationLinePolicy
 
     /**
      * Determine whether the user can permanently delete the model.
+     *
+     * @psalm-pure
      */
-    public function forceDelete(User $user, FundingAllocationLine $fundingAllocationLine): bool
+    public function forceDelete(User $user, FundingAllocationLine $fundingAllocationLine): false
     {
         return false;
     }

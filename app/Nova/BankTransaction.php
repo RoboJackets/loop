@@ -141,8 +141,8 @@ class BankTransaction extends Resource
                     ): bool => $request->user()->can('update-bank-transactions')
                 ),
             MatchBankTransaction::make()
-                ->canSee(static fn (NovaRequest $request): bool => true)
-                ->canRun(static fn (NovaRequest $request, \App\Models\BankTransaction $bankTransaction): bool => true),
+                ->canSee(static fn (NovaRequest $request): true => true)
+                ->canRun(static fn (NovaRequest $request, \App\Models\BankTransaction $bankTransaction): true => true),
         ];
     }
 

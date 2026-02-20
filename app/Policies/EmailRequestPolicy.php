@@ -14,6 +14,8 @@ class EmailRequestPolicy
 
     /**
      * Determine whether the user can view any models.
+     *
+     * @psalm-pure
      */
     public function viewAny(User $user): true
     {
@@ -22,6 +24,8 @@ class EmailRequestPolicy
 
     /**
      * Determine whether the user can view the model.
+     *
+     * @psalm-pure
      */
     public function view(User $user, EmailRequest $emailRequest): true
     {
@@ -30,8 +34,10 @@ class EmailRequestPolicy
 
     /**
      * Determine whether the user can create models.
+     *
+     * @psalm-pure
      */
-    public function create(User $user): bool
+    public function create(User $user): false
     {
         return false;
     }
@@ -62,12 +68,19 @@ class EmailRequestPolicy
 
     /**
      * Determine whether the user can permanently delete the model.
+     *
+     * @psalm-pure
      */
     public function forceDelete(User $user, EmailRequest $emailRequest): false
     {
         return false;
     }
 
+    /**
+     * Determine whether the user can replicate the model.
+     *
+     * @psalm-pure
+     */
     public function replicate(User $user, EmailRequest $emailRequest): false
     {
         return false;

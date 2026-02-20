@@ -103,11 +103,21 @@ class FiscalYear extends Model
         return $this->hasMany(ExpenseReport::class);
     }
 
+    /**
+     * Convert a Carbon date object to a FiscalYear model.
+     *
+     * @psalm-pure
+     */
     public static function fromDate(Carbon $date): self
     {
         return self::where('ending_year', self::intFromDate($date))->sole();
     }
 
+    /**
+     * Convert a Carbon date object to a fiscal year integer value.
+     *
+     * @psalm-pure
+     */
     public static function intFromDate(Carbon $date): int
     {
         return $date->year + ($date->month < 7 ? 0 : 1);

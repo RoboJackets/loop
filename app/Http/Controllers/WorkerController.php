@@ -45,7 +45,7 @@ class WorkerController
                 static function () use ($email): ?string {
                     $result = Sentry::wrapWithChildSpan(
                         'ldap.get_username_by_email',
-                        static fn (): array => Container::getDefaultConnection()
+                        static fn (): array|\LdapRecord\Query\Collection => Container::getDefaultConnection()
                             ->query()
                             ->where('mail', '=', $email)
                             ->select('primaryUid')

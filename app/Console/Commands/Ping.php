@@ -31,6 +31,8 @@ class Ping extends Command
 
     /**
      * Execute the console command.
+     *
+     * @psalm-return 0|1
      */
     public function handle(): int
     {

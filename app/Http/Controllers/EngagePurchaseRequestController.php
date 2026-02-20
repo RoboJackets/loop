@@ -109,6 +109,11 @@ class EngagePurchaseRequestController
         return response()->json($purchaseRequest);
     }
 
+    /**
+     * Simplify the finance stage name.
+     *
+     * @psalm-pure
+     */
     private static function cleanFinanceStageName(string $input): string
     {
         if (str_contains($input, ':')) {
@@ -137,7 +142,7 @@ class EngagePurchaseRequestController
 
         $result = Sentry::wrapWithChildSpan(
             'ldap.get_user_by_username',
-            static fn (): array => Container::getDefaultConnection()
+            static fn (): array|\LdapRecord\Query\Collection => Container::getDefaultConnection()
                 ->query()
                 ->where('uid', '=', $parts[0])
                 ->select('sn', 'givenName', 'primaryUid', 'mail')

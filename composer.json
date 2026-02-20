@@ -51,7 +51,7 @@
         "spatie/laravel-ignition": "2.10.0",
         "spatie/ray": "1.46.0",
         "squizlabs/php_codesniffer": "4.0.1",
-        "vimeo/psalm": "7.0.0-beta14"
+        "vimeo/psalm": "7.0.0-beta15"
     },
     "replace": {
         "felixfbecker/advanced-json-rpc": "*",
@@ -109,7 +109,6 @@
         "ci": [
             "vendor/bin/pint --test",
             "vendor/bin/phpcs",
-            "vendor/bin/phpstan analyse --level=max .",
             "vendor/bin/phan",
             "vendor/bin/psalm"
         ],

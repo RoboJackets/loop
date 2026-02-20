@@ -98,6 +98,8 @@ class FundingAllocationLine extends Model
 
     /**
      * Get the display name for this funding allocation.
+     *
+     * @psalm-mutation-free
      */
     public function getNameAttribute(): string
     {

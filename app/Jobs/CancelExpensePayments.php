@@ -19,6 +19,8 @@ class CancelExpensePayments implements ShouldBeUnique, ShouldQueue
 
     /**
      * Execute the job.
+     *
+     * @psalm-mutation-free
      */
     public function handle(): void
     {
