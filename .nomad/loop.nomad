@@ -69,6 +69,8 @@ job "loop" {
 
   type = "service"
 
+  priority = 10
+
   group "loop" {
     network {
       port "redis" {}
