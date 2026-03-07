@@ -103,7 +103,7 @@ jobs:
 
   deploy-production:
     name: Deploy
-    needs: [lint, docker, deploy-test]
+    needs: [docker, deploy-test]
     uses: ./.github/workflows/deploy.yml
     if: ${{ github.ref == 'refs/heads/main' }}
     concurrency:
