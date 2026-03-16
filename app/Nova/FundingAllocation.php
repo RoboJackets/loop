@@ -91,7 +91,7 @@ class FundingAllocation extends Resource
             Text::make('SGA Bill Number')
                 ->sortable()
                 ->nullable()
-                ->rules('required_if:type,sga_bill','prohibited_unless:type,sga_bill','regex:/^\\d{6}$/','nullable')
+                ->rules('required_if:type,sga_bill', 'prohibited_unless:type,sga_bill', 'regex:/^\\d{6}$/', 'nullable')
                 ->default(
                     static fn (Request $request): ?string => self::queryParamFromReferrer($request, 'sga_bill_number')
                 ),
