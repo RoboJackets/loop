@@ -94,7 +94,7 @@ class FundingAllocation extends Resource
                 ->rules(
                     'required_if:type,sga_bill',
                     'prohibited_unless:type,sga_bill',
-                    'regex:/^\\d{2}J\\d{3}$/',
+                    'regex:/^\\d{6}$/',
                     'nullable'
                 )
                 ->default(
