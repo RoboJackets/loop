@@ -6,7 +6,10 @@ namespace App\Nova;
 
 use App\Nova\Actions\SyncExpensePaymentToQuickBooks;
 use App\Nova\Lenses\ExpensePaymentsReadyToSyncToQuickBooks;
+use App\Util\QuickBooks;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -19,6 +22,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
+use QuickBooksOnline\API\Exception\ServiceException;
 
 /**
  * A Nova resource for Workday Expense Payments.
@@ -182,15 +186,27 @@ class ExpensePayment extends Resource
             return [];
         }
 
+        $syncAction = SyncExpensePaymentToQuickBooks::make()
+            ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('access-quickbooks'))
+            ->canRun(
+                static fn (
+                    NovaRequest $request,
+                    \App\Models\ExpensePayment $payment
+                ): bool => $request->user()->can('access-quickbooks')
+            );
+
+        try {
+            QuickBooks::getDataService(Auth::user());
+        } catch (ServiceException $exception) {
+            return [
+                Action::danger($syncAction->name(), $exception->getMessage())
+                    ->withoutConfirmation()
+                    ->canRun(static fn (): true => true),
+            ];
+        }
+
         return [
-            SyncExpensePaymentToQuickBooks::make()
-                ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('access-quickbooks'))
-                ->canRun(
-                    static fn (
-                        NovaRequest $request,
-                        \App\Models\ExpensePayment $payment
-                    ): bool => $request->user()->can('access-quickbooks')
-                ),
+            $syncAction,
         ];
     }
 

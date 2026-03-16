@@ -8,6 +8,7 @@ use App\Nova\Actions\SyncEngagePurchaseRequestToQuickBooks;
 use App\Nova\Lenses\EngagePurchaseRequestsMissingExpenseReports;
 use App\Nova\Lenses\EngagePurchaseRequestsMissingInvoices;
 use Illuminate\Http\Request;
+use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
@@ -18,6 +19,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
+use QuickBooksOnline\API\Exception\ServiceException;
 
 /**
  * A Nova resource for Engage purchase requests.
@@ -248,14 +250,26 @@ class EngagePurchaseRequest extends Resource
             return [];
         }
 
+        $syncAction = SyncEngagePurchaseRequestToQuickBooks::make()
+            ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('access-quickbooks'))
+            ->canRun(
+                static fn (NovaRequest $request, \App\Models\EngagePurchaseRequest $engage): bool => $request
+                    ->user()
+                    ->can('access-quickbooks')
+            );
+
+        try {
+            ($syncAction->fields($request)[0]->optionsCallback)();
+        } catch (ServiceException $exception) {
+            return [
+                Action::danger($syncAction->name(), $exception->getMessage())
+                    ->withoutConfirmation()
+                    ->canRun(static fn (): true => true),
+            ];
+        }
+
         return [
-            SyncEngagePurchaseRequestToQuickBooks::make()
-                ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('access-quickbooks'))
-                ->canRun(
-                    static fn (NovaRequest $request, \App\Models\EngagePurchaseRequest $engage): bool => $request
-                        ->user()
-                        ->can('access-quickbooks')
-                ),
+            $syncAction,
         ];
     }
 
