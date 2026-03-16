@@ -9,6 +9,7 @@ use App\Nova\Actions\ProcessSensibleOutput;
 use App\Nova\Actions\RunSensibleExtraction;
 use App\Nova\Actions\SyncEmailRequestToQuickBooks;
 use Illuminate\Http\Request;
+use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Code;
@@ -23,6 +24,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
+use QuickBooksOnline\API\Exception\ServiceException;
 
 /**
  * A Nova resource for email requests.
@@ -186,10 +188,10 @@ class EmailRequest extends Resource
     #[\Override]
     public function actions(NovaRequest $request): array
     {
-        return [
-            ConvertEmailRequestToAttachment::make(),
-            ProcessSensibleOutput::make(),
-            RunSensibleExtraction::make(),
+        $resourceId = $request->resourceId ?? $request->resources;
+        $user = $request->user();
+
+        $syncAction = [
             SyncEmailRequestToQuickBooks::make()
                 ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('access-quickbooks'))
                 ->canRun(
@@ -197,6 +199,38 @@ class EmailRequest extends Resource
                         ->user()
                         ->can('access-quickbooks')
                 ),
+        ];
+
+        if ($resourceId === null || $user === null || ! $user->can('access-quickbooks')) {
+            $syncAction = [];
+        }
+
+        $emailRequest = \App\Models\EmailRequest::whereId($resourceId)->withTrashed()->sole();
+
+        if (
+            $emailRequest->deleted_at !== null ||
+            $emailRequest->quickbooks_invoice_id !== null ||
+            $emailRequest->quickbooks_invoice_document_number !== null ||
+            $emailRequest->expense_report_id === null
+        ) {
+            $syncAction = [];
+        }
+
+        try {
+            ($syncAction[0]->fields($request)[0]->optionsCallback)();
+        } catch (ServiceException $exception) {
+            $syncAction = [
+                Action::danger($syncAction[0]->name(), $exception->getMessage())
+                    ->withoutConfirmation()
+                    ->canRun(static fn (): true => true),
+            ];
+        }
+
+        return [
+            ConvertEmailRequestToAttachment::make(),
+            ProcessSensibleOutput::make(),
+            RunSensibleExtraction::make(),
+            ...$syncAction,
         ];
     }
 
