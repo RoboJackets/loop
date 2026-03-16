@@ -8,6 +8,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\SyncDocuSignEnvelopeToQuickBooks;
 use Illuminate\Http\Request;
+use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
@@ -24,6 +25,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
+use QuickBooksOnline\API\Exception\ServiceException;
 
 /**
  * A Nova resource for DocuSign envelopes.
@@ -267,14 +269,29 @@ class DocuSignEnvelope extends Resource
             return [];
         }
 
+        $syncAction = SyncDocuSignEnvelopeToQuickBooks::make()
+            ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('access-quickbooks'))
+            ->canRun(
+                static fn (NovaRequest $request, \App\Models\DocuSignEnvelope $envelope): bool => $request
+                    ->user()
+                    ->can('access-quickbooks')
+            );
+
+        try {
+            $syncAction->fields($request);
+        } catch (ServiceException $exception) {
+            return [
+                Action::danger(
+                    name: $syncAction->name(),
+                    message: $exception->getMessage()
+                )
+                    ->withoutConfirmation()
+                    ->canRun(static fn (): true => true),
+            ];
+        }
+
         return [
-            SyncDocuSignEnvelopeToQuickBooks::make()
-                ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('access-quickbooks'))
-                ->canRun(
-                    static fn (NovaRequest $request, \App\Models\DocuSignEnvelope $envelope): bool => $request
-                        ->user()
-                        ->can('access-quickbooks')
-                ),
+            $syncAction,
         ];
     }
 
