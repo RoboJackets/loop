@@ -297,5 +297,10 @@
                 <file name="app/Models/User.php"/>
             </errorLevel>
         </PossiblyUnusedReturnValue>
+        <UndefinedPropertyFetch>
+            <errorLevel type="suppress">
+                <referencedProperty name="Laravel\Nova\Fields\Field::$optionsCallback"/>
+            </errorLevel>
+        </UndefinedPropertyFetch>
     </issueHandlers>
 </psalm>
