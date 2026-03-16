@@ -281,10 +281,7 @@ class DocuSignEnvelope extends Resource
             $syncAction->fields($request);
         } catch (ServiceException $exception) {
             return [
-                Action::danger(
-                    name: $syncAction->name(),
-                    message: $exception->getMessage()
-                )
+                Action::danger($syncAction->name(), $exception->getMessage())
                     ->withoutConfirmation()
                     ->canRun(static fn (): true => true),
             ];
