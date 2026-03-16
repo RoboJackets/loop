@@ -216,14 +216,16 @@ class EmailRequest extends Resource
             $syncAction = [];
         }
 
-        try {
-            ($syncAction[0]->fields($request)[0]->optionsCallback)();
-        } catch (ServiceException $exception) {
-            $syncAction = [
-                Action::danger($syncAction[0]->name(), $exception->getMessage())
-                    ->withoutConfirmation()
-                    ->canRun(static fn (): true => true),
-            ];
+        if (count($syncAction) > 0) {
+            try {
+                ($syncAction[0]->fields($request)[0]->optionsCallback)();
+            } catch (ServiceException $exception) {
+                $syncAction = [
+                    Action::danger($syncAction[0]->name(), $exception->getMessage())
+                        ->withoutConfirmation()
+                        ->canRun(static fn (): true => true),
+                ];
+            }
         }
 
         return [
