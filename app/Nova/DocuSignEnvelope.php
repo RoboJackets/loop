@@ -278,7 +278,7 @@ class DocuSignEnvelope extends Resource
             );
 
         try {
-            $syncAction->fields($request);
+            ($syncAction->fields($request)[0]->optionsCallback)();
         } catch (ServiceException $exception) {
             return [
                 Action::danger($syncAction->name(), $exception->getMessage())
