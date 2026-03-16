@@ -203,28 +203,28 @@ class EmailRequest extends Resource
 
         if ($resourceId === null || $user === null || ! $user->can('access-quickbooks')) {
             $syncAction = [];
-        }
+        } else {
+            $emailRequest = \App\Models\EmailRequest::whereId($resourceId)->withTrashed()->sole();
 
-        $emailRequest = \App\Models\EmailRequest::whereId($resourceId)->withTrashed()->sole();
+            if (
+                $emailRequest->deleted_at !== null ||
+                $emailRequest->quickbooks_invoice_id !== null ||
+                $emailRequest->quickbooks_invoice_document_number !== null ||
+                $emailRequest->expense_report_id === null
+            ) {
+                $syncAction = [];
+            }
 
-        if (
-            $emailRequest->deleted_at !== null ||
-            $emailRequest->quickbooks_invoice_id !== null ||
-            $emailRequest->quickbooks_invoice_document_number !== null ||
-            $emailRequest->expense_report_id === null
-        ) {
-            $syncAction = [];
-        }
-
-        if (count($syncAction) > 0) {
-            try {
-                ($syncAction[0]->fields($request)[0]->optionsCallback)();
-            } catch (ServiceException $exception) {
-                $syncAction = [
-                    Action::danger($syncAction[0]->name(), $exception->getMessage())
-                        ->withoutConfirmation()
-                        ->canRun(static fn (): true => true),
-                ];
+            if (count($syncAction) > 0) {
+                try {
+                    ($syncAction[0]->fields($request)[0]->optionsCallback)();
+                } catch (ServiceException $exception) {
+                    $syncAction = [
+                        Action::danger($syncAction[0]->name(), $exception->getMessage())
+                            ->withoutConfirmation()
+                            ->canRun(static fn (): true => true),
+                    ];
+                }
             }
         }
 
