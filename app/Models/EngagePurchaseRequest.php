@@ -102,6 +102,7 @@ class EngagePurchaseRequest extends Model
         'Saved' => 'info',
         'Submitted' => 'info',
         'Send to SOFO Accountant' => 'info',
+        'Request Processed by SOFO' => 'info',
         'Submitted to SOFO/CRC Accountant' => 'info',
         'Sent back for edits' => 'danger',
         'Check Request Sent' => 'success',
