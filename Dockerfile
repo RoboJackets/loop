@@ -66,7 +66,7 @@ RUN set -eux && \
     apt-get update && \
     apt-get install -qq --assume-yes \
         php8.5-fpm php8.5-mysql php8.5-xml php8.5-mbstring php8.5-curl php8.5-sqlite php8.5-intl php8.5-uuid \
-        unzip libfcgi-bin default-mysql-client zopfli php8.5-redis php8.5-ldap poppler-utils file && \
+        unzip libfcgi-bin default-mysql-client zopfli php8.5-redis php8.5-ldap poppler-utils file php8.5-zip && \
     apt-get autoremove -qq --assume-yes && \
     mkdir /app && \
     chown www-data:www-data /app && \
