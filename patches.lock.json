@@ -1,0 +1,29 @@
+{
+    "_hash": "342ca30ff22e5bcdeb16ca2d5817324aed39fb5b9debdb858891260cf80161bc",
+    "patches": {
+        "mrclay/minify": [
+            {
+                "package": "mrclay/minify",
+                "description": "Don't insert extra newlines in HTML",
+                "url": "https://raw.githubusercontent.com/RoboJackets/apiary/refs/heads/main/patches/mrclay/minify/newlines.patch",
+                "sha256": "71cfda1ade40aff482476b09956ec4b9e22890e026e56841f6a01fa06f0cfd4e",
+                "depth": 1,
+                "extra": {
+                    "provenance": "patches-file:patches.json"
+                }
+            }
+        ],
+        "htmlmin/htmlmin": [
+            {
+                "package": "htmlmin/htmlmin",
+                "description": "Check length of minified HTML before returning",
+                "url": "https://raw.githubusercontent.com/RoboJackets/apiary/refs/heads/main/patches/htmlmin/htmlmin/check-minified-length.patch",
+                "sha256": "0a26e3c720870828ccc133f134c3117e4079c4a5c1236ab8107b6a0d2af656af",
+                "depth": 1,
+                "extra": {
+                    "provenance": "patches-file:patches.json"
+                }
+            }
+        ]
+    }
+}

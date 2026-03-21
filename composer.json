@@ -13,6 +13,7 @@
         "ext-uuid": "*",
         "ans-group/laravel-health-check": "2.1.1",
         "apereo/phpcas": "^1.6",
+        "cweagans/composer-patches": "^2.0",
         "directorytree/ldaprecord-laravel": "*",
         "enlightn/security-checker": "^2.0",
         "guzzlehttp/guzzle": "^7.8",

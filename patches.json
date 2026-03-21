@@ -1,0 +1,16 @@
+{
+    "patches": {
+        "mrclay/minify": [
+            {
+                "description": "Don't insert extra newlines in HTML",
+                "url": "https://raw.githubusercontent.com/RoboJackets/apiary/refs/heads/main/patches/mrclay/minify/newlines.patch"
+            }
+        ],
+        "htmlmin/htmlmin": [
+            {
+                "description": "Check length of minified HTML before returning",
+                "url": "https://raw.githubusercontent.com/RoboJackets/apiary/refs/heads/main/patches/htmlmin/htmlmin/check-minified-length.patch"
+            }
+        ]
+    }
+}
