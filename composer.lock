@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "22e39d0c13acef96d5089ac5223a532e",
+    "content-hash": "12b6843e717a892874180ed23856b71a",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -11451,30 +11451,30 @@
         },
         {
             "name": "phan/phan",
-            "version": "6.0.1",
+            "version": "6.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phan/phan.git",
-                "reference": "072872a257bc2de31daeaa998ae39db0821a2b8e"
+                "reference": "ebaecc75c999c51f7e649625b383ca8e95b45bc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phan/phan/zipball/072872a257bc2de31daeaa998ae39db0821a2b8e",
-                "reference": "072872a257bc2de31daeaa998ae39db0821a2b8e",
+                "url": "https://api.github.com/repos/phan/phan/zipball/ebaecc75c999c51f7e649625b383ca8e95b45bc7",
+                "reference": "ebaecc75c999c51f7e649625b383ca8e95b45bc7",
                 "shasum": ""
             },
             "require": {
                 "composer/semver": "^1.4|^2.0|^3.0",
                 "composer/xdebug-handler": "^2.0|^3.0",
+                "danog/advanced-json-rpc": "^3.0.4",
                 "ext-filter": "*",
                 "ext-json": "*",
                 "ext-tokenizer": "*",
-                "felixfbecker/advanced-json-rpc": "^3.0.4",
                 "netresearch/jsonmapper": "^1.6.0|^2.0|^3.0|^4.0|^5.0",
                 "phan/tolerant-php-parser": "v0.2.0",
                 "phan/var_representation_polyfill": "^0.1.4",
                 "php": "^8.1.0",
-                "sabre/event": "^5.1.3",
+                "sabre/event": "^5.1.3|^6.0",
                 "symfony/console": "^6.0|^7.0|^8.0",
                 "symfony/polyfill-mbstring": "^1.11.0",
                 "symfony/string": "^6.0|^7.0|^8.0"
@@ -11531,9 +11531,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phan/phan/issues",
-                "source": "https://github.com/phan/phan/tree/6.0.1"
+                "source": "https://github.com/phan/phan/tree/6.0.5"
             },
-            "time": "2026-02-08T23:04:04+00:00"
+            "time": "2026-03-27T15:41:19+00:00"
         },
         {
             "name": "phan/tolerant-php-parser",
