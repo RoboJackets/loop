@@ -118,6 +118,8 @@ class FundingAllocation extends Resource
      * Get the actions available for the resource.
      *
      * @return array<\Laravel\Nova\Actions\Action>
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function actions(NovaRequest $request): array
@@ -130,6 +132,8 @@ class FundingAllocation extends Resource
 
     /**
      * Get the search result subtitle for the resource.
+     *
+     * @psalm-mutation-free
      */
     #[\Override]
     public function subtitle(): string

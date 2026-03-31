@@ -78,6 +78,8 @@ class AverageDaysToCreateExpenseReport extends Value
 
     /**
      * Get the displayable name of the metric.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function name(): string

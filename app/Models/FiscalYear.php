@@ -44,6 +44,8 @@ class FiscalYear extends Model
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
+     *
+     * @psalm-pure
      */
     #[\Override]
     protected function casts(): array

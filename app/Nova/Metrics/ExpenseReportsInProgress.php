@@ -22,6 +22,8 @@ class ExpenseReportsInProgress extends Table
 
     /**
      * Get the displayable name of the metric.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function name(): string

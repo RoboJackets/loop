@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "07c49653288fc02a3d5e44f207dcc944",
+    "content-hash": "92202926338bd7d49a6c87929a861331",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -11358,16 +11358,16 @@
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v10.12.0",
+            "version": "v10.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "6bf2848753ce678d8568355f53edc31916816360"
+                "reference": "c180fac0f975aa76d1911e3fc5f8b22d20b0fa3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/6bf2848753ce678d8568355f53edc31916816360",
-                "reference": "6bf2848753ce678d8568355f53edc31916816360",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/c180fac0f975aa76d1911e3fc5f8b22d20b0fa3a",
+                "reference": "c180fac0f975aa76d1911e3fc5f8b22d20b0fa3a",
                 "shasum": ""
             },
             "require": {
@@ -11447,7 +11447,7 @@
                 "issues": "https://github.com/orchestral/testbench/issues",
                 "source": "https://github.com/orchestral/testbench-core"
             },
-            "time": "2026-03-23T23:11:32+00:00"
+            "time": "2026-03-31T03:29:51+00:00"
         },
         {
             "name": "phan/phan",
@@ -11864,46 +11864,43 @@
         },
         {
             "name": "psalm/plugin-laravel",
-            "version": "v3.0.4",
+            "version": "v4.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/psalm-plugin-laravel.git",
-                "reference": "364a35e28d45cabaece26f2a2e51e50fc43e99b4"
+                "reference": "85c14b8eb270511356909e38e86425a1966ead97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/364a35e28d45cabaece26f2a2e51e50fc43e99b4",
-                "reference": "364a35e28d45cabaece26f2a2e51e50fc43e99b4",
+                "url": "https://api.github.com/repos/psalm/psalm-plugin-laravel/zipball/85c14b8eb270511356909e38e86425a1966ead97",
+                "reference": "85c14b8eb270511356909e38e86425a1966ead97",
                 "shasum": ""
             },
             "require": {
-                "barryvdh/laravel-ide-helper": "~3.5.4",
                 "ext-simplexml": "*",
-                "illuminate/config": "^11.35 || ^12.0",
-                "illuminate/container": "^11.35 || ^12.0",
-                "illuminate/contracts": "^11.35 || ^12.0",
-                "illuminate/database": "^11.35 || ^12.0",
-                "illuminate/events": "^11.35 || ^12.0",
-                "illuminate/http": "^11.35 || ^12.0",
-                "illuminate/routing": "^11.35 || ^12.0",
-                "illuminate/support": "^11.35 || ^12.0",
-                "illuminate/view": "^11.35 || ^12.0",
+                "illuminate/config": "^12.0 || ^13.0",
+                "illuminate/container": "^12.0 || ^13.0",
+                "illuminate/contracts": "^12.0 || ^13.0",
+                "illuminate/database": "^12.0 || ^13.0",
+                "illuminate/events": "^12.0 || ^13.0",
+                "illuminate/http": "^12.0 || ^13.0",
+                "illuminate/routing": "^12.0 || ^13.0",
+                "illuminate/support": "^12.0 || ^13.0",
+                "illuminate/view": "^12.0 || ^13.0",
                 "nikic/php-parser": "^5.0",
-                "orchestra/testbench-core": "^9.11 || ^10.0",
+                "orchestra/testbench-core": "^10.0 || ^11.0",
                 "php": "^8.2",
-                "symfony/console": "^7.1",
-                "symfony/finder": "^7.1",
-                "vimeo/psalm": "dev-master || ^6.0 || ^7.0.0-beta1"
+                "psalm/psalm-plugin-api": "^0.1.0",
+                "vimeo/psalm": "^7.0.0-beta17 || dev-master"
             },
             "require-dev": {
-                "laravel/framework": "^11.35 || ^12.0",
-                "phpunit/phpunit": "^10.5 || ^11.5",
-                "phpyh/psalm-tester": "^0.1.0",
+                "friendsofphp/php-cs-fixer": "^3.94",
+                "laravel/framework": "^12.0 || ^13.0",
+                "phpunit/phpunit": "^11.5 || ^12.5 || ^13.0",
+                "phpyh/psalm-tester": "dev-batch",
                 "ramsey/collection": "^1.3",
-                "rector/rector": "^2.0",
-                "slevomat/coding-standard": "^8.15",
-                "squizlabs/php_codesniffer": "^3.11",
-                "symfony/http-foundation": "^7.1"
+                "rector/rector": "^2.3",
+                "symfony/http-foundation": "^7.1 || ^8.0"
             },
             "type": "psalm-plugin",
             "extra": {
@@ -11936,9 +11933,50 @@
             ],
             "support": {
                 "issues": "https://github.com/psalm/psalm-plugin-laravel/issues",
-                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v3.0.4"
+                "source": "https://github.com/psalm/psalm-plugin-laravel/tree/v4.5.0"
             },
-            "time": "2025-08-12T18:13:40+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/alies-dev",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-03-30T17:25:06+00:00"
+        },
+        {
+            "name": "psalm/psalm-plugin-api",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/psalm/psalm-plugin-api.git",
+                "reference": "a995ad2c44df828f5333cb37b0ced92bb4b74b5b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/psalm/psalm-plugin-api/zipball/a995ad2c44df828f5333cb37b0ced92bb4b74b5b",
+                "reference": "a995ad2c44df828f5333cb37b0ced92bb4b74b5b",
+                "shasum": ""
+            },
+            "conflict": {
+                "vimeo/psalm": "<7.0.0"
+            },
+            "type": "metapackage",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniil Gentili",
+                    "email": "daniil@daniil.it"
+                }
+            ],
+            "description": "Stable, semantically versioned API for Psalm plugins",
+            "support": {
+                "issues": "https://github.com/psalm/psalm-plugin-api/issues",
+                "source": "https://github.com/psalm/psalm-plugin-api/tree/0.1.0"
+            },
+            "time": "2026-03-19T15:12:37+00:00"
         },
         {
             "name": "revolt/event-loop",
@@ -13031,16 +13069,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "7.0.0-beta15",
+            "version": "7.0.0-beta17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "90bb719c909380be79f7bb788751041f7bc8efb2"
+                "reference": "a7f96f911fc869c40c48ec977e21f01a8ca534bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/90bb719c909380be79f7bb788751041f7bc8efb2",
-                "reference": "90bb719c909380be79f7bb788751041f7bc8efb2",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/a7f96f911fc869c40c48ec977e21f01a8ca534bd",
+                "reference": "a7f96f911fc869c40c48ec977e21f01a8ca534bd",
                 "shasum": ""
             },
             "require": {
@@ -13145,7 +13183,7 @@
                 "issues": "https://github.com/vimeo/psalm/issues",
                 "source": "https://github.com/vimeo/psalm"
             },
-            "time": "2026-02-19T21:55:44+00:00"
+            "time": "2026-03-17T11:16:02+00:00"
         },
         {
             "name": "webmozart/assert",

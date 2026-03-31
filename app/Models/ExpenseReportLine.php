@@ -74,6 +74,8 @@ class ExpenseReportLine extends Model
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
+     *
+     * @psalm-pure
      */
     #[\Override]
     protected function casts(): array
@@ -105,6 +107,8 @@ class ExpenseReportLine extends Model
 
     /**
      * Get the route key for the model.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function getRouteKeyName(): string

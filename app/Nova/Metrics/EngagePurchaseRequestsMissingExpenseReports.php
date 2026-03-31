@@ -52,6 +52,8 @@ class EngagePurchaseRequestsMissingExpenseReports extends Value
 
     /**
      * Get the ranges available for the metric.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function ranges(): array
@@ -61,6 +63,8 @@ class EngagePurchaseRequestsMissingExpenseReports extends Value
 
     /**
      * Get the displayable name of the metric.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function name(): string
@@ -70,6 +74,8 @@ class EngagePurchaseRequestsMissingExpenseReports extends Value
 
     /**
      * Get the URI key for the metric.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function uriKey(): string

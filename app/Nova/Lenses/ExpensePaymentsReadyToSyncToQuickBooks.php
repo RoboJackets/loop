@@ -112,6 +112,8 @@ class ExpensePaymentsReadyToSyncToQuickBooks extends Lens
 
     /**
      * Get the URI key for the lens.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function uriKey(): string

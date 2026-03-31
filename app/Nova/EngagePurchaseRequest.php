@@ -39,6 +39,8 @@ class EngagePurchaseRequest extends Resource
 
     /**
      * Get the displayble label of the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function label(): string
@@ -48,6 +50,8 @@ class EngagePurchaseRequest extends Resource
 
     /**
      * Get the displayble singular label of the resource.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public static function singularLabel(): string

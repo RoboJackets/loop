@@ -168,6 +168,8 @@ class DocuSignEnvelope extends Model
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
+     *
+     * @psalm-pure
      */
     #[\Override]
     protected function casts(): array
@@ -184,6 +186,8 @@ class DocuSignEnvelope extends Model
 
     /**
      * Get the default foreign key name for the model.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function getForeignKey(): string
@@ -193,6 +197,8 @@ class DocuSignEnvelope extends Model
 
     /**
      * Get the route key for the model.
+     *
+     * @psalm-pure
      */
     #[\Override]
     public function getRouteKeyName(): string
