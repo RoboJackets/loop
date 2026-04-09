@@ -1875,16 +1875,16 @@
         },
         {
             "name": "inertiajs/inertia-laravel",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inertiajs/inertia-laravel.git",
-                "reference": "2918fb04f49d18eca13debfcd58dd27ac966ca3c"
+                "reference": "871255862da13682bb9e5dae5466590678be89ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/2918fb04f49d18eca13debfcd58dd27ac966ca3c",
-                "reference": "2918fb04f49d18eca13debfcd58dd27ac966ca3c",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/871255862da13682bb9e5dae5466590678be89ff",
+                "reference": "871255862da13682bb9e5dae5466590678be89ff",
                 "shasum": ""
             },
             "require": {
@@ -1942,9 +1942,9 @@
             ],
             "support": {
                 "issues": "https://github.com/inertiajs/inertia-laravel/issues",
-                "source": "https://github.com/inertiajs/inertia-laravel/tree/v3.0.4"
+                "source": "https://github.com/inertiajs/inertia-laravel/tree/v3.0.5"
             },
-            "time": "2026-04-09T11:41:21+00:00"
+            "time": "2026-04-09T15:13:38+00:00"
         },
         {
             "name": "intervention/httpauth",
@@ -13193,16 +13193,16 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "2.1.6",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozarts/assert.git",
-                "reference": "ff31ad6efc62e66e518fbab1cde3453d389bcdc8"
+                "reference": "1b99650e7ffcad232624a260bc7fbdec2ffc407c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozarts/assert/zipball/ff31ad6efc62e66e518fbab1cde3453d389bcdc8",
-                "reference": "ff31ad6efc62e66e518fbab1cde3453d389bcdc8",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/1b99650e7ffcad232624a260bc7fbdec2ffc407c",
+                "reference": "1b99650e7ffcad232624a260bc7fbdec2ffc407c",
                 "shasum": ""
             },
             "require": {
@@ -13249,9 +13249,9 @@
             ],
             "support": {
                 "issues": "https://github.com/webmozarts/assert/issues",
-                "source": "https://github.com/webmozarts/assert/tree/2.1.6"
+                "source": "https://github.com/webmozarts/assert/tree/2.2.0"
             },
-            "time": "2026-02-27T10:28:38+00:00"
+            "time": "2026-04-09T16:54:47+00:00"
         }
     ],
     "aliases": [],
