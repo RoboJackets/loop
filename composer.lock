@@ -1875,16 +1875,16 @@
         },
         {
             "name": "inertiajs/inertia-laravel",
-            "version": "v3.0.3",
+            "version": "v3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inertiajs/inertia-laravel.git",
-                "reference": "9cb520f18c425ffd523293af54dd3c31ec9b1e79"
+                "reference": "2918fb04f49d18eca13debfcd58dd27ac966ca3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/9cb520f18c425ffd523293af54dd3c31ec9b1e79",
-                "reference": "9cb520f18c425ffd523293af54dd3c31ec9b1e79",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/2918fb04f49d18eca13debfcd58dd27ac966ca3c",
+                "reference": "2918fb04f49d18eca13debfcd58dd27ac966ca3c",
                 "shasum": ""
             },
             "require": {
@@ -1942,9 +1942,9 @@
             ],
             "support": {
                 "issues": "https://github.com/inertiajs/inertia-laravel/issues",
-                "source": "https://github.com/inertiajs/inertia-laravel/tree/v3.0.3"
+                "source": "https://github.com/inertiajs/inertia-laravel/tree/v3.0.4"
             },
-            "time": "2026-04-08T12:12:17+00:00"
+            "time": "2026-04-09T11:41:21+00:00"
         },
         {
             "name": "intervention/httpauth",
