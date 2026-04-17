@@ -17,6 +17,8 @@ trait GetMorphClassStatic
      * Get the morph class string for this class.
      *
      * @phan-suppress PhanPossiblyFalseTypeReturn
+     *
+     * @psalm-suppress ImpureMethodCall
      */
     public static function getMorphClassStatic(): string
     {
