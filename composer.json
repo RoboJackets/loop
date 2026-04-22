@@ -11,7 +11,7 @@
         "php": "^8.5",
         "ext-redis": "*",
         "ext-uuid": "*",
-        "ans-group/laravel-health-check": "2.1.1",
+        "ans-group/laravel-health-check": "3.0.0",
         "apereo/phpcas": "^1.6",
         "cweagans/composer-patches": "^2.0",
         "directorytree/ldaprecord-laravel": "*",
