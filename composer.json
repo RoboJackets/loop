@@ -33,7 +33,7 @@
         "spatie/laravel-csp": "2.10.3",
         "spatie/laravel-failed-job-monitor": "4.5.0",
         "spatie/laravel-permission": "6.25.0",
-        "spatie/laravel-webhook-client": "3.5.0",
+        "spatie/laravel-webhook-client": "3.6.2",
         "subfission/cas": "dev-master",
         "symfony/http-client": "^7.2",
         "symfony/postmark-mailer": "^7.2"
