@@ -816,16 +816,16 @@
         },
         {
             "name": "directorytree/ldaprecord-laravel",
-            "version": "v4.0.0",
+            "version": "v4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DirectoryTree/LdapRecord-Laravel.git",
-                "reference": "975dba582e1c87dad971970eaa92b93a05204f4d"
+                "reference": "4ae7772d9ff276ae3fbb466ba51cbbcdb1f6bbf9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DirectoryTree/LdapRecord-Laravel/zipball/975dba582e1c87dad971970eaa92b93a05204f4d",
-                "reference": "975dba582e1c87dad971970eaa92b93a05204f4d",
+                "url": "https://api.github.com/repos/DirectoryTree/LdapRecord-Laravel/zipball/4ae7772d9ff276ae3fbb466ba51cbbcdb1f6bbf9",
+                "reference": "4ae7772d9ff276ae3fbb466ba51cbbcdb1f6bbf9",
                 "shasum": ""
             },
             "require": {
@@ -871,7 +871,7 @@
             ],
             "support": {
                 "issues": "https://github.com/DirectoryTree/LdapRecord-Laravel/issues",
-                "source": "https://github.com/DirectoryTree/LdapRecord-Laravel/tree/v4.0.0"
+                "source": "https://github.com/DirectoryTree/LdapRecord-Laravel/tree/v4.0.1"
             },
             "funding": [
                 {
@@ -879,7 +879,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-04-26T22:34:37+00:00"
+            "time": "2026-05-01T16:14:20+00:00"
         },
         {
             "name": "doctrine/inflector",
