@@ -1,5 +1,5 @@
 {
-    "_hash": "342ca30ff22e5bcdeb16ca2d5817324aed39fb5b9debdb858891260cf80161bc",
+    "_hash": "8d27df37d657b48490609b5c2bba12d330549c0b203a7ad2864fb63a46e4c641",
     "patches": {
         "mrclay/minify": [
             {
@@ -19,6 +19,18 @@
                 "description": "Check length of minified HTML before returning",
                 "url": "https://raw.githubusercontent.com/RoboJackets/apiary/refs/heads/main/patches/htmlmin/htmlmin/check-minified-length.patch",
                 "sha256": "0a26e3c720870828ccc133f134c3117e4079c4a5c1236ab8107b6a0d2af656af",
+                "depth": 1,
+                "extra": {
+                    "provenance": "patches-file:patches.json"
+                }
+            }
+        ],
+        "laravel/horizon": [
+            {
+                "package": "laravel/horizon",
+                "description": "Add support for stop-when-empty-for to Horizon",
+                "url": "https://raw.githubusercontent.com/RoboJackets/apiary/refs/heads/main/patches/laravel/horizon/add-stop-when-empty-for.patch",
+                "sha256": "92ebe667eab1de074864f58c8be86392a56a0d902ecf2e39496fabbf68cf8745",
                 "depth": 1,
                 "extra": {
                     "provenance": "patches-file:patches.json"

@@ -11,6 +11,12 @@
                 "description": "Check length of minified HTML before returning",
                 "url": "https://raw.githubusercontent.com/RoboJackets/apiary/refs/heads/main/patches/htmlmin/htmlmin/check-minified-length.patch"
             }
+        ],
+        "laravel/horizon": [
+            {
+                "description": "Add support for stop-when-empty-for to Horizon",
+                "url": "https://raw.githubusercontent.com/RoboJackets/apiary/refs/heads/main/patches/laravel/horizon/add-stop-when-empty-for.patch"
+            }
         ]
     }
 }
