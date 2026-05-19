@@ -42,9 +42,10 @@ COPY --link config/ /app/config/
 COPY --link database/ /app/database/
 COPY --link public/ /app/public/
 COPY --link resources/ /app/resources/
+COPY --link patches/ /app/patches/
 COPY --link routes/ /app/routes/
 COPY --link storage/ /app/storage/
-COPY --link artisan composer.json composer.lock /app/
+COPY --link artisan composer.json composer.lock patches.json patches.lock.json /app/
 COPY --link --from=docs-minification /docs/ /app/public/docs/
 
 FROM debian:trixie-slim AS backend-uncompressed
