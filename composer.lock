@@ -816,16 +816,16 @@
         },
         {
             "name": "directorytree/ldaprecord-laravel",
-            "version": "v4.0.1",
+            "version": "v4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DirectoryTree/LdapRecord-Laravel.git",
-                "reference": "4ae7772d9ff276ae3fbb466ba51cbbcdb1f6bbf9"
+                "reference": "877016669774c8c1e0ff9e3fb781eca9f2f35f40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DirectoryTree/LdapRecord-Laravel/zipball/4ae7772d9ff276ae3fbb466ba51cbbcdb1f6bbf9",
-                "reference": "4ae7772d9ff276ae3fbb466ba51cbbcdb1f6bbf9",
+                "url": "https://api.github.com/repos/DirectoryTree/LdapRecord-Laravel/zipball/877016669774c8c1e0ff9e3fb781eca9f2f35f40",
+                "reference": "877016669774c8c1e0ff9e3fb781eca9f2f35f40",
                 "shasum": ""
             },
             "require": {
@@ -871,7 +871,7 @@
             ],
             "support": {
                 "issues": "https://github.com/DirectoryTree/LdapRecord-Laravel/issues",
-                "source": "https://github.com/DirectoryTree/LdapRecord-Laravel/tree/v4.0.1"
+                "source": "https://github.com/DirectoryTree/LdapRecord-Laravel/tree/v4.0.2"
             },
             "funding": [
                 {
@@ -879,7 +879,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-01T16:14:20+00:00"
+            "time": "2026-05-22T17:18:39+00:00"
         },
         {
             "name": "doctrine/deprecations",
