@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "748d5481a06f5fd6001b685f9e7cccb0",
+    "content-hash": "a537591dbea7302ddc741e0a6a73e9f7",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -2539,17 +2539,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "5.9.3",
+            "version": "5.9.4",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "0ff2c943a60942aa5c24d948fd6e6848bf64114a"
+                "reference": "a56bc5ea1e9667ca9f97f5c9e4db2d135fe0dd9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-0ff2c943a60942aa5c24d948fd6e6848bf64114a-zip-fdf894.zip",
-                "reference": "0ff2c943a60942aa5c24d948fd6e6848bf64114a",
-                "shasum": "e9cbd2f6053cd2e6fb19c0382e5f8aeca3c0de11"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-a56bc5ea1e9667ca9f97f5c9e4db2d135fe0dd9b-zip-ed4e96.zip",
+                "reference": "a56bc5ea1e9667ca9f97f5c9e4db2d135fe0dd9b",
+                "shasum": "c4d43311ff52eb17def7bdc2568692df8889071d"
             },
             "require": {
                 "brick/money": "^0.8|^0.9|^0.10|^0.11|^0.12|^0.13",
@@ -2716,10 +2716,10 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v5.9.3",
+                "source": "https://github.com/laravel/nova/tree/v5.9.4",
                 "issues": "https://github.com/laravel/nova/issues"
             },
-            "time": "2026-07-02T02:52:36+00:00"
+            "time": "2026-07-10T14:39:07+00:00"
         },
         {
             "name": "laravel/passkeys",
@@ -10126,16 +10126,16 @@
         },
         {
             "name": "web-auth/webauthn-lib",
-            "version": "5.3.3",
+            "version": "5.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-auth/webauthn-lib.git",
-                "reference": "e6f656d6c6b29fa305382fe6a0a3be8177d177df"
+                "reference": "9e0986d999f4102e24ac8a598d3a80d98b56c19f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-auth/webauthn-lib/zipball/e6f656d6c6b29fa305382fe6a0a3be8177d177df",
-                "reference": "e6f656d6c6b29fa305382fe6a0a3be8177d177df",
+                "url": "https://api.github.com/repos/web-auth/webauthn-lib/zipball/9e0986d999f4102e24ac8a598d3a80d98b56c19f",
+                "reference": "9e0986d999f4102e24ac8a598d3a80d98b56c19f",
                 "shasum": ""
             },
             "require": {
@@ -10196,7 +10196,7 @@
                 "webauthn"
             ],
             "support": {
-                "source": "https://github.com/web-auth/webauthn-lib/tree/5.3.3"
+                "source": "https://github.com/web-auth/webauthn-lib/tree/5.3.5"
             },
             "funding": [
                 {
@@ -10208,7 +10208,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2026-05-17T19:04:30+00:00"
+            "time": "2026-05-31T15:00:08+00:00"
         },
         {
             "name": "webmozart/assert",
