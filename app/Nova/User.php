@@ -85,6 +85,7 @@ class User extends Resource
                 ->updateRules('unique:users,email,{{resourceId}}'),
 
             Boolean::make('Active Employee')
+                ->filterable()
                 ->onlyOnDetail(),
 
             Number::make('Instance ID', 'workday_instance_id')

@@ -93,6 +93,7 @@ class ExpensePayment extends Resource
                     'Complete' => 'success',
                     'Canceled' => 'danger',
                 ])
+                ->filterable()
                 ->sortable()
                 ->hideWhenUpdating(),
 
@@ -106,14 +107,17 @@ class ExpensePayment extends Resource
                 ->onlyOnForms(),
 
             Boolean::make('Reconciled')
+                ->filterable()
                 ->sortable()
                 ->readonly(),
 
             BelongsTo::make('Pay To', 'payTo', ExternalCommitteeMember::class)
+                ->filterable()
                 ->sortable()
                 ->readonly(),
 
             Date::make('Payment Date')
+                ->filterable()
                 ->sortable()
                 ->readonly(),
 

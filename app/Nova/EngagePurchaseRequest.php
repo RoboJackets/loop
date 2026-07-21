@@ -104,11 +104,13 @@ class EngagePurchaseRequest extends Resource
                 ->sortable(),
 
             BelongsTo::make('Fiscal Year')
+                ->filterable()
                 ->sortable(),
 
             Badge::make('Step', 'current_step_name')
                 ->resolveUsing([\App\Models\EngagePurchaseRequest::class, 'fixStepSpelling'])
                 ->map(\App\Models\EngagePurchaseRequest::STEP_NAME_BADGE_MAP)
+                ->filterable()
                 ->sortable(),
 
             Badge::make('Status', 'status')
@@ -119,6 +121,7 @@ class EngagePurchaseRequest extends Resource
                     'Approved' => 'success',
                     'Completed' => 'success',
                 ])
+                ->filterable()
                 ->sortable(),
 
             Text::make('Subject'),
@@ -129,7 +132,8 @@ class EngagePurchaseRequest extends Resource
             Currency::make('Submitted Amount')
                 ->sortable(),
 
-            BelongsTo::make('Submitted By', 'submittedBy', User::class),
+            BelongsTo::make('Submitted By', 'submittedBy', User::class)
+                ->filterable(),
 
             BelongsTo::make('Workday Expense Report', 'expenseReport', ExpenseReport::class)
                 ->sortable()

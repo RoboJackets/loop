@@ -88,6 +88,7 @@ class EmailRequest extends Resource
             BelongsTo::make('Fiscal Year')
                 ->sortable()
                 ->required()
+                ->filterable()
                 ->rules('required'),
 
             Avatar::make('Thumbnail', fn (): ?string => $this->thumbnail_path)

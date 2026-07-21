@@ -88,10 +88,12 @@ class ExternalCommitteeMember extends Resource
                 ->readonly(),
 
             Boolean::make('Active')
+                ->filterable()
                 ->sortable()
                 ->readonly(),
 
             BelongsTo::make('User')
+                ->filterable()
                 ->nullable()
                 ->searchable(),
 
