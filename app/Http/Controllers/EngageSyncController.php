@@ -25,7 +25,7 @@ class EngageSyncController
             ->get()
             ->pluck('engage_id');
 
-        $not_approved = EngagePurchaseRequest::where('status', '!=', 'Approved')
+        $not_approved = EngagePurchaseRequest::whereNotIn('status', ['Approved', 'Completed', 'Canceled'])
             ->get()
             ->pluck('engage_id');
 
