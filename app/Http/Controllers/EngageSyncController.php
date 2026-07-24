@@ -25,14 +25,14 @@ class EngageSyncController
             ->get()
             ->pluck('engage_id');
 
-        $not_approved = EngagePurchaseRequest::whereNotIn('status', ['Approved', 'Completed', 'Canceled'])
+        $incomplete = EngagePurchaseRequest::whereNotIn('status', ['Approved', 'Completed', 'Canceled'])
             ->get()
             ->pluck('engage_id');
 
         $request_engage_ids = array_values(collect($missing_submitted_by_user)
             ->concat($missing_approved_by_user)
             ->concat($missing_attachments)
-            ->concat($not_approved)
+            ->concat($incomplete)
             ->uniqueStrict()
             ->toArray());
 
