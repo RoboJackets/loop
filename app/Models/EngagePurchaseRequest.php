@@ -106,6 +106,7 @@ class EngagePurchaseRequest extends Model
         'Submitted to SOFO/CRC Accountant' => 'info',
         'Sent back for edits' => 'danger',
         'Check Request Sent' => 'success',
+        'Complete' => 'success',
     ];
 
     /**
