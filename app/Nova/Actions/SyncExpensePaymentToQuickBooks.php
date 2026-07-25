@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use App\Models\DocuSignEnvelope;
 use App\Models\EmailRequest;
 use App\Models\EngagePurchaseRequest;
 use App\Util\QuickBooks;
@@ -76,22 +75,6 @@ class SyncExpensePaymentToQuickBooks extends Action
         if ($requests_not_synced > 0) {
             return Action::danger(
                 $requests_not_synced.' '.($requests_not_synced === 1 ? 'request has' : 'requests have')
-                .' not been synced to QuickBooks, and must be synced before this payment can sync'
-            );
-        }
-
-        $envelopes_not_synced = DocuSignEnvelope::whereNull('quickbooks_invoice_id')
-            ->whereHas(
-                'expenseReport',
-                static function (Builder $query) use ($payment): void {
-                    $query->where('expense_payment_id', '=', $payment->workday_instance_id);
-                }
-            )
-            ->count();
-
-        if ($envelopes_not_synced > 0) {
-            return Action::danger(
-                $envelopes_not_synced.' '.($envelopes_not_synced === 1 ? 'envelope has' : 'envelopes have')
                 .' not been synced to QuickBooks, and must be synced before this payment can sync'
             );
         }
