@@ -63,7 +63,7 @@ class MatchAttachment implements ShouldBeUnique, ShouldQueue
         try {
             $purchase_request = EngagePurchaseRequest::whereEngageRequestNumber($purchase_request_number)
                 ->whereDoesntHave('expenseReport')
-                ->where('status', '=', 'Approved')
+                ->whereIn('status', ['Approved', 'Completed'])
                 ->sole();
 
             $purchase_request->expense_report_id = $this->attachment->attachable->expenseReport->id;
