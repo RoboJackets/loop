@@ -187,6 +187,10 @@ class User extends Resource
                                     strtolower($entry['title'][0]),
                                     'research assistant'
                                 ))
+                                ->filter(static fn (array $entry, int $key): bool => ! str_contains(
+                                    strtolower($entry['title'][0]),
+                                    'grad student'
+                                ))
                                 ->sole()
                         );
                     } catch (ItemNotFoundException) {
