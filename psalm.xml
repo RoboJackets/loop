@@ -147,12 +147,6 @@
                 <file name="app/Nova/Actions/SyncEngagePurchaseRequestToQuickBooks.php"/>
             </errorLevel>
         </InvalidArrayOffset>
-        <InvalidTemplateParam>
-            <errorLevel type="suppress">
-                <directory name="app/Models/"/>
-                <file name="app/Nova/User.php"/>
-            </errorLevel>
-        </InvalidTemplateParam>
         <MoreSpecificImplementedParamType>
             <errorLevel type="suppress">
                 <directory name="app"/>
