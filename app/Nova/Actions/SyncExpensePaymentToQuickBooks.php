@@ -170,66 +170,6 @@ class SyncExpensePaymentToQuickBooks extends Action
             }
         }
 
-        DocuSignEnvelope::whereHas(
-            'expenseReport',
-            static function (Builder $query) use ($payment): void {
-                $query->where('expense_payment_id', '=', $payment->workday_instance_id);
-            }
-        )
-            ->with('expenseReport.lines.attachments')
-            ->get()
-            ->each(static function (DocuSignEnvelope $envelope, int $key) use (&$lines): void {
-                if ($envelope->expenseReport->envelopes()->count() === 1) {
-                    $lines[] = [
-                        'Amount' => $envelope->expenseReport->amount,
-                        'LinkedTxn' => [
-                            [
-                                'TxnType' => 'Invoice',
-                                'TxnId' => $envelope->quickbooks_invoice_id,
-                            ],
-                        ],
-                    ];
-                } else {
-                    $envelope_amounts_from_lines = [];
-
-                    $envelope->expenseReport->lines->each(
-                        static function (ExpenseReportLine $line, int $key) use (&$envelope_amounts_from_lines): void {
-                            try {
-                                $envelope_uuid = $line->attachments->map(
-                                    static fn (Attachment $attachment, int $key): ?string => $attachment
-                                        ->toSearchableArray()['docusign_envelope_uuid']
-                                )->filter(
-                                    static fn (?string $envelope_uuid, int $key): bool => $envelope_uuid !== null
-                                )
-                                    ->sole();
-                            } catch (MultipleItemsFoundException|ItemNotFoundException $e) {
-                                throw new Exception(
-                                    'Could not match envelope for expense report line '.$line->id,
-                                    0,
-                                    $e
-                                );
-                            }
-
-                            if (array_key_exists($envelope_uuid, $envelope_amounts_from_lines)) {
-                                $envelope_amounts_from_lines[$envelope_uuid] += $line->amount;
-                            } else {
-                                $envelope_amounts_from_lines[$envelope_uuid] = $line->amount;
-                            }
-                        }
-                    );
-
-                    $lines[] = [
-                        'Amount' => $envelope_amounts_from_lines[$envelope->envelope_uuid],
-                        'LinkedTxn' => [
-                            [
-                                'TxnType' => 'Invoice',
-                                'TxnId' => $envelope->quickbooks_invoice_id,
-                            ],
-                        ],
-                    ];
-                }
-            });
-
         foreach (
             EmailRequest::whereHas(
                 'expenseReport',
