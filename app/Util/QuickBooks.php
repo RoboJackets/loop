@@ -31,7 +31,7 @@ class QuickBooks
             'QBORealmID' => config('quickbooks.company.id'),
         ])->throwExceptionOnError(true);
 
-        if ($user !== null) {
+        if ($user !== null && $user->quickbooks_tokens !== null) {
             $data_service->updateOAuth2Token($user->quickbooks_tokens);
         }
 
