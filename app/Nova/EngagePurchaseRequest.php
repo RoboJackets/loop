@@ -266,6 +266,18 @@ class EngagePurchaseRequest extends Resource
                     ->can('access-quickbooks')
             );
 
+        if ($request->user()->quickbooks_tokens === null) {
+            return [
+                Action::danger(
+                    $syncAction->name(),
+                    'Connect your QuickBooks account using the "Connect to QuickBooks" action under your '
+                    .'user menu in top right.'
+                )
+                    ->withoutConfirmation()
+                    ->canRun(static fn (): true => true),
+            ];
+        }
+
         try {
             ($syncAction->fields($request)[0]->optionsCallback)();
         } catch (ServiceException $exception) {
