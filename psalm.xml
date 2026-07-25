@@ -150,7 +150,6 @@
         <InvalidTemplateParam>
             <errorLevel type="suppress">
                 <directory name="app/Models/"/>
-                <directory name="app/Nova/Actions/"/>
                 <file name="app/Nova/User.php"/>
             </errorLevel>
         </InvalidTemplateParam>
