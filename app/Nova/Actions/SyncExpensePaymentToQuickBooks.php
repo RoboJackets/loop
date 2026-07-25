@@ -117,59 +117,58 @@ class SyncExpensePaymentToQuickBooks extends Action
             );
         }
 
-        EngagePurchaseRequest::whereHas(
-            'expenseReport',
-            static function (Builder $query) use ($payment): void {
-                $query->where('expense_payment_id', '=', $payment->workday_instance_id);
-            }
-        )
-            ->get()
-            ->each(static function (EngagePurchaseRequest $engagePurchaseRequest, int $key) use (&$lines): void {
-                if ($engagePurchaseRequest->expenseReport->engagePurchaseRequests()->count() === 1) {
-                    $lines[] = [
-                        'Amount' => $engagePurchaseRequest->expenseReport->amount,
-                        'LinkedTxn' => [
-                            [
-                                'TxnType' => 'Invoice',
-                                'TxnId' => $engagePurchaseRequest->quickbooks_invoice_id,
-                            ],
-                        ],
-                    ];
-                } elseif (
-                    floatval(
-                        $engagePurchaseRequest->expenseReport->engagePurchaseRequests()->sum('approved_amount')
-                    ) === $engagePurchaseRequest->expenseReport->amount
-                ) {
-                    $lines[] = [
-                        'Amount' => $engagePurchaseRequest->approved_amount,
-                        'LinkedTxn' => [
-                            [
-                                'TxnType' => 'Invoice',
-                                'TxnId' => $engagePurchaseRequest->quickbooks_invoice_id,
-                            ],
-                        ],
-                    ];
-                } elseif (
-                    floatval(
-                        $engagePurchaseRequest->expenseReport->engagePurchaseRequests()->sum('submitted_amount')
-                    ) === $engagePurchaseRequest->expenseReport->amount
-                ) {
-                    $lines[] = [
-                        'Amount' => $engagePurchaseRequest->submitted_amount,
-                        'LinkedTxn' => [
-                            [
-                                'TxnType' => 'Invoice',
-                                'TxnId' => $engagePurchaseRequest->quickbooks_invoice_id,
-                            ],
-                        ],
-                    ];
-                } else {
-                    throw new Exception(
-                        'Expense report is matched to multiple Engage requests and unable to automatically determine'.
-                        ' splits'
-                    );
+        foreach (
+            EngagePurchaseRequest::whereHas(
+                'expenseReport',
+                static function (Builder $query) use ($payment): void {
+                    $query->where('expense_payment_id', '=', $payment->workday_instance_id);
                 }
-            });
+            )->get() as $engagePurchaseRequest
+        ) {
+            if ($engagePurchaseRequest->expenseReport->engagePurchaseRequests()->count() === 1) {
+                $lines[] = [
+                    'Amount' => $engagePurchaseRequest->expenseReport->amount,
+                    'LinkedTxn' => [
+                        [
+                            'TxnType' => 'Invoice',
+                            'TxnId' => $engagePurchaseRequest->quickbooks_invoice_id,
+                        ],
+                    ],
+                ];
+            } elseif (
+                floatval(
+                    $engagePurchaseRequest->expenseReport->engagePurchaseRequests()->sum('approved_amount')
+                ) === $engagePurchaseRequest->expenseReport->amount
+            ) {
+                $lines[] = [
+                    'Amount' => $engagePurchaseRequest->approved_amount,
+                    'LinkedTxn' => [
+                        [
+                            'TxnType' => 'Invoice',
+                            'TxnId' => $engagePurchaseRequest->quickbooks_invoice_id,
+                        ],
+                    ],
+                ];
+            } elseif (
+                floatval(
+                    $engagePurchaseRequest->expenseReport->engagePurchaseRequests()->sum('submitted_amount')
+                ) === $engagePurchaseRequest->expenseReport->amount
+            ) {
+                $lines[] = [
+                    'Amount' => $engagePurchaseRequest->submitted_amount,
+                    'LinkedTxn' => [
+                        [
+                            'TxnType' => 'Invoice',
+                            'TxnId' => $engagePurchaseRequest->quickbooks_invoice_id,
+                        ],
+                    ],
+                ];
+            } else {
+                return Action::danger(
+                    'Expense report is matched to multiple Engage requests and unable to automatically determine splits'
+                );
+            }
+        }
 
         DocuSignEnvelope::whereHas(
             'expenseReport',
@@ -231,45 +230,44 @@ class SyncExpensePaymentToQuickBooks extends Action
                 }
             });
 
-        EmailRequest::whereHas(
-            'expenseReport',
-            static function (Builder $query) use ($payment): void {
-                $query->where('expense_payment_id', '=', $payment->workday_instance_id);
-            }
-        )
-            ->get()
-            ->each(static function (EmailRequest $emailRequest, int $key) use (&$lines): void {
-                if ($emailRequest->expenseReport->emailRequests()->count() === 1) {
-                    $lines[] = [
-                        'Amount' => $emailRequest->expenseReport->amount,
-                        'LinkedTxn' => [
-                            [
-                                'TxnType' => 'Invoice',
-                                'TxnId' => $emailRequest->quickbooks_invoice_id,
-                            ],
-                        ],
-                    ];
-                } elseif (
-                    floatval(
-                        $emailRequest->expenseReport->emailRequests()->sum('vendor_document_amount')
-                    ) === $emailRequest->expenseReport->amount
-                ) {
-                    $lines[] = [
-                        'Amount' => $emailRequest->vendor_document_amount,
-                        'LinkedTxn' => [
-                            [
-                                'TxnType' => 'Invoice',
-                                'TxnId' => $emailRequest->quickbooks_invoice_id,
-                            ],
-                        ],
-                    ];
-                } else {
-                    throw new Exception(
-                        'Expense report is matched to multiple email requests and unable to automatically determine'.
-                        ' splits'
-                    );
+        foreach (
+            EmailRequest::whereHas(
+                'expenseReport',
+                static function (Builder $query) use ($payment): void {
+                    $query->where('expense_payment_id', '=', $payment->workday_instance_id);
                 }
-            });
+            )->get() as $emailRequest
+        ) {
+            if ($emailRequest->expenseReport->emailRequests()->count() === 1) {
+                $lines[] = [
+                    'Amount' => $emailRequest->expenseReport->amount,
+                    'LinkedTxn' => [
+                        [
+                            'TxnType' => 'Invoice',
+                            'TxnId' => $emailRequest->quickbooks_invoice_id,
+                        ],
+                    ],
+                ];
+            } elseif (
+                floatval(
+                    $emailRequest->expenseReport->emailRequests()->sum('vendor_document_amount')
+                ) === $emailRequest->expenseReport->amount
+            ) {
+                $lines[] = [
+                    'Amount' => $emailRequest->vendor_document_amount,
+                    'LinkedTxn' => [
+                        [
+                            'TxnType' => 'Invoice',
+                            'TxnId' => $emailRequest->quickbooks_invoice_id,
+                        ],
+                    ],
+                ];
+            } else {
+                return Action::danger(
+                    'Expense report is matched to multiple email requests and unable to automatically determine splits'
+                );
+            }
+        }
 
         $payment_response = Sentry::wrapWithChildSpan(
             'quickbooks.create_payment',
