@@ -157,9 +157,7 @@ class SyncExpensePaymentToQuickBooks extends Action
                         )
                             ->sole();
                     } catch (MultipleItemsFoundException|ItemNotFoundException) {
-                        return Action::danger(
-                            'Could not match Engage request for expense report line '.$line->id
-                        );
+                        return Action::danger('Could not match Engage request for expense report line '.$line->id);
                     }
 
                     if (array_key_exists($engage_request_number, $request_amounts_from_lines)) {
@@ -169,10 +167,7 @@ class SyncExpensePaymentToQuickBooks extends Action
                     }
                 }
 
-                if (! array_key_exists(
-                    $engagePurchaseRequest->engage_request_number,
-                    $request_amounts_from_lines
-                )) {
+                if (! array_key_exists($engagePurchaseRequest->engage_request_number, $request_amounts_from_lines)) {
                     return Action::danger(
                         'Expense report is matched to multiple Engage requests and unable to automatically'.
                         ' determine splits'
