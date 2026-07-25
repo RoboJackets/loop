@@ -55,7 +55,7 @@ class MatchExpenseReport implements ShouldBeUnique, ShouldQueue
             try {
                 $purchase_request = EngagePurchaseRequest::whereApprovedAmount($this->expenseReport->amount)
                     ->whereDoesntHave('expenseReport')
-                    ->where('status', '=', 'Approved')
+                    ->whereIn('status', ['Approved', 'Completed'])
                     ->whereDate('approved_at', '<=', $this->expenseReport->created_date)
                     ->where('approved_by_user_id', '=', $this->expenseReport->createdBy->id)
                     ->sole();
@@ -64,6 +64,8 @@ class MatchExpenseReport implements ShouldBeUnique, ShouldQueue
                 $purchase_request->save();
             } catch (ModelNotFoundException|MultipleRecordsFoundException) {
                 $engage_request_numbers = [];
+
+                $this->expenseReport->loadMissing('lines.attachments');
 
                 $this->expenseReport->lines->each(
                     static function (ExpenseReportLine $line, int $key) use (&$engage_request_numbers): void {
