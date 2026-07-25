@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Exceptions\CouldNotExtractEngagePurchaseRequestNumber;
 use App\Exceptions\CouldNotExtractEnvelopeUuid;
 use App\Observers\AttachmentObserver;
 use App\Util\Sentry;
@@ -181,9 +182,18 @@ class Attachment extends Model
             } catch (CouldNotExtractEnvelopeUuid) {
                 $array['docusign_envelope_uuid'] = null;
             }
+
+            try {
+                $array['engage_request_number'] = EngagePurchaseRequest::getPurchaseRequestNumberFromText(
+                    $array['full_text']
+                );
+            } catch (CouldNotExtractEngagePurchaseRequestNumber) {
+                $array['engage_request_number'] = null;
+            }
         } else {
             $array['full_text'] = null;
             $array['docusign_envelope_uuid'] = null;
+            $array['engage_request_number'] = null;
         }
 
         return $array;

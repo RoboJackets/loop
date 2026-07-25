@@ -145,6 +145,7 @@ return [
                     'filename',
                     'workday_comment',
                     'docusign_envelope_uuid',
+                    'engage_request_number',
                     'full_text',
                 ],
                 'typoTolerance' => [

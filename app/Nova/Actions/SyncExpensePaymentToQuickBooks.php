@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
+use App\Models\Attachment;
 use App\Models\EmailRequest;
 use App\Models\EngagePurchaseRequest;
 use App\Util\QuickBooks;
@@ -16,6 +17,8 @@ use App\Util\Sentry;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\ItemNotFoundException;
+use Illuminate\Support\MultipleItemsFoundException;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use QuickBooksOnline\API\Data\IPPPayment;
@@ -101,7 +104,7 @@ class SyncExpensePaymentToQuickBooks extends Action
                 static function (Builder $query) use ($payment): void {
                     $query->where('expense_payment_id', '=', $payment->workday_instance_id);
                 }
-            )->get() as $engagePurchaseRequest
+            )->with('expenseReport.lines.attachments')->get() as $engagePurchaseRequest
         ) {
             if ($engagePurchaseRequest->expenseReport->engagePurchaseRequests()->count() === 1) {
                 $lines[] = [
@@ -142,9 +145,49 @@ class SyncExpensePaymentToQuickBooks extends Action
                     ],
                 ];
             } else {
-                return Action::danger(
-                    'Expense report is matched to multiple Engage requests and unable to automatically determine splits'
-                );
+                $request_amounts_from_lines = [];
+
+                foreach ($engagePurchaseRequest->expenseReport->lines as $line) {
+                    try {
+                        $engage_request_number = $line->attachments->map(
+                            static fn (Attachment $attachment, int $key): ?int => $attachment
+                                ->toSearchableArray()['engage_request_number']
+                        )->filter(
+                            static fn (?int $engage_request_number, int $key): bool => $engage_request_number !== null
+                        )
+                            ->sole();
+                    } catch (MultipleItemsFoundException|ItemNotFoundException) {
+                        return Action::danger(
+                            'Could not match Engage request for expense report line '.$line->id
+                        );
+                    }
+
+                    if (array_key_exists($engage_request_number, $request_amounts_from_lines)) {
+                        $request_amounts_from_lines[$engage_request_number] += $line->amount;
+                    } else {
+                        $request_amounts_from_lines[$engage_request_number] = $line->amount;
+                    }
+                }
+
+                if (! array_key_exists(
+                    $engagePurchaseRequest->engage_request_number,
+                    $request_amounts_from_lines
+                )) {
+                    return Action::danger(
+                        'Expense report is matched to multiple Engage requests and unable to automatically'.
+                        ' determine splits'
+                    );
+                }
+
+                $lines[] = [
+                    'Amount' => $request_amounts_from_lines[$engagePurchaseRequest->engage_request_number],
+                    'LinkedTxn' => [
+                        [
+                            'TxnType' => 'Invoice',
+                            'TxnId' => $engagePurchaseRequest->quickbooks_invoice_id,
+                        ],
+                    ],
+                ];
             }
         }
 
