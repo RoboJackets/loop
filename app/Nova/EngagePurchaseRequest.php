@@ -266,7 +266,7 @@ class EngagePurchaseRequest extends Resource
                     ->can('access-quickbooks')
             );
 
-        if ($request->user()->quickbooks_tokens === null) {
+        if ($request->user()?->quickbooks_access_token === null) {
             return [
                 Action::danger(
                     $syncAction->name(),
