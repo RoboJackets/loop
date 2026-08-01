@@ -10,6 +10,8 @@ use HTMLMin\HTMLMin\Http\Middleware\MinifyMiddleware;
 class MinifyHtml extends MinifyMiddleware
 {
     /**
+     * Handle an incoming request.
+     *
      * @param  \Closure(\Illuminate\Http\Request): \Symfony\Component\HttpFoundation\Response  $next
      */
     #[\Override]
