@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Models\Attachment;
 use App\Models\DataSource;
 use App\Models\EngagePurchaseRequest;
 use App\Models\FiscalYear;
@@ -19,7 +20,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 
 class SyncEngage implements ShouldBeUnique, ShouldQueue
 {
@@ -37,6 +40,25 @@ class SyncEngage implements ShouldBeUnique, ShouldQueue
      * The Engage API endpoint that lists purchase requests.
      */
     private const string PURCHASE_REQUEST_LIST_URL = self::PURCHASE_REQUEST_URL_PREFIX.'list-items';
+
+    /**
+     * The base URL for the page that renders additional questions, including attachments, for a purchase request.
+     */
+    private const string ADDITIONAL_QUESTIONS_URL_PREFIX =
+        'https://gatech.campuslabs.com/engage/actionCenter/organization/robojackets/finance/'
+        .'financeRequestViewAdditionalQuestions/';
+
+    /**
+     * The base URL to resolve attachment download links against.
+     */
+    private const string ENGAGE_BASE_URL = 'https://gatech.campuslabs.com';
+
+    /**
+     * Matches HTML-escaped attachment download links within the additional questions page.
+     */
+    private const string ATTACHMENT_URL_REGEX =
+        '~/engage/actionCenter/organization/robojackets/Finance/FileUploadQuestion/getdocument'
+        .'\?DocumentId=[0-9]+&amp;RespondentId=[0-9]+~';
 
     /**
      * The number of purchase requests to retrieve per page.
@@ -83,6 +105,10 @@ class SyncEngage implements ShouldBeUnique, ShouldQueue
 
         foreach ($need_details as $purchase_request) {
             self::syncPurchaseRequestDetails($client, $purchase_request);
+
+            if ($purchase_request->deleted_at === null) {
+                self::syncPurchaseRequestAttachments($client, $purchase_request);
+            }
         }
 
         DataSource::updateOrCreate(
@@ -188,6 +214,100 @@ class SyncEngage implements ShouldBeUnique, ShouldQueue
             'deleted_at' => $detail['deletedOn'] === null ? null : Carbon::parse(strval($detail['deletedOn'])),
         ]);
         $purchase_request->save();
+    }
+
+    /**
+     * Download any attachments for a purchase request that are not already stored locally.
+     */
+    private static function syncPurchaseRequestAttachments(
+        Client $client,
+        EngagePurchaseRequest $purchase_request
+    ): void {
+        $response = Sentry::wrapWithChildSpan(
+            'engage.get_additional_questions',
+            static fn (): ResponseInterface => $client->get(
+                self::ADDITIONAL_QUESTIONS_URL_PREFIX.$purchase_request->engage_id
+            )
+        );
+
+        if ($response->getStatusCode() !== 200) {
+            throw new Exception(
+                'Unexpected HTTP '.$response->getStatusCode().' response from Engage additional questions page for '
+                    .'purchase request '.$purchase_request->engage_id
+            );
+        }
+
+        $matches = [];
+
+        preg_match_all(self::ATTACHMENT_URL_REGEX, $response->getBody()->getContents(), $matches);
+
+        foreach (array_unique($matches[0]) as $attachment_url) {
+            self::syncAttachment($client, $purchase_request, html_entity_decode($attachment_url));
+        }
+    }
+
+    /**
+     * Download a single attachment from Engage and store it locally, unless it already exists in the
+     * database and on disk.
+     */
+    private static function syncAttachment(
+        Client $client,
+        EngagePurchaseRequest $purchase_request,
+        string $attachment_url
+    ): void {
+        $query_string = [];
+
+        parse_str(strval(parse_url($attachment_url, PHP_URL_QUERY)), $query_string);
+
+        $document_id = intval($query_string['DocumentId']);
+
+        $attachment = Attachment::whereEngageDocumentId($document_id)->first();
+        \assert($attachment instanceof \App\Models\Attachment || $attachment === null);
+
+        if ($attachment !== null && Storage::disk('local')->exists($attachment->filename)) {
+            return;
+        }
+
+        $response = Sentry::wrapWithChildSpan(
+            'engage.download_attachment',
+            static fn (): ResponseInterface => $client->get(self::ENGAGE_BASE_URL.$attachment_url)
+        );
+
+        if ($response->getStatusCode() !== 200) {
+            throw new Exception(
+                'Unexpected HTTP '.$response->getStatusCode().' response from Engage for attachment '.$document_id
+            );
+        }
+
+        if ($attachment === null) {
+            $content_disposition = HeaderUtils::combine(
+                HeaderUtils::split($response->getHeaderLine('Content-Disposition'), ';=')
+            );
+
+            if (array_key_exists('filename*', $content_disposition)) {
+                // RFC 5987 extended value, formatted as charset'language'percent-encoded-filename
+                $extended_value = explode('\'', strval($content_disposition['filename*']), 3);
+
+                $remote_filename = rawurldecode($extended_value[2] ?? $extended_value[0]);
+            } elseif (array_key_exists('filename', $content_disposition)) {
+                $remote_filename = strval($content_disposition['filename']);
+            } else {
+                throw new Exception('No filename in Content-Disposition header for attachment '.$document_id);
+            }
+
+            $attachment = Attachment::create([
+                'attachable_type' => $purchase_request->getMorphClass(),
+                'attachable_id' => $purchase_request->id,
+                'filename' => 'engage/'.$document_id.'/'.basename($remote_filename),
+                'engage_document_id' => $document_id,
+            ]);
+
+            $attachment->searchable();
+        }
+
+        Storage::disk('local')->put($attachment->filename, $response->getBody()->getContents());
+
+        GenerateThumbnail::dispatch(Storage::disk('local')->path($attachment->filename));
     }
 
     /**
