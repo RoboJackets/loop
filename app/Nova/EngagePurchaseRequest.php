@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Actions\RefreshEngagePurchaseRequests;
 use App\Nova\Actions\SyncEngagePurchaseRequestToQuickBooks;
 use App\Nova\Lenses\EngagePurchaseRequestsMissingExpenseReports;
 use App\Nova\Lenses\EngagePurchaseRequestsMissingInvoices;
@@ -234,11 +235,20 @@ class EngagePurchaseRequest extends Resource
     #[\Override]
     public function actions(NovaRequest $request): array
     {
+        $refreshAction = RefreshEngagePurchaseRequests::make()
+            ->canSee(static fn (NovaRequest $request): bool => $request->user()->can('access-engage'))
+            ->canRun(
+                static fn (
+                    NovaRequest $request,
+                    \App\Models\EngagePurchaseRequest $engagePurchaseRequest
+                ): bool => $request->user()->can('access-engage')
+            );
+
         $resourceId = $request->resourceId ?? $request->resources;
         $user = $request->user();
 
         if ($resourceId === null || $user === null || ! $user->can('access-quickbooks')) {
-            return [];
+            return [$refreshAction];
         }
 
         $engageRequest = \App\Models\EngagePurchaseRequest::whereId($resourceId)->withTrashed()->sole();
@@ -255,7 +265,7 @@ class EngagePurchaseRequest extends Resource
                 )
             )
         ) {
-            return [];
+            return [$refreshAction];
         }
 
         $syncAction = SyncEngagePurchaseRequestToQuickBooks::make()
@@ -268,6 +278,7 @@ class EngagePurchaseRequest extends Resource
 
         if ($request->user()?->quickbooks_access_token === null) {
             return [
+                $refreshAction,
                 Action::danger(
                     $syncAction->name(),
                     'Connect your QuickBooks account using the "Connect to QuickBooks" action under your '
@@ -282,6 +293,7 @@ class EngagePurchaseRequest extends Resource
             ($syncAction->fields($request)[0]->optionsCallback)();
         } catch (ServiceException $exception) {
             return [
+                $refreshAction,
                 Action::danger($syncAction->name(), $exception->getMessage())
                     ->withoutConfirmation()
                     ->canRun(static fn (): true => true),
@@ -289,6 +301,7 @@ class EngagePurchaseRequest extends Resource
         }
 
         return [
+            $refreshAction,
             $syncAction,
         ];
     }
