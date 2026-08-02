@@ -20,7 +20,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
 use Psr\Http\Message\ResponseInterface;
-use Throwable;
 
 class SyncEngage implements ShouldBeUnique, ShouldQueue
 {
@@ -70,7 +69,9 @@ class SyncEngage implements ShouldBeUnique, ShouldQueue
                             $query->whereNull('approved_by_user_id')
                                 ->orWhereNull('approved_at');
                         });
-                });
+                })
+                ->orWhereDoesntHave('attachments')
+                ->orWhereNotIn('status', ['Completed', 'Canceled']);
         })
             ->orderBy('engage_id')
             ->get();
@@ -81,16 +82,7 @@ class SyncEngage implements ShouldBeUnique, ShouldQueue
         );
 
         foreach ($need_details as $purchase_request) {
-            try {
-                self::syncPurchaseRequestDetails($client, $purchase_request);
-            } catch (Throwable $exception) {
-                report($exception);
-
-                Log::warning(
-                    'Failed to sync details for purchase request '.$purchase_request->engage_id.': '
-                        .$exception->getMessage()
-                );
-            }
+            self::syncPurchaseRequestDetails($client, $purchase_request);
         }
 
         DataSource::updateOrCreate(
