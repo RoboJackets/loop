@@ -26,6 +26,11 @@ return [
         'token' => env('MERCURY_TOKEN'),
     ],
 
+    'engage' => [
+        'username' => env('ENGAGE_USERNAME'),
+        'password' => env('ENGAGE_PASSWORD'),
+    ],
+
     'treasurer_email_address' => env('TREASURER_EMAIL_ADDRESS'),
 
     'treasurer_name' => env('TREASURER_NAME'),

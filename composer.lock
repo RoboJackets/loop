@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "558722efb8436b2227aad0efd0354e48",
+    "content-hash": "12ada548c20287e860f79f595bcdc9ed",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -4217,6 +4217,65 @@
                 "source": "https://github.com/mrclay/Props/tree/3.0.1"
             },
             "time": "2023-02-13T07:32:41+00:00"
+        },
+        {
+            "name": "mxl/laravel-job",
+            "version": "v1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mxl/laravel-job.git",
+                "reference": "fdb676b3e72bda1c8772ce15e41f79e4e8bd1e3c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mxl/laravel-job/zipball/fdb676b3e72bda1c8772ce15e41f79e4e8bd1e3c",
+                "reference": "fdb676b3e72bda1c8772ce15e41f79e4e8bd1e3c",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.2|^10.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MichaelLedin\\LaravelJob\\LaravelJobServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MichaelLedin\\LaravelJob\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Ledin",
+                    "email": "mledin89@gmail.com"
+                }
+            ],
+            "description": "Laravel job tools",
+            "homepage": "https://github.com/mxl/laravel-job",
+            "keywords": [
+                "command",
+                "dispatch",
+                "job",
+                "laravel",
+                "tools"
+            ],
+            "support": {
+                "issues": "https://github.com/mxl/laravel-job/issues",
+                "source": "https://github.com/mxl/laravel-job"
+            },
+            "time": "2026-04-29T13:34:56+00:00"
         },
         {
             "name": "nesbot/carbon",
