@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Util;
 
+use App\Models\User;
 use Dom\Element;
 use Dom\HTMLDocument;
 use Exception;
@@ -13,6 +14,7 @@ use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Psr7\UriResolver;
 use GuzzleHttp\RedirectMiddleware;
 use Illuminate\Support\Facades\Log;
+use LdapRecord\Container;
 use Psr\Http\Message\ResponseInterface;
 
 class Engage
@@ -80,6 +82,46 @@ class Engage
         }
 
         return $input;
+    }
+
+    /**
+     * Return a User given an email address (actually a User Principal Name).
+     */
+    public static function getUserByEmailAddress(string $email): User
+    {
+        $parts = explode('@', $email);
+
+        if (User::whereUsername($parts[0])->exists()) {
+            $user = User::whereUsername($parts[0])->sole();
+
+            $user->givePermissionTo('access-engage');
+
+            return $user;
+        }
+
+        $result = Sentry::wrapWithChildSpan(
+            'ldap.get_user_by_username',
+            static fn (): array|\LdapRecord\Query\Collection => Container::getDefaultConnection()
+                ->query()
+                ->where('uid', '=', $parts[0])
+                ->select('sn', 'givenName', 'primaryUid', 'mail')
+                ->get()
+        );
+
+        if (count($result) === 0) {
+            throw new Exception('User '.$parts[0].' not in Whitepages');
+        }
+
+        $user = User::create([
+            'first_name' => $result[0]['givenname'][0],
+            'last_name' => $result[0]['sn'][0],
+            'username' => $result[0]['primaryuid'][0],
+            'email' => $email,
+        ]);
+
+        $user->givePermissionTo('access-engage');
+
+        return $user;
     }
 
     /**

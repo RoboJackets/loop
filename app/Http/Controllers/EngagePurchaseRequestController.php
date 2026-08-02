@@ -8,13 +8,9 @@ use App\Http\Requests\UpdateEngagePurchaseRequest;
 use App\Http\Requests\UpsertEngagePurchaseRequests;
 use App\Models\EngagePurchaseRequest;
 use App\Models\FiscalYear;
-use App\Models\User;
 use App\Util\Engage;
-use App\Util\Sentry;
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Http\JsonResponse;
-use LdapRecord\Container;
 
 class EngagePurchaseRequestController
 {
@@ -85,12 +81,12 @@ class EngagePurchaseRequestController
             'submitted_at' => $request['submitted']['date'] === null ? null : Carbon::parse(
                 $request['submitted']['date']
             ),
-            'submitted_by_user_id' => self::getUserByEmailAddress($request['submitted']['email'])->id,
+            'submitted_by_user_id' => Engage::getUserByEmailAddress($request['submitted']['email'])->id,
             'approved_amount' => $request['approved'] === null ? null : $request['approved']['amount'],
             'approved_at' => $request['approved'] === null ? null : (
                 $request['approved']['date'] === null ? null : Carbon::parse($request['approved']['date'])
             ),
-            'approved_by_user_id' => $request['approved'] === null ? null : self::getUserByEmailAddress(
+            'approved_by_user_id' => $request['approved'] === null ? null : Engage::getUserByEmailAddress(
                 $request['approved']['email']
             )->id,
             'payee_first_name' => $request['payee']['firstName'],
@@ -108,45 +104,5 @@ class EngagePurchaseRequestController
         $purchaseRequest->save();
 
         return response()->json($purchaseRequest);
-    }
-
-    /**
-     * Return a User given an email address (actually a User Principal Name).
-     */
-    private static function getUserByEmailAddress(string $email): User
-    {
-        $parts = explode('@', $email);
-
-        if (User::whereUsername($parts[0])->exists()) {
-            $user = User::whereUsername($parts[0])->sole();
-
-            $user->givePermissionTo('access-engage');
-
-            return $user;
-        }
-
-        $result = Sentry::wrapWithChildSpan(
-            'ldap.get_user_by_username',
-            static fn (): array|\LdapRecord\Query\Collection => Container::getDefaultConnection()
-                ->query()
-                ->where('uid', '=', $parts[0])
-                ->select('sn', 'givenName', 'primaryUid', 'mail')
-                ->get()
-        );
-
-        if (count($result) === 0) {
-            throw new Exception('User '.$parts[0].' not in Whitepages');
-        }
-
-        $user = User::create([
-            'first_name' => $result[0]['givenname'][0],
-            'last_name' => $result[0]['sn'][0],
-            'username' => $result[0]['primaryuid'][0],
-            'email' => $email,
-        ]);
-
-        $user->givePermissionTo('access-engage');
-
-        return $user;
     }
 }
