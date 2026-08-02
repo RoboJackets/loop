@@ -6,6 +6,9 @@
                 "artisan",
                 "boost:mcp"
             ]
+        },
+        "ray": {
+            "url": "http://localhost:2411/mcp"
         }
     }
 }
