@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Models\EngagePurchaseRequest;
+use App\Models\FiscalYear;
 use App\Util\Engage;
 use App\Util\Sentry;
+use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
@@ -39,25 +42,58 @@ class SyncEngage implements ShouldBeUnique, ShouldQueue
     {
         $client = Sentry::wrapWithChildSpan('engage.authenticate', static fn (): Client => Engage::client());
 
-        $purchase_requests = Sentry::wrapWithChildSpan(
+        $list_items = Sentry::wrapWithChildSpan(
             'engage.list_purchase_requests',
             static fn (): array => self::retrievePurchaseRequestListItems($client)
         );
 
-        Log::info('Retrieved '.count($purchase_requests).' purchase requests from Engage');
+        Log::info('Retrieved '.count($list_items).' purchase requests from Engage');
 
-        // Temporary demonstration output, to be replaced with loading into the database
-        foreach ($purchase_requests as $purchase_request) {
-            echo sprintf(
-                "%7d  #%-5d  %-9s  %-10s  %9.2f  %s\n",
-                $purchase_request['id'],
-                $purchase_request['requestNumber'],
-                $purchase_request['status'],
-                substr(strval($purchase_request['submittedOn']), 0, 10),
-                floatval($purchase_request['submittedAmount'] ?? 0),
-                $purchase_request['name'].' ('.$purchase_request['submittedByName'].')'
+        $need_details = [];
+
+        foreach ($list_items as $item) {
+            $submitted_at = $item['submittedOn'] === null ? null : Carbon::parse(strval($item['submittedOn']));
+
+            $purchase_request = EngagePurchaseRequest::updateOrCreate(
+                [
+                    'engage_id' => $item['id'],
+                    'engage_request_number' => $item['requestNumber'],
+                ],
+                [
+                    'subject' => $item['name'],
+                    'status' => $item['status'],
+                    'current_step_name' => Engage::cleanFinanceStageName(strval($item['currentStepName'])),
+                    'submitted_amount' => $item['submittedAmount'],
+                    'submitted_at' => $submitted_at,
+                    'approved_amount' => $item['approvedAmount'],
+                    'deleted_at' => $item['deletedOn'] === null ? null : Carbon::parse(strval($item['deletedOn'])),
+                    'fiscal_year_id' => $submitted_at === null ? null : FiscalYear::firstOrCreate([
+                        'ending_year' => FiscalYear::intFromDate($submitted_at),
+                    ])->id,
+                ]
             );
+
+            if (in_array($purchase_request->engage_id, $need_details, true)) {
+                continue;
+            }
+
+            if ($purchase_request->submitted_by_user_id === null) {
+                $need_details[] = $purchase_request->engage_id;
+            } elseif (
+                $purchase_request->status === 'Approved' && (
+                    $purchase_request->approved_by_user_id === null || $purchase_request->approved_at === null
+                )
+            ) {
+                $need_details[] = $purchase_request->engage_id;
+            }
         }
+
+        sort($need_details);
+
+        Log::info(
+            count($need_details).' purchase requests need details from Engage',
+            ['engage_ids' => $need_details]
+        );
     }
 
     /**

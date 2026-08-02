@@ -9,6 +9,7 @@ use App\Http\Requests\UpsertEngagePurchaseRequests;
 use App\Models\EngagePurchaseRequest;
 use App\Models\FiscalYear;
 use App\Models\User;
+use App\Util\Engage;
 use App\Util\Sentry;
 use Carbon\Carbon;
 use Exception;
@@ -35,7 +36,7 @@ class EngagePurchaseRequestController
                 [
                     'subject' => $item['name'],
                     'status' => $item['status'],
-                    'current_step_name' => self::cleanFinanceStageName($item['currentStepName']),
+                    'current_step_name' => Engage::cleanFinanceStageName($item['currentStepName']),
                     'submitted_amount' => $item['submittedAmount'],
                     'submitted_at' => $item['submittedOn'] === null ? null : Carbon::parse($item['submittedOn']),
                     'approved_amount' => $item['approvedAmount'],
@@ -79,7 +80,7 @@ class EngagePurchaseRequestController
             'subject' => $request['subject'],
             'description' => $request['description'],
             'status' => $request['status'],
-            'current_step_name' => self::cleanFinanceStageName($request['financeStage']['name']),
+            'current_step_name' => Engage::cleanFinanceStageName($request['financeStage']['name']),
             'submitted_amount' => $request['submitted']['amount'],
             'submitted_at' => $request['submitted']['date'] === null ? null : Carbon::parse(
                 $request['submitted']['date']
@@ -107,22 +108,6 @@ class EngagePurchaseRequestController
         $purchaseRequest->save();
 
         return response()->json($purchaseRequest);
-    }
-
-    /**
-     * Simplify the finance stage name.
-     *
-     * @psalm-pure
-     */
-    private static function cleanFinanceStageName(string $input): string
-    {
-        if (str_contains($input, ':')) {
-            $parts = explode(':', $input);
-
-            return trim($parts[1]);
-        }
-
-        return $input;
     }
 
     /**

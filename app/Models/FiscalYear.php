@@ -41,6 +41,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class FiscalYear extends Model
 {
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     *
+     * @phan-read-only
+     */
+    protected $fillable = [
+        'ending_year',
+    ];
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>

@@ -67,6 +67,22 @@ class Engage
     }
 
     /**
+     * Simplify a finance stage name.
+     *
+     * @psalm-pure
+     */
+    public static function cleanFinanceStageName(string $input): string
+    {
+        if (str_contains($input, ':')) {
+            $parts = explode(':', $input);
+
+            return trim($parts[1]);
+        }
+
+        return $input;
+    }
+
+    /**
      * Authenticate to Engage using the CAS REST API.
      *
      * This mirrors the flow a browser would follow, except the CAS login form is replaced with the
