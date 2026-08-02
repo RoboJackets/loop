@@ -31,6 +31,16 @@ class SyncEngage implements ShouldBeUnique, ShouldQueue
     use Queueable;
 
     /**
+     * Create a new job instance.
+     *
+     * @psalm-mutation-free
+     */
+    public function __construct()
+    {
+        $this->queue = 'engage';
+    }
+
+    /**
      * The base URL for the Engage purchase request API.
      */
     private const string PURCHASE_REQUEST_URL_PREFIX =

@@ -188,12 +188,22 @@ return [
                 'block_for' => null,
                 'timeout' => 300,
             ],
+            'engage' => [
+                'connection' => 'redis',
+                'queue' => ['engage'],
+                'balance' => 'simple',
+                'processes' => 1,
+                'tries' => 1,
+                'block_for' => null,
+                // must remain shorter than the redis queue connection retry_after
+                'timeout' => 570,
+            ],
         ],
 
         'test' => [
             'main' => [
                 'connection' => 'redis',
-                'queue' => ['default', 'postmark', 'sensible', 'meilisearch', 'thumbnail', 'expense-report-match', 'ldap'],
+                'queue' => ['default', 'postmark', 'sensible', 'meilisearch', 'thumbnail', 'expense-report-match', 'ldap', 'engage'],
                 'balance' => 'simple',
                 'processes' => 1,
                 'tries' => 1,
