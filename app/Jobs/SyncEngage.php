@@ -80,7 +80,7 @@ class SyncEngage implements ShouldBeUnique, ShouldQueue
             if ($purchase_request->submitted_by_user_id === null) {
                 $need_details[] = $purchase_request->engage_id;
             } elseif (
-                $purchase_request->status === 'Approved' && (
+                in_array($purchase_request->status, ['Approved', 'Completed'], true) && (
                     $purchase_request->approved_by_user_id === null || $purchase_request->approved_at === null
                 )
             ) {
