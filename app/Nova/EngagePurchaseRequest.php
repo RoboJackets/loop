@@ -8,6 +8,7 @@ use App\Nova\Actions\RefreshEngagePurchaseRequests;
 use App\Nova\Actions\SyncEngagePurchaseRequestToQuickBooks;
 use App\Nova\Lenses\EngagePurchaseRequestsMissingExpenseReports;
 use App\Nova\Lenses\EngagePurchaseRequestsMissingInvoices;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\Badge;
@@ -75,6 +76,19 @@ class EngagePurchaseRequest extends Resource
     public static $search = [
         'id',
     ];
+
+    /**
+     * Apply the default orderings for the given resource.
+     *
+     * @return \Illuminate\Contracts\Database\Eloquent\Builder
+     */
+    #[\Override]
+    public static function defaultOrderings(Builder $query)
+    {
+        \assert($query instanceof \Illuminate\Database\Eloquent\Builder);
+
+        return $query->orderByDesc('engage_request_number');
+    }
 
     /**
      * The logical group associated with the resource.
