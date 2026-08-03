@@ -103,7 +103,7 @@ class SyncEngage implements ShouldBeUnique, ShouldQueue
                         });
                 })
                 ->orWhereDoesntHave('attachments')
-                ->orWhereNotIn('status', ['Completed', 'Canceled']);
+                ->orWhereNotIn('status', ['Completed', 'Canceled', 'Denied']);
         })
             ->orderBy('engage_id')
             ->get();
