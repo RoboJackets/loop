@@ -99,14 +99,15 @@ class EngagePurchaseRequest extends Model
     private const string PURCHASE_REQUEST_NUM_REGEX = '/(?:Purchase Request|Request No):\s+(?P<requestNumber>\d{7})/';
 
     public const array STEP_NAME_BADGE_MAP = [
-        'Saved' => 'info',
-        'Submitted' => 'info',
-        'Send to SOFO Accountant' => 'info',
-        'Request Processed by SOFO' => 'success',
-        'Submitted to SOFO/CRC Accountant' => 'info',
-        'Sent back for edits' => 'danger',
         'Check Request Sent' => 'success',
         'Complete' => 'success',
+        'Request Processed by SOFO' => 'success',
+        'Saved' => 'info',
+        'Send to SOFO Accountant' => 'info',
+        'Sent back for edits' => 'danger',
+        'Submited to SOFO Accountant' => 'info',
+        'Submitted to SOFO/CRC Accountant' => 'info',
+        'Submitted' => 'info',
     ];
 
     /**
