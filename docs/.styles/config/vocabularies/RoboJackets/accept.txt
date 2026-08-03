@@ -1,4 +1,4 @@
-purchase
+(P|p)urchase
 (E|e)mail
 blind
 ingest

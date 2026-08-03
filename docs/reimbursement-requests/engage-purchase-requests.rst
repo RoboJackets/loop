@@ -14,8 +14,10 @@ As of fall 2023, reimbursement requests are submitted to the Student Organizatio
 Data load
 ---------
 
-Engage data must be uploaded with the `loop-engage-upload <https://github.com/RoboJackets/loop-engage-upload>`_ utility by a member with access to the Finance module in Engage.
-The footer at the bottom of Nova shows when Engage data was most recently uploaded.
+Loop syncs purchase requests directly from Engage on a daily basis.
+It can also be triggered manually with the :guilabel:`Refresh Engage Requests` action on the :guilabel:`Engage Requests` list in Nova.
+
+The footer at the bottom of Nova shows when Engage data was most recently synced.
 
 Invoicing
 ---------
