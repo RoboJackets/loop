@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Jobs\SyncEngage;
+use App\Jobs\SyncEngagePurchaseRequests;
 use Illuminate\Support\Facades\Schedule;
 use UKFast\HealthCheck\Commands\CacheSchedulerRunning;
 
@@ -19,4 +19,4 @@ use UKFast\HealthCheck\Commands\CacheSchedulerRunning;
 
 Schedule::command('horizon:snapshot')->everyFiveMinutes();
 Schedule::command(CacheSchedulerRunning::class)->everyMinute();
-Schedule::job(new SyncEngage())->timezone('America/New_York')->dailyAt('06:00');
+Schedule::job(new SyncEngagePurchaseRequests())->timezone('America/New_York')->dailyAt('06:00');

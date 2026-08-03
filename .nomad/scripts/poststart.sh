@@ -7,5 +7,5 @@ php artisan scout:import ExpenseReportLine --no-interaction --verbose
 php artisan scout:import ExternalCommitteeMember --no-interaction --verbose
 php artisan scout:import User --no-interaction --verbose
 if [ "$APP_ENV" = "production" ]; then
-    php artisan job:dispatch SyncEngage --no-interaction --verbose
+    php artisan job:dispatch SyncEngagePurchaseRequests --no-interaction --verbose
 fi

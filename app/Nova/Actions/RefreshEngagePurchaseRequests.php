@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Nova\Actions;
 
-use App\Jobs\SyncEngage;
+use App\Jobs\SyncEngagePurchaseRequests;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
@@ -54,7 +54,7 @@ class RefreshEngagePurchaseRequests extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        SyncEngage::dispatchSync();
+        SyncEngagePurchaseRequests::dispatchSync();
 
         return Action::message('All Engage requests refreshed!');
     }

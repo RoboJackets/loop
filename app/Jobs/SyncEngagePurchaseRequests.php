@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Storage;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\HeaderUtils;
 
-class SyncEngage implements ShouldBeUnique, ShouldQueue
+class SyncEngagePurchaseRequests implements ShouldBeUnique, ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
