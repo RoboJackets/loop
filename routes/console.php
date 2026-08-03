@@ -19,4 +19,7 @@ use UKFast\HealthCheck\Commands\CacheSchedulerRunning;
 
 Schedule::command('horizon:snapshot')->everyFiveMinutes();
 Schedule::command(CacheSchedulerRunning::class)->everyMinute();
-Schedule::job(new SyncEngagePurchaseRequests())->timezone('America/New_York')->dailyAt('06:00');
+Schedule::job(new SyncEngagePurchaseRequests())
+    ->timezone('America/New_York')
+    ->dailyAt('06:00')
+    ->environments('production');
