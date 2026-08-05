@@ -123,36 +123,118 @@ class ExpenseReport extends Resource
                 ->onlyOnDetail(),
 
             Currency::make('Amount')
-                ->sortable(),
-
-            Currency::make(
-                'Envelopes Total Amount',
-                fn (): string|int => $this->envelopes()->sum('docusign_envelopes.amount')
-            )
-                ->onlyOnDetail(),
+                ->sortable()
+                ->onlyOnIndex(),
 
             URL::make('View in Workday', 'workday_url')
                 ->canSee(static fn (Request $request): bool => $request->user()->can('access-workday')),
 
+            Panel::make('Totals', [
+                Currency::make('Expense Report Amount', 'amount')
+                    ->onlyOnDetail(),
+
+                Currency::make(
+                    'Expense Report Lines Total Amount',
+                    fn (): string|int => $this->lines()->sum('expense_report_lines.amount')
+                )
+                    ->onlyOnDetail()
+                    ->showOnDetail(
+                        static fn (
+                            NovaRequest $request,
+                            \App\Models\ExpenseReport $expenseReport
+                        ): bool => $expenseReport->lines()->count() > 0
+                    ),
+
+                Currency::make(
+                    'Envelopes Total Amount',
+                    fn (): string|int => $this->envelopes()->sum('docusign_envelopes.amount')
+                )
+                    ->onlyOnDetail()
+                    ->showOnDetail(
+                        static fn (
+                            NovaRequest $request,
+                            \App\Models\ExpenseReport $expenseReport
+                        ): bool => $expenseReport->envelopes()->count() > 0
+                    ),
+
+                Currency::make(
+                    'Engage Requests Total Submitted Amount',
+                    fn (): string|int => $this->engagePurchaseRequests()->sum(
+                        'engage_purchase_requests.submitted_amount'
+                    )
+                )
+                    ->onlyOnDetail()
+                    ->showOnDetail(
+                        static fn (
+                            NovaRequest $request,
+                            \App\Models\ExpenseReport $expenseReport
+                        ): bool => $expenseReport->engagePurchaseRequests()->count() > 0
+                    ),
+
+                Currency::make(
+                    'Engage Requests Total Approved Amount',
+                    fn (): string|int => $this->engagePurchaseRequests()->sum(
+                        'engage_purchase_requests.approved_amount'
+                    )
+                )
+                    ->onlyOnDetail()
+                    ->showOnDetail(
+                        static fn (
+                            NovaRequest $request,
+                            \App\Models\ExpenseReport $expenseReport
+                        ): bool => $expenseReport->engagePurchaseRequests()->count() > 0
+                    ),
+
+                Currency::make(
+                    'Email Requests Total Amount',
+                    fn (): string|int => $this->emailRequests()->sum('email_requests.vendor_document_amount')
+                )
+                    ->onlyOnDetail()
+                    ->showOnDetail(
+                        static fn (
+                            NovaRequest $request,
+                            \App\Models\ExpenseReport $expenseReport
+                        ): bool => $expenseReport->emailRequests()->count() > 0
+                    ),
+            ]),
+
             HasMany::make('Lines', 'lines', ExpenseReportLine::class),
 
-            ...($this->engagePurchaseRequests()->count() === 0 ||
-                $this->emailRequests()->count() === 0 ||
-                $this->envelopes()->count() > 0 ? [
-                    HasMany::make('DocuSign Envelopes', 'envelopes', DocuSignEnvelope::class),
-                ] : []),
+            HasMany::make('DocuSign Envelopes', 'envelopes', DocuSignEnvelope::class)
+                ->showOnDetail(
+                    static fn (
+                        NovaRequest $request,
+                        \App\Models\ExpenseReport $expenseReport
+                    ): bool => ($expenseReport->envelopes()->count() > 0) ||
+                        (
+                            $expenseReport->engagePurchaseRequests()->count() === 0 &&
+                            $expenseReport->emailRequests()->count() === 0
+                        )
+                ),
 
-            ...($this->envelopes()->count() === 0 ||
-                $this->emailRequests()->count() === 0 ||
-                $this->engagePurchaseRequests()->count() > 0 ? [
-                    HasMany::make('Engage Requests', 'engagePurchaseRequests', EngagePurchaseRequest::class),
-                ] : []),
+            HasMany::make('Engage Requests', 'engagePurchaseRequests', EngagePurchaseRequest::class)
+                ->showOnDetail(
+                    static fn (
+                        NovaRequest $request,
+                        \App\Models\ExpenseReport $expenseReport
+                    ): bool => ($expenseReport->engagePurchaseRequests()->count() > 0) ||
+                        (
+                            $expenseReport->envelopes()->count() === 0 &&
+                            $expenseReport->emailRequests()->count() === 0
+                        )
+                ),
 
-            ...($this->engagePurchaseRequests()->count() === 0 ||
-                $this->envelopes()->count() === 0 ||
-                $this->emailRequests()->count() > 0 ? [
-                    HasMany::make('Email Requests'),
-                ] : []),
+            HasMany::make('Email Requests')
+                ->showOnDetail(
+                    static fn (
+                        NovaRequest $request,
+                        \App\Models\ExpenseReport $expenseReport
+                    ): bool => ($expenseReport->emailRequests()->count() > 0) ||
+                        (
+                            $expenseReport->envelopes()->count() === 0 &&
+                            $expenseReport->engagePurchaseRequests()->count() === 0
+                        )
+                ),
 
             Panel::make('Timestamps', [
                 DateTime::make('Created', 'created_at')
