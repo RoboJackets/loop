@@ -43,7 +43,7 @@
         "barryvdh/laravel-ide-helper": "3.7.0",
         "danog/advanced-json-rpc": "3.2.3",
         "fakerphp/faker": "1.24.1",
-        "laravel/boost": "2.4.13",
+        "laravel/boost": "2.5.3",
         "laravel/pail": "1.2.7",
         "laravel/pint": "1.30.4",
         "mockery/mockery": "1.6.12",
