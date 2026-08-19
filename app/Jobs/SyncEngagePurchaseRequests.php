@@ -180,9 +180,9 @@ class SyncEngagePurchaseRequests implements ShouldBeUnique, ShouldQueue
         );
 
         if ($response->getStatusCode() !== 200) {
-            throw new Exception(
-                'Unexpected HTTP '.$response->getStatusCode().' response from Engage for purchase request '
-                    .$purchase_request->engage_id
+            throw Engage::unexpectedResponseException(
+                'from Engage for purchase request '.$purchase_request->engage_id,
+                $response
             );
         }
 
@@ -241,9 +241,9 @@ class SyncEngagePurchaseRequests implements ShouldBeUnique, ShouldQueue
         );
 
         if ($response->getStatusCode() !== 200) {
-            throw new Exception(
-                'Unexpected HTTP '.$response->getStatusCode().' response from Engage additional questions page for '
-                    .'purchase request '.$purchase_request->engage_id
+            throw Engage::unexpectedResponseException(
+                'from Engage additional questions page for purchase request '.$purchase_request->engage_id,
+                $response
             );
         }
 
@@ -284,9 +284,7 @@ class SyncEngagePurchaseRequests implements ShouldBeUnique, ShouldQueue
         );
 
         if ($response->getStatusCode() !== 200) {
-            throw new Exception(
-                'Unexpected HTTP '.$response->getStatusCode().' response from Engage for attachment '.$document_id
-            );
+            throw Engage::unexpectedResponseException('from Engage for attachment '.$document_id, $response);
         }
 
         if ($attachment === null) {
@@ -351,9 +349,7 @@ class SyncEngagePurchaseRequests implements ShouldBeUnique, ShouldQueue
             ]);
 
             if ($response->getStatusCode() !== 200) {
-                throw new Exception(
-                    'Unexpected HTTP '.$response->getStatusCode().' response from Engage purchase request list'
-                );
+                throw Engage::unexpectedResponseException('from Engage purchase request list', $response);
             }
 
             $page = json_decode($response->getBody()->getContents(), true);

@@ -41,31 +41,44 @@ class Engage
 
     private const array REDIRECT_STATUS_CODES = [301, 302, 303, 307, 308];
 
-    private static ?Client $client = null;
-
     /**
-     * Returns an HTTP client with an authenticated Engage session.
+     * Returns an HTTP client with a freshly authenticated Engage session.
+     *
+     * A new session is established on every call. The session must not be reused across job runs,
+     * because Engage sessions expire server-side, and long-lived worker processes would otherwise
+     * present stale cookies and receive redirects to the login flow.
      */
     public static function client(): Client
     {
-        if (self::$client === null) {
-            $client = new Client([
-                'cookies' => new CookieJar(),
-                'headers' => [
-                    'User-Agent' => 'RoboJackets Loop on '.config('app.url'),
-                ],
-                'allow_redirects' => false,
-                'http_errors' => false,
-                'connect_timeout' => 5,
-                'timeout' => 30,
-            ]);
+        $client = new Client([
+            'cookies' => new CookieJar(),
+            'headers' => [
+                'User-Agent' => 'RoboJackets Loop on '.config('app.url'),
+            ],
+            'allow_redirects' => false,
+            'http_errors' => false,
+            'connect_timeout' => 5,
+            'timeout' => 30,
+        ]);
 
-            self::logIn($client);
+        self::logIn($client);
 
-            self::$client = $client;
+        return $client;
+    }
+
+    /**
+     * Build an exception describing an unexpected HTTP response, including the redirect target when
+     * the response is a redirect.
+     */
+    public static function unexpectedResponseException(string $description, ResponseInterface $response): \Throwable
+    {
+        $message = 'Unexpected HTTP '.$response->getStatusCode().' response '.$description;
+
+        if ($response->hasHeader('Location')) {
+            $message .= ', redirecting to '.$response->getHeaderLine('Location');
         }
 
-        return self::$client;
+        return new Exception($message);
     }
 
     /**
@@ -149,9 +162,7 @@ class Engage
         );
 
         if ($response->getStatusCode() !== 200) {
-            throw new Exception(
-                'Unexpected HTTP '.$response->getStatusCode().' response from CampusLabs federation'
-            );
+            throw self::unexpectedResponseException('from CampusLabs federation', $response);
         }
 
         Log::info('Completing CampusLabs single sign-on callbacks');
@@ -160,9 +171,7 @@ class Engage
         [$response] = self::requestFollowingRedirects($client, 'GET', self::ENGAGE_HOME_URL);
 
         if ($response->getStatusCode() !== 200) {
-            throw new Exception(
-                'Unexpected HTTP '.$response->getStatusCode().' response from Engage after single sign-on'
-            );
+            throw self::unexpectedResponseException('from Engage after single sign-on', $response);
         }
 
         Log::info('Engage authentication complete');
