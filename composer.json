@@ -26,7 +26,7 @@
         "laravel/scout": "10.25.0",
         "laravel/slack-notification-channel": "3.10.0",
         "laravel/tinker": "2.11.1",
-        "meilisearch/meilisearch-php": "1.16.1",
+        "meilisearch/meilisearch-php": "1.17.0",
         "mxl/laravel-job": "^1.8",
         "quickbooks/v3-php-sdk": "^6.0",
         "sentry/sentry-laravel": "^4.13",
