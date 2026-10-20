@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c929737bedc646df9d583341348eba17",
+    "content-hash": "605e8820a6cf6d937b63e9ab75a812d7",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -7977,16 +7977,16 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v7.4.15",
+            "version": "v7.4.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "1f898ee8188adda9417fb52cf8425a8342c254e7"
+                "reference": "58c89144c7a36dd89c3d01917e9fa3a72d8aaf31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/1f898ee8188adda9417fb52cf8425a8342c254e7",
-                "reference": "1f898ee8188adda9417fb52cf8425a8342c254e7",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/58c89144c7a36dd89c3d01917e9fa3a72d8aaf31",
+                "reference": "58c89144c7a36dd89c3d01917e9fa3a72d8aaf31",
                 "shasum": ""
             },
             "require": {
@@ -8035,7 +8035,7 @@
             "description": "Defines an object-oriented layer for the HTTP specification",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-foundation/tree/v7.4.15"
+                "source": "https://github.com/symfony/http-foundation/tree/v7.4.21"
             },
             "funding": [
                 {
@@ -8055,7 +8055,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-07-29T07:12:33+00:00"
+            "time": "2026-10-08T16:56:12+00:00"
         },
         {
             "name": "symfony/http-kernel",
@@ -13819,16 +13819,16 @@
         },
         {
             "name": "spatie/laravel-ignition",
-            "version": "2.12.0",
+            "version": "2.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-ignition.git",
-                "reference": "45b3b6e1e73fc161cba2149972698644b99594ee"
+                "reference": "0d49228686542bf718ad1a978ab3eb1d5a0dcd41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-ignition/zipball/45b3b6e1e73fc161cba2149972698644b99594ee",
-                "reference": "45b3b6e1e73fc161cba2149972698644b99594ee",
+                "url": "https://api.github.com/repos/spatie/laravel-ignition/zipball/0d49228686542bf718ad1a978ab3eb1d5a0dcd41",
+                "reference": "0d49228686542bf718ad1a978ab3eb1d5a0dcd41",
                 "shasum": ""
             },
             "require": {
@@ -13907,7 +13907,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-03-17T12:20:04+00:00"
+            "time": "2026-10-19T16:31:25+00:00"
         },
         {
             "name": "spatie/macroable",
