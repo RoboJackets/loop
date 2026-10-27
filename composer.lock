@@ -5958,23 +5958,23 @@
         },
         {
             "name": "quickbooks/v3-php-sdk",
-            "version": "v6.3.2",
+            "version": "v6.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/intuit/QuickBooks-V3-PHP-SDK.git",
-                "reference": "1bc0edf8c97fdbecc491ba0598221848c44ea8d1"
+                "reference": "8bf471f08c39dffc4851f4d0714d43366a1ae857"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/intuit/QuickBooks-V3-PHP-SDK/zipball/1bc0edf8c97fdbecc491ba0598221848c44ea8d1",
-                "reference": "1bc0edf8c97fdbecc491ba0598221848c44ea8d1",
+                "url": "https://api.github.com/repos/intuit/QuickBooks-V3-PHP-SDK/zipball/8bf471f08c39dffc4851f4d0714d43366a1ae857",
+                "reference": "8bf471f08c39dffc4851f4d0714d43366a1ae857",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-mbstring": "*",
-                "guzzlehttp/guzzle": "^7.9",
-                "php": ">=8.4"
+                "guzzlehttp/guzzle": "^7.15.2",
+                "php": ">=8.2"
             },
             "require-dev": {
                 "php-mock/php-mock": "^2.3",
@@ -6012,9 +6012,9 @@
             ],
             "support": {
                 "issues": "https://github.com/intuit/QuickBooks-V3-PHP-SDK/issues",
-                "source": "https://github.com/intuit/QuickBooks-V3-PHP-SDK/tree/v6.3.2"
+                "source": "https://github.com/intuit/QuickBooks-V3-PHP-SDK/tree/v6.4.1"
             },
-            "time": "2026-10-21T17:14:01+00:00"
+            "time": "2026-10-21T19:20:27+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
