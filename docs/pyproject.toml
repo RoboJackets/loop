@@ -7,8 +7,8 @@ license = "MIT"
 package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.12"
-sphinx = "9.1.0"
+python = "^3.13"
+sphinx = "9.2.0"
 sphinx-autobuild = "2025.8.25"
 sphinxext-opengraph = "0.13.0"
 furo = "2025.12.19"
