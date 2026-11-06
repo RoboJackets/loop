@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a56d15244c6dc909a3c18c21186552e",
+    "content-hash": "b6e3b94f997b61b4d312bd9f8ef4a0b7",
     "packages": [
         {
             "name": "ans-group/laravel-health-check",
@@ -13658,7 +13658,8 @@
                     "type": "other"
                 }
             ],
-            "time": "2026-03-11T13:48:28+00:00"
+            "time": "2026-03-11T13:48:28+00:00",
+            "published-time": "2026-03-11T13:53:28+00:00"
         },
         {
             "name": "spatie/error-solutions",
@@ -14030,20 +14031,21 @@
                 "issues": "https://github.com/spatie/macroable/issues",
                 "source": "https://github.com/spatie/macroable/tree/2.1.0"
             },
-            "time": "2026-01-30T17:13:34+00:00"
+            "time": "2026-01-30T17:13:34+00:00",
+            "published-time": "2026-01-30T18:06:57+00:00"
         },
         {
             "name": "spatie/ray",
-            "version": "1.48.0",
+            "version": "1.48.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ray.git",
-                "reference": "974ac9c6e315033ab8ace883d60e094522f88ede"
+                "reference": "1b82467e05eb4cabccd876344d2a48c4e98c6dd5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ray/zipball/974ac9c6e315033ab8ace883d60e094522f88ede",
-                "reference": "974ac9c6e315033ab8ace883d60e094522f88ede",
+                "url": "https://api.github.com/repos/spatie/ray/zipball/1b82467e05eb4cabccd876344d2a48c4e98c6dd5",
+                "reference": "1b82467e05eb4cabccd876344d2a48c4e98c6dd5",
                 "shasum": ""
             },
             "require": {
@@ -14103,7 +14105,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/ray/issues",
-                "source": "https://github.com/spatie/ray/tree/1.48.0"
+                "source": "https://github.com/spatie/ray/tree/1.48.1"
             },
             "funding": [
                 {
@@ -14115,7 +14117,8 @@
                     "type": "other"
                 }
             ],
-            "time": "2026-03-31T12:44:31+00:00"
+            "time": "2026-11-05T09:15:00+00:00",
+            "published-time": "2026-11-05T09:17:03+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -14331,7 +14334,8 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-29T05:06:50+00:00"
+            "time": "2026-05-29T05:06:50+00:00",
+            "published-time": "2026-05-29T08:53:18+00:00"
         },
         {
             "name": "vimeo/psalm",
